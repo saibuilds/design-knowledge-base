@@ -1,5 +1,5 @@
 # Web Design Knowledge Base
-_Updated: 2026-05-27 — 63 files_
+_Updated: 2026-05-27 — 68 files_
 
 > Local design library for Claude Code. Reference with: `~/Downloads/design-knowledge-base/md/[file].md`
 
@@ -87,6 +87,13 @@ Build a garden suite landing page. Reference:
 - [performance.md](tools/performance.md) — Core Web Vitals, next/image, WebP/AVIF, code splitting, Three.js LOD, Lighthouse CI
 - [cms-options.md](tools/cms-options.md) — Sanity, Contentful, Strapi, Prismic, Notion, Directus — when-to-use table
 - [omma.md](tools/omma.md) — Omma Build visual 3D builder: 20 free plugins, embed in Next.js, DIY R3F equivalent
+
+## seo
+- [seo-renovation-toronto.md](seo/seo-renovation-toronto.md) — Keywords, competitor analysis, LocalBusiness schema, HomeStars/Google Maps Pack strategy
+- [seo-garden-suites-adu.md](seo/seo-garden-suites-adu.md) — ADU/garden suite keywords, permit FAQ schema, neighbourhood eligibility content
+- [seo-real-estate.md](seo/seo-real-estate.md) — Agent/brokerage keywords, listing schema, neighbourhood pages, dynamic OG images
+- [seo-technical-checklist.md](seo/seo-technical-checklist.md) — Next.js 14 Core Web Vitals, JSON-LD templates, sitemap.ts, robots.ts, image optimization
+- [seo-content-templates.md](seo/seo-content-templates.md) — Service page, location page, cost guide, meta title formulas, GBP optimization
 
 ## assets
 - [lucide-phosphor.md](assets/icons/lucide-phosphor.md) — Icon library usage, common icon names for renovation/real estate
