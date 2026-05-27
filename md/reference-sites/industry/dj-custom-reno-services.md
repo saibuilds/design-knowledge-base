@@ -97,6 +97,64 @@
 
 ---
 
+### 6. Epoxy Flooring — Commercial & Residential
+
+#### What DJ Custom Reno Does
+- **Residential epoxy floors**: garages, basements, laundry rooms, utility spaces
+- **Commercial epoxy floors**: warehouses, retail, restaurants, offices, gyms, medical facilities
+- Full prep + application — not a topcoat slap-on; proper surface grinding and priming
+
+#### Epoxy Types Offered
+| Type | Description | Best For |
+|------|-------------|----------|
+| **Solid colour epoxy** | Single colour, gloss finish | Garages, basements, commercial |
+| **Metallic epoxy** | 3D swirl/lava effect, high-gloss | Showrooms, restaurants, luxury residential |
+| **Flake / broadcast epoxy** | Colour flakes broadcast into base coat; slip-resistant | Garages, gyms, medical |
+| **Quartz epoxy** | Quartz aggregate broadcast; very durable, matte/satin | Commercial kitchens, labs, high-traffic |
+| **Polyaspartic topcoat** | UV-stable, fast cure (1-day install), scratch-resistant | All types — premium upcharge |
+| **Anti-slip additive** | Aluminum oxide or shark grip added to topcoat | Wet areas, ramps, commercial entries |
+
+#### Application Process
+1. **Surface prep** — diamond grind or shot blast concrete (opens pores for adhesion)
+2. **Crack/spall repair** — polyurea crack filler, patch divots
+3. **Moisture test** — calcium chloride or RH test; epoxy fails over wet slabs
+4. **Primer coat** — 100% solids epoxy primer
+5. **Base colour coat** — solid, metallic, or flake broadcast
+6. **Topcoat** — polyaspartic or urethane; 2× for commercial
+7. **Cure** — light foot traffic 24 hrs; full cure 72 hrs (polyaspartic: same day)
+
+#### Commercial Applications
+- Warehouses / distribution centres — high-gloss or matte, forklift-rated
+- Restaurant kitchens — seamless, non-porous, passes health inspection
+- Retail showrooms — metallic or custom logo inlay
+- Auto shops / dealerships — flake broadcast, oil-resistant
+- Gyms / fitness centres — rubber-top or flake, anti-fatigue
+- Medical / dental offices — seamless, easy-clean, antimicrobial additive available
+
+#### Residential Applications
+- Garage floors — most common; flake or solid colour, polyaspartic topcoat
+- Basement floors — moisture barrier + epoxy; eliminates cold/damp feel
+- Laundry rooms, mudrooms — waterproof, durable
+
+#### Website Copy Angles
+- "One contractor — kitchens, basements, epoxy floors"
+- "Commercial-grade epoxy for your garage or facility"
+- "Same-day install available with polyaspartic systems"
+- "Seamless floors that pass health inspections"
+- CTAs: "Get an Epoxy Quote", "See Our Floor Gallery", "Book a Free Measurement"
+
+#### SEO Keywords — Epoxy
+- epoxy floor coating toronto
+- garage epoxy flooring toronto
+- commercial epoxy flooring toronto
+- metallic epoxy floor toronto
+- basement epoxy floor toronto
+- epoxy floor contractor toronto
+- polyaspartic floor coating toronto
+- warehouse epoxy flooring toronto
+
+---
+
 ## SEO Keywords — DJ Custom Reno
 
 ### Cabinet Finishing
