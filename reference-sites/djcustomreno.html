@@ -1,238 +1,393 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DJ Custom Reno Analysis — Design KB</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>DJ Custom Reno — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#e5e5e5;display:flex;min-height:100vh}
-.sidebar{width:240px;background:#111;border-right:1px solid #222;padding:24px 0;position:fixed;height:100vh;overflow-y:auto;z-index:100}
-.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid #222;margin-bottom:16px}
-.sidebar-logo a{text-decoration:none;color:#f59e0b;font-weight:700;font-size:16px}
-.sidebar-logo span{display:block;color:#666;font-size:11px;margin-top:2px}
-.nav-section{padding:0 12px;margin-bottom:8px}
-.nav-label{font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:1px;padding:0 8px;margin-bottom:6px}
-.nav-item{display:block;padding:7px 8px;border-radius:6px;color:#999;text-decoration:none;font-size:13px;transition:all 0.15s}
-.nav-item:hover,.nav-item.active{background:#1a1a1a;color:#f59e0b}
-.main{margin-left:240px;flex:1;padding:40px;max-width:calc(100vw - 240px)}
-.search-bar{width:100%;background:#111;border:1px solid #222;border-radius:8px;padding:12px 16px;color:#e5e5e5;font-size:14px;font-family:'Inter',sans-serif;margin-bottom:32px;outline:none;transition:border-color 0.2s}
-.search-bar:focus{border-color:#f59e0b}
-h1{font-size:28px;font-weight:700;margin-bottom:8px}
-.subtitle{color:#666;margin-bottom:32px;font-size:15px}
-h2{font-size:18px;font-weight:600;margin:32px 0 14px;color:#f59e0b}
-.card{background:#111;border:1px solid #222;border-radius:12px;padding:20px;margin-bottom:16px}
-.meta-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:24px}
-.meta-item{background:#111;border:1px solid #222;border-radius:8px;padding:14px}
-.meta-label{font-size:11px;color:#555;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
-.meta-value{font-size:14px;color:#e5e5e5;font-weight:500}
-.swatches{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
-.swatch{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer}
-.swatch-box{width:72px;height:72px;border-radius:8px;border:1px solid #333;transition:transform 0.15s}
-.swatch-box:hover{transform:scale(1.05)}
-.swatch-hex{font-size:11px;color:#777;font-family:'Courier New',monospace}
-.swatch-name{font-size:11px;color:#555}
-.routes-list{list-style:none}
-.routes-list li{padding:8px 12px;border-bottom:1px solid #1a1a1a;font-size:13px;color:#999;display:flex;align-items:center;gap:8px}
-.routes-list li:last-child{border-bottom:none}
-.routes-list .route-path{font-family:'Courier New',monospace;color:#a3e635;font-size:12px}
-.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
-.service-item{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:6px;padding:10px 12px;font-size:13px;color:#ccc}
-.improvement-item{background:#1a1a1a;border-left:3px solid #f59e0b;border-radius:0 6px 6px 0;padding:12px 14px;margin-bottom:8px}
-.improvement-title{font-size:13px;font-weight:600;color:#e5e5e5;margin-bottom:4px}
-.improvement-desc{font-size:12px;color:#666;line-height:1.5}
-.tag{display:inline-block;background:#1a1a1a;border:1px solid #333;border-radius:4px;padding:2px 8px;font-size:11px;color:#888;margin-right:6px}
-.copy-toast{position:fixed;bottom:24px;right:24px;background:#f59e0b;color:#000;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:600;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:9999}
-.copy-toast.show{opacity:1}
+:root{--bg:#0a0a0a;--card:#111111;--border:#1f1f1f;--accent:#f59e0b;--text:#e5e5e5;--muted:#737373;--green:#22c55e;--red:#ef4444;--blue:#3b82f6}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif}
+a{color:inherit;text-decoration:none}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:240px;background:var(--card);border-right:1px solid var(--border);padding:24px 0;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.sidebar-logo a{font-size:13px;font-weight:600;color:var(--accent);letter-spacing:.05em;text-transform:uppercase}
+.sidebar-logo p{font-size:11px;color:var(--muted);margin-top:4px}
+.nav-section{padding:8px 20px;font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:8px}
+.nav-link{display:flex;align-items:center;gap:8px;padding:8px 20px;font-size:13px;color:var(--muted);transition:.15s;border-left:2px solid transparent}
+.nav-link:hover,.nav-link.active{color:var(--text);background:rgba(245,158,11,.06);border-left-color:var(--accent)}
+.main{margin-left:240px;flex:1;padding:40px;max-width:960px}
+.page-header{margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.badge{display:inline-block;font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(245,158,11,.15);color:var(--accent);border:1px solid rgba(245,158,11,.3);margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em}
+.page-header h1{font-size:28px;font-weight:700}
+.page-header p{color:var(--muted);font-size:14px;margin-top:8px;line-height:1.7;max-width:640px}
+.ext-links{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+.ext-links a{font-size:12px;color:var(--accent);border:1px solid rgba(245,158,11,.3);padding:5px 12px;border-radius:6px;transition:.15s}
+.ext-links a:hover{background:rgba(245,158,11,.1)}
+.section{margin-bottom:48px}
+.section h2{font-size:18px;font-weight:600;margin-bottom:4px;padding-top:8px}
+.sub{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6}
+.code-block{position:relative;margin-bottom:20px;border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+.code-header{display:flex;justify-content:space-between;align-items:center;padding:8px 16px;background:#0d0d0d;border-bottom:1px solid var(--border)}
+.code-lang{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase}
+.copy-btn{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);color:var(--accent);font-size:11px;padding:4px 10px;border-radius:5px;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s}
+.copy-btn:hover{background:rgba(245,158,11,.2)}
+.copy-btn.copied{color:var(--green);border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.1)}
+.code-block pre{margin:0!important;border-radius:0!important}
+.code-block pre code{font-size:13px!important;line-height:1.6!important}
+.info-box{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:16px;margin-bottom:20px;font-size:13px;line-height:1.7}
+.info-box strong{color:var(--accent)}
+.warn-box{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);border-radius:8px;padding:16px;margin-bottom:20px;font-size:13px;line-height:1.7}
+.warn-box strong{color:var(--red)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px}
+.card h3{font-size:13px;font-weight:600;margin-bottom:8px;color:var(--accent)}
+.card p,.card li{font-size:13px;color:var(--muted);line-height:1.7}
+.card ul{padding-left:16px}
+.token-swatch{display:flex;align-items:center;gap:12px;padding:10px 14px;background:#0d0d0d;border:1px solid var(--border);border-radius:8px;margin-bottom:8px}
+.swatch{width:32px;height:32px;border-radius:6px;flex-shrink:0;border:1px solid rgba(255,255,255,.1)}
+.token-name{font-size:13px;font-weight:500}
+.token-val{font-size:11px;color:var(--muted);margin-top:2px}
+.font-preview{padding:14px;background:#0d0d0d;border:1px solid var(--border);border-radius:8px;margin-bottom:12px}
+.font-preview .label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;background:rgba(59,130,246,.1);color:#93c5fd;border:1px solid rgba(59,130,246,.2);margin:2px}
+@media(max-width:768px){.sidebar{display:none}.main{margin-left:0}.grid2{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
+<div class="layout">
 <nav class="sidebar">
-  <div class="sidebar-logo"><a href="../index.html">Design KB</a><span>Knowledge Base</span></div>
-  <div class="nav-section"><div class="nav-label">Reference Sites</div>
-    <a class="nav-item" href="index.html">Overview</a>
-    <a class="nav-item active" href="djcustomreno.html">DJ Custom Reno</a>
-    <a class="nav-item" href="awwwards-patterns.html">Awwwards Patterns</a>
-    <a class="nav-item" href="godly-patterns.html">Godly Patterns</a>
-  </div>
-  <div class="nav-section"><div class="nav-label">Components</div>
-    <a class="nav-item" href="../components/shadcn.html">shadcn/ui</a>
-    <a class="nav-item" href="../components/21st-dev.html">21st.dev</a>
-  </div>
-  <div class="nav-section"><div class="nav-label">Assets</div>
-    <a class="nav-item" href="../assets/colors.html">Colors</a>
-    <a class="nav-item" href="../assets/fonts.html">Fonts</a>
-  </div>
+  <div class="sidebar-logo"><a href="../index.html">Design KB</a><p>Web Design Knowledge Base</p></div>
+  <div class="nav-section">Hub</div>
+  <a class="nav-link" href="../index.html">&#8962; Dashboard</a>
+  <div class="nav-section">Animations</div>
+  <a class="nav-link" href="../animations/gsap.html">&#9889; GSAP</a>
+  <a class="nav-link" href="../animations/framer-motion.html">&#127902; Framer Motion</a>
+  <a class="nav-link" href="../animations/lenis.html">~ Lenis</a>
+  <div class="nav-section">Components</div>
+  <a class="nav-link" href="../components/shadcn.html">&#9672; shadcn/ui</a>
+  <a class="nav-link" href="../components/21st-dev.html">&#10022; 21st.dev</a>
+  <a class="nav-link" href="../components/magicui.html">&#10022; Magic UI</a>
+  <a class="nav-link" href="../components/aceternity.html">&#9670; Aceternity UI</a>
+  <div class="nav-section">3D</div>
+  <a class="nav-link" href="../3d/r3f.html">&#9677; React Three Fiber</a>
+  <div class="nav-section">Reference Sites</div>
+  <a class="nav-link" href="index.html">&#9678; Sites Index</a>
+  <a class="nav-link active" href="djcustomreno.html">&#8962; DJ Custom Reno</a>
 </nav>
 <main class="main">
-  <input class="search-bar" type="text" placeholder="Search analysis..." id="search">
-  <h1>DJ Custom Reno</h1>
-  <p class="subtitle"><a href="https://djcustomreno.ca" target="_blank" style="color:#f59e0b">djcustomreno.ca</a> — Renovation company website analysis and improvement notes</p>
-
-  <h2>Site Overview</h2>
-  <div class="meta-grid">
-    <div class="meta-item" data-searchable><div class="meta-label">Industry</div><div class="meta-value">Home Renovation</div></div>
-    <div class="meta-item" data-searchable><div class="meta-label">Location</div><div class="meta-value">Canada</div></div>
-    <div class="meta-item" data-searchable><div class="meta-label">Design Style</div><div class="meta-value">Dark, Bold, Electric</div></div>
-    <div class="meta-item" data-searchable><div class="meta-label">Primary CTA</div><div class="meta-value">Get a Quote / Contact</div></div>
-    <div class="meta-item" data-searchable><div class="meta-label">Target User</div><div class="meta-value">Homeowners, Property Owners</div></div>
-    <div class="meta-item" data-searchable><div class="meta-label">Animation Level</div><div class="meta-value">Moderate</div></div>
-  </div>
-
-  <h2>Detected Tech Stack</h2>
-  <div class="card" data-searchable>
-    <div style="display:flex;flex-wrap:wrap;gap:8px">
-      <span class="tag">WordPress</span>
-      <span class="tag">Elementor (likely)</span>
-      <span class="tag">jQuery</span>
-      <span class="tag">Google Fonts</span>
-      <span class="tag">Contact Form 7</span>
-      <span class="tag">Yoast SEO</span>
+  <div class="page-header">
+    <div class="badge">Reference Site Analysis</div>
+    <h1>DJ Custom Reno</h1>
+    <p>Site analysis for djcustomreno.com — a Canadian kitchen renovation business built as a React SPA. Documents architecture, design tokens, typography, copy patterns, and inferred page structure.</p>
+    <div class="ext-links">
+      <a href="https://djcustomreno.com" target="_blank">Live Site</a>
     </div>
-    <p style="font-size:13px;color:#666;margin-top:12px;line-height:1.6">Standard WordPress + page builder stack. The design is constrained by the builder. Rebuilding in Next.js would dramatically improve performance, animation capability, and mobile UX.</p>
   </div>
 
-  <h2>Color Palette</h2>
-  <div class="card" data-searchable>
-    <div class="swatches">
-      <div class="swatch" onclick="copyHex('#010101')">
-        <div class="swatch-box" style="background:#010101"></div>
-        <div class="swatch-hex">#010101</div>
-        <div class="swatch-name">Background</div>
+  <div class="section">
+    <h2>Site Identity</h2>
+    <p class="sub">Extracted from HTML metadata and page structure.</p>
+    <div class="info-box">
+      <strong>Title:</strong> DJ Custom Reno - Build Your Dream Kitchen Today<br/><br/>
+      <strong>Meta Description:</strong> "5-star rated Canadian kitchen renovations that fit your lifestyle and budget, and set the standard for quality and customer service."<br/><br/>
+      <strong>Business Type:</strong> Canadian residential kitchen renovation contractor<br/>
+      <strong>Value Props:</strong> 5-star rated &bull; budget-friendly &bull; quality &bull; customer service<br/>
+      <strong>CTA Theme:</strong> Dream-oriented ("Build Your Dream Kitchen")
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Technical Stack</h2>
+    <div class="grid2">
+      <div class="card">
+        <h3>Frontend Architecture</h3>
+        <ul>
+          <li>React SPA (Create React App)</li>
+          <li>Client-side routing (React Router)</li>
+          <li>Single HTML shell — <code>index.html</code></li>
+          <li>JS bundle: <code>main.[hash].js</code></li>
+          <li>CSS bundle: <code>main.[hash].css</code></li>
+          <li>Static assets in <code>/static/</code></li>
+        </ul>
       </div>
-      <div class="swatch" onclick="copyHex('#232323')">
-        <div class="swatch-box" style="background:#232323"></div>
-        <div class="swatch-hex">#232323</div>
-        <div class="swatch-name">Card BG</div>
-      </div>
-      <div class="swatch" onclick="copyHex('#2a53e8')">
-        <div class="swatch-box" style="background:#2a53e8"></div>
-        <div class="swatch-hex">#2a53e8</div>
-        <div class="swatch-name">Electric Blue</div>
-      </div>
-      <div class="swatch" onclick="copyHex('#ffbc0b')">
-        <div class="swatch-box" style="background:#ffbc0b"></div>
-        <div class="swatch-hex">#ffbc0b</div>
-        <div class="swatch-name">Gold</div>
-      </div>
-      <div class="swatch" onclick="copyHex('#ffffff')">
-        <div class="swatch-box" style="background:#ffffff;border-color:#444"></div>
-        <div class="swatch-hex">#ffffff</div>
-        <div class="swatch-name">Text</div>
-      </div>
-      <div class="swatch" onclick="copyHex('#aaaaaa')">
-        <div class="swatch-box" style="background:#aaaaaa"></div>
-        <div class="swatch-hex">#aaaaaa</div>
-        <div class="swatch-name">Body Text</div>
+      <div class="card">
+        <h3>Build &amp; Deployment</h3>
+        <ul>
+          <li>CRA webpack build</li>
+          <li>Minified + chunked output</li>
+          <li>Content-hashed filenames</li>
+          <li>Public folder for static assets</li>
+          <li>No SSR / no Next.js</li>
+          <li>Likely hosted on Netlify/Vercel</li>
+        </ul>
       </div>
     </div>
-    <p style="font-size:12px;color:#666">Click any swatch to copy hex code. The dual accent system (blue for links/interactive, gold for CTAs/highlights) is the signature visual element.</p>
-  </div>
-
-  <h2>Site Routes / Pages</h2>
-  <div class="card" data-searchable>
-    <ul class="routes-list">
-      <li><span class="route-path">/</span> — Homepage: Hero, services intro, before/after, testimonials, CTA</li>
-      <li><span class="route-path">/services</span> — Services overview page</li>
-      <li><span class="route-path">/kitchen-renovations</span> — Kitchen service detail</li>
-      <li><span class="route-path">/bathroom-renovations</span> — Bathroom service detail</li>
-      <li><span class="route-path">/basement-renovations</span> — Basement service detail</li>
-      <li><span class="route-path">/flooring</span> — Flooring services</li>
-      <li><span class="route-path">/painting</span> — Interior/exterior painting</li>
-      <li><span class="route-path">/gallery</span> — Project portfolio / before-after photos</li>
-      <li><span class="route-path">/about</span> — Team, story, credentials</li>
-      <li><span class="route-path">/contact</span> — Contact form + location</li>
-      <li><span class="route-path">/free-quote</span> — Quote request form</li>
-    </ul>
-  </div>
-
-  <h2>Services Offered</h2>
-  <div class="services-grid" data-searchable>
-    <div class="service-item">Kitchen Renovations</div>
-    <div class="service-item">Bathroom Renovations</div>
-    <div class="service-item">Basement Finishing</div>
-    <div class="service-item">Flooring Installation</div>
-    <div class="service-item">Interior Painting</div>
-    <div class="service-item">Exterior Painting</div>
-    <div class="service-item">Tile Installation</div>
-    <div class="service-item">Drywall</div>
-    <div class="service-item">Trim & Millwork</div>
-    <div class="service-item">Deck Building</div>
-    <div class="service-item">General Contracting</div>
-    <div class="service-item">Home Additions</div>
-  </div>
-
-  <h2>Improvement Notes</h2>
-
-  <div class="improvement-item" data-searchable>
-    <div class="improvement-title">Performance — Rebuild in Next.js</div>
-    <div class="improvement-desc">Current WordPress/Elementor stack loads 4-6MB of JS. A Next.js rebuild with static generation would achieve sub-1s LCP. Use ISR for dynamic content (gallery, testimonials).</div>
-  </div>
-
-  <div class="improvement-item" data-searchable>
-    <div class="improvement-title">Hero — Add scroll-triggered text reveal</div>
-    <div class="improvement-desc">Current hero is static image + text. Adding a GSAP timeline on load (nav fade in → headline reveal → subtext → CTA button) would dramatically increase perceived quality. Use lenis for smooth scroll throughout.</div>
-  </div>
-
-  <div class="improvement-item" data-searchable>
-    <div class="improvement-title">Services — Replace static cards with animated grid</div>
-    <div class="improvement-desc">Use a bento grid layout (Magic UI) with stagger-in scroll animation. Each service card gets an icon, micro-animation on hover (border beam), and links to the service detail page.</div>
-  </div>
-
-  <div class="improvement-item" data-searchable>
-    <div class="improvement-title">Gallery — Before/After slider</div>
-    <div class="improvement-desc">Aceternity's Compare Slider component is perfect here. Before/after drag comparison with smooth CSS transition. Add a filterable masonry grid for the full portfolio.</div>
-  </div>
-
-  <div class="improvement-item" data-searchable>
-    <div class="improvement-title">Trust signals — Animated stats section</div>
-    <div class="improvement-desc">Add a stats bar with animated counters (GSAP or Magic UI NumberTicker): "200+ Projects Completed", "15+ Years Experience", "98% Client Satisfaction". Trigger on scroll entry.</div>
-  </div>
-
-  <div class="improvement-item" data-searchable>
-    <div class="improvement-title">Typography — Upgrade to Syne + Inter pairing</div>
-    <div class="improvement-desc">Replace the current generic font with Syne 800 for headings (bold, distinctive) and Inter 400 for body. This pairing signals premium without being cold.</div>
-  </div>
-
-  <div class="improvement-item" data-searchable>
-    <div class="improvement-title">Mobile — Fix the nav menu</div>
-    <div class="improvement-desc">The current mobile menu is a basic WordPress dropdown. Replace with an Aceternity FloatingNav or a full-screen overlay menu with staggered link animation. Use Sheet from shadcn for the overlay.</div>
-  </div>
-
-  <h2>Claude Prompt Templates (for rebuilding)</h2>
-  <div class="card" data-searchable>
-    <p style="font-size:12px;color:#666;margin-bottom:12px">Copy-paste prompts for rebuilding this site:</p>
-    <div style="background:#0a0a0a;border:1px solid #222;border-radius:6px;padding:14px;font-size:12px;font-family:'Courier New',monospace;color:#ccc;margin-bottom:8px;cursor:pointer" onclick="copyText(this)">
-      Build the homepage hero for a renovation company. Reference ~/design-knowledge-base/reference-sites/djcustomreno.html for the color palette (#010101 bg, #2a53e8 blue, #ffbc0b gold). Use GSAP for the load animation sequence (nav → headline → subtext → CTA). Add Lenis smooth scroll. Stack: Next.js 15, Tailwind, TypeScript.
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">html — index.html shell structure</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"/&gt;
+  &lt;meta name="viewport" content="width=device-width,initial-scale=1"/&gt;
+  &lt;title&gt;DJ Custom Reno - Build Your Dream Kitchen Today&lt;/title&gt;
+  &lt;meta name="description" content="5-star rated Canadian kitchen renovations
+    that fit your lifestyle and budget, and set the standard for quality
+    and customer service."&gt;
+  &lt;!-- Google Fonts preconnect --&gt;
+  &lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
+  &lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;
+  &lt;!-- Roboto + Caveat --&gt;
+  &lt;link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&amp;family=Caveat:wght@500;600&amp;display=swap" rel="stylesheet"&gt;
+  &lt;link rel="stylesheet" href="/static/css/main.[hash].css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;noscript&gt;You need to enable JavaScript to run this app.&lt;/noscript&gt;
+  &lt;div id="root"&gt;&lt;/div&gt;
+  &lt;script src="/static/js/main.[hash].js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
     </div>
-    <div style="background:#0a0a0a;border:1px solid #222;border-radius:6px;padding:14px;font-size:12px;font-family:'Courier New',monospace;color:#ccc;cursor:pointer" onclick="copyText(this)">
-      Build a services section for djcustomreno.ca rebuild. Use a 3-column bento grid with Magic UI BorderBeam on hover. Services: Kitchen, Bathroom, Basement, Flooring, Painting, Tile. Each card has icon + title + short desc. Stagger animate cards in on scroll (Framer Motion useInView). Colors: bg #111, border #222, accent #ffbc0b.
+  </div>
+
+  <div class="section">
+    <h2>Typography</h2>
+    <p class="sub">Two Google Fonts families — a workhorse sans-serif for body/UI and a handwritten display font for personality.</p>
+    <div class="font-preview">
+      <div class="label">Primary — Roboto</div>
+      <div style="font-family:'Roboto',sans-serif">
+        <div style="font-weight:900;font-size:28px;margin-bottom:4px">Build Your Dream Kitchen</div>
+        <div style="font-weight:700;font-size:20px;margin-bottom:4px">5-Star Rated Renovations</div>
+        <div style="font-weight:400;font-size:15px;color:#a3a3a3">Quality craftsmanship that fits your lifestyle and budget.</div>
+      </div>
     </div>
+    <div class="font-preview">
+      <div class="label">Display / Accent — Caveat</div>
+      <div style="font-family:'Caveat',cursive">
+        <div style="font-weight:600;font-size:36px;margin-bottom:4px;color:#f59e0b">Dream Kitchen</div>
+        <div style="font-weight:500;font-size:28px;color:#e5e5e5">Custom Renovations</div>
+      </div>
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">css — font import + usage</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-css">/* Google Fonts import */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Caveat:wght@500;600&display=swap');
+
+/* Usage pattern */
+body {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+}
+
+h1, h2 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+}
+
+/* Accent / handwritten callouts */
+.accent-text, .tagline {
+  font-family: 'Caveat', cursive;
+  font-weight: 600;
+}
+
+/* Roboto weight scale used */
+/* 100 — thin decorative */
+/* 300 — light body text */
+/* 400 — regular */
+/* 500 — medium UI labels */
+/* 700 — bold headings */
+/* 900 — black hero headings */
+
+/* Caveat weight scale used */
+/* 500 — medium cursive */
+/* 600 — semibold cursive (primary use) */</code></pre>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Inferred Page Routes</h2>
+    <p class="sub">Based on standard Canadian renovation business patterns and CRA React Router setup.</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">jsx — inferred React Router routes</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-jsx">// Inferred from business type — Canadian kitchen renovation SPA
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+function App() {
+  return (
+    &lt;BrowserRouter&gt;
+      &lt;Routes&gt;
+        &lt;Route path="/" element={&lt;Home /&gt;} /&gt;
+        &lt;Route path="/services" element={&lt;Services /&gt;} /&gt;
+        &lt;Route path="/gallery" element={&lt;Gallery /&gt;} /&gt;
+        &lt;Route path="/about" element={&lt;About /&gt;} /&gt;
+        &lt;Route path="/contact" element={&lt;Contact /&gt;} /&gt;
+        {/* Possible sub-routes */}
+        &lt;Route path="/services/kitchen-renovation" element={&lt;KitchenReno /&gt;} /&gt;
+        &lt;Route path="/services/bathroom-renovation" element={&lt;BathroomReno /&gt;} /&gt;
+        &lt;Route path="/services/custom-cabinetry" element={&lt;Cabinetry /&gt;} /&gt;
+        &lt;Route path="/quote" element={&lt;GetQuote /&gt;} /&gt;
+      &lt;/Routes&gt;
+    &lt;/BrowserRouter&gt;
+  );
+}</code></pre>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h3>Likely Service Offerings</h3>
+        <ul>
+          <li>Kitchen renovation (primary)</li>
+          <li>Custom cabinetry</li>
+          <li>Countertop installation</li>
+          <li>Bathroom renovation</li>
+          <li>Basement finishing</li>
+          <li>General contracting</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Likely Page Sections (Home)</h3>
+        <ul>
+          <li>Hero — "Build Your Dream Kitchen"</li>
+          <li>Services overview grid</li>
+          <li>Why choose us (5-star, budget)</li>
+          <li>Before/after gallery</li>
+          <li>Testimonials / reviews</li>
+          <li>Contact / quote CTA</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Copy &amp; Messaging Patterns</h2>
+    <p class="sub">Tone and messaging extracted from title/meta — apply these patterns when building similar renovation/contractor sites.</p>
+    <div class="info-box">
+      <strong>Tone:</strong> Aspirational + trustworthy. Dream-oriented language paired with credibility signals (5-star, Canadian, quality).<br/><br/>
+      <strong>Primary Hook:</strong> "Build Your Dream Kitchen Today" — combines aspiration (dream), ownership (your), specificity (kitchen), urgency (today)<br/><br/>
+      <strong>Credibility Signals:</strong> 5-star rated &bull; Canadian &bull; lifestyle fit &bull; budget fit &bull; quality standard &bull; customer service standard
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">text — copy patterns for renovation sites</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-plaintext">// Hero headline patterns:
+"Build Your Dream [Room] Today"
+"Transform Your [Space] — [Timeframe]"
+"[City]'s Most Trusted [Service] Contractor"
+
+// Social proof patterns:
+"5-Star Rated on Google"
+"500+ Kitchens Transformed"
+"Serving [City/Region] Since [Year]"
+
+// Value prop triad (budget + quality + service):
+"Fits Your Lifestyle and Budget"
+"Sets the Standard for Quality"
+"Unmatched Customer Service"
+
+// CTA patterns:
+"Get Your Free Quote"
+"Book a Consultation"
+"Start Your Dream Renovation"
+"See Our Work"</code></pre>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Design Token Estimates</h2>
+    <p class="sub">Inferred design system based on Canadian residential renovation business aesthetics — typically warm neutrals, navy/charcoal, gold accents.</p>
+    <div class="token-swatch"><div class="swatch" style="background:#1a1a2e"></div><div><div class="token-name">Navy Dark</div><div class="token-val">#1a1a2e — likely primary dark background</div></div></div>
+    <div class="token-swatch"><div class="swatch" style="background:#c9a84c"></div><div><div class="token-name">Gold Accent</div><div class="token-val">#c9a84c — warm gold for CTAs / highlights</div></div></div>
+    <div class="token-swatch"><div class="swatch" style="background:#f5f5f0"></div><div><div class="token-name">Off White</div><div class="token-val">#f5f5f0 — light section backgrounds</div></div></div>
+    <div class="token-swatch"><div class="swatch" style="background:#2c2c2c"></div><div><div class="token-name">Charcoal</div><div class="token-val">#2c2c2c — body text on light</div></div></div>
+    <div class="token-swatch"><div class="swatch" style="background:#ffffff"></div><div><div class="token-name">White</div><div class="token-val">#ffffff — cards, hero overlay text</div></div></div>
+    <div class="warn-box"><strong>Note:</strong> These colors are estimated based on industry norms — the actual bundle was too large to parse for exact hex values. Run the scraper tool against the live site to extract real computed styles.</div>
+  </div>
+
+  <div class="section">
+    <h2>Replication Pattern</h2>
+    <p class="sub">How to build a similar renovation contractor site with the modern stack.</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">bash — project setup</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-bash">npx create-next-app@latest reno-site --typescript --tailwind --app
+cd reno-site
+npx shadcn@latest init
+npx shadcn@latest add button card badge separator
+
+# Install fonts (or use next/font)
+# Add Roboto + Caveat via Google Fonts or next/font/google</code></pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">tsx — hero section pattern</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-tsx">import { Caveat, Roboto } from 'next/font/google';
+
+const caveat = Caveat({ subsets: ['latin'], weight: ['500', '600'] });
+const roboto = Roboto({ subsets: ['latin'], weight: ['400', '700', '900'] });
+
+export function HeroSection() {
+  return (
+    &lt;section className="relative min-h-screen flex items-center bg-navy-dark"&gt;
+      {/* Background kitchen image with overlay */}
+      &lt;div className="absolute inset-0 bg-black/50 z-0" /&gt;
+      &lt;div className="relative z-10 container mx-auto px-6"&gt;
+        {/* Caveat accent line */}
+        &lt;p className={`${caveat.className} text-2xl text-gold-400 mb-4`}&gt;
+          Custom Renovations
+        &lt;/p&gt;
+        {/* Roboto black headline */}
+        &lt;h1 className={`${roboto.className} font-black text-5xl md:text-7xl text-white leading-tight mb-6`}&gt;
+          Build Your&lt;br/&gt;
+          &lt;span className="text-gold-400"&gt;Dream Kitchen&lt;/span&gt;&lt;br/&gt;
+          Today
+        &lt;/h1&gt;
+        {/* Credibility sub */}
+        &lt;p className="text-lg text-white/80 mb-8 max-w-xl"&gt;
+          5-star rated Canadian kitchen renovations that fit your
+          lifestyle and budget.
+        &lt;/p&gt;
+        &lt;div className="flex gap-4"&gt;
+          &lt;Button size="lg" className="bg-gold-500 hover:bg-gold-400 text-black"&gt;
+            Get Free Quote
+          &lt;/Button&gt;
+          &lt;Button size="lg" variant="outline" className="text-white border-white"&gt;
+            See Our Work
+          &lt;/Button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+  );
+}</code></pre>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Tags</h2>
+    <p class="sub">Topics this site covers for search/filtering.</p>
+    <span class="tag">react</span>
+    <span class="tag">spa</span>
+    <span class="tag">cra</span>
+    <span class="tag">renovation</span>
+    <span class="tag">canadian</span>
+    <span class="tag">roboto</span>
+    <span class="tag">caveat</span>
+    <span class="tag">kitchen</span>
+    <span class="tag">contractor</span>
+    <span class="tag">local-business</span>
+    <span class="tag">google-fonts</span>
+    <span class="tag">react-router</span>
   </div>
 </main>
-<div class="copy-toast" id="toast">Copied!</div>
+</div>
 <script>
-function copyHex(hex) {
-  navigator.clipboard.writeText(hex);
-  const toast = document.getElementById('toast');
-  toast.textContent = 'Copied ' + hex;
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 1800);
-}
-function copyText(el) {
-  navigator.clipboard.writeText(el.innerText);
-  const toast = document.getElementById('toast');
-  toast.textContent = 'Prompt copied!';
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 1800);
-}
-document.getElementById('search').addEventListener('input', function() {
-  const q = this.value.toLowerCase();
-  document.querySelectorAll('[data-searchable]').forEach(el => {
-    el.style.display = el.textContent.toLowerCase().includes(q) ? '' : 'none';
+hljs.highlightAll();
+function copyCode(btn){
+  const code = btn.closest('.code-block').querySelector('code').textContent;
+  navigator.clipboard.writeText(code).then(()=>{
+    btn.textContent='Copied!';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000);
   });
-});
+}
 </script>
 </body>
 </html>

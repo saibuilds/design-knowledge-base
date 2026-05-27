@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Mobbin Analysis — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0a;--card:#111111;--border:#1f1f1f;--accent:#f59e0b;--text:#e5e5e5;--muted:#737373;--green:#22c55e}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh}
+a{color:inherit;text-decoration:none}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:240px;background:var(--card);border-right:1px solid var(--border);padding:24px 0;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.sidebar-logo span{font-size:13px;font-weight:600;color:var(--accent);letter-spacing:.05em;text-transform:uppercase}
+.sidebar-logo p{font-size:11px;color:var(--muted);margin-top:4px}
+.nav-section{padding:8px 20px;font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:8px}
+.nav-link{display:flex;align-items:center;gap:8px;padding:8px 20px;font-size:13px;color:var(--muted);transition:.15s;border-left:2px solid transparent}
+.nav-link:hover,.nav-link.active{color:var(--text);background:rgba(245,158,11,.06);border-left-color:var(--accent)}
+.main{margin-left:240px;flex:1;padding:40px;max-width:1100px}
+h1{font-size:28px;font-weight:700;background:linear-gradient(135deg,#f59e0b,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.meta{display:flex;gap:12px;align-items:center;margin-bottom:32px;flex-wrap:wrap}
+.badge{font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(245,158,11,.1);color:var(--accent);border:1px solid rgba(245,158,11,.2);font-weight:500}
+.url-link{font-size:13px;color:var(--muted)}
+.url-link a{color:var(--accent)}
+.section{margin-bottom:40px}
+.section-title{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:12px}
+.card h3{font-size:14px;font-weight:600;margin-bottom:8px}
+.card p,.card li{font-size:13px;color:var(--muted);line-height:1.7}
+.card ul{padding-left:16px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.palette{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.swatch{display:flex;flex-direction:column;align-items:center;gap:6px}
+.swatch-color{width:52px;height:52px;border-radius:8px;border:1px solid rgba(255,255,255,.08)}
+.swatch-label{font-size:10px;color:var(--muted);font-family:monospace}
+pre{position:relative;border-radius:10px;overflow:hidden;margin-top:12px}
+.copy-btn{position:absolute;top:10px;right:10px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);color:var(--accent);font-size:11px;padding:4px 10px;border-radius:5px;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s;z-index:2}
+.copy-btn:hover{background:rgba(245,158,11,.2)}
+.copy-btn.copied{color:var(--green);border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.1)}
+.prompt-box{background:var(--card);border:1px solid rgba(245,158,11,.2);border-radius:12px;padding:20px;margin-bottom:12px;position:relative}
+.prompt-box h4{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:10px}
+.prompt-box p{font-size:13px;color:var(--muted);line-height:1.7;white-space:pre-wrap;word-break:break-word;font-family:'Inter',sans-serif}
+/* Mobile screen mockups */
+.screen-grid{display:flex;gap:12px;overflow-x:auto;padding:8px 0 16px;margin-top:8px}
+.screen-mock{flex-shrink:0;width:120px;background:#1a1a1a;border-radius:16px;border:1px solid #2a2a2a;overflow:hidden;position:relative}
+.screen-mock .notch{width:40%;height:6px;background:#2a2a2a;border-radius:0 0 6px 6px;margin:0 auto 8px}
+.screen-mock .content{padding:0 8px 12px}
+.screen-mock .bar{height:8px;background:#2a2a2a;border-radius:4px;margin-bottom:6px}
+.screen-mock .bar.short{width:60%}
+.screen-mock .img-block{height:60px;background:linear-gradient(135deg,#2a2a2a,#333);border-radius:6px;margin-bottom:6px}
+.screen-mock .row{display:flex;gap:4px;margin-bottom:4px}
+.screen-mock .dot{width:16px;height:16px;background:#2a2a2a;border-radius:50%}
+.screen-mock .line{flex:1;height:8px;background:#2a2a2a;border-radius:4px}
+/* Pattern categories */
+.pattern-tag{display:inline-block;font-size:10px;padding:3px 8px;border-radius:4px;background:rgba(245,158,11,.08);color:var(--accent);border:1px solid rgba(245,158,11,.15);font-weight:500;margin:2px}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <div class="sidebar-logo"><span>Design KB</span><p>Web Design Knowledge Base</p></div>
+  <div class="nav-section">Hub</div>
+  <a class="nav-link" href="../index.html">⌂ Dashboard</a>
+  <div class="nav-section">Reference Sites</div>
+  <a class="nav-link" href="awwwards.html">◎ Awwwards</a>
+  <a class="nav-link" href="godly.html">◎ Godly</a>
+  <a class="nav-link" href="lusion.html">◎ Lusion</a>
+  <a class="nav-link" href="linear.html">◎ Linear</a>
+  <a class="nav-link" href="vercel.html">◎ Vercel</a>
+  <a class="nav-link" href="stripe.html">◎ Stripe</a>
+  <a class="nav-link" href="cosmos.html">◎ Cosmos</a>
+  <a class="nav-link active" href="mobbin.html">◎ Mobbin</a>
+</nav>
+<main class="main">
+  <h1>Mobbin — Mobile UI Patterns & Reference</h1>
+  <div class="meta">
+    <span class="badge">UI Reference</span>
+    <span class="badge">Mobile Design</span>
+    <span class="badge">Design Patterns</span>
+    <span class="badge">iOS / Android</span>
+    <span class="url-link">→ <a href="https://mobbin.com" target="_blank">mobbin.com</a></span>
+  </div>
+
+  <div class="section">
+    <div class="section-title">What Mobbin Is</div>
+    <div class="card">
+      <p>Mobbin is the largest library of real, hand-picked mobile and web app screenshots — 300,000+ screens from top-tier iOS, Android, and web apps. It's an essential reference for UI designers: see exactly how Airbnb handles their checkout flow, how Figma does onboarding, how Notion structures their settings screen. Screenshots are organized by app, flow, and UI pattern. The platform itself (its own website and app) is also a masterclass in clean, functional dark UI.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Mobile Screen Demo</div>
+    <div class="screen-grid">
+      <div class="screen-mock">
+        <div class="notch"></div>
+        <div class="content">
+          <div class="bar"></div>
+          <div class="bar short"></div>
+          <div class="img-block"></div>
+          <div class="row"><div class="dot"></div><div class="line"></div></div>
+          <div class="row"><div class="dot"></div><div class="line"></div></div>
+        </div>
+      </div>
+      <div class="screen-mock">
+        <div class="notch"></div>
+        <div class="content">
+          <div class="img-block" style="height:80px"></div>
+          <div class="bar" style="margin-top:4px"></div>
+          <div class="bar short"></div>
+          <div class="row"><div class="line"></div></div>
+        </div>
+      </div>
+      <div class="screen-mock">
+        <div class="notch"></div>
+        <div class="content">
+          <div class="bar"></div>
+          <div class="row" style="gap:4px;margin:6px 0">
+            <div style="flex:1;height:40px;background:#2a2a2a;border-radius:6px"></div>
+            <div style="flex:1;height:40px;background:#2a2a2a;border-radius:6px"></div>
+          </div>
+          <div class="bar short"></div>
+          <div class="img-block" style="height:40px"></div>
+        </div>
+      </div>
+      <div class="screen-mock">
+        <div class="notch"></div>
+        <div class="content">
+          <div style="height:10px;background:#f59e0b;border-radius:4px;margin-bottom:8px"></div>
+          <div class="bar" style="width:80%"></div>
+          <div class="bar short"></div>
+          <div class="bar" style="width:70%"></div>
+          <div class="row"><div class="dot"></div><div class="line"></div></div>
+        </div>
+      </div>
+      <div class="screen-mock">
+        <div class="notch"></div>
+        <div class="content">
+          <div class="row" style="justify-content:center;margin:8px 0">
+            <div style="width:40px;height:40px;background:#2a2a2a;border-radius:50%"></div>
+          </div>
+          <div class="bar" style="width:60%;margin:0 auto 4px"></div>
+          <div class="bar short" style="width:40%;margin:0 auto 8px"></div>
+          <div class="bar"></div>
+          <div class="bar" style="background:#f59e0b;margin-top:4px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">UI Pattern Categories on Mobbin</div>
+    <div class="card">
+      <p>Core UI patterns catalogued:</p>
+      <div style="margin-top:10px">
+        <span class="pattern-tag">Onboarding</span>
+        <span class="pattern-tag">Authentication</span>
+        <span class="pattern-tag">Empty States</span>
+        <span class="pattern-tag">Navigation</span>
+        <span class="pattern-tag">Tab Bars</span>
+        <span class="pattern-tag">Bottom Sheets</span>
+        <span class="pattern-tag">Cards</span>
+        <span class="pattern-tag">Modals</span>
+        <span class="pattern-tag">Forms</span>
+        <span class="pattern-tag">Search</span>
+        <span class="pattern-tag">Filters</span>
+        <span class="pattern-tag">Checkout</span>
+        <span class="pattern-tag">Payment</span>
+        <span class="pattern-tag">Profile</span>
+        <span class="pattern-tag">Settings</span>
+        <span class="pattern-tag">Notifications</span>
+        <span class="pattern-tag">Feed</span>
+        <span class="pattern-tag">Gallery</span>
+        <span class="pattern-tag">Maps</span>
+        <span class="pattern-tag">Charts</span>
+        <span class="pattern-tag">Messaging</span>
+        <span class="pattern-tag">Paywall</span>
+        <span class="pattern-tag">Pricing</span>
+        <span class="pattern-tag">Gestures</span>
+        <span class="pattern-tag">Loading</span>
+        <span class="pattern-tag">Error States</span>
+        <span class="pattern-tag">Success States</span>
+        <span class="pattern-tag">Tooltips</span>
+        <span class="pattern-tag">Toasts</span>
+        <span class="pattern-tag">Progress</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Key Mobile Design Patterns (Distilled from Mobbin)</div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Onboarding Flows</h3>
+        <ul>
+          <li>3–5 swipeable intro slides (progress dots below)</li>
+          <li>Value prop first, permissions request last</li>
+          <li>"Skip" always visible top-right</li>
+          <li>Social login (Apple, Google) before email — reduces friction</li>
+          <li>Progressive profiling: collect info post-signup, not during</li>
+          <li>Celebration screen after signup completion</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Navigation Patterns</h3>
+        <ul>
+          <li>Tab bar: max 5 items, icons + labels, selected state with fill or tint</li>
+          <li>Bottom sheet navigation for secondary actions</li>
+          <li>Floating action button (FAB): primary action bottom-right</li>
+          <li>Swipe-to-go-back (iOS native behavior should not be blocked)</li>
+          <li>Header: title center, primary action right, back/close left</li>
+          <li>Context menus (long press) for secondary actions</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Form Patterns</h3>
+        <ul>
+          <li>One question per screen for high-friction forms</li>
+          <li>Inline validation — show error immediately on blur, not on submit</li>
+          <li>Input groups: float labels animate up on focus</li>
+          <li>Show/hide password toggle always present on password fields</li>
+          <li>Smart defaults: auto-detect country, suggest email domains</li>
+          <li>CTA button disabled until form is valid</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Empty States</h3>
+        <ul>
+          <li>Illustration (simple, not stock) + headline + subtext + CTA</li>
+          <li>Illustration size: 60–80% of screen width, centered</li>
+          <li>Tone: friendly and helpful, not apologetic</li>
+          <li>Specific CTA: "Add your first item" not "No items found"</li>
+          <li>Match app personality in illustration style</li>
+          <li>Search empty state: suggest alternatives or clear search</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Mobbin Platform Design (Its Own UI)</div>
+    <div class="card">
+      <ul>
+        <li><strong>Filter sidebar:</strong> Left sidebar with collapsible category sections — checkboxes with count badges (e.g. "Navigation (847)")</li>
+        <li><strong>Screen grid:</strong> Tight 5–7 column grid of phone-frame screenshots with app icon and name below</li>
+        <li><strong>App cards:</strong> App icon (rounded-xl), name below, screen count badge, "last updated" timestamp</li>
+        <li><strong>Phone frame overlay:</strong> Subtle device frame (status bar, home indicator) added to every screenshot</li>
+        <li><strong>Search:</strong> Instant search with dropdown showing app suggestions + pattern type suggestions</li>
+        <li><strong>Keyboard shortcuts:</strong> Arrow keys to navigate screens, F to favorite, / to focus search</li>
+        <li><strong>Preview modal:</strong> Click screen → full-page modal with scroll arrows, related screens below</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">What to Steal from Mobbin</div>
+    <div class="card">
+      <ul>
+        <li><strong>Single-question forms:</strong> Break long forms into one-question-per-screen flows — conversion rates dramatically improve</li>
+        <li><strong>Phone frame wrapper component:</strong> Display mobile screenshots in a device frame — adds professionalism to any mobile UI showcase</li>
+        <li><strong>Filter sidebar with counts:</strong> Always show item counts next to filter options — helps users predict results before clicking</li>
+        <li><strong>Disabled CTA until valid:</strong> CTA button starts grayed/disabled, enables once form validation passes — clearest UX signal</li>
+        <li><strong>App icon + name card grid:</strong> Pattern for showing apps/tools in a reference grid — works for any catalog interface</li>
+        <li><strong>Bottom sheet for actions:</strong> Instead of dropdown menus on mobile, use a bottom sheet with large touch targets — 44px minimum</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Claude Prompts</div>
+    <div class="prompt-box">
+      <h4>Mobbin-Style App Reference Grid</h4>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+      <p>Build a Mobbin-inspired app reference grid in Next.js. Left sidebar: sticky filter panel (240px wide) with collapsible category sections. Each category shows a chevron, category name, and item count badge. Active filters shown as pills at top with X to remove. Main area: 6-column responsive grid of app cards. Each card: rounded-xl app icon (60x60), app name (13px weight-500 text-white), screen count (11px text-gray-500), on hover: border brightens from rgba(255,255,255,0.06) to rgba(255,255,255,0.15). Click opens a modal with the selected app's screens in a 4-col grid. Dark theme throughout: bg #0f0f0f, sidebar #141414, cards #1a1a1a.</p>
+    </div>
+    <div class="prompt-box">
+      <h4>Multi-Step Mobile Form (One Question Per Screen)</h4>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+      <p>Create a multi-step form component inspired by Mobbin's analysis of top onboarding flows. Each step shows one question fullscreen. Features: (1) progress bar at top showing step X of N, (2) question headline 28px weight-600, subtext 16px gray, single input or choice below, (3) "Continue" CTA button disabled until field is valid — transitions from gray to brand color when valid, (4) swipe left/right on mobile to navigate steps, (5) Framer Motion AnimatePresence with slide-in from right / slide-out to left transitions between steps, (6) final success screen with animation. Steps defined as an array of config objects: {id, question, type: 'text'|'choice'|'email', required}.</p>
+    </div>
+    <div class="prompt-box">
+      <h4>Phone Frame Screenshot Component</h4>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+      <p>Create a PhoneFrame React component that wraps any content (or an image src) in a realistic iPhone-style device frame. The frame should be: rounded-[44px] bg-[#1a1a1a] border-2 border-[#2a2a2a] with an inner shadow. Include: top notch (pill shape, 40% width, height 20px, bg black, absolute top-0 center), status bar area (20px height showing mock time "9:41" and signal icons), home indicator bar at bottom (40% width, 4px height, bg rgba(255,255,255,0.3), rounded, margin auto). The content/screenshot fills the remaining inner area. Scale the frame with a width prop, aspect-ratio maintained at 9:19.5 (iPhone proportions).</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Code Snippet — Mobbin-Style Filter Sidebar</div>
+    <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-tsx">// Mobbin-style filter sidebar with collapsible categories and counts
+"use client";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+interface FilterCategory {
+  id: string;
+  label: string;
+  options: { id: string; label: string; count: number }[];
+}
+
+export function FilterSidebar({
+  categories,
+  selected,
+  onToggle,
+}: {
+  categories: FilterCategory[];
+  selected: Set&lt;string&gt;;
+  onToggle: (id: string) =&gt; void;
+}) {
+  const [expanded, setExpanded] = useState&lt;Set&lt;string&gt;&gt;(
+    new Set(categories.map((c) =&gt; c.id))
+  );
+
+  const toggle = (catId: string) =&gt; {
+    setExpanded((prev) =&gt; {
+      const next = new Set(prev);
+      next.has(catId) ? next.delete(catId) : next.add(catId);
+      return next;
+    });
+  };
+
+  return (
+    &lt;aside className="w-60 bg-[#141414] border-r border-[rgba(255,255,255,0.06)] h-screen sticky top-0 overflow-y-auto p-4"&gt;
+      {/* Active filters */}
+      {selected.size &gt; 0 &amp;&amp; (
+        &lt;div className="mb-4"&gt;
+          &lt;p className="text-[11px] text-gray-500 uppercase tracking-widest mb-2"&gt;Active Filters&lt;/p&gt;
+          &lt;div className="flex flex-wrap gap-1"&gt;
+            {Array.from(selected).map((id) =&gt; (
+              &lt;button
+                key={id}
+                onClick={() =&gt; onToggle(id)}
+                className="flex items-center gap-1 px-2 py-1 rounded bg-[rgba(245,158,11,0.1)] border border-[rgba(245,158,11,0.2)] text-[#f59e0b] text-[11px]"
+              &gt;
+                {id} &lt;span className="ml-1"&gt;×&lt;/span&gt;
+              &lt;/button&gt;
+            ))}
+          &lt;/div&gt;
+        &lt;/div&gt;
+      )}
+
+      {/* Categories */}
+      {categories.map((cat) =&gt; (
+        &lt;div key={cat.id} className="mb-1"&gt;
+          &lt;button
+            className="w-full flex items-center justify-between py-2 text-[13px] text-gray-400 hover:text-white transition-colors"
+            onClick={() =&gt; toggle(cat.id)}
+          &gt;
+            &lt;span className="font-medium"&gt;{cat.label}&lt;/span&gt;
+            &lt;span
+              className="text-[10px] transition-transform duration-200"
+              style={{ transform: expanded.has(cat.id) ? "rotate(180deg)" : "rotate(0deg)" }}
+            &gt;▾&lt;/span&gt;
+          &lt;/button&gt;
+          &lt;AnimatePresence initial={false}&gt;
+            {expanded.has(cat.id) &amp;&amp; (
+              &lt;motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.2, ease: "easeInOut" }}
+                className="overflow-hidden"
+              &gt;
+                {cat.options.map((opt) =&gt; (
+                  &lt;label
+                    key={opt.id}
+                    className="flex items-center justify-between py-1.5 px-2 rounded cursor-pointer hover:bg-[rgba(255,255,255,0.04)] transition-colors"
+                  &gt;
+                    &lt;div className="flex items-center gap-2"&gt;
+                      &lt;input
+                        type="checkbox"
+                        checked={selected.has(opt.id)}
+                        onChange={() =&gt; onToggle(opt.id)}
+                        className="w-3.5 h-3.5 accent-[#f59e0b]"
+                      /&gt;
+                      &lt;span className="text-[13px] text-gray-300"&gt;{opt.label}&lt;/span&gt;
+                    &lt;/div&gt;
+                    &lt;span className="text-[11px] text-gray-600"&gt;{opt.count.toLocaleString()}&lt;/span&gt;
+                  &lt;/label&gt;
+                ))}
+              &lt;/motion.div&gt;
+            )}
+          &lt;/AnimatePresence&gt;
+        &lt;/div&gt;
+      ))}
+    &lt;/aside&gt;
+  );
+}</code></pre>
+  </div>
+</main>
+</div>
+<script>
+hljs.highlightAll();
+function copyPrompt(btn){const text=btn.nextElementSibling.textContent;navigator.clipboard.writeText(text).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000)})}
+function copyCode(btn){const code=btn.parentElement.querySelector('code').textContent;navigator.clipboard.writeText(code).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000)})}
+</script>
+</body>
+</html>
