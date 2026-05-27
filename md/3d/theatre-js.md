@@ -1,0 +1,327 @@
+# Theatre.js — Animation Sequencer Reference
+_Updated: 2026-05-27 | License: MIT_
+
+> Theatre.js is a JavaScript animation library with a professional-grade GUI timeline editor. Use it for complex, multi-property keyframe animations — especially scroll-linked 3D scenes.
+
+## Install
+
+```bash
+npm install @theatre/core @theatre/studio
+# R3F integration
+npm install @theatre/r3f
+```
+
+---
+
+## 1. Core Concepts
+
+| Term       | Meaning                                                     |
+|------------|-------------------------------------------------------------|
+| Project    | Top-level container. Stores all animation state.            |
+| Sheet       | A timeline (like a clip). One project can have many sheets. |
+| Object     | A set of animatable props on a sheet.                       |
+| Sequence   | The timeline of a sheet. Has `.play()`, `.pause()`, `.position`. |
+
+---
+
+## 2. Basic Setup (vanilla JS)
+
+```js
+import { getProject, types } from '@theatre/core'
+import studio from '@theatre/studio'
+
+// Only show GUI in dev
+if (import.meta.env.DEV) {
+  studio.initialize()
+}
+
+// Create project (name matches saved state JSON)
+const project = getProject('My Project')
+
+// Create a sheet (one sheet = one animation sequence)
+const sheet = project.ready.then(() => {
+  const sheet = project.sheet('Intro Scene')
+
+  // Create an object with typed props
+  const boxObj = sheet.object('Box', {
+    position: types.compound({
+      x: types.number(0, { range: [-5, 5] }),
+      y: types.number(0, { range: [-5, 5] }),
+      z: types.number(0, { range: [-10, 10] }),
+    }),
+    rotation: types.compound({
+      y: types.number(0, { range: [-Math.PI, Math.PI] }),
+    }),
+    scale: types.number(1, { range: [0, 3] }),
+    opacity: types.number(1, { range: [0, 1] }),
+  })
+
+  // Subscribe to value changes (runs on every frame when animating)
+  boxObj.onValuesChange((values) => {
+    mesh.position.set(values.position.x, values.position.y, values.position.z)
+    mesh.rotation.y = values.rotation.y
+    mesh.scale.setScalar(values.scale)
+    mesh.material.opacity = values.opacity
+  })
+
+  // Play the sequence
+  sheet.sequence.play({ iterationCount: Infinity, range: [0, 5] })
+})
+```
+
+---
+
+## 3. R3F Integration with @theatre/r3f
+
+```jsx
+// main.jsx — wrap Canvas
+import { getProject } from '@theatre/core'
+import studio from '@theatre/studio'
+import { SheetProvider, editable as e, PerspectiveCamera } from '@theatre/r3f'
+
+if (import.meta.env.DEV) studio.initialize()
+
+const project = getProject('R3F Scene', { assets: { baseUrl: '/assets' } })
+const sheet   = project.sheet('Main')
+
+export default function App() {
+  return (
+    <Canvas>
+      <SheetProvider sheet={sheet}>
+        <Scene />
+      </SheetProvider>
+    </Canvas>
+  )
+}
+```
+
+```jsx
+// Scene.jsx — editable meshes
+import { editable as e } from '@theatre/r3f'
+
+export function Scene() {
+  return (
+    <>
+      {/* editable() wraps standard R3F elements */}
+      <e.mesh theatreKey="Hero Box">
+        <boxGeometry args={[1, 1, 1]} />
+        <meshStandardMaterial color="hotpink" />
+      </e.mesh>
+
+      <e.spotLight
+        theatreKey="Main Light"
+        position={[5, 5, 5]}
+        intensity={1}
+      />
+
+      {/* Editable camera */}
+      <PerspectiveCamera theatreKey="Camera" makeDefault />
+    </>
+  )
+}
+```
+
+---
+
+## 4. Playing the Sequence Programmatically
+
+```jsx
+import { useEffect } from 'react'
+
+export function SequenceController({ sheet }) {
+  useEffect(() => {
+    // Play once from 0 to 4 seconds
+    sheet.sequence.play({ range: [0, 4] })
+  }, [sheet])
+
+  return null
+}
+
+// Scrub to position manually (for scroll-linking)
+function scrubTo(position) {
+  sheet.sequence.position = position  // 0..duration
+}
+```
+
+---
+
+## 5. Scroll-Linked 3D with Theatre.js
+
+```jsx
+import { useEffect, useRef } from 'react'
+import { getProject } from '@theatre/core'
+
+const project = getProject('Scroll Scene')
+const sheet   = project.sheet('Scroll')
+
+export function ScrollLinkedScene() {
+  useEffect(() => {
+    const duration = sheet.sequence.duration  // set in editor
+
+    function onScroll() {
+      const scrollY   = window.scrollY
+      const maxScroll = document.body.scrollHeight - window.innerHeight
+      const progress  = scrollY / maxScroll                   // 0..1
+      sheet.sequence.position = progress * duration           // map to timeline
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  return (
+    <Canvas style={{ position: 'fixed', inset: 0 }}>
+      <SheetProvider sheet={sheet}>
+        <Scene />
+      </SheetProvider>
+    </Canvas>
+  )
+}
+```
+
+---
+
+## 6. Saving / Loading Animation State
+
+```js
+// Export state from Studio UI → Extensions → Export
+// Then import the JSON:
+import state from './theatre-state.json'
+
+const project = getProject('My Project', { state })
+```
+
+```json
+// theatre-state.json shape (auto-generated by Studio)
+{
+  "sheetsById": {
+    "Main": {
+      "staticOverrides": { "byObject": {} },
+      "sequence": {
+        "subUnitsPerUnit": 30,
+        "length": 8,
+        "tracksByObject": {
+          "Hero Box": {
+            "trackData": {
+              "position/x": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "position/x",
+                "keyframes": [
+                  { "id": "kf1", "position": 0, "value": -4, "handles": [0.5,0,0.5,1], "type": "bezier" },
+                  { "id": "kf2", "position": 4, "value":  4, "handles": [0.5,0,0.5,1], "type": "bezier" }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+---
+
+## 7. GSAP + Theatre.js Integration
+
+```js
+// Pattern: use Theatre for keyframed 3D properties,
+// GSAP for CSS/DOM transitions. Sync via scroll position.
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
+
+// GSAP handles DOM elements
+gsap.to('.hero-text', {
+  opacity: 0,
+  y: -50,
+  scrollTrigger: { trigger: '.hero', scrub: true }
+})
+
+// Theatre handles the 3D canvas via scroll position
+ScrollTrigger.create({
+  trigger: 'body',
+  start: 'top top',
+  end: 'bottom bottom',
+  scrub: true,
+  onUpdate: (self) => {
+    sheet.sequence.position = self.progress * sheet.sequence.duration
+  }
+})
+```
+
+---
+
+## 8. Animation Types Reference
+
+```js
+import { types } from '@theatre/core'
+
+sheet.object('Sphere', {
+  // Number with range
+  radius:   types.number(1, { range: [0.1, 5], nudgeMultiplier: 0.1 }),
+
+  // String enum
+  blending: types.stringLiteral('normal', {
+    normal: 'Normal',
+    additive: 'Additive',
+    multiply: 'Multiply'
+  }),
+
+  // Compound (group of props)
+  color: types.compound({
+    r: types.number(1, { range: [0, 1] }),
+    g: types.number(0, { range: [0, 1] }),
+    b: types.number(0.5, { range: [0, 1] }),
+  }),
+
+  // Boolean
+  visible: types.boolean(true),
+
+  // RGBA color (renders color picker in Studio)
+  tint: types.rgba({ r: 1, g: 0.5, b: 0, a: 1 }),
+})
+```
+
+---
+
+## 9. Multi-Sheet Scene (scene transitions)
+
+```js
+const introSheet    = project.sheet('Intro')
+const mainSheet     = project.sheet('Main Loop')
+const outroSheet    = project.sheet('Outro')
+
+async function runScene() {
+  await introSheet.sequence.play({ range: [0, 3] })
+  mainSheet.sequence.play({ iterationCount: Infinity, range: [0, 4] })
+
+  // Later: stop loop and play outro
+  await new Promise(r => setTimeout(r, 8000))
+  mainSheet.sequence.pause()
+  outroSheet.sequence.play({ range: [0, 2] })
+}
+```
+
+---
+
+## 10. Performance Tips
+
+- Use `editable()` only in dev. In production, Theatre animates values via `onValuesChange` without the Studio overhead.
+- Call `studio.initialize()` only when `import.meta.env.DEV` is true.
+- Pre-export animation state to JSON so production builds skip the GUI entirely.
+- For 60fps scrubbing, use `requestAnimationFrame` to batch scroll updates:
+
+```js
+let pending = false
+function onScroll() {
+  if (!pending) {
+    pending = true
+    requestAnimationFrame(() => {
+      const p = window.scrollY / (document.body.scrollHeight - window.innerHeight)
+      sheet.sequence.position = p * sheet.sequence.duration
+      pending = false
+    })
+  }
+}
+```
