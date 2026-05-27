@@ -1,303 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Godly Website Analysis — Design KB</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0a0a0a;--card:#111111;--border:#1f1f1f;--accent:#f59e0b;--text:#e5e5e5;--muted:#737373;--green:#22c55e}
-body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh}
-a{color:inherit;text-decoration:none}
-.layout{display:flex;min-height:100vh}
-.sidebar{width:240px;background:var(--card);border-right:1px solid var(--border);padding:24px 0;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
-.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid var(--border);margin-bottom:16px}
-.sidebar-logo span{font-size:13px;font-weight:600;color:var(--accent);letter-spacing:.05em;text-transform:uppercase}
-.sidebar-logo p{font-size:11px;color:var(--muted);margin-top:4px}
-.nav-section{padding:8px 20px;font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:8px}
-.nav-link{display:flex;align-items:center;gap:8px;padding:8px 20px;font-size:13px;color:var(--muted);transition:.15s;border-left:2px solid transparent}
-.nav-link:hover,.nav-link.active{color:var(--text);background:rgba(245,158,11,.06);border-left-color:var(--accent)}
-.main{margin-left:240px;flex:1;padding:40px;max-width:1100px}
-h1{font-size:28px;font-weight:700;background:linear-gradient(135deg,#f59e0b,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
-.meta{display:flex;gap:12px;align-items:center;margin-bottom:32px;flex-wrap:wrap}
-.badge{font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(245,158,11,.1);color:var(--accent);border:1px solid rgba(245,158,11,.2);font-weight:500}
-.url-link{font-size:13px;color:var(--muted)}
-.url-link a{color:var(--accent)}
-.section{margin-bottom:40px}
-.section-title{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
-.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:12px}
-.card h3{font-size:14px;font-weight:600;margin-bottom:8px}
-.card p,.card li{font-size:13px;color:var(--muted);line-height:1.7}
-.card ul{padding-left:16px}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.palette{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-.swatch{display:flex;flex-direction:column;align-items:center;gap:6px}
-.swatch-color{width:52px;height:52px;border-radius:8px;border:1px solid rgba(255,255,255,.08)}
-.swatch-label{font-size:10px;color:var(--muted);font-family:monospace}
-pre{position:relative;border-radius:10px;overflow:hidden;margin-top:12px}
-.copy-btn{position:absolute;top:10px;right:10px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);color:var(--accent);font-size:11px;padding:4px 10px;border-radius:5px;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s;z-index:2}
-.copy-btn:hover{background:rgba(245,158,11,.2)}
-.copy-btn.copied{color:var(--green);border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.1)}
-.prompt-box{background:var(--card);border:1px solid rgba(245,158,11,.2);border-radius:12px;padding:20px;margin-bottom:12px;position:relative}
-.prompt-box h4{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:10px}
-.prompt-box p{font-size:13px;color:var(--muted);line-height:1.7;white-space:pre-wrap;word-break:break-word;font-family:'Inter',sans-serif}
-/* Godly-style gallery demo */
-.gallery-demo{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
-.gallery-item{background:#1a1a1a;border:1px solid var(--border);border-radius:8px;aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted);position:relative;overflow:hidden;transition:.3s cubic-bezier(.16,1,.3,1)}
-.gallery-item:hover{transform:scale(1.02);border-color:#333}
-.gallery-item .overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(245,158,11,.05),transparent);opacity:0;transition:.3s}
-.gallery-item:hover .overlay{opacity:1}
-</style>
-</head>
-<body>
-<div class="layout">
-<nav class="sidebar">
-  <div class="sidebar-logo"><span>Design KB</span><p>Web Design Knowledge Base</p></div>
-  <div class="nav-section">Hub</div>
-  <a class="nav-link" href="../index.html">⌂ Dashboard</a>
-  <div class="nav-section">Reference Sites</div>
-  <a class="nav-link" href="awwwards.html">◎ Awwwards</a>
-  <a class="nav-link active" href="godly.html">◎ Godly</a>
-  <a class="nav-link" href="lusion.html">◎ Lusion</a>
-  <a class="nav-link" href="linear.html">◎ Linear</a>
-  <a class="nav-link" href="vercel.html">◎ Vercel</a>
-  <a class="nav-link" href="stripe.html">◎ Stripe</a>
-  <a class="nav-link" href="cosmos.html">◎ Cosmos</a>
-  <a class="nav-link" href="mobbin.html">◎ Mobbin</a>
-</nav>
-<main class="main">
-  <h1>Godly — Curated Web Design Gallery</h1>
-  <div class="meta">
-    <span class="badge">Design Gallery</span>
-    <span class="badge">Curated Inspiration</span>
-    <span class="badge">Animation Reference</span>
-    <span class="url-link">→ <a href="https://godly.website" target="_blank">godly.website</a></span>
-  </div>
-
-  <div class="section">
-    <div class="section-title">What Godly Is</div>
-    <div class="card">
-      <p>Godly is a curated gallery of the most beautiful, innovative websites on the internet. Unlike Awwwards, Godly focuses purely on aesthetic excellence — no scoring system, just hand-picked sites that represent the cutting edge of web design. The site itself is a masterclass in minimal dark UI with impeccable grid layout and hover animations. It's categorized by: Agency, Portfolio, Startup, E-commerce, Editorial, and Interactive. Updated daily with 3–5 new submissions.</p>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title">Godly's Own Design System</div>
-    <div class="grid-2">
-      <div class="card">
-        <h3>Layout</h3>
-        <ul>
-          <li>Pure CSS grid — typically 3 columns on desktop, 2 on tablet, 1 on mobile</li>
-          <li>Consistent 8px gap between cards</li>
-          <li>Cards maintain 16:10 aspect ratio</li>
-          <li>Minimal chrome — no distracting UI</li>
-          <li>Top filter bar with category pills</li>
-          <li>Infinite scroll pagination (no pagination buttons)</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Hover Interactions</h3>
-        <ul>
-          <li>Card scale: 1 → 1.02 on hover</li>
-          <li>Live video preview plays on hover (no sound)</li>
-          <li>Overlay with site name fades in from bottom</li>
-          <li>Smooth cubic-bezier transitions: cubic-bezier(.16,1,.3,1)</li>
-          <li>Screenshot → video crossfade within 0.3s</li>
-          <li>Category tag visible on hover</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title">Color Palette</div>
-    <div class="card">
-      <p>Godly uses an extremely restrained near-black palette that lets the site thumbnails speak for themselves:</p>
-      <div class="palette">
-        <div class="swatch"><div class="swatch-color" style="background:#0c0c0c"></div><span class="swatch-label">#0c0c0c</span></div>
-        <div class="swatch"><div class="swatch-color" style="background:#161616"></div><span class="swatch-label">#161616</span></div>
-        <div class="swatch"><div class="swatch-color" style="background:#222222"></div><span class="swatch-label">#222222</span></div>
-        <div class="swatch"><div class="swatch-color" style="background:#ffffff"></div><span class="swatch-label">#ffffff</span></div>
-        <div class="swatch"><div class="swatch-color" style="background:#999999"></div><span class="swatch-label">#999999</span></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title">Typography</div>
-    <div class="card">
-      <ul>
-        <li>Font: custom or system-ui — extremely minimal, body 13–14px</li>
-        <li>Site name on cards: 13px, weight 500, white</li>
-        <li>Category tags: 11px, weight 400, muted gray</li>
-        <li>Header logo: minimal wordmark, no decorative elements</li>
-        <li>Filter pills: 12px, padding 4px 12px, border-radius 20px</li>
-        <li>Zero decorative typography — all utility</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title">Featured Design Styles Seen on Godly</div>
-    <div class="card">
-      <ul>
-        <li><strong>Brutalist minimalism:</strong> No gradients, raw black/white, heavy type, intentional misalignment</li>
-        <li><strong>Immersive WebGL:</strong> Sites where the browser window becomes a canvas — particles, fluid sims, 3D worlds</li>
-        <li><strong>Scroll storytelling:</strong> Narrative unfolds as you scroll — text reveals, scene changes, character movement</li>
-        <li><strong>Kinetic type-first:</strong> Zero images, pure typography as the visual element — letters scale, rotate, flow</li>
-        <li><strong>Gradient meshes:</strong> Soft, multi-stop CSS/SVG gradient backgrounds with organic shape movement</li>
-        <li><strong>Photography-forward:</strong> Full-bleed editorial photography with minimal UI overlay</li>
-        <li><strong>Retro-futurism:</strong> CRT effects, scan lines, green-on-black terminal aesthetics, pixel fonts</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title">Gallery Layout Demo</div>
-    <div class="gallery-demo">
-      <div class="gallery-item"><div class="overlay"></div>Agency Portfolio</div>
-      <div class="gallery-item"><div class="overlay"></div>Interactive Experiment</div>
-      <div class="gallery-item"><div class="overlay"></div>SaaS Product</div>
-      <div class="gallery-item"><div class="overlay"></div>Editorial Site</div>
-      <div class="gallery-item"><div class="overlay"></div>E-commerce Store</div>
-      <div class="gallery-item"><div class="overlay"></div>Studio Portfolio</div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title">Animation Patterns</div>
-    <div class="card">
-      <ul>
-        <li><strong>Staggered card entrance:</strong> Cards fade + translate-y on page load, stagger 0.04s between items</li>
-        <li><strong>Video hover preview:</strong> muted autoplay video crossfades over static screenshot on mouseenter</li>
-        <li><strong>Filter pill transition:</strong> Active pill has bg fill that slides in with layout animation</li>
-        <li><strong>Infinite scroll:</strong> New cards append with fade-in as IntersectionObserver triggers near bottom</li>
-        <li><strong>Smooth hover scale:</strong> transform: scale(1.02) with will-change: transform for GPU compositing</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title">What to Steal</div>
-    <div class="card">
-      <ul>
-        <li><strong>Gallery grid pattern:</strong> 3-col CSS grid with consistent aspect-ratio cards — works for any showcase page</li>
-        <li><strong>Video-on-hover preview:</strong> Replaces static thumbnails with video — dramatically increases engagement</li>
-        <li><strong>Near-black multi-tone bg:</strong> Using #0c, #16, #22 for layered depth without using true gradients</li>
-        <li><strong>Borderless card separation:</strong> Cards defined only by background color difference, no border lines</li>
-        <li><strong>Category filter with scroll-persist:</strong> Filter state preserved in URL hash so shareable links work</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title">Claude Prompts</div>
-    <div class="prompt-box">
-      <h4>Godly-Style Design Gallery</h4>
-      <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
-      <p>Build a Godly-inspired design gallery in Next.js. Features: (1) 3-column responsive CSS grid with 16:10 aspect-ratio cards, 8px gap, bg #0c0c0c background, (2) on hover, a muted autoplay video fades in over the thumbnail image with scale(1.02) transition using cubic-bezier(0.16,1,0.3,1) 0.3s, (3) overlay with site name (13px white 500) and category tag (11px #999) fades up from bottom on hover, (4) category filter pills at top — clicking one filters the grid with Framer Motion layout animations so cards smoothly reflow, (5) infinite scroll using IntersectionObserver, new cards appear with staggered fade+translateY entrance.</p>
-    </div>
-    <div class="prompt-box">
-      <h4>Video-Preview Card Component</h4>
-      <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
-      <p>Create a React card component that shows a static screenshot by default and plays a muted looping video on hover. Use CSS transition for the crossfade (opacity on the video element: 0 → 1 over 0.3s). The card maintains a fixed aspect-ratio via aspect-ratio: 16/10. Include a bottom overlay div that slides up from y:8 to y:0 on hover showing the site title and category. Make it accessible: add title attribute and role="button" with keyboard support.</p>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title">Code Snippet — Godly-Style Gallery Grid</div>
-    <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-tsx">// Godly-style gallery with video hover preview
-"use client";
-import { useState, useRef } from "react";
-import { motion } from "framer-motion";
-import Image from "next/image";
-
-interface GalleryItem {
-  id: string;
-  title: string;
-  category: string;
-  thumbnail: string;
-  video?: string;
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Godly - Design KB</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#e5e5e5;font-family:Inter,sans-serif;font-size:15px;line-height:1.6}.sidebar{position:fixed;left:0;top:0;width:220px;height:100vh;background:#111;border-right:1px solid #1f1f1f;padding:20px;overflow-y:auto}.sidebar h2{font-size:13px;color:#f59e0b;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}.sidebar a{display:block;color:#888;text-decoration:none;padding:6px 8px;border-radius:6px;font-size:13px;margin-bottom:2px}.sidebar a:hover{color:#fff;background:#1a1a1a}.main{margin-left:220px;padding:48px;max-width:900px}h1{font-size:32px;font-weight:700;color:#fff;margin-bottom:8px}h2{font-size:20px;font-weight:600;color:#fff;margin:40px 0 12px;padding-top:40px;border-top:1px solid #1f1f1f}h3{font-size:15px;font-weight:600;color:#d4d4d4;margin:24px 0 8px}p{color:#aaa;margin-bottom:12px}.tag{display:inline-block;background:#f59e0b15;border:1px solid #f59e0b40;color:#f59e0b;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.badge{display:inline-block;background:#1a1a1a;border:1px solid #2a2a2a;color:#888;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.code-block{position:relative;margin:16px 0}.copy-btn{position:absolute;top:8px;right:8px;background:#1f1f1f;border:1px solid #333;color:#888;padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer}pre{border-radius:8px;overflow:auto;font-size:13px}input[type=search]{width:100%;background:#111;border:1px solid #2a2a2a;color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;font-family:inherit;margin-bottom:32px;outline:none}.note{background:#f59e0b08;border:1px solid #f59e0b20;border-radius:8px;padding:16px;margin:16px 0}.note p{margin:0;color:#ccc}</style></head><body><div class="sidebar"><h2>Design KB</h2><a href="../index.html">Home</a><a href="../animations/gsap.html">GSAP</a><a href="../animations/framer-motion.html">Framer Motion</a><a href="../animations/lenis.html">Lenis</a><a href="../components/shadcn.html">shadcn/ui</a><a href="../components/magicui.html">MagicUI</a><a href="../components/aceternity.html">Aceternity</a><a href="../components/21st-dev.html">21st.dev</a><a href="../3d/r3f.html">React Three Fiber</a><a href="../3d/spline-scenes.html">Spline Scenes</a><a href="../reference-sites/awwwards.html">Awwwards</a><a href="../reference-sites/godly.html">Godly</a><a href="../reference-sites/lusion.html">Lusion</a></div><div class="main"><input type="search" placeholder="Search..." oninput="search(this.value)"><div id="content"><h1>Godly</h1><p>The most carefully curated gallery of web design on the internet. Godly collects the world&#39;s most beautiful, technically impressive, and aesthetically daring websites — the fastest way to identify contemporary design trends and extract visual direction for new projects. Updated daily with hand-picked selections.</p><h2>Overview</h2><p>Godly curates purely on aesthetic taste rather than scored criteria — it skews toward dark, atmospheric, motion-heavy, and typographically bold work. The collection is a direct window into what the top tier of independent studios, creative technologists, and brand agencies considers beautiful right now. Use Godly at the start of a project to establish visual direction, screenshot interactions, and build mood boards.</p><h2>Dominant Design Patterns</h2><h3>Dark Mode as Default Aesthetic</h3><p>The majority of Godly-featured sites use dark backgrounds (#0a0a0a to #111111). Dark mode allows cinematic imagery to pop, enables glowing/neon accent colors, and creates a premium focused atmosphere. Paired with near-white text and a single accent color (amber, electric blue, or warm white), this palette appears in ~70% of featured work. Treat dark mode as the hero experience, not an optional toggle.</p><h3>Large, Confident Typography</h3><p>Headlines occupy 30-60% of the viewport. Oversized type — often variable fonts at maximum weight — is used as a primary visual element, not just content delivery. Techniques: viewport-width font sizing (10vw+), clamp() for fluid scaling, text that bleeds off-screen intentionally, and lettered layouts where typography IS the layout structure.</p><h3>Ambient Video and Canvas Backgrounds</h3><p>Autoplay muted video loops, WebGL canvas backgrounds, and CSS gradient animations replace static hero images. The effect is a living, breathing page that communicates energy before a user reads a word. Common: looping drone footage, fluid shader simulations, particle fields, and Three.js ambient scenes with soft lighting.</p><h3>Reveal Animations on Scroll</h3><p>Every content section reveals with intentional animation. Most common patterns: text lines wipe upward behind a clip-path mask, images scale from 85% to 100% while fading, entire sections slide from horizontal offsets. The aesthetic quality is <em>weight</em> — reveals should feel deliberate and physical, not floaty or instant.</p><h3>Grain and Texture Overlays</h3><p>A noise/film grain overlay (3-8% opacity) is applied as a pseudo-element over the entire page. This adds organic warmth, reduces the clinical flatness of digital screens, and references analog photography and print. Combine with CSS blend modes (overlay, multiply) for additional depth and richness.</p><h3>Elaborate Hover States</h3><p>Hover interactions are experiences: images switch or reveal on link hover, text scrambles to reveal new content, grid cells flip or expand, and 3D perspective shifts occur on mouse position. No hover state is ignored. The best implementations feel surprising the first time and satisfying on repeat.</p><h2>Key Techniques</h2><h3>The Reveal Behind Mask Pattern</h3><p>Text or images hidden behind clip-path or overflow:hidden container. On scroll/load trigger, the content translates upward to reveal. This is the single most common animation pattern in premium web design — master it first before exploring more complex techniques.</p><h3>Image Distortion on Hover</h3><p>WebGL post-processing applies displacement/warp to images on hover. Libraries: curtains.js, OGL, or custom Three.js PlaneGeometry with a displacement shader. Even a subtle 2-4px warp elevates a portfolio grid from ordinary to memorable. The distortion should ease in and out with spring physics.</p><h3>Variable Font Animation</h3><p>Fonts with variable axes (weight, width, optical size) animated via CSS or JS. A heading that pulses weight on scroll, or a word that expands letter-spacing on hover, leverages variable fonts as a motion medium. Combine with GSAP for timeline-controlled variable font transitions.</p><h3>Lenis + GSAP Ecosystem</h3><p>Virtually all high-motion sites in the Godly gallery use Lenis for smooth scroll, feeding scroll position into GSAP ScrollTrigger for perfectly synchronized animations. This combination produces the "buttery" scroll feel that defines the Godly aesthetic. Initialize Lenis first, then pass its scroll event to ScrollTrigger.</p><h2>Site Categories Featured</h2><span class="tag">Creative Agency Portfolios</span> <span class="tag">Product Launches</span> <span class="tag">Fashion &amp; Editorial</span> <span class="tag">Music &amp; Sound Artists</span> <span class="tag">Architecture Studios</span> <span class="tag">Web3 / NFT Projects</span> <span class="tag">SaaS Product Sites</span> <span class="tag">Interactive Experiments</span> <span class="tag">Annual Reports</span> <span class="tag">Film &amp; Documentary</span> <span class="tag">Luxury Brand Campaigns</span> <span class="tag">Developer Portfolios</span> <h2>Visual Language Vocabulary</h2><span class="badge">Dark backgrounds</span> <span class="badge">Oversized headlines</span> <span class="badge">Film grain overlay</span> <span class="badge">Clip-path reveals</span> <span class="badge">Ambient video loops</span> <span class="badge">Magnetic interactions</span> <span class="badge">High contrast</span> <span class="badge">Monochrome + one accent</span> <span class="badge">Full-bleed imagery</span> <span class="badge">Kinetic typography</span> <span class="badge">Lenis smooth scroll</span> <span class="badge">Variable fonts</span> <h2>Code Examples</h2><h3>Film grain overlay &mdash; CSS pseudo-element</h3><div class="code-block"><button class="copy-btn">Copy</button><pre><code class="language-css">/* Animated grain overlay covering entire page */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 9999;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 120px 120px;
+  animation: grain 0.4s steps(1) infinite;
 }
 
-function GalleryCard({ item }: { item: GalleryItem }) {
-  const [hovered, setHovered] = useState(false);
-  const videoRef = useRef&lt;HTMLVideoElement&gt;(null);
+@keyframes grain {
+  0%,100% { transform: translate(0,0) }
+  20% { transform: translate(-2%,-3%) }
+  40% { transform: translate(3%,-1%) }
+  60% { transform: translate(-1%,2%) }
+  80% { transform: translate(2%,1%) }
+}</code></pre></div><h3>Clip-path text reveal on scroll</h3><div class="code-block"><button class="copy-btn">Copy</button><pre><code class="language-javascript">// HTML: <div class='line-wrap'><p class='line'>Text</p></div>
+// CSS: .line-wrap { overflow: hidden; }
 
-  const handleEnter = () => {
-    setHovered(true);
-    videoRef.current?.play();
-  };
-  const handleLeave = () => {
-    setHovered(false);
-    if (videoRef.current) { videoRef.current.pause(); videoRef.current.currentTime = 0; }
-  };
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
 
-  return (
-    &lt;motion.div
-      className="relative overflow-hidden rounded-lg bg-[#161616] cursor-pointer"
-      style={{ aspectRatio: "16/10" }}
-      onMouseEnter={handleEnter}
-      onMouseLeave={handleLeave}
-      whileHover={{ scale: 1.02 }}
-      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-    &gt;
-      &lt;Image src={item.thumbnail} alt={item.title} fill className="object-cover" /&gt;
-      {item.video &amp;&amp; (
-        &lt;video
-          ref={videoRef}
-          src={item.video}
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
-          style={{ opacity: hovered ? 1 : 0 }}
-        /&gt;
-      )}
-      {/* Bottom overlay */}
-      &lt;motion.div
-        className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent"
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : 8 }}
-        transition={{ duration: 0.2 }}
-      &gt;
-        &lt;p className="text-white text-[13px] font-medium"&gt;{item.title}&lt;/p&gt;
-        &lt;p className="text-[#999] text-[11px]"&gt;{item.category}&lt;/p&gt;
-      &lt;/motion.div&gt;
-    &lt;/motion.div&gt;
-  );
+gsap.utils.toArray('.line').forEach(line => {
+  gsap.from(line, {
+    yPercent: 110,
+    duration: 1,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: line.parentElement,
+      start: 'top 85%',
+    },
+  })
+})</code></pre></div><h3>Lenis + GSAP ScrollTrigger integration</h3><div class="code-block"><button class="copy-btn">Copy</button><pre><code class="language-javascript">import Lenis from '@studio-freight/lenis'
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
+
+const lenis = new Lenis({
+  duration: 1.2,
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  smoothWheel: true,
+})
+
+// Feed Lenis scroll position to ScrollTrigger
+lenis.on('scroll', ScrollTrigger.update)
+
+gsap.ticker.add((time) => lenis.raf(time * 1000))
+gsap.ticker.lagSmoothing(0)</code></pre></div><h3>Oversized fluid typography</h3><div class="code-block"><button class="copy-btn">Copy</button><pre><code class="language-css">.hero-title {
+  font-size: clamp(3rem, 11vw, 11rem);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: #fff;
 }
 
-export function GodlyGallery({ items }: { items: GalleryItem[] }) {
-  return (
-    &lt;div className="min-h-screen bg-[#0c0c0c] p-4"&gt;
-      &lt;motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2"
-      &gt;
-        {items.map((item, i) =&gt; (
-          &lt;motion.div
-            key={item.id}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.04, duration: 0.4 }}
-          &gt;
-            &lt;GalleryCard item={item} /&gt;
-          &lt;/motion.div&gt;
-        ))}
-      &lt;/motion.div&gt;
-    &lt;/div&gt;
-  );
-}</code></pre>
-  </div>
-</main>
-</div>
-<script>
-hljs.highlightAll();
-function copyPrompt(btn){const text=btn.nextElementSibling.textContent;navigator.clipboard.writeText(text).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000)})}
-function copyCode(btn){const code=btn.parentElement.querySelector('code').textContent;navigator.clipboard.writeText(code).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000)})}
-</script>
-</body>
-</html>
+/* Intentional bleed off-screen */
+.oversize-display {
+  font-size: 16vw;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-left: -0.05em; /* optical alignment */
+}</code></pre></div><h2>Implementation Notes</h2><div class="note"><p><strong>Mood boarding:</strong> Spend 20 minutes on Godly filtered by your project industry before writing code. Screenshot 10-15 sites that feel right. Extract the common palette, type treatment, and animation vocabulary — these become your design constraints.</p></div><div class="note"><p><strong>The grain overlay is free polish:</strong> A 3-5% opacity SVG noise overlay as a fixed pseudo-element is a one-line CSS addition that immediately elevates perceived quality. Every Godly-tier site uses some form of it.</p></div><div class="note"><p><strong>Dark + one accent color:</strong> The Godly aesthetic is almost always: near-black background, near-white body text, and one saturated accent. Resist the temptation to use more than one accent color.</p></div><div class="note"><p><strong>Weight before polish:</strong> Reveals should feel physical. Use ease: power3.out or custom cubic-bezier(0.16, 1, 0.3, 1) for entries. Duration 0.8-1.2s for major reveals, 0.3-0.5s for micro-interactions. Avoid linear or ease-in-out — they feel cheap.</p></div></div></div><script>hljs.highlightAll();document.querySelectorAll(".code-block").forEach(b=>{const btn=b.querySelector(".copy-btn");if(btn)btn.onclick=()=>{navigator.clipboard.writeText(b.querySelector("code").innerText);btn.textContent="Copied!";setTimeout(()=>btn.textContent="Copy",1500);}});function search(q){document.querySelectorAll("#content h2,#content h3,#content p").forEach(el=>{el.style.opacity=q&&!el.textContent.toLowerCase().includes(q.toLowerCase())?"0.2":"1";});}</script></body></html>

@@ -1,169 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>21st.dev — Design KB</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0a0a0a;--card:#111111;--border:#1f1f1f;--accent:#f59e0b;--text:#e5e5e5;--muted:#737373;--green:#22c55e}
-body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif}
-a{color:inherit;text-decoration:none}
-.layout{display:flex;min-height:100vh}
-.sidebar{width:240px;background:var(--card);border-right:1px solid var(--border);padding:24px 0;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
-.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid var(--border);margin-bottom:16px}
-.sidebar-logo a{font-size:13px;font-weight:600;color:var(--accent);letter-spacing:.05em;text-transform:uppercase}
-.sidebar-logo p{font-size:11px;color:var(--muted);margin-top:4px}
-.nav-section{padding:8px 20px;font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:8px}
-.nav-link{display:flex;align-items:center;gap:8px;padding:8px 20px;font-size:13px;color:var(--muted);transition:.15s;border-left:2px solid transparent}
-.nav-link:hover,.nav-link.active{color:var(--text);background:rgba(245,158,11,.06);border-left-color:var(--accent)}
-.main{margin-left:240px;flex:1;padding:40px;max-width:900px}
-.page-header{margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border)}
-.badge{display:inline-block;font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(245,158,11,.15);color:var(--accent);border:1px solid rgba(245,158,11,.3);margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em}
-.page-header h1{font-size:28px;font-weight:700}
-.page-header p{color:var(--muted);font-size:14px;margin-top:8px;line-height:1.7;max-width:620px}
-.ext-links{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
-.ext-links a{font-size:12px;color:var(--accent);border:1px solid rgba(245,158,11,.3);padding:5px 12px;border-radius:6px;transition:.15s}
-.ext-links a:hover{background:rgba(245,158,11,.1)}
-.section{margin-bottom:48px}
-.section h2{font-size:18px;font-weight:600;margin-bottom:4px;padding-top:8px}
-.sub{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6}
-.code-block{position:relative;margin-bottom:20px;border-radius:10px;overflow:hidden;border:1px solid var(--border)}
-.code-header{display:flex;justify-content:space-between;align-items:center;padding:8px 16px;background:#0d0d0d;border-bottom:1px solid var(--border)}
-.code-lang{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase}
-.copy-btn{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);color:var(--accent);font-size:11px;padding:4px 10px;border-radius:5px;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s}
-.copy-btn:hover{background:rgba(245,158,11,.2)}
-.copy-btn.copied{color:var(--green);border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.1)}
-.code-block pre{margin:0!important;border-radius:0!important}
-.code-block pre code{font-size:13px!important;line-height:1.6!important}
-.info-box{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:16px;margin-bottom:20px;font-size:13px;line-height:1.7}
-.info-box strong{color:var(--accent)}
-@media(max-width:768px){.sidebar{display:none}.main{margin-left:0}}
-</style>
-</head>
-<body>
-<div class="layout">
-<nav class="sidebar">
-  <div class="sidebar-logo"><a href="../index.html">Design KB</a><p>Web Design Knowledge Base</p></div>
-  <div class="nav-section">Hub</div>
-  <a class="nav-link" href="../index.html">&#8962; Dashboard</a>
-  <div class="nav-section">Animations</div>
-  <a class="nav-link" href="../animations/gsap.html">&#9889; GSAP</a>
-  <a class="nav-link" href="../animations/framer-motion.html">&#127902; Framer Motion</a>
-  <a class="nav-link" href="../animations/lenis.html">~ Lenis</a>
-  <div class="nav-section">Components</div>
-  <a class="nav-link" href="shadcn.html">&#9672; shadcn/ui</a>
-  <a class="nav-link active" href="21st-dev.html">&#10022; 21st.dev</a>
-  <a class="nav-link" href="magicui.html">&#10022; Magic UI</a>
-  <a class="nav-link" href="aceternity.html">&#9670; Aceternity UI</a>
-  <div class="nav-section">3D</div>
-  <a class="nav-link" href="../3d/r3f.html">&#9677; React Three Fiber</a>
-  <div class="nav-section">Reference Sites</div>
-  <a class="nav-link" href="../reference-sites/index.html">&#9678; Sites Index</a>
-  <a class="nav-link" href="../reference-sites/djcustomreno.html">&#8962; DJ Custom Reno</a>
-</nav>
-<main class="main">
-  <div class="page-header">
-    <div class="badge">AI Component Marketplace</div>
-    <h1>21st.dev</h1>
-    <p>AI-powered component marketplace for shipping UI 10x faster. Search components, install via shadcn registry protocol, and integrate directly with Cursor IDE via the Magic MCP server. Built for the AI-assisted development era.</p>
-    <div class="ext-links">
-      <a href="https://21st.dev" target="_blank">Official Site</a>
-      <a href="https://21st.dev/docs" target="_blank">Docs</a>
-      <a href="https://21st.dev/components" target="_blank">Browse Components</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>21st.dev - Design KB</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#e5e5e5;font-family:Inter,sans-serif;font-size:15px;line-height:1.6}.sidebar{position:fixed;left:0;top:0;width:220px;height:100vh;background:#111;border-right:1px solid #1f1f1f;padding:20px;overflow-y:auto}.sidebar h2{font-size:13px;color:#f59e0b;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}.sidebar a{display:block;color:#888;text-decoration:none;padding:6px 8px;border-radius:6px;font-size:13px;margin-bottom:2px}.sidebar a:hover{color:#fff;background:#1a1a1a}.main{margin-left:220px;padding:48px;max-width:900px}h1{font-size:32px;font-weight:700;color:#fff;margin-bottom:8px}h2{font-size:20px;font-weight:600;color:#fff;margin:40px 0 12px;padding-top:40px;border-top:1px solid #1f1f1f}h3{font-size:15px;font-weight:600;color:#d4d4d4;margin:24px 0 8px}p{color:#aaa;margin-bottom:12px}.tag{display:inline-block;background:#f59e0b15;border:1px solid #f59e0b40;color:#f59e0b;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.badge{display:inline-block;background:#1a1a1a;border:1px solid #2a2a2a;color:#888;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.code-block{position:relative;margin:16px 0}.copy-btn{position:absolute;top:8px;right:8px;background:#1f1f1f;border:1px solid #333;color:#888;padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer}pre{border-radius:8px;overflow:auto;font-size:13px}input[type=search]{width:100%;background:#111;border:1px solid #2a2a2a;color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;font-family:inherit;margin-bottom:32px;outline:none}.note{background:#f59e0b08;border:1px solid #f59e0b20;border-radius:8px;padding:16px;margin:16px 0}.note p{margin:0;color:#ccc}</style></head><body><div class="sidebar"><h2>Design KB</h2><a href="../index.html">Home</a><a href="../animations/gsap.html">GSAP</a><a href="../animations/framer-motion.html">Framer Motion</a><a href="../animations/lenis.html">Lenis</a><a href="../components/shadcn.html">shadcn/ui</a><a href="../components/magicui.html">MagicUI</a><a href="../components/aceternity.html">Aceternity</a><a href="../components/21st-dev.html">21st.dev</a><a href="../components/hover-dev.html">hover.dev</a><a href="../3d/r3f.html">React Three Fiber</a><a href="../3d/spline-scenes.html">Spline Scenes</a><a href="../reference-sites/awwwards.html">Awwwards</a><a href="../reference-sites/godly.html">Godly</a><a href="../reference-sites/lusion.html">Lusion</a></div><div class="main"><input type="search" placeholder="Search..." oninput="search(this.value)"><div id="content"><h1>21st.dev</h1><p>A community-driven marketplace for discovering and sharing production-ready UI components. 21st.dev functions as a curated library where developers browse pre-made, reusable interface elements — with a strong emphasis on marketing blocks, interactive UI, and animated components built for modern React/Next.js applications.</p><h2>Overview</h2><p>21st.dev organizes components into two primary sections: <strong>Marketing Blocks</strong> for full page sections (heroes, features, pricing, testimonials) and <strong>UI Components</strong> for interactive elements (buttons, inputs, cards, modals). The platform features community discovery mechanisms: Featured, Newest, Best of the Week, Themes, and Top Authors. It is the fastest way to find polished, copy-paste-ready components beyond the shadcn/ui defaults.</p><h2>Marketing Block Categories</h2><span class="tag">Heroes (73+)</span> <span class="tag">Features (36+)</span> <span class="tag">Text Sections (58+)</span> <span class="tag">CTAs (34+)</span> <span class="tag">Pricing (17+)</span> <span class="tag">Testimonials (15+)</span> <span class="tag">Navigation (11+)</span> <span class="tag">Footers</span> <span class="tag">Logo Clouds</span> <span class="tag">Stats</span> <span class="tag">Team Sections</span> <span class="tag">Blog Sections</span> <h2>UI Component Categories</h2><span class="tag">Buttons (130+)</span> <span class="tag">Inputs (102+)</span> <span class="tag">Selects (62+)</span> <span class="tag">Sliders (45+)</span> <span class="tag">Cards (79+)</span> <span class="tag">Tabs (38+)</span> <span class="tag">Modals / Dialogs (37+)</span> <span class="tag">Calendars (34+)</span> <span class="tag">AI Chat</span> <span class="tag">Shaders</span> <span class="tag">Testimonials</span> <span class="tag">Navigation</span>
+<h2>Complete Component Directory</h2><p>Every category with component counts — direct links to browse each collection:</p><div class="component-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin:16px 0"><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Buttons</strong><br><span style="color:#f59e0b">130+</span> variants<br><a href="https://21st.dev/components/buttons" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Inputs</strong><br><span style="color:#f59e0b">102+</span> variants<br><a href="https://21st.dev/components/inputs" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Cards</strong><br><span style="color:#f59e0b">79+</span> variants<br><a href="https://21st.dev/components/cards" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Selects</strong><br><span style="color:#f59e0b">62+</span> variants<br><a href="https://21st.dev/components/selects" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Sliders</strong><br><span style="color:#f59e0b">45+</span> variants<br><a href="https://21st.dev/components/sliders" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Tabs</strong><br><span style="color:#f59e0b">38+</span> variants<br><a href="https://21st.dev/components/tabs" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Dialogs / Modals</strong><br><span style="color:#f59e0b">37+</span> variants<br><a href="https://21st.dev/components/dialogs" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Tables</strong><br><span style="color:#f59e0b">30+</span> variants<br><a href="https://21st.dev/components/tables" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Accordions</strong><br><span style="color:#f59e0b">40+</span> variants<br><a href="https://21st.dev/components/accordions" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>AI Chats</strong><br><span style="color:#f59e0b">30+</span> variants<br><a href="https://21st.dev/components/ai-chats" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Calendars</strong><br><span style="color:#f59e0b">34+</span> variants<br><a href="https://21st.dev/components/calendars" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Badges</strong><br><span style="color:#f59e0b">25+</span> variants<br><a href="https://21st.dev/components/badges" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Alerts</strong><br><span style="color:#f59e0b">23+</span> variants<br><a href="https://21st.dev/components/alerts" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Dropdowns</strong><br><span style="color:#f59e0b">25+</span> variants<br><a href="https://21st.dev/components/dropdowns" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Popovers</strong><br><span style="color:#f59e0b">23+</span> variants<br><a href="https://21st.dev/components/popovers" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Forms</strong><br><span style="color:#f59e0b">23+</span> variants<br><a href="https://21st.dev/components/forms" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Spinner Loaders</strong><br><span style="color:#f59e0b">21+</span> variants<br><a href="https://21st.dev/components/spinner-loaders" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Paginations</strong><br><span style="color:#f59e0b">20+</span> variants<br><a href="https://21st.dev/components/paginations" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Numbers</strong><br><span style="color:#f59e0b">18+</span> variants<br><a href="https://21st.dev/components/numbers" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Avatars</strong><br><span style="color:#f59e0b">17+</span> variants<br><a href="https://21st.dev/components/avatars" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Carousels</strong><br><span style="color:#f59e0b">16+</span> variants<br><a href="https://21st.dev/components/carousels" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Links</strong><br><span style="color:#f59e0b">13+</span> variants<br><a href="https://21st.dev/components/links" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Toggles</strong><br><span style="color:#f59e0b">12+</span> variants<br><a href="https://21st.dev/components/toggles" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Date Pickers</strong><br><span style="color:#f59e0b">12+</span> variants<br><a href="https://21st.dev/components/date-pickers" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Sidebars</strong><br><span style="color:#f59e0b">10+</span> variants<br><a href="https://21st.dev/components/sidebars" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Tooltips</strong><br><span style="color:#f59e0b">28+</span> variants<br><a href="https://21st.dev/components/tooltips" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Radio Groups</strong><br><span style="color:#f59e0b">22+</span> variants<br><a href="https://21st.dev/components/radio-groups" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Checkboxes</strong><br><span style="color:#f59e0b">19+</span> variants<br><a href="https://21st.dev/components/checkboxes" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Text Areas</strong><br><span style="color:#f59e0b">22+</span> variants<br><a href="https://21st.dev/components/text-areas" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>File Uploads</strong><br><span style="color:#f59e0b">7+</span> variants<br><a href="https://21st.dev/components/file-uploads" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Menus</strong><br><span style="color:#f59e0b">18+</span> variants<br><a href="https://21st.dev/components/menus" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div></div>
+<h2>Marketing Blocks Directory</h2><div class="component-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin:16px 0"><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Heroes</strong><br><span style="color:#f59e0b">73+</span> variants<br><a href="https://21st.dev/components/heroes" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Texts</strong><br><span style="color:#f59e0b">58+</span> variants<br><a href="https://21st.dev/components/texts" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Features</strong><br><span style="color:#f59e0b">36+</span> variants<br><a href="https://21st.dev/components/features" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>CTAs</strong><br><span style="color:#f59e0b">34+</span> variants<br><a href="https://21st.dev/components/ctas" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Backgrounds</strong><br><span style="color:#f59e0b">33+</span> variants<br><a href="https://21st.dev/components/backgrounds" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Hooks</strong><br><span style="color:#f59e0b">31+</span> variants<br><a href="https://21st.dev/components/hooks" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Images</strong><br><span style="color:#f59e0b">26+</span> variants<br><a href="https://21st.dev/components/images" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Scroll Areas</strong><br><span style="color:#f59e0b">24+</span> variants<br><a href="https://21st.dev/components/scroll-areas" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Pricing Sections</strong><br><span style="color:#f59e0b">17+</span> variants<br><a href="https://21st.dev/components/pricing" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Testimonials</strong><br><span style="color:#f59e0b">15+</span> variants<br><a href="https://21st.dev/components/testimonials" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Shaders</strong><br><span style="color:#f59e0b">15+</span> variants<br><a href="https://21st.dev/components/shaders" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Footers</strong><br><span style="color:#f59e0b">14+</span> variants<br><a href="https://21st.dev/components/footers" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Borders</strong><br><span style="color:#f59e0b">12+</span> variants<br><a href="https://21st.dev/components/borders" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Navigation Menus</strong><br><span style="color:#f59e0b">11+</span> variants<br><a href="https://21st.dev/components/navigation-menus" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Announcements</strong><br><span style="color:#f59e0b">10+</span> variants<br><a href="https://21st.dev/components/announcements" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Videos</strong><br><span style="color:#f59e0b">9+</span> variants<br><a href="https://21st.dev/components/videos" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Comparisons</strong><br><span style="color:#f59e0b">6+</span> variants<br><a href="https://21st.dev/components/comparisons" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Docks</strong><br><span style="color:#f59e0b">6+</span> variants<br><a href="https://21st.dev/components/docks" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Clients</strong><br><span style="color:#f59e0b">16+</span> variants<br><a href="https://21st.dev/components/clients" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div><div class="component-card" style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px;font-size:13px;color:#ccc"><strong>Maps</strong><br><span style="color:#f59e0b">2+</span> variants<br><a href="https://21st.dev/components/maps" target="_blank" style="color:#f59e0b;font-size:11px">→ browse</a></div></div> <h2>Design Patterns</h2><h3>Hero Sections</h3><p>73+ hero variants covering: centered text with animated background, split-layout with product mockup, full-bleed video/WebGL, gradient mesh backgrounds, word-rotation headlines, and typewriter-style animated text. Each variant ships as a self-contained React component with Tailwind classes. Use the hero search to filter by animation style and layout type.</p><h3>Feature Grids</h3><p>36+ feature section patterns including bento-grid layouts, icon + text cards with hover animations, screenshot-with-annotation layouts, and animated comparison sliders. The bento grid variants are especially useful for SaaS products that need to communicate multiple capabilities simultaneously.</p><h3>Button Variety (130+ components)</h3><p>The button library is the most comprehensive in any free component collection: gradient borders, shimmer sweep animations, magnetic hover, ripple effects, icon-morphing states, loading spinners built in, neon glow variants, and 3D-press tactile buttons. Use this library to replace every default button in a project with something crafted.</p><h3>AI Chat Components</h3><p>Specialized components for AI product interfaces: animated message streams, typing indicators with physics, prompt input fields with expanding textarea, tool-call display cards, and citation/reference blocks. Particularly valuable for LLM-powered product UIs.</p><h2>Technology Stack</h2><span class="badge">React / Next.js</span> <span class="badge">Tailwind CSS</span> <span class="badge">Framer Motion</span> <span class="badge">shadcn/ui compatible</span> <span class="badge">TypeScript</span> <span class="badge">Radix UI primitives</span> <span class="badge">GSAP (select components)</span> <h2>How to Use Components</h2><h3>Discovery Workflow</h3><p>1. Browse by category or use the search. 2. Preview the component in the live demo. 3. Click the code tab to see the full source. 4. Copy-paste into your project. 5. Install any listed peer dependencies (Framer Motion, etc). Most components are self-contained with no CLI install required.</p><h3>Theming and Customization</h3><p>Components use Tailwind CSS variables that map to shadcn/ui CSS custom properties. If you have a configured shadcn/ui setup, most components drop in with correct colors automatically. Override the accent color with your brand color in globals.css and components will inherit it.</p><h2>Code Examples</h2><h3>Animated gradient button (common pattern)</h3><div class="code-block"><button class="copy-btn">Copy</button><pre><code class="language-jsx">// Shimmer sweep button pattern from 21st.dev
+export function ShimmerButton({ children, className, ...props }) {
+  return (
+    <button
+      className={cn(
+        'relative overflow-hidden rounded-lg px-6 py-3 font-medium',
+        'bg-gradient-to-r from-violet-600 to-indigo-600',
+        'text-white shadow-lg transition-all duration-300',
+        'before:absolute before:inset-0',
+        'before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent',
+        'before:translate-x-[-100%] hover:before:translate-x-[100%]',
+        'before:transition-transform before:duration-700',
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </button>
+  )
+}</code></pre></div><h3>Bento grid layout</h3><div class="code-block"><button class="copy-btn">Copy</button><pre><code class="language-jsx">// Bento grid — responsive asymmetric layout
+export function BentoGrid({ children }) {
+  return (
+    <div className='grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[200px]'>
+      {children}
     </div>
-  </div>
-
-  <div class="section">
-    <h2>What is 21st.dev?</h2>
-    <p class="sub">A marketplace where developers publish and discover UI components. Uses the shadcn registry spec so every component installs with one command.</p>
-    <div class="info-box">
-      <strong>Key differentiator:</strong> 21st.dev includes a <strong>Magic MCP server</strong> that integrates directly with Cursor, Windsurf, and other AI IDEs. When you ask your AI assistant to "add a hero section", it searches 21st.dev and installs the best match automatically — no manual browsing.<br/><br/>
-      <strong>Format:</strong> All components follow the shadcn registry format. Install with <code>npx shadcn@latest add [url]</code> or via the Magic MCP tool.
-    </div>
-  </div>
-
-  <div class="section">
-    <h2>Installing Components</h2>
-    <div class="code-block">
-      <div class="code-header"><span class="code-lang">bash — CLI install</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-      <pre><code class="language-bash"># Search and install from 21st.dev
-npx shadcn@latest add "https://21st.dev/r/shadcn/animated-hero"
-npx shadcn@latest add "https://21st.dev/r/shadcn/navigation-menu"
-npx shadcn@latest add "https://21st.dev/r/shadcn/pricing-section"
-npx shadcn@latest add "https://21st.dev/r/shadcn/testimonials"
-npx shadcn@latest add "https://21st.dev/r/shadcn/footer"
-npx shadcn@latest add "https://21st.dev/r/shadcn/feature-section"</code></pre>
-    </div>
-  </div>
-
-  <div class="section">
-    <h2>Magic MCP — Cursor Integration</h2>
-    <p class="sub">The Magic MCP server lets your AI assistant (Cursor, Windsurf) browse and install 21st.dev components on command.</p>
-    <div class="code-block">
-      <div class="code-header"><span class="code-lang">json — .cursor/mcp.json</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-      <pre><code class="language-json">{
-  "mcpServers": {
-    "21st-magic": {
-      "command": "npx",
-      "args": ["-y", "@21st-dev/magic@latest", "API_KEY=your-key-here"]
-    }
-  }
-}</code></pre>
-    </div>
-    <div class="code-block">
-      <div class="code-header"><span class="code-lang">text — Cursor chat prompts</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-      <pre><code class="language-plaintext">// In Cursor chat with Magic MCP active:
-"Add a hero section with gradient text and CTA buttons"
-"Install a pricing table with 3 tiers"
-"Add a features bento grid section"
-"Install a dark theme testimonials carousel"
-"Add an animated navigation menu with dropdowns"</code></pre>
-    </div>
-  </div>
-
-  <div class="section">
-    <h2>Component Categories</h2>
-    <div class="info-box">
-      <strong>Sections:</strong> Hero, Features, Pricing, Testimonials, FAQ, CTA, Footer, About<br/>
-      <strong>Navigation:</strong> Navbar, Sidebar, Breadcrumb, Mobile menu<br/>
-      <strong>Marketing:</strong> Social proof, Logo ticker, Stats, Team grid<br/>
-      <strong>Forms:</strong> Contact, Newsletter, Auth pages, Multi-step<br/>
-      <strong>Overlays:</strong> Modal, Sheet, Command palette, Notifications<br/>
-      <strong>Data:</strong> Tables, Charts, Dashboards, Analytics widgets<br/>
-      <strong>Animations:</strong> Animated counters, Reveal effects, Loading states<br/><br/>
-      Each component is standalone (includes all required sub-components), responsive, and dark-mode compatible.
-    </div>
-  </div>
-
-  <div class="section">
-    <h2>Publishing Components</h2>
-    <div class="code-block">
-      <div class="code-header"><span class="code-lang">bash — publish your own component</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-      <pre><code class="language-bash"># Login to 21st.dev
-npx @21st-dev/cli login
-
-# Publish a component from your project
-npx @21st-dev/cli publish components/ui/my-component.tsx
-
-# The component gets a registry URL:
-# https://21st.dev/r/your-username/my-component</code></pre>
-    </div>
-  </div>
-</main>
-</div>
-<script>
-hljs.highlightAll();
-function copyCode(btn){
-  const code = btn.closest('.code-block').querySelector('code').textContent;
-  navigator.clipboard.writeText(code).then(()=>{
-    btn.textContent='Copied!';btn.classList.add('copied');
-    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000);
-  });
+  )
 }
-</script>
-</body>
-</html>
+
+export function BentoCard({ title, description, className, icon: Icon }) {
+  return (
+    <div className={cn(
+      'group relative overflow-hidden rounded-2xl border border-white/10',
+      'bg-gradient-to-br from-zinc-900 to-zinc-800 p-6',
+      'hover:border-white/20 transition-all duration-300',
+      className
+    )}>
+      <Icon className='h-8 w-8 text-zinc-400 group-hover:text-white transition-colors' />
+      <h3 className='mt-4 text-lg font-semibold text-white'>{title}</h3>
+      <p className='mt-2 text-sm text-zinc-400'>{description}</p>
+    </div>
+  )
+}</code></pre></div><h3>Animated testimonial card</h3><div class="code-block"><button class="copy-btn">Copy</button><pre><code class="language-jsx">import { motion } from 'framer-motion'
+
+export function TestimonialCard({ quote, author, role, avatar }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className='rounded-2xl border border-zinc-800 bg-zinc-900 p-6'
+    >
+      <p className='text-zinc-300 leading-relaxed'>{quote}</p>
+      <div className='mt-4 flex items-center gap-3'>
+        <img src={avatar} alt={author} className='h-10 w-10 rounded-full object-cover' />
+        <div>
+          <p className='font-medium text-white'>{author}</p>
+          <p className='text-sm text-zinc-500'>{role}</p>
+        </div>
+      </div>
+    </motion.div>
+  )
+}</code></pre></div><h2>Implementation Notes</h2><div class="note"><p><strong>Start here for marketing pages:</strong> When building a landing page, browse 21st.dev hero and feature sections before designing from scratch. Find 3-4 components that match the aesthetic direction and adapt them rather than building from zero.</p></div><div class="note"><p><strong>Button library first:</strong> Replace all default button styles early in a project by picking 2-3 button variants from 21st.dev that match the brand. Consistent, polished buttons are the first thing users subconsciously judge about UI quality.</p></div><div class="note"><p><strong>Check peer dependencies:</strong> Some 21st.dev components require Framer Motion, GSAP, or specific Radix primitives. Check the dependency list before copying — most are already in modern Next.js projects.</p></div><div class="note"><p><strong>Community themes:</strong> Browse the Themes section for full-page design systems contributed by the community. These are complete design language implementations you can fork as a starting point.</p></div></div></div><script>hljs.highlightAll();document.querySelectorAll(".code-block").forEach(b=>{const btn=b.querySelector(".copy-btn");if(btn)btn.onclick=()=>{navigator.clipboard.writeText(b.querySelector("code").innerText);btn.textContent="Copied!";setTimeout(()=>btn.textContent="Copy",1500);}});function search(q){document.querySelectorAll("#content h2,#content h3,#content p").forEach(el=>{el.style.opacity=q&&!el.textContent.toLowerCase().includes(q.toLowerCase())?"0.2":"1";});}</script></body></html>

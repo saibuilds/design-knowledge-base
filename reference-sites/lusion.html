@@ -1,321 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Lusion Analysis — Design KB</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0a0a0a;--card:#111111;--border:#1f1f1f;--accent:#f59e0b;--text:#e5e5e5;--muted:#737373;--green:#22c55e}
-body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh}
-a{color:inherit;text-decoration:none}
-.layout{display:flex;min-height:100vh}
-.sidebar{width:240px;background:var(--card);border-right:1px solid var(--border);padding:24px 0;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
-.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid var(--border);margin-bottom:16px}
-.sidebar-logo span{font-size:13px;font-weight:600;color:var(--accent);letter-spacing:.05em;text-transform:uppercase}
-.sidebar-logo p{font-size:11px;color:var(--muted);margin-top:4px}
-.nav-section{padding:8px 20px;font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:8px}
-.nav-link{display:flex;align-items:center;gap:8px;padding:8px 20px;font-size:13px;color:var(--muted);transition:.15s;border-left:2px solid transparent}
-.nav-link:hover,.nav-link.active{color:var(--text);background:rgba(245,158,11,.06);border-left-color:var(--accent)}
-.main{margin-left:240px;flex:1;padding:40px;max-width:1100px}
-h1{font-size:28px;font-weight:700;background:linear-gradient(135deg,#f59e0b,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
-.meta{display:flex;gap:12px;align-items:center;margin-bottom:32px;flex-wrap:wrap}
-.badge{font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(245,158,11,.1);color:var(--accent);border:1px solid rgba(245,158,11,.2);font-weight:500}
-.url-link{font-size:13px;color:var(--muted)}
-.url-link a{color:var(--accent)}
-.section{margin-bottom:40px}
-.section-title{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
-.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:12px}
-.card h3{font-size:14px;font-weight:600;margin-bottom:8px}
-.card p,.card li{font-size:13px;color:var(--muted);line-height:1.7}
-.card ul{padding-left:16px}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-.palette{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-.swatch{display:flex;flex-direction:column;align-items:center;gap:6px}
-.swatch-color{width:52px;height:52px;border-radius:8px;border:1px solid rgba(255,255,255,.08)}
-.swatch-label{font-size:10px;color:var(--muted);font-family:monospace}
-pre{position:relative;border-radius:10px;overflow:hidden;margin-top:12px}
-.copy-btn{position:absolute;top:10px;right:10px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);color:var(--accent);font-size:11px;padding:4px 10px;border-radius:5px;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s;z-index:2}
-.copy-btn:hover{background:rgba(245,158,11,.2)}
-.copy-btn.copied{color:var(--green);border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.1)}
-.prompt-box{background:var(--card);border:1px solid rgba(245,158,11,.2);border-radius:12px;padding:20px;margin-bottom:12px;position:relative}
-.prompt-box h4{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:10px}
-.prompt-box p{font-size:13px;color:var(--muted);line-height:1.7;white-space:pre-wrap;word-break:break-word;font-family:'Inter',sans-serif}
-.highlight-box{background:linear-gradient(135deg,rgba(245,158,11,.05),rgba(249,115,22,.03));border:1px solid rgba(245,158,11,.15);border-radius:12px;padding:20px;margin-bottom:12px}
-.highlight-box h3{font-size:14px;font-weight:600;color:var(--accent);margin-bottom:8px}
-.highlight-box p,.highlight-box li{font-size:13px;color:var(--muted);line-height:1.7}
-.highlight-box ul{padding-left:16px}
-</style>
-</head>
-<body>
-<div class="layout">
-<nav class="sidebar">
-  <div class="sidebar-logo"><span>Design KB</span><p>Web Design Knowledge Base</p></div>
-  <div class="nav-section">Hub</div>
-  <a class="nav-link" href="../index.html">⌂ Dashboard</a>
-  <div class="nav-section">Reference Sites</div>
-  <a class="nav-link" href="awwwards.html">◎ Awwwards</a>
-  <a class="nav-link" href="godly.html">◎ Godly</a>
-  <a class="nav-link active" href="lusion.html">◎ Lusion</a>
-  <a class="nav-link" href="linear.html">◎ Linear</a>
-  <a class="nav-link" href="vercel.html">◎ Vercel</a>
-  <a class="nav-link" href="stripe.html">◎ Stripe</a>
-  <a class="nav-link" href="cosmos.html">◎ Cosmos</a>
-  <a class="nav-link" href="mobbin.html">◎ Mobbin</a>
-</nav>
-<main class="main">
-  <h1>Lusion — Interactive Creative Studio</h1>
-  <div class="meta">
-    <span class="badge">Creative Agency</span>
-    <span class="badge">WebGL</span>
-    <span class="badge">Three.js</span>
-    <span class="badge">SOTD Multiple</span>
-    <span class="url-link">→ <a href="https://lusion.co" target="_blank">lusion.co</a></span>
-  </div>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Lusion - Design KB</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#e5e5e5;font-family:Inter,sans-serif;font-size:15px;line-height:1.6}.sidebar{position:fixed;left:0;top:0;width:220px;height:100vh;background:#111;border-right:1px solid #1f1f1f;padding:20px;overflow-y:auto}.sidebar h2{font-size:13px;color:#f59e0b;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}.sidebar a{display:block;color:#888;text-decoration:none;padding:6px 8px;border-radius:6px;font-size:13px;margin-bottom:2px}.sidebar a:hover{color:#fff;background:#1a1a1a}.main{margin-left:220px;padding:48px;max-width:900px}h1{font-size:32px;font-weight:700;color:#fff;margin-bottom:8px}h2{font-size:20px;font-weight:600;color:#fff;margin:40px 0 12px;padding-top:40px;border-top:1px solid #1f1f1f}h3{font-size:15px;font-weight:600;color:#d4d4d4;margin:24px 0 8px}p{color:#aaa;margin-bottom:12px}.tag{display:inline-block;background:#f59e0b15;border:1px solid #f59e0b40;color:#f59e0b;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.badge{display:inline-block;background:#1a1a1a;border:1px solid #2a2a2a;color:#888;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.code-block{position:relative;margin:16px 0}.copy-btn{position:absolute;top:8px;right:8px;background:#1f1f1f;border:1px solid #333;color:#888;padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer}pre{border-radius:8px;overflow:auto;font-size:13px}input[type=search]{width:100%;background:#111;border:1px solid #2a2a2a;color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;font-family:inherit;margin-bottom:32px;outline:none}.note{background:#f59e0b08;border:1px solid #f59e0b20;border-radius:8px;padding:16px;margin:16px 0}.note p{margin:0;color:#ccc}</style></head><body><div class="sidebar"><h2>Design KB</h2><a href="../index.html">Home</a><a href="../animations/gsap.html">GSAP</a><a href="../animations/framer-motion.html">Framer Motion</a><a href="../animations/lenis.html">Lenis</a><a href="../components/shadcn.html">shadcn/ui</a><a href="../components/magicui.html">MagicUI</a><a href="../components/aceternity.html">Aceternity</a><a href="../components/21st-dev.html">21st.dev</a><a href="../3d/r3f.html">React Three Fiber</a><a href="../3d/spline-scenes.html">Spline Scenes</a><a href="../reference-sites/awwwards.html">Awwwards</a><a href="../reference-sites/godly.html">Godly</a><a href="../reference-sites/lusion.html">Lusion</a></div><div class="main"><input type="search" placeholder="Search..." oninput="search(this.value)"><div id="content"><h1>Lusion</h1><p>An award-winning creative studio from Bristol, UK specializing in immersive 3D digital experiences. Lusion integrates design, motion, 3D, and development to create brand worlds that feel visually distinctive and technically seamless. Their own site is a masterclass in WebGL-first design.</p><h2>Overview</h2><p>Lusion&#39;s methodology: "create visually distinctive digital experiences that reflect your brand, engage your audience, and feel original, polished, and built for impact." They emphasize originality over trend-following. Their work spans interactive web experiences, 3D campaigns, AR/VR, Web3, and game design. Notable clients include Porsche, Meta, and several AI startups. Studying Lusion&#39;s work and their technique reveals the ceiling of what is achievable in web-based 3D.</p><h2>Core Disciplines</h2><span class="tag">Web Development</span> <span class="tag">3D Modeling &amp; Illustration</span> <span class="tag">Motion Graphics</span> <span class="tag">Interactive Development</span> <span class="tag">Concept Design</span> <span class="tag">AR / VR</span> <span class="tag">Web3 / NFT</span> <span class="tag">Game Design</span> <span class="tag">Brand Identity</span> <h2>Design Philosophy</h2><h3>3D as Primary Medium</h3><p>Where most agencies use 3D as decoration, Lusion builds entire experiences around it. Their hero sections are real-time WebGL renders — not video or static images. This requires deep Three.js/WebGL expertise but produces experiences that are inherently interactive, responsive to user input, and impossible to replicate with pre-rendered video.</p><h3>Originality Over Trends</h3><p>Lusion deliberately avoids following web design trends. Each project starts from the brand&#39;s core identity and builds a unique visual language. The result is work that ages better and feels more authentic than trend-chasing. For your own work: identify the one thing that is conceptually unique about the brand and build the visual system around that.</p><h3>Seamless Technical Polish</h3><p>Lusion&#39;s work is characterized by zero rough edges — every transition, every hover state, every loading sequence is considered. This level of polish requires systematic QA: test every interactive state, every browser, every device size. Polish is not a feature to add at the end; it is a practice maintained throughout development.</p><h3>Motion as Brand Expression</h3><p>Animation and motion are not decorative — they express brand personality. A fast, snappy interaction communicates energy and confidence. A slow, weighted transition communicates luxury and precision. Before animating anything, ask: what does this motion say about the brand?</p><h2>Technical Approaches</h2><h3>Three.js with Custom GLSL Shaders</h3><p>Lusion uses Three.js as the foundation but writes custom fragment and vertex shaders for visual effects. Displacement maps, noise-driven morphing, custom lighting models, and post-processing passes (bloom, chromatic aberration, depth of field) are all implemented in GLSL rather than relying on Three.js defaults. This produces visuals impossible with standard renderer configurations.</p><h3>React Three Fiber Integration</h3><p>For component-based projects, Lusion-style work maps naturally to React Three Fiber (R3F) with Drei helpers. R3F allows Three.js scenes to be composed declaratively, integrated with React state, and animated via useFrame hooks. Pair with @react-spring/three for physics-based 3D animations.</p><h3>Post-Processing Pipeline</h3><p>The Lusion aesthetic relies heavily on post-processing: bloom for emissive materials, chromatic aberration for glassy/lens distortion, SSAO for depth and contact shadows, and custom tone-mapping for cinematic color grading. In R3F, use the EffectComposer from @react-three/postprocessing.</p><h3>Physics-Based Interactions</h3><p>Interactive elements respond with physical simulation — objects react to cursor force, particles are attracted/repelled by mouse position, and geometry deforms based on pointer proximity. Libraries: cannon-es or rapier for rigid body physics, custom spring math for soft-body-like cursor responses.</p><h2>Notable Project Techniques</h2><h3>Porsche Dream Machine Campaign</h3><p>Full-viewport 3D car model with environment mapping, real-time reflections, and scroll-driven camera animation. The camera path is pre-authored in Blender and baked to a curve that GSAP scrubs through on scroll. Lighting responds to scroll position via shader uniforms.</p><h3>AI Product Experiences</h3><p>For AI brands (Oryzo AI, Devin AI), Lusion uses particle systems and fluid simulations to represent intelligence and data flow. Perlin noise drives particle movement; mouse proximity creates turbulence. The 3D scene metaphorically communicates the product&#39;s value proposition.</p><h2>Technology Stack</h2><span class="badge">Three.js</span> <span class="badge">React Three Fiber</span> <span class="badge">GLSL Shaders</span> <span class="badge">GSAP</span> <span class="badge">@react-three/postprocessing</span> <span class="badge">Blender (3D authoring)</span> <span class="badge">Lenis</span> <span class="badge">cannon-es / rapier</span> <span class="badge">Drei</span> <span class="badge">Zustand (state)</span> <span class="badge">Next.js</span> <h2>Code Examples</h2><h3>Three.js displacement shader on hover</h3><div class="code-block"><button class="copy-btn">Copy</button><pre><code class="language-glsl">// Fragment shader — image displacement on hover
+uniform sampler2D uTexture;
+uniform sampler2D uDisplacement;
+uniform float uProgress; // 0 to 1 on hover
+varying vec2 vUv;
 
-  <div class="section">
-    <div class="section-title">Site Overview</div>
-    <div class="highlight-box">
-      <h3>Why Lusion Is the Benchmark for Creative Web</h3>
-      <p>Lusion (London-based creative studio) is considered one of the most technically impressive agency sites on the internet. Multiple Awwwards SOTD and Site of the Year nominations. The site is a full-WebGL experience — nearly every surface, image, and transition is rendered through Three.js. It demonstrates that the gap between a "website" and an "interactive 3D experience" can be zero.</p>
-    </div>
-  </div>
+void main() {
+  vec4 disp = texture2D(uDisplacement, vUv);
+  vec2 distortedUv = vUv + disp.rg * uProgress * 0.08;
+  vec4 color = texture2D(uTexture, distortedUv);
+  gl_FragColor = color;
+}</code></pre></div><h3>Scroll-driven camera path (Three.js + GSAP)</h3><div class="code-block"><button class="copy-btn">Copy</button><pre><code class="language-javascript">import * as THREE from 'three'
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
 
-  <div class="section">
-    <div class="section-title">Scroll Behavior</div>
-    <div class="card">
-      <ul>
-        <li><strong>Lenis smooth scroll:</strong> buttery inertia-based scrolling, dampening ~0.1, preventing jarring native scroll</li>
-        <li><strong>Scroll-driven 3D scene:</strong> camera moves through a 3D world as the user scrolls — no separate "sections" per se, one continuous journey</li>
-        <li><strong>Parallax depth layers:</strong> foreground, midground, background elements move at different rates creating real depth</li>
-        <li><strong>ScrollTrigger pinning:</strong> certain scenes are pinned while the 3D content within them animates on scroll progress</li>
-        <li><strong>Velocity-sensitive:</strong> faster scrolling increases motion blur / distortion effects in the WebGL pass</li>
-        <li><strong>No scroll jank:</strong> everything runs on the GPU, no layout thrashing — maintains 60fps even on complex scenes</li>
-      </ul>
-    </div>
-  </div>
+// Camera path as a CatmullRom curve
+const points = [
+  new THREE.Vector3(0, 2, 10),
+  new THREE.Vector3(2, 1, 6),
+  new THREE.Vector3(-1, 0.5, 2),
+  new THREE.Vector3(0, 0, 0),
+]
+const curve = new THREE.CatmullRomCurve3(points)
 
-  <div class="section">
-    <div class="section-title">WebGL Use</div>
-    <div class="grid-2">
-      <div class="card">
-        <h3>Rendering Stack</h3>
-        <ul>
-          <li>Three.js as the WebGL layer</li>
-          <li>Custom GLSL vertex + fragment shaders</li>
-          <li>Post-processing: bloom, chromatic aberration, film grain</li>
-          <li>EffectComposer for multi-pass rendering</li>
-          <li>Environment maps (HDRI) for realistic reflections</li>
-          <li>Draco-compressed GLTF models for fast loading</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Shader Techniques</h3>
-        <ul>
-          <li>Image distortion shader — mouse position warps textures</li>
-          <li>Displacement maps on image planes for depth illusion</li>
-          <li>Fresnel rim lighting on 3D objects</li>
-          <li>Custom noise functions for organic movement</li>
-          <li>Shader-based particle systems (100k+ particles)</li>
-          <li>Transition shaders: wave distortion between pages</li>
-        </ul>
-      </div>
-    </div>
-  </div>
+const progress = { t: 0 }
+gsap.to(progress, {
+  t: 1,
+  ease: 'none',
+  scrollTrigger: { trigger: '.scene', scrub: 1.5, start: 'top top', end: 'bottom bottom' },
+  onUpdate: () => {
+    const pos = curve.getPointAt(progress.t)
+    camera.position.copy(pos)
+    camera.lookAt(0, 0, 0)
+  },
+})</code></pre></div><h3>Mouse-reactive particle system (R3F)</h3><div class="code-block"><button class="copy-btn">Copy</button><pre><code class="language-jsx">import { useRef, useMemo } from 'react'
+import { useFrame, useThree } from '@react-three/fiber'
+import * as THREE from 'three'
 
-  <div class="section">
-    <div class="section-title">Typography</div>
-    <div class="card">
-      <ul>
-        <li><strong>Font:</strong> Custom variable font or PP Neue Montreal — geometric grotesque, clean, modern</li>
-        <li><strong>Hero headline:</strong> 100–140px, weight 500–700, letter-spacing -0.02em, off-white (#f0ede8)</li>
-        <li><strong>Body text:</strong> 16–18px, line-height 1.6, lighter weight (300–400)</li>
-        <li><strong>Navigation:</strong> tiny — 12–13px, all caps, letter-spacing 0.12em, top-right alignment</li>
-        <li><strong>Text as texture:</strong> typography placed over 3D scenes, often with blend modes (multiply, screen)</li>
-        <li><strong>Animated type:</strong> text lines reveal with clip-path or transform on scroll, staggered per line</li>
-      </ul>
-    </div>
-  </div>
+export function Particles({ count = 3000 }) {
+  const mesh = useRef()
+  const { mouse } = useThree()
 
-  <div class="section">
-    <div class="section-title">Color Palette</div>
-    <div class="card">
-      <p>Lusion uses a warm, desaturated off-black/cream palette that feels premium and tactile — never harsh pure black or pure white:</p>
-      <div class="palette">
-        <div class="swatch"><div class="swatch-color" style="background:#0d0c0b"></div><span class="swatch-label">#0d0c0b</span></div>
-        <div class="swatch"><div class="swatch-color" style="background:#1a1816"></div><span class="swatch-label">#1a1816</span></div>
-        <div class="swatch"><div class="swatch-color" style="background:#f0ede8"></div><span class="swatch-label">#f0ede8</span></div>
-        <div class="swatch"><div class="swatch-color" style="background:#c8c3bc"></div><span class="swatch-label">#c8c3bc</span></div>
-        <div class="swatch"><div class="swatch-color" style="background:#8a8480"></div><span class="swatch-label">#8a8480</span></div>
-        <div class="swatch"><div class="swatch-color" style="background:#e8a87c"></div><span class="swatch-label">#e8a87c</span></div>
-        <div class="swatch"><div class="swatch-color" style="background:#4a3728"></div><span class="swatch-label">#4a3728</span></div>
-      </div>
-    </div>
-  </div>
+  const positions = useMemo(() => {
+    const pos = new Float32Array(count * 3)
+    for (let i = 0; i < count; i++) {
+      pos.set([
+        (Math.random() - 0.5) * 10,
+        (Math.random() - 0.5) * 10,
+        (Math.random() - 0.5) * 5,
+      ], i * 3)
+    }
+    return pos
+  }, [count])
 
-  <div class="section">
-    <div class="section-title">Animation / Interaction Breakdown</div>
-    <div class="grid-3">
-      <div class="card">
-        <h3>Mouse Tracking</h3>
-        <ul>
-          <li>Every object subtly follows mouse</li>
-          <li>Lag applied via lerp() each frame</li>
-          <li>Parallax on depth layers</li>
-          <li>Cursor is a custom dot</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Hover States</h3>
-        <ul>
-          <li>Project images tilt in 3D (CSS perspective)</li>
-          <li>WebGL distortion on image hover</li>
-          <li>Text elements shift slightly</li>
-          <li>Color temperature shift</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Page Load</h3>
-        <ul>
-          <li>Assets preloaded before display</li>
-          <li>Percentage counter (0–100%)</li>
-          <li>Reveal animation after load</li>
-          <li>Staggered content entrance</li>
-        </ul>
-      </div>
-    </div>
-  </div>
+  useFrame(({ clock }) => {
+    const t = clock.elapsedTime
+    const pos = mesh.current.geometry.attributes.position
+    for (let i = 0; i < count; i++) {
+      const ix = i * 3
+      pos.array[ix + 1] += Math.sin(t + pos.array[ix] * 0.5) * 0.002
+    }
+    pos.needsUpdate = true
+  })
 
-  <div class="section">
-    <div class="section-title">What to Steal from Lusion</div>
-    <div class="card">
-      <ul>
-        <li><strong>Lerp-smoothed mouse tracking:</strong> Apply to any element — cursor, cards, hero images. Just 2 lines: <code>currentX += (targetX - currentX) * 0.08</code> each rAF tick</li>
-        <li><strong>Warm near-black palette:</strong> Use #0d0c0b instead of #000000, #f0ede8 instead of #ffffff — instantly feels more premium</li>
-        <li><strong>Film grain post-process:</strong> Add SVG noise filter or canvas grain pass over the entire page — adds texture without complexity</li>
-        <li><strong>Velocity-based distortion:</strong> On fast scroll, briefly increase a shader uniform or CSS filter blur, then ease back — suggests physical momentum</li>
-        <li><strong>Loading preloader with counter:</strong> Show asset loading progress as a % counter, then do a reveal animation — sets expectation and feels intentional</li>
-        <li><strong>Off-white text instead of white:</strong> #f0ede8 or #e8e4de on dark bg has warmth that #ffffff lacks</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title">Claude Prompts</div>
-    <div class="prompt-box">
-      <h4>Lusion-Inspired R3F Hero with Mouse Parallax</h4>
-      <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
-      <p>Build a React Three Fiber hero section inspired by Lusion. The scene should: (1) render a floating 3D object (icosahedron or torus knot) with a warm metallic material (roughness 0.2, metalness 0.8) lit by a warm point light (#e8a87c) and a cool ambient, (2) apply mouse-tracking parallax — lerp the camera position toward mouse coordinates each frame (lerpFactor: 0.05), (3) add post-processing with @react-three/postprocessing: bloom (intensity 0.8, luminanceThreshold 0.6), chromatic aberration (offset 0.002), film grain (intensity 0.3), (4) overlay HTML text on top of the canvas using R3F Html component or absolute positioning — font off-white #f0ede8, 100px display size, letter-spacing -0.02em. Background color: #0d0c0b.</p>
-    </div>
-    <div class="prompt-box">
-      <h4>GLSL Image Distortion on Hover</h4>
-      <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
-      <p>Create a Three.js image plane with a custom GLSL fragment shader that distorts the texture on hover. The shader should: use a simplex noise function to offset UV coordinates, controlled by a 'distortion' uniform (0.0 at rest, 1.0 on hover). Animate the uniform with GSAP (0 → 1 on mouseenter, 1 → 0 on mouseleave, duration 0.8s ease). The distortion magnitude should be 0.03 at peak — subtle but noticeable. Apply the effect as a Three.js PlaneGeometry with ShaderMaterial. The plane should replace a standard img tag in the portfolio grid.</p>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title">Code Snippet — Lerp Mouse Tracking</div>
-    <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-tsx">// Lusion-style lerp mouse tracking — smooth parallax on any element
-import { useEffect, useRef } from "react";
-
-export function useLerpMouse(factor = 0.08) {
-  const current = useRef({ x: 0, y: 0 });
-  const target = useRef({ x: 0, y: 0 });
-  const raf = useRef&lt;number&gt;(0);
-
-  useEffect(() =&gt; {
-    const onMove = (e: MouseEvent) =&gt; {
-      // Normalize to -1 to 1
-      target.current.x = (e.clientX / window.innerWidth) * 2 - 1;
-      target.current.y = (e.clientY / window.innerHeight) * 2 - 1;
-    };
-    window.addEventListener("mousemove", onMove);
-
-    const tick = () =&gt; {
-      current.current.x += (target.current.x - current.current.x) * factor;
-      current.current.y += (target.current.y - current.current.y) * factor;
-      raf.current = requestAnimationFrame(tick);
-    };
-    raf.current = requestAnimationFrame(tick);
-
-    return () =&gt; {
-      window.removeEventListener("mousemove", onMove);
-      cancelAnimationFrame(raf.current);
-    };
-  }, [factor]);
-
-  return current; // current.x, current.y — use in useFrame or rAF
-}
-
-// Usage in R3F scene:
-// const mouse = useLerpMouse(0.05);
-// useFrame(() =&gt; {
-//   ref.current.rotation.y = mouse.current.x * 0.3;
-//   ref.current.rotation.x = -mouse.current.y * 0.2;
-// });</code></pre>
-  </div>
-
-  <div class="section">
-    <div class="section-title">Code Snippet — Film Grain Overlay</div>
-    <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-tsx">// CSS film grain overlay — Lusion signature texture
-// Add this component once at the root, wrapping the entire page
-
-export function FilmGrain() {
   return (
-    &lt;&gt;
-      {/* SVG noise filter defined once */}
-      &lt;svg className="hidden"&gt;
-        &lt;defs&gt;
-          &lt;filter id="grain"&gt;
-            &lt;feTurbulence
-              type="fractalNoise"
-              baseFrequency="0.65"
-              numOctaves="3"
-              stitchTiles="stitch"
-            /&gt;
-            &lt;feColorMatrix type="saturate" values="0" /&gt;
-          &lt;/filter&gt;
-        &lt;/defs&gt;
-      &lt;/svg&gt;
-      {/* Animated grain overlay */}
-      &lt;div
-        className="pointer-events-none fixed inset-0 z-[9999]"
-        style={{
-          opacity: 0.035,
-          filter: "url(#grain)",
-          background: "#fff",
-          animation: "grain 0.5s steps(1) infinite",
-        }}
-      /&gt;
-      &lt;style&gt;{`
-        @keyframes grain {
-          0%, 100% { transform: translate(0, 0); }
-          10% { transform: translate(-2%, -3%); }
-          20% { transform: translate(1%, 2%); }
-          30% { transform: translate(-3%, 1%); }
-          40% { transform: translate(2%, -2%); }
-          50% { transform: translate(-1%, 3%); }
-          60% { transform: translate(3%, -1%); }
-          70% { transform: translate(-2%, 2%); }
-          80% { transform: translate(1%, -3%); }
-          90% { transform: translate(-3%, 2%); }
-        }
-      `}&lt;/style&gt;
-    &lt;/&gt;
-  );
-}</code></pre>
-  </div>
-</main>
-</div>
-<script>
-hljs.highlightAll();
-function copyPrompt(btn){const text=btn.nextElementSibling.textContent;navigator.clipboard.writeText(text).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000)})}
-function copyCode(btn){const code=btn.parentElement.querySelector('code').textContent;navigator.clipboard.writeText(code).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000)})}
-</script>
-</body>
-</html>
+    <points ref={mesh}>
+      <bufferGeometry>
+        <bufferAttribute attach='attributes-position' args={[positions, 3]} />
+      </bufferGeometry>
+      <pointsMaterial size={0.02} color='#ffffff' />
+    </points>
+  )
+}</code></pre></div><h3>Post-processing bloom + chromatic aberration (R3F)</h3><div class="code-block"><button class="copy-btn">Copy</button><pre><code class="language-jsx">import { EffectComposer, Bloom, ChromaticAberration } from '@react-three/postprocessing'
+import { BlendFunction } from 'postprocessing'
+import * as THREE from 'three'
+
+export function PostFX() {
+  return (
+    <EffectComposer>
+      <Bloom
+        luminanceThreshold={0.2}
+        luminanceSmoothing={0.9}
+        intensity={0.8}
+        blendFunction={BlendFunction.ADD}
+      />
+      <ChromaticAberration
+        offset={new THREE.Vector2(0.0005, 0.0012)}
+        blendFunction={BlendFunction.NORMAL}
+      />
+    </EffectComposer>
+  )
+}</code></pre></div><h2>Implementation Notes</h2><div class="note"><p><strong>Performance budget:</strong> Lusion-level 3D requires a strict performance budget. Target 60fps on mid-range hardware. Use instanced meshes for repeated geometry, LOD for complex models, and frustum culling. Profile with Spector.js and Chrome GPU timeline.</p></div><div class="note"><p><strong>Blender to web pipeline:</strong> Model in Blender, optimize geometry (Decimate modifier, remove hidden faces), export as .glb with Draco compression (gltfpack or Blender glTF exporter). Load with useGLTF from Drei. Target under 2MB for hero models.</p></div><div class="note"><p><strong>The key insight from Lusion:</strong> 3D is most powerful when it responds to user input. A static 3D hero is impressive; a 3D hero that reacts to mouse movement, scroll, or click is memorable. Build interactivity into the concept from the start, not as an afterthought.</p></div><div class="note"><p><strong>Lighting is everything:</strong> The difference between amateur and professional 3D is almost always lighting. Use environment maps (HDRI) for realistic reflections, three-point lighting for hero objects, and emissive materials sparingly for glow effects. Spend 40% of 3D development time on lighting.</p></div></div></div><script>hljs.highlightAll();document.querySelectorAll(".code-block").forEach(b=>{const btn=b.querySelector(".copy-btn");if(btn)btn.onclick=()=>{navigator.clipboard.writeText(b.querySelector("code").innerText);btn.textContent="Copied!";setTimeout(()=>btn.textContent="Copy",1500);}});function search(q){document.querySelectorAll("#content h2,#content h3,#content p").forEach(el=>{el.style.opacity=q&&!el.textContent.toLowerCase().includes(q.toLowerCase())?"0.2":"1";});}</script></body></html>

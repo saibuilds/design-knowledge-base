@@ -1,0 +1,1279 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Instagram Reels Patterns — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#e5e5e5;font-family:'Inter',sans-serif;line-height:1.6}
+.sidebar{position:fixed;left:0;top:0;width:220px;height:100vh;background:#111;border-right:1px solid #1f1f1f;padding:20px;overflow-y:auto}
+.sidebar h2{font-size:13px;color:#f59e0b;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}
+.sidebar a{display:block;color:#888;text-decoration:none;padding:6px 8px;border-radius:6px;font-size:13px;margin-bottom:2px}
+.sidebar a:hover{color:#e5e5e5;background:#1f1f1f}
+.main{margin-left:220px;padding:48px;max-width:900px}
+h1{font-size:32px;font-weight:700;color:#fff;margin-bottom:8px}
+h2{font-size:20px;font-weight:600;color:#fff;margin:40px 0 12px;padding-top:40px;border-top:1px solid #1f1f1f}
+h3{font-size:15px;font-weight:600;color:#d4d4d4;margin:24px 0 8px}
+p{color:#aaa;margin-bottom:12px}
+.tag{display:inline-block;background:#f59e0b15;border:1px solid #f59e0b40;color:#f59e0b;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}
+.tag.blue{background:#3b82f615;border-color:#3b82f640;color:#60a5fa}
+.tag.green{background:#10b98115;border-color:#10b98140;color:#34d399}
+.tag.purple{background:#8b5cf615;border-color:#8b5cf640;color:#a78bfa}
+.code-block{position:relative;margin:16px 0}
+.copy-btn{position:absolute;top:8px;right:8px;background:#1f1f1f;border:1px solid #333;color:#888;padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer;z-index:10}
+.copy-btn:hover{color:#e5e5e5;border-color:#555}
+pre{border-radius:8px;overflow:auto;font-size:13px}
+input[type=search]{width:100%;background:#111;border:1px solid #2a2a2a;color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;margin-bottom:32px;outline:none}
+input[type=search]:focus{border-color:#f59e0b40}
+.meta{color:#666;font-size:13px;margin-bottom:32px}
+.pattern-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.pattern-card{background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:16px}
+.pattern-card h4{font-size:13px;font-weight:600;color:#e5e5e5;margin-bottom:6px}
+.pattern-card p{font-size:12px;color:#666;margin:0}
+.visual-demo{background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:20px;margin:16px 0}
+.reel-mock{width:120px;height:213px;background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:8px;display:inline-flex;align-items:center;justify-content:center;margin:8px;position:relative;overflow:hidden;vertical-align:top}
+.reel-mock::after{content:"▶";color:rgba(255,255,255,0.7);font-size:24px}
+.reel-mock .label{position:absolute;bottom:8px;left:8px;right:8px;font-size:10px;color:rgba(255,255,255,0.6);font-family:'Inter',sans-serif}
+.reel-grid-demo{display:flex;flex-wrap:wrap;gap:4px}
+.callout{background:#f59e0b08;border:1px solid #f59e0b20;border-radius:8px;padding:16px;margin:16px 0}
+.callout p{margin:0;font-size:13px;color:#d4d4d4}
+.callout strong{color:#f59e0b}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px}
+th{text-align:left;padding:8px 12px;background:#111;color:#888;border-bottom:1px solid #1f1f1f;font-weight:500}
+td{padding:8px 12px;border-bottom:1px solid #111;color:#aaa}
+td code{background:#1f1f1f;padding:2px 6px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:11px}
+</style></head>
+<body>
+
+<div class="sidebar">
+  <h2>Design KB</h2>
+  <a href="../index.html">🏠 Home</a>
+  <a href="djcustomreno.html">DJ Custom Reno</a>
+  <a href="awwwards.html">Awwwards</a>
+  <a href="godly.html">Godly</a>
+  <a href="../components/21st-dev.html">21st.dev</a>
+  <a href="../animations/framer-motion.html">Framer Motion</a>
+  <a href="../animations/gsap.html">GSAP</a>
+  <hr style="border-color:#1f1f1f;margin:12px 0">
+  <a href="#vertical-video-cards">Video Cards</a>
+  <a href="#reel-grid-layouts">Reel Grids</a>
+  <a href="#hover-autoplay">Hover Autoplay</a>
+  <a href="#scroll-snap">Scroll Snap Feed</a>
+  <a href="#react-components">React Components</a>
+  <a href="#oembed">oEmbed / Embed API</a>
+  <a href="#portfolio-gallery">Portfolio Gallery</a>
+  <a href="#mobile-css">Mobile-First CSS</a>
+</div>
+
+<div class="main">
+  <input type="search" placeholder="Search patterns..." oninput="search(this.value)">
+  <div id="content">
+
+    <h1>Instagram Reels UI/UX Patterns</h1>
+    <p class="meta">
+      Sources: Awwwards inspiration (reels, vertical video) · hover.dev · godly.website · Instagram oEmbed API docs<br>
+      Last updated: May 2026
+    </p>
+    <span class="tag">Vertical Video</span>
+    <span class="tag blue">React</span>
+    <span class="tag blue">Framer Motion</span>
+    <span class="tag green">CSS Grid</span>
+    <span class="tag green">Scroll Snap</span>
+    <span class="tag purple">oEmbed API</span>
+
+    <!-- ===================== SECTION 1 ===================== -->
+    <h2 id="vertical-video-cards">1. Vertical Video Card Components</h2>
+    <p>Vertical video cards follow a strict <strong>9:16 aspect ratio</strong> (same as phone screens). Two dominant archetypes exist: <strong>full-bleed</strong> (video fills entire card face) and <strong>thumbnail + play overlay</strong> (static poster image with a centered play button).</p>
+
+    <div class="pattern-grid">
+      <div class="pattern-card">
+        <h4>Full-Bleed Card</h4>
+        <p>Video element fills 100% of card. Overlay gradient at bottom for text legibility. Auto-plays muted on hover/intersection. Used by TikTok, Instagram Reels in-feed.</p>
+      </div>
+      <div class="pattern-card">
+        <h4>Thumbnail + Play Overlay</h4>
+        <p>Static poster image. Semi-transparent dark circle with ▶ icon centered. On click: poster fades, video loads and plays. Preserves bandwidth until intent confirmed.</p>
+      </div>
+      <div class="pattern-card">
+        <h4>Progress Bar Overlay</h4>
+        <p>Thin 2px bar at top of card. Fills left-to-right as video plays. Common in Stories + Reels sequential UI. CSS transition on width synced to currentTime.</p>
+      </div>
+      <div class="pattern-card">
+        <h4>Metadata Footer</h4>
+        <p>Username, caption snippet, like/comment counts overlaid on a bottom gradient. Font size 12–13px. Avatar circle 28–32px diameter. Always white text on dark gradient.</p>
+      </div>
+    </div>
+
+    <h3>Key CSS: 9:16 Aspect Ratio Card Shell</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-css">/* Vertical video card — 9:16 ratio */
+.reel-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9 / 16;          /* locks 9:16 without JS */
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0a0a0a;
+  cursor: pointer;
+}
+
+.reel-card video,
+.reel-card img.poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;             /* fill frame, crop edges */
+  object-position: center;
+}
+
+/* Bottom gradient for text legibility */
+.reel-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.75) 0%,
+    rgba(0,0,0,0.2) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.reel-card__meta {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  z-index: 2;
+  color: #fff;
+  font-size: 12px;
+}
+
+.reel-card__play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  transition: opacity 0.2s ease;
+}
+
+.reel-card__play-overlay svg {
+  width: 48px;
+  height: 48px;
+  fill: rgba(255,255,255,0.85);
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+}
+
+/* Hide play overlay once video is playing */
+.reel-card.playing .reel-card__play-overlay {
+  opacity: 0;
+  pointer-events: none;
+}</code></pre>
+    </div>
+
+    <!-- ===================== SECTION 2 ===================== -->
+    <h2 id="reel-grid-layouts">2. Reel Grid / Masonry Layouts</h2>
+    <p>Grids for vertical video content differ from standard image grids — the tall aspect ratio means fewer columns work better. Common configurations observed on Awwwards:</p>
+
+    <table>
+      <tr><th>Layout</th><th>Columns (desktop)</th><th>Columns (mobile)</th><th>Gap</th><th>Use case</th></tr>
+      <tr><td>Instagram Profile Grid</td><td>3</td><td>3</td><td>2–3px</td><td>Profile / portfolio overview</td></tr>
+      <tr><td>Explore / Discover</td><td>3 (mixed sizes)</td><td>2</td><td>4px</td><td>Discovery feed, mixed content</td></tr>
+      <tr><td>Featured Reels</td><td>4</td><td>2</td><td>12px</td><td>Website gallery section</td></tr>
+      <tr><td>Hero Spotlight</td><td>1 large + 2 small</td><td>1</td><td>8px</td><td>Above-fold feature section</td></tr>
+      <tr><td>Masonry (Pinterest)</td><td>4–5 columns</td><td>2</td><td>8px</td><td>Creative portfolio, agency sites</td></tr>
+    </table>
+
+    <div class="visual-demo">
+      <p style="font-size:12px;color:#555;margin-bottom:12px">Visual: 4-column reel grid (desktop)</p>
+      <div class="reel-grid-demo">
+        <div class="reel-mock" style="background:linear-gradient(135deg,#1a1a2e,#e94560)"><span class="label">Reel 1</span></div>
+        <div class="reel-mock" style="background:linear-gradient(135deg,#0f3460,#533483)"><span class="label">Reel 2</span></div>
+        <div class="reel-mock" style="background:linear-gradient(135deg,#2d6a4f,#1b4332)"><span class="label">Reel 3</span></div>
+        <div class="reel-mock" style="background:linear-gradient(135deg,#7f5af0,#2cb67d)"><span class="label">Reel 4</span></div>
+      </div>
+    </div>
+
+    <h3>CSS: Responsive Reel Grid</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-css">/* Responsive reel grid — auto-fills columns */
+.reels-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 8px;
+}
+
+/* Force 2 columns on mobile, 4 on tablet, 6 on wide */
+@media (max-width: 480px) {
+  .reels-grid { grid-template-columns: repeat(2, 1fr); gap: 3px; }
+}
+@media (min-width: 481px) and (max-width: 768px) {
+  .reels-grid { grid-template-columns: repeat(3, 1fr); gap: 4px; }
+}
+@media (min-width: 769px) {
+  .reels-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+}
+
+/* Each item locks to 9:16 */
+.reels-grid__item {
+  aspect-ratio: 9 / 16;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  background: #111;
+}
+
+/* CSS Masonry (Chrome 131+ / Firefox 66+) */
+.reels-grid--masonry {
+  grid-template-rows: masonry;
+  align-tracks: start;
+}</code></pre>
+    </div>
+
+    <!-- ===================== SECTION 3 ===================== -->
+    <h2 id="hover-autoplay">3. Auto-Play on Hover Patterns</h2>
+    <p>Hover-triggered video play is the dominant interaction pattern for reel grids on the web. Key principles from Awwwards research:</p>
+
+    <div class="pattern-grid">
+      <div class="pattern-card">
+        <h4>Muted Autoplay Only</h4>
+        <p>Browsers block autoplay with sound. Always mute video before calling .play(). Provide a sound toggle button separately if audio matters.</p>
+      </div>
+      <div class="pattern-card">
+        <h4>Poster → Video Crossfade</h4>
+        <p>Keep poster image visible until video's canplay event fires. Crossfade with opacity transition to avoid flash of blank frame.</p>
+      </div>
+      <div class="pattern-card">
+        <h4>Lazy Load Src</h4>
+        <p>Don't set video src until hover intent. Use data-src attribute, populate src on mouseenter. Prevents loading 20+ videos on page load.</p>
+      </div>
+      <div class="pattern-card">
+        <h4>Intersection Observer</h4>
+        <p>For mobile (no hover), use IntersectionObserver with threshold:0.6. Play when 60% visible, pause when leaving viewport. Standard TikTok/Reels behavior.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p><strong>Awwwards pattern:</strong> Top-rated portfolio reels use a <strong>300ms hover delay</strong> before triggering play — prevents accidental triggers when scanning the grid quickly. Implement with setTimeout + clearTimeout on mouseleave.</p>
+    </div>
+
+    <h3>JavaScript: Hover Autoplay with Lazy Src</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">// Hover autoplay — lazy loads src, crossfades poster → video
+class ReelCard {
+  constructor(el) {
+    this.el = el;
+    this.video = el.querySelector('video');
+    this.poster = el.querySelector('.poster');
+    this.hoverTimer = null;
+
+    el.addEventListener('mouseenter', () => this.onEnter());
+    el.addEventListener('mouseleave', () => this.onLeave());
+  }
+
+  onEnter() {
+    // 300ms intent delay — avoids accidental triggers
+    this.hoverTimer = setTimeout(() => this.loadAndPlay(), 300);
+  }
+
+  onLeave() {
+    clearTimeout(this.hoverTimer);
+    this.video.pause();
+    this.video.currentTime = 0;
+    this.poster.style.opacity = '1';
+    this.el.classList.remove('playing');
+  }
+
+  loadAndPlay() {
+    // Lazy-load src from data attribute
+    if (!this.video.src && this.video.dataset.src) {
+      this.video.src = this.video.dataset.src;
+    }
+    this.video.muted = true;
+    this.video.loop = true;
+
+    this.video.addEventListener('canplay', () => {
+      this.poster.style.opacity = '0'; // crossfade
+      this.el.classList.add('playing');
+    }, { once: true });
+
+    this.video.play().catch(() => {}); // swallow blocked-autoplay errors
+  }
+}
+
+// Initialize all cards
+document.querySelectorAll('.reel-card').forEach(el => new ReelCard(el));
+
+// IntersectionObserver for mobile (no hover)
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    const video = entry.target.querySelector('video');
+    if (!video) return;
+    if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
+      video.muted = true;
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
+  });
+}, { threshold: [0, 0.6] });
+
+document.querySelectorAll('.reel-card').forEach(el => observer.observe(el));</code></pre>
+    </div>
+
+    <!-- ===================== SECTION 4 ===================== -->
+    <h2 id="scroll-snap">4. TikTok/Reels-Style Scroll Snap UX</h2>
+    <p>Full-screen scroll snap creates the immersive one-reel-at-a-time experience. CSS <code>scroll-snap-type</code> is the native approach — no JavaScript library needed for the core behavior.</p>
+
+    <h3>CSS: Full-Screen Scroll Snap Feed</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-css">/* Scroll snap container — full-viewport vertical feed */
+.reels-feed {
+  height: 100dvh;               /* dvh = dynamic viewport height (mobile safe) */
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory; /* mandatory = always snaps to next item */
+  overscroll-behavior: none;    /* prevents pull-to-refresh interfering */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Each reel occupies exactly one viewport */
+.reels-feed__item {
+  height: 100dvh;
+  scroll-snap-align: start;     /* snaps to top edge of each item */
+  scroll-snap-stop: always;     /* prevents skipping multiple items */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Video fills viewport, letter/pillarboxed if needed */
+.reels-feed__item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Right-side action buttons (like TikTok sidebar) */
+.reel-actions {
+  position: absolute;
+  right: 12px;
+  bottom: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  z-index: 10;
+}
+
+.reel-actions button {
+  background: none;
+  border: none;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
+/* Bottom caption area */
+.reel-caption {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 64px;
+  z-index: 10;
+  color: #fff;
+}
+
+.reel-caption__username {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.reel-caption__text {
+  font-size: 13px;
+  opacity: 0.9;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}</code></pre>
+    </div>
+
+    <!-- ===================== SECTION 5 ===================== -->
+    <h2 id="react-components">5. React + Framer Motion Components</h2>
+    <p>Production-ready copy-paste components. All use existing patterns from Awwwards-featured sites: lazy src loading, muted autoplay, Framer Motion for entrance animations.</p>
+
+    <h3>5a. Single Reel Card with Hover Play</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-tsx">// ReelCard.tsx — hover-play with Framer Motion entrance
+import { useRef, useState, useCallback } from 'react';
+import { motion } from 'framer-motion';
+
+interface ReelCardProps {
+  src: string;          // video URL (lazy-loaded on hover)
+  poster: string;       // thumbnail image URL
+  username?: string;
+  caption?: string;
+  likes?: string;
+}
+
+export function ReelCard({ src, poster, username, caption, likes }: ReelCardProps) {
+  const videoRef = useRef&lt;HTMLVideoElement&gt;(null);
+  const timerRef = useRef&lt;ReturnType&lt;typeof setTimeout&gt;&gt;();
+  const [loaded, setLoaded] = useState(false);
+  const [playing, setPlaying] = useState(false);
+
+  const handleEnter = useCallback(() => {
+    timerRef.current = setTimeout(async () => {
+      const video = videoRef.current;
+      if (!video) return;
+      if (!video.src) video.src = src;         // lazy load
+      video.muted = true;
+      video.loop = true;
+      try {
+        await video.play();
+        setPlaying(true);
+      } catch { /* autoplay blocked */ }
+    }, 300);
+  }, [src]);
+
+  const handleLeave = useCallback(() => {
+    clearTimeout(timerRef.current);
+    const video = videoRef.current;
+    if (!video) return;
+    video.pause();
+    video.currentTime = 0;
+    setPlaying(false);
+  }, []);
+
+  return (
+    &lt;motion.div
+      className="reel-card"
+      style={{
+        position: 'relative',
+        aspectRatio: '9/16',
+        borderRadius: 12,
+        overflow: 'hidden',
+        background: '#111',
+        cursor: 'pointer',
+      }}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.4, ease: 'easeOut' }}
+      whileHover={{ scale: 1.02 }}
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
+    &gt;
+      {/* Poster image */}
+      &lt;motion.img
+        src={poster}
+        alt={caption}
+        style={{
+          position: 'absolute', inset: 0,
+          width: '100%', height: '100%',
+          objectFit: 'cover',
+        }}
+        animate={{ opacity: playing ? 0 : 1 }}
+        transition={{ duration: 0.3 }}
+      /&gt;
+
+      {/* Lazy-loaded video */}
+      &lt;video
+        ref={videoRef}
+        playsInline
+        muted
+        loop
+        onCanPlay={() =&gt; setLoaded(true)}
+        style={{
+          position: 'absolute', inset: 0,
+          width: '100%', height: '100%',
+          objectFit: 'cover',
+        }}
+      /&gt;
+
+      {/* Play icon — fades out when playing */}
+      &lt;motion.div
+        style={{
+          position: 'absolute', inset: 0,
+          display: 'flex', alignItems: 'center',
+          justifyContent: 'center', zIndex: 3,
+        }}
+        animate={{ opacity: playing ? 0 : 1 }}
+        transition={{ duration: 0.2 }}
+      &gt;
+        &lt;svg width="48" height="48" viewBox="0 0 48 48" fill="rgba(255,255,255,0.8)"&gt;
+          &lt;circle cx="24" cy="24" r="22" fill="rgba(0,0,0,0.35)" /&gt;
+          &lt;polygon points="19,14 37,24 19,34" /&gt;
+        &lt;/svg&gt;
+      &lt;/motion.div&gt;
+
+      {/* Bottom gradient + metadata */}
+      &lt;div style={{
+        position: 'absolute', bottom: 0, left: 0, right: 0,
+        background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 70%)',
+        padding: '32px 12px 12px', zIndex: 4,
+      }}&gt;
+        {username &amp;&amp; (
+          &lt;p style={{ color: '#fff', fontWeight: 600, fontSize: 13, marginBottom: 2 }}&gt;
+            @{username}
+          &lt;/p&gt;
+        )}
+        {caption &amp;&amp; (
+          &lt;p style={{ color: 'rgba(255,255,255,0.8)', fontSize: 12,
+            overflow: 'hidden', display: '-webkit-box',
+            WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const }}&gt;
+            {caption}
+          &lt;/p&gt;
+        )}
+        {likes &amp;&amp; (
+          &lt;p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 11, marginTop: 4 }}&gt;
+            ♥ {likes}
+          &lt;/p&gt;
+        )}
+      &lt;/div&gt;
+    &lt;/motion.div&gt;
+  );
+}</code></pre>
+    </div>
+
+    <h3>5b. Reels Grid Component</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-tsx">// ReelsGrid.tsx — responsive 9:16 grid with staggered entrance
+import { motion } from 'framer-motion';
+import { ReelCard } from './ReelCard';
+
+interface Reel {
+  id: string;
+  src: string;
+  poster: string;
+  username?: string;
+  caption?: string;
+  likes?: string;
+}
+
+interface ReelsGridProps {
+  reels: Reel[];
+  columns?: 2 | 3 | 4;
+  gap?: number;
+  title?: string;
+}
+
+const containerVariants = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.07,  // cards appear 70ms apart
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.45, ease: 'easeOut' } },
+};
+
+export function ReelsGrid({ reels, columns = 4, gap = 8, title }: ReelsGridProps) {
+  return (
+    &lt;section style={{ padding: '40px 0' }}&gt;
+      {title &amp;&amp; (
+        &lt;h2 style={{ marginBottom: 24, fontSize: 24, fontWeight: 700 }}&gt;
+          {title}
+        &lt;/h2&gt;
+      )}
+
+      &lt;motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: '-80px' }}
+        style={{
+          display: 'grid',
+          gridTemplateColumns: `repeat(${columns}, 1fr)`,
+          gap,
+          // Responsive overrides via CSS custom properties
+          '--cols-mobile': '2',
+          '--cols-tablet': '3',
+        } as React.CSSProperties}
+        className="reels-grid"
+      &gt;
+        {reels.map((reel) =&gt; (
+          &lt;motion.div key={reel.id} variants={itemVariants}&gt;
+            &lt;ReelCard {...reel} /&gt;
+          &lt;/motion.div&gt;
+        ))}
+      &lt;/motion.div&gt;
+    &lt;/section&gt;
+  );
+}
+
+// Usage example:
+// const reels = [
+//   { id: '1', src: '/video/reel1.mp4', poster: '/img/thumb1.jpg',
+//     username: 'djcustomreno', caption: 'Kitchen transformation', likes: '2.4k' },
+//   ...
+// ];
+// &lt;ReelsGrid reels={reels} columns={4} title="Our Work on Reels" /&gt;</code></pre>
+    </div>
+
+    <h3>5c. Full-Screen Scroll Snap Reel Feed (TikTok/Reels style)</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-tsx">// ScrollSnapFeed.tsx — full-screen vertical scroll snap with IntersectionObserver autoplay
+import { useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+interface FeedReel {
+  id: string;
+  src: string;
+  poster: string;
+  username: string;
+  caption: string;
+  likes: string;
+  comments: string;
+}
+
+interface ScrollSnapFeedProps {
+  reels: FeedReel[];
+}
+
+export function ScrollSnapFeed({ reels }: ScrollSnapFeedProps) {
+  const containerRef = useRef&lt;HTMLDivElement&gt;(null);
+
+  useEffect(() =&gt; {
+    const videos = containerRef.current?.querySelectorAll&lt;HTMLVideoElement&gt;('video') ?? [];
+
+    const observer = new IntersectionObserver(
+      (entries) =&gt; {
+        entries.forEach((entry) =&gt; {
+          const video = entry.target as HTMLVideoElement;
+          if (!video.src && video.dataset.src) {
+            video.src = video.dataset.src;  // lazy load on first intersection
+          }
+          if (entry.isIntersecting && entry.intersectionRatio &gt;= 0.8) {
+            video.muted = true;
+            video.play().catch(() =&gt; {});
+          } else {
+            video.pause();
+            video.currentTime = 0;
+          }
+        });
+      },
+      { threshold: [0, 0.8] }
+    );
+
+    videos.forEach((v) =&gt; observer.observe(v));
+    return () =&gt; observer.disconnect();
+  }, [reels]);
+
+  return (
+    &lt;div
+      ref={containerRef}
+      style={{
+        height: '100dvh',
+        overflowY: 'scroll',
+        scrollSnapType: 'y mandatory',
+        overscrollBehavior: 'none',
+        WebkitOverflowScrolling: 'touch',
+      }}
+    &gt;
+      {reels.map((reel, i) =&gt; (
+        &lt;div
+          key={reel.id}
+          style={{
+            height: '100dvh',
+            scrollSnapAlign: 'start',
+            scrollSnapStop: 'always',
+            position: 'relative',
+            overflow: 'hidden',
+            background: '#000',
+          }}
+        &gt;
+          {/* Video */}
+          &lt;video
+            data-src={reel.src}  // lazy — observer sets .src
+            poster={reel.poster}
+            playsInline
+            muted
+            loop
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          /&gt;
+
+          {/* Bottom gradient */}
+          &lt;div style={{
+            position: 'absolute', inset: 0,
+            background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%)',
+            pointerEvents: 'none',
+          }} /&gt;
+
+          {/* Caption */}
+          &lt;motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.4 }}
+            style={{
+              position: 'absolute', bottom: 80, left: 16, right: 72, zIndex: 10,
+            }}
+          &gt;
+            &lt;p style={{ color: '#fff', fontWeight: 700, fontSize: 15, marginBottom: 4 }}&gt;
+              @{reel.username}
+            &lt;/p&gt;
+            &lt;p style={{ color: 'rgba(255,255,255,0.85)', fontSize: 13, lineHeight: 1.5 }}&gt;
+              {reel.caption}
+            &lt;/p&gt;
+          &lt;/motion.div&gt;
+
+          {/* Right actions sidebar */}
+          &lt;div style={{
+            position: 'absolute', right: 12, bottom: 80, zIndex: 10,
+            display: 'flex', flexDirection: 'column', gap: 24, alignItems: 'center',
+          }}&gt;
+            {[
+              { icon: '♥', label: reel.likes },
+              { icon: '💬', label: reel.comments },
+              { icon: '↗', label: 'Share' },
+            ].map(({ icon, label }) =&gt; (
+              &lt;button key={label} style={{
+                background: 'none', border: 'none', color: '#fff',
+                display: 'flex', flexDirection: 'column', alignItems: 'center',
+                gap: 4, fontSize: 12, cursor: 'pointer',
+                textShadow: '0 1px 4px rgba(0,0,0,0.5)',
+              }}&gt;
+                &lt;span style={{ fontSize: 28 }}&gt;{icon}&lt;/span&gt;
+                &lt;span&gt;{label}&lt;/span&gt;
+              &lt;/button&gt;
+            ))}
+          &lt;/div&gt;
+
+          {/* Reel counter */}
+          &lt;div style={{
+            position: 'absolute', top: 12, right: 12, zIndex: 10,
+            color: 'rgba(255,255,255,0.5)', fontSize: 11,
+          }}&gt;
+            {i + 1} / {reels.length}
+          &lt;/div&gt;
+        &lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}</code></pre>
+    </div>
+
+    <!-- ===================== SECTION 6 ===================== -->
+    <h2 id="oembed">6. Instagram Reels Embedding (iframe + oEmbed API)</h2>
+    <p>Instagram provides two embedding methods. The oEmbed API is the cleaner approach for dynamic integration — it returns the full embed HTML for any public post URL.</p>
+
+    <div class="callout">
+      <p><strong>Important:</strong> Instagram oEmbed requires a Facebook/Meta app with the <code>oembed_read</code> permission. Public embeds (without token) work but are rate-limited. Token-authenticated requests allow higher volume. Instagram reels are just regular posts with <code>/reel/</code> in the URL.</p>
+    </div>
+
+    <h3>Method 1: Static iframe Embed</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-html">&lt;!-- Basic Instagram Reel embed — works for any public reel --&gt;
+&lt;!-- Replace SHORTCODE with the reel's shortcode from the URL --&gt;
+&lt;!-- e.g. instagram.com/reel/ABC123xyz → shortcode = ABC123xyz --&gt;
+
+&lt;blockquote
+  class="instagram-media"
+  data-instgrm-captioned
+  data-instgrm-permalink="https://www.instagram.com/reel/SHORTCODE/?utm_source=ig_embed"
+  data-instgrm-version="14"
+  style="
+    background:#FFF;
+    border:0;
+    border-radius:12px;
+    box-shadow:0 0 1px 0 rgba(0,0,0,.5),0 1px 10px 0 rgba(0,0,0,.15);
+    margin:1px;
+    max-width:540px;
+    min-width:326px;
+    padding:0;
+    width:calc(100% - 2px);
+  "
+&gt;
+&lt;/blockquote&gt;
+
+&lt;!-- Load Instagram embed script once per page --&gt;
+&lt;script async src="//www.instagram.com/embed.js"&gt;&lt;/script&gt;
+
+&lt;!-- If you inject embeds after page load, trigger re-process: --&gt;
+&lt;script&gt;
+  if (window.instgrm) {
+    window.instgrm.Embeds.process();
+  }
+&lt;/script&gt;</code></pre>
+    </div>
+
+    <h3>Method 2: oEmbed API (React component)</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-tsx">// InstagramReelEmbed.tsx — fetches oEmbed HTML dynamically
+// Requires: VITE_META_ACCESS_TOKEN in .env (Facebook app token)
+import { useEffect, useState } from 'react';
+
+interface OEmbedResponse {
+  html: string;
+  thumbnail_url: string;
+  author_name: string;
+  width: number;
+  height: number;
+}
+
+interface InstagramReelEmbedProps {
+  reelUrl: string;     // full Instagram reel URL
+  maxWidth?: number;
+  hideCaption?: boolean;
+}
+
+export function InstagramReelEmbed({
+  reelUrl,
+  maxWidth = 540,
+  hideCaption = false,
+}: InstagramReelEmbedProps) {
+  const [embedHtml, setEmbedHtml] = useState&lt;string&gt;('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState&lt;string | null&gt;(null);
+
+  useEffect(() =&gt; {
+    const token = import.meta.env.VITE_META_ACCESS_TOKEN;
+    const params = new URLSearchParams({
+      url: reelUrl,
+      maxwidth: String(maxWidth),
+      fields: 'html,thumbnail_url,author_name,width,height',
+      omitscript: '1',    // we'll load embed.js manually
+      ...(token && { access_token: token }),
+    });
+
+    fetch(`https://graph.facebook.com/v19.0/instagram_oembed?${params}`)
+      .then((r) =&gt; r.json())
+      .then((data: OEmbedResponse) =&gt; {
+        setEmbedHtml(data.html);
+        setLoading(false);
+      })
+      .catch((e) =&gt; {
+        setError('Failed to load reel');
+        setLoading(false);
+      });
+  }, [reelUrl, maxWidth]);
+
+  useEffect(() =&gt; {
+    if (!embedHtml) return;
+    // Load embed.js once, then process new embeds
+    if (!document.getElementById('ig-embed-script')) {
+      const script = document.createElement('script');
+      script.id = 'ig-embed-script';
+      script.src = '//www.instagram.com/embed.js';
+      script.async = true;
+      script.onload = () =&gt; window.instgrm?.Embeds.process();
+      document.body.appendChild(script);
+    } else {
+      window.instgrm?.Embeds.process();
+    }
+  }, [embedHtml]);
+
+  if (loading) return (
+    &lt;div style={{
+      width: maxWidth, aspectRatio: '9/16', borderRadius: 12,
+      background: '#111', display: 'flex', alignItems: 'center',
+      justifyContent: 'center', color: '#555', fontSize: 13,
+    }}&gt;
+      Loading reel...
+    &lt;/div&gt;
+  );
+
+  if (error) return (
+    &lt;div style={{ color: '#ef4444', fontSize: 13 }}&gt;{error}&lt;/div&gt;
+  );
+
+  return (
+    &lt;div
+      dangerouslySetInnerHTML={{ __html: embedHtml }}
+      style={{ maxWidth, margin: '0 auto' }}
+    /&gt;
+  );
+}
+
+// oEmbed endpoint (no auth, public posts):
+// GET https://graph.facebook.com/v19.0/instagram_oembed
+//   ?url=https://www.instagram.com/reel/SHORTCODE/
+//   &access_token=APP_ID|CLIENT_TOKEN
+//
+// Response fields:
+//   html         — full blockquote embed HTML
+//   thumbnail_url — reel cover image URL
+//   author_name  — Instagram username
+//   width/height — embed dimensions</code></pre>
+    </div>
+
+    <h3>oEmbed API Reference</h3>
+    <table>
+      <tr><th>Parameter</th><th>Value</th><th>Notes</th></tr>
+      <tr><td><code>url</code></td><td>instagram.com/reel/CODE/</td><td>Required. Full public reel URL.</td></tr>
+      <tr><td><code>access_token</code></td><td>APP_ID|CLIENT_TOKEN</td><td>Required for production. Optional for low-volume dev.</td></tr>
+      <tr><td><code>maxwidth</code></td><td>320–658</td><td>Instagram caps at 658px wide.</td></tr>
+      <tr><td><code>fields</code></td><td>html,thumbnail_url,…</td><td>Comma-separated. Omit for all fields.</td></tr>
+      <tr><td><code>omitscript</code></td><td>true</td><td>Exclude embed.js from response (load manually).</td></tr>
+      <tr><td><code>hidecaption</code></td><td>true</td><td>Strip caption from blockquote output.</td></tr>
+    </table>
+
+    <!-- ===================== SECTION 7 ===================== -->
+    <h2 id="portfolio-gallery">7. Portfolio Reel Gallery (Renovation / Trade Business)</h2>
+    <p>For a renovation company like DJ Custom Reno, the optimal pattern is a <strong>4-column grid on desktop, 2-column on mobile</strong>, with project categories as filter tabs. Each card shows before/after context in the caption.</p>
+
+    <div class="callout">
+      <p><strong>Awwwards pattern observed:</strong> Agency/portfolio reels use a <strong>hero spotlight</strong> layout — one large featured reel (2 columns wide) paired with two smaller reels. Below: standard grid. This draws attention to the most impressive project.</p>
+    </div>
+
+    <h3>Portfolio Reels Section Component</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-tsx">// PortfolioReelsSection.tsx — filter tabs + grid for renovation portfolio
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ReelCard } from './ReelCard';
+
+const CATEGORIES = ['All', 'Kitchen', 'Bathroom', 'Flooring', 'Painting', 'Full Reno'];
+
+interface ProjectReel {
+  id: string;
+  src: string;
+  poster: string;
+  category: string;
+  caption: string;
+  location?: string;
+}
+
+export function PortfolioReelsSection({ reels }: { reels: ProjectReel[] }) {
+  const [active, setActive] = useState('All');
+
+  const filtered = active === 'All'
+    ? reels
+    : reels.filter((r) =&gt; r.category === active);
+
+  return (
+    &lt;section style={{ padding: '80px 0' }}&gt;
+      &lt;h2 style={{ fontSize: 32, fontWeight: 700, marginBottom: 8 }}&gt;
+        Our Work
+      &lt;/h2&gt;
+      &lt;p style={{ color: '#888', marginBottom: 32 }}&gt;
+        {reels.length} projects · tap to play
+      &lt;/p&gt;
+
+      {/* Filter tabs */}
+      &lt;div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 24 }}&gt;
+        {CATEGORIES.map((cat) =&gt; (
+          &lt;button
+            key={cat}
+            onClick={() =&gt; setActive(cat)}
+            style={{
+              padding: '6px 16px',
+              borderRadius: 20,
+              border: '1px solid',
+              borderColor: active === cat ? '#f59e0b' : '#2a2a2a',
+              background: active === cat ? '#f59e0b15' : 'transparent',
+              color: active === cat ? '#f59e0b' : '#888',
+              fontSize: 13,
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+            }}
+          &gt;
+            {cat}
+          &lt;/button&gt;
+        ))}
+      &lt;/div&gt;
+
+      {/* Hero spotlight — first reel is featured */}
+      {filtered.length &gt; 0 &amp;&amp; (
+        &lt;div style={{
+          display: 'grid',
+          gridTemplateColumns: '2fr 1fr 1fr',
+          gap: 8,
+          marginBottom: 8,
+        }}&gt;
+          &lt;ReelCard {...filtered[0]} /&gt;
+          {filtered[1] &amp;&amp; &lt;ReelCard {...filtered[1]} /&gt;}
+          {filtered[2] &amp;&amp; &lt;ReelCard {...filtered[2]} /&gt;}
+        &lt;/div&gt;
+      )}
+
+      {/* Standard grid — remaining reels */}
+      &lt;AnimatePresence mode="wait"&gt;
+        &lt;motion.div
+          key={active}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: 8,
+          }}
+          className="reels-grid"
+        &gt;
+          {filtered.slice(3).map((reel) =&gt; (
+            &lt;ReelCard key={reel.id} {...reel} /&gt;
+          ))}
+        &lt;/motion.div&gt;
+      &lt;/AnimatePresence&gt;
+    &lt;/section&gt;
+  );
+}</code></pre>
+    </div>
+
+    <!-- ===================== SECTION 8 ===================== -->
+    <h2 id="mobile-css">8. Mobile-First Vertical Video Layout CSS</h2>
+    <p>Complete mobile-first stylesheet. Start with 2-column portrait layout, scale up. Uses <code>dvh</code> for viewport-reliable heights on iOS Safari.</p>
+
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-css">/* =============================================
+   Mobile-First Vertical Video Layout
+   Start: 2-col portrait → 3-col tablet → 4-col desktop
+   ============================================= */
+
+/* Base: mobile (< 480px) — 2 tight columns */
+.reels-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3px;                     /* tight Instagram-style gap */
+  padding: 0;
+}
+
+.reel-card {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border-radius: 0;             /* flush grid on mobile */
+  background: #000;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.reel-card video,
+.reel-card .poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Gradient overlay */
+.reel-card__gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.7) 0%,
+    rgba(0,0,0,0.15) 40%,
+    transparent 65%
+  );
+  pointer-events: none;
+}
+
+/* Metadata inside card */
+.reel-card__meta {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 8px;
+  z-index: 2;
+}
+
+.reel-card__username {
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Full-screen feed container */
+.reels-feed {
+  height: 100dvh;              /* dvh = safe on iOS Safari */
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  overscroll-behavior-y: none;
+}
+
+.reels-feed__item {
+  height: 100dvh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;    /* no skipping on fast swipe */
+  position: relative;
+  overflow: hidden;
+}
+
+/* ---- Tablet (481px – 768px) ---- */
+@media (min-width: 481px) {
+  .reels-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+  }
+
+  .reel-card {
+    border-radius: 6px;
+  }
+
+  .reel-card__username {
+    font-size: 12px;
+  }
+}
+
+/* ---- Desktop (769px – 1280px) ---- */
+@media (min-width: 769px) {
+  .reels-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+
+  .reel-card {
+    border-radius: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .reel-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    z-index: 2;
+  }
+
+  .reel-card__meta {
+    padding: 12px;
+  }
+
+  .reel-card__username {
+    font-size: 13px;
+  }
+}
+
+/* ---- Wide desktop (1281px+) ---- */
+@media (min-width: 1281px) {
+  .reels-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+  }
+}
+
+/* ---- Reel feed right sidebar (desktop) ---- */
+@media (min-width: 769px) {
+  .reels-feed {
+    max-width: 400px;           /* cap width, centered layout */
+    margin: 0 auto;
+    border-radius: 0;
+  }
+}
+
+/* ---- Accessibility: prefers-reduced-motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  .reel-card { transition: none; }
+  .reel-card:hover { transform: none; }
+}
+
+/* ---- Skeleton loading state ---- */
+@keyframes shimmer {
+  from { background-position: -400px 0; }
+  to   { background-position:  400px 0; }
+}
+
+.reel-card--skeleton {
+  background: linear-gradient(
+    90deg,
+    #111 25%,
+    #1a1a1a 50%,
+    #111 75%
+  );
+  background-size: 800px 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}</code></pre>
+    </div>
+
+    <!-- ===================== QUICK REFERENCE ===================== -->
+    <h2>Quick Reference</h2>
+    <h3>Key Numbers</h3>
+    <table>
+      <tr><th>Property</th><th>Value</th><th>Reason</th></tr>
+      <tr><td>Aspect ratio</td><td>9:16</td><td>Phone screen portrait standard</td></tr>
+      <tr><td>Min card width</td><td>120px</td><td>Below this, content unreadable</td></tr>
+      <tr><td>Max card width</td><td>320px</td><td>Larger feels like full-screen, not grid</td></tr>
+      <tr><td>Hover delay</td><td>300ms</td><td>Prevents accidental triggers on scan</td></tr>
+      <tr><td>IntersectionObserver threshold</td><td>0.6</td><td>Play when 60% visible</td></tr>
+      <tr><td>oEmbed max width</td><td>658px</td><td>Instagram hard limit</td></tr>
+      <tr><td>Bottom gradient height</td><td>~60% from bottom</td><td>Text legible without obscuring video</td></tr>
+      <tr><td>Avatar diameter</td><td>28–32px</td><td>Readable at card scale</td></tr>
+    </table>
+
+    <h3>Browser Support Notes</h3>
+    <table>
+      <tr><th>Feature</th><th>Support</th><th>Fallback</th></tr>
+      <tr><td><code>aspect-ratio: 9/16</code></td><td>All modern browsers</td><td>Padding-top: 177.77% hack</td></tr>
+      <tr><td><code>scroll-snap-type</code></td><td>All modern + iOS 11+</td><td>JS scroll library</td></tr>
+      <tr><td><code>height: 100dvh</code></td><td>Chrome 108+, Safari 15.4+</td><td><code>100vh</code> (breaks iOS toolbar)</td></tr>
+      <tr><td><code>grid-template-rows: masonry</code></td><td>Chrome 131+ / Firefox flag</td><td>JS masonry library</td></tr>
+      <tr><td>Muted autoplay</td><td>All modern browsers</td><td>Always muted — never unmuted autoplay</td></tr>
+    </table>
+
+    <h3>Stack Tags</h3>
+    <span class="tag">React 18+</span>
+    <span class="tag">TypeScript</span>
+    <span class="tag blue">Framer Motion 11</span>
+    <span class="tag blue">CSS Grid</span>
+    <span class="tag blue">Scroll Snap API</span>
+    <span class="tag blue">IntersectionObserver</span>
+    <span class="tag green">Instagram oEmbed v19</span>
+    <span class="tag green">Meta Graph API</span>
+    <span class="tag purple">GSAP (optional)</span>
+    <span class="tag purple">Locomotive Scroll (optional)</span>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<script>
+hljs.highlightAll();
+
+// Copy buttons
+document.querySelectorAll('.code-block').forEach(b => {
+  const btn = b.querySelector('.copy-btn');
+  if (btn) {
+    btn.onclick = () => {
+      const code = b.querySelector('code');
+      if (code) {
+        navigator.clipboard.writeText(code.innerText).then(() => {
+          btn.textContent = 'Copied!';
+          setTimeout(() => btn.textContent = 'Copy', 1500);
+        });
+      }
+    };
+  }
+});
+
+// Search
+function search(q) {
+  const query = q.toLowerCase().trim();
+  document.querySelectorAll('#content h2, #content h3, #content p').forEach(el => {
+    if (!query) {
+      el.style.opacity = '1';
+    } else {
+      el.style.opacity = el.textContent.toLowerCase().includes(query) ? '1' : '0.15';
+    }
+  });
+}
+</script>
+
+</body></html>

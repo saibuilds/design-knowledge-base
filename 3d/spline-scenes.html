@@ -1,0 +1,1090 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Spline 3D Scenes — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#e5e5e5;font-family:'Inter',sans-serif;line-height:1.6}.sidebar{position:fixed;left:0;top:0;width:220px;height:100vh;background:#111;border-right:1px solid #1f1f1f;padding:20px;overflow-y:auto}.sidebar h2{font-size:13px;color:#f59e0b;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}.sidebar a{display:block;color:#888;text-decoration:none;padding:6px 8px;border-radius:6px;font-size:13px;margin-bottom:2px}.sidebar a:hover{color:#e5e5e5;background:#1a1a1a}.sidebar hr{border-color:#1f1f1f;margin:12px 0}.main{margin-left:220px;padding:48px;max-width:900px}h1{font-size:32px;font-weight:700;color:#fff;margin-bottom:8px}h2{font-size:20px;font-weight:600;color:#fff;margin:40px 0 12px;padding-top:40px;border-top:1px solid #1f1f1f}h3{font-size:15px;font-weight:600;color:#d4d4d4;margin:24px 0 8px}p{color:#aaa;margin-bottom:12px}.tag{display:inline-block;background:#f59e0b15;border:1px solid #f59e0b40;color:#f59e0b;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.tag.blue{background:#3b82f615;border-color:#3b82f640;color:#60a5fa}.tag.green{background:#10b98115;border-color:#10b98140;color:#34d399}.tag.purple{background:#8b5cf615;border-color:#8b5cf640;color:#a78bfa}.code-block{position:relative;margin:16px 0}.copy-btn{position:absolute;top:8px;right:8px;background:#1f1f1f;border:1px solid #333;color:#888;padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer;z-index:1}.copy-btn:hover{color:#e5e5e5}pre{border-radius:8px;overflow:auto;font-size:13px}input[type=search]{width:100%;background:#111;border:1px solid #2a2a2a;color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;margin-bottom:32px;outline:none}.scene-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:16px 0}.scene-card{background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:16px}.scene-card h4{font-size:13px;font-weight:600;color:#fff;margin-bottom:6px}.scene-card p{font-size:12px;color:#666;margin:0}.tip{background:#f59e0b0a;border:1px solid #f59e0b20;border-radius:8px;padding:16px;margin:16px 0}.tip strong{color:#f59e0b}.warn{background:#ef44440a;border:1px solid #ef444420;border-radius:8px;padding:16px;margin:16px 0}.warn strong{color:#f87171}.info{background:#3b82f60a;border:1px solid #3b82f620;border-radius:8px;padding:16px;margin:16px 0}.info strong{color:#60a5fa}table{width:100%;border-collapse:collapse;margin:16px 0}th{text-align:left;padding:8px 12px;font-size:12px;font-weight:600;color:#888;border-bottom:1px solid #1f1f1f}td{padding:8px 12px;font-size:13px;color:#aaa;border-bottom:1px solid #111}td code,p code{background:#1a1a1a;border:1px solid #2a2a2a;padding:1px 5px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#e2e8f0}ul{padding-left:20px;color:#aaa;font-size:14px;margin:8px 0}li{margin-bottom:4px}</style></head>
+<body>
+<div class="sidebar">
+  <h2>Design KB</h2>
+  <a href="../index.html">&#127968; Home</a>
+  <a href="../3d/r3f.html">React Three Fiber</a>
+  <a href="../3d/drei-patterns.html">Drei</a>
+  <a href="../3d/shaders.html">Shaders</a>
+  <a href="../animations/gsap.html">GSAP</a>
+  <a href="../animations/framer-motion.html">Framer Motion</a>
+  <a href="../components/21st-dev.html">21st.dev</a>
+  <a href="../reference-sites/awwwards.html">Awwwards</a>
+  <hr>
+  <a href="#overview">Overview</a>
+  <a href="#install">Installation</a>
+  <a href="#react-embed">React Embed</a>
+  <a href="#nextjs">Next.js</a>
+  <a href="#html-embed">HTML Embed</a>
+  <a href="#scene-categories">Scene Categories</a>
+  <a href="#props-api">Props &amp; API</a>
+  <a href="#events">Events</a>
+  <a href="#object-control">Object Control</a>
+  <a href="#responsive">Responsive</a>
+  <a href="#performance">Performance</a>
+  <a href="#gsap">GSAP Integration</a>
+  <a href="#framer">Framer Motion</a>
+  <a href="#vanilla-js">Vanilla JS</a>
+  <a href="#community">Community</a>
+</div>
+<div class="main">
+  <input type="search" placeholder="Search..." oninput="search(this.value)">
+  <div id="content">
+
+    <h1>Spline 3D Scenes</h1>
+    <p>Production-ready interactive 3D for web hero sections — no WebGL expertise required. Spline outputs optimized <code>.splinecode</code> bundles embeddable via a web component or React package.</p>
+    <p>
+      <span class="tag">@splinetool/react-spline</span>
+      <span class="tag">@splinetool/runtime</span>
+      <span class="tag">@splinetool/viewer</span>
+      <span class="tag blue">React</span>
+      <span class="tag blue">Next.js</span>
+      <span class="tag green">Free tier</span>
+    </p>
+
+    <h2 id="overview">Overview</h2>
+    <p>Spline is a browser-based 3D design tool that exports interactive scenes directly to the web. Scenes are rendered via WebGL at runtime — no build pipeline required for embedding. The community library has hundreds of free remixable scenes.</p>
+    <div class="scene-grid">
+      <div class="scene-card">
+        <h4>No Three.js knowledge</h4>
+        <p>Visual editor outputs ready-to-use scene URLs</p>
+      </div>
+      <div class="scene-card">
+        <h4>Real-time interactivity</h4>
+        <p>Mouse follow, scroll triggers, click events built in</p>
+      </div>
+      <div class="scene-card">
+        <h4>Community scenes</h4>
+        <p>Hundreds of free remixable hero scenes</p>
+      </div>
+      <div class="scene-card">
+        <h4>Multi-platform</h4>
+        <p>Web, Webflow, Framer, iOS, Android</p>
+      </div>
+    </div>
+    <table>
+      <tr><th>Package</th><th>Use case</th><th>Notes</th></tr>
+      <tr><td><code>@splinetool/react-spline</code></td><td>React/Next.js component</td><td>~180 KB gzipped</td></tr>
+      <tr><td><code>@splinetool/runtime</code></td><td>Vanilla JS / programmatic control</td><td>Peer dep of react-spline</td></tr>
+      <tr><td><code>@splinetool/viewer</code></td><td>Web component (any framework)</td><td>Via CDN, zero npm install</td></tr>
+    </table>
+
+    <h2 id="install">Installation</h2>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-bash"># npm
+npm install @splinetool/react-spline @splinetool/runtime
+
+# yarn
+yarn add @splinetool/react-spline @splinetool/runtime</code></pre>
+    </div>
+    <p>The <code>@splinetool/runtime</code> peer dependency is required — it provides the core WebGL renderer. Both packages must be installed together.</p>
+
+    <h2 id="react-embed">React Embed</h2>
+    <h3>Minimal usage</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-jsx">import Spline from '@splinetool/react-spline';
+
+export default function HeroSection() {
+  return (
+    &lt;section style={{ width: '100%', height: '100vh', position: 'relative' }}&gt;
+      &lt;Spline scene="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode" /&gt;
+    &lt;/section&gt;
+  );
+}</code></pre>
+    </div>
+
+    <h3>With onLoad callback + cached ref</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-jsx">import { useRef } from 'react';
+import Spline from '@splinetool/react-spline';
+
+export default function Hero() {
+  const splineApp = useRef(null);
+
+  function onLoad(spline) {
+    splineApp.current = spline;
+    // Scene fully loaded — safe to call methods from here
+    console.log('Scene ready', spline);
+  }
+
+  return (
+    &lt;Spline
+      scene="https://prod.spline.design/YOUR_SCENE_ID/scene.splinecode"
+      onLoad={onLoad}
+    /&gt;
+  );
+}</code></pre>
+    </div>
+
+    <h3>Lazy loading with React.Suspense</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-jsx">import React, { Suspense } from 'react';
+
+const Spline = React.lazy(() => import('@splinetool/react-spline'));
+
+export default function Hero() {
+  return (
+    &lt;Suspense fallback={&lt;div className="hero-placeholder" style={{ height: '100vh', background: '#0a0a0a' }} /&gt;}&gt;
+      &lt;Spline scene="https://prod.spline.design/YOUR_SCENE_ID/scene.splinecode" /&gt;
+    &lt;/Suspense&gt;
+  );
+}</code></pre>
+    </div>
+    <div class="tip"><strong>Tip:</strong> Always lazy-load Spline. The runtime is ~170 KB gzipped — deferring it keeps your LCP score healthy and avoids blocking the main thread on parse.</div>
+
+    <h2 id="nextjs">Next.js Integration</h2>
+    <h3>App Router (recommended) — /next subpath</h3>
+    <p>The <code>/next</code> export handles SSR gracefully, auto-generating a placeholder on the server so hydration never mismatches. Add <code>'use client'</code> since WebGL requires a browser.</p>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-tsx">// app/components/SplineHero.tsx
+'use client';
+import Spline from '@splinetool/react-spline/next';
+
+export default function SplineHero() {
+  return (
+    &lt;div style={{ width: '100%', height: '100vh' }}&gt;
+      &lt;Spline scene="https://prod.spline.design/KFonZGtsoUXP-qx7/scene.splinecode" /&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+    </div>
+
+    <h3>Pages Router — dynamic import with ssr: false</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-tsx">// pages/index.tsx
+import dynamic from 'next/dynamic';
+
+const Spline = dynamic(() => import('@splinetool/react-spline'), {
+  ssr: false,
+  loading: () => &lt;div style={{ height: '100vh', background: '#0a0a0a' }} /&gt;,
+});
+
+export default function Home() {
+  return (
+    &lt;main&gt;
+      &lt;Spline scene="https://prod.spline.design/YOUR_SCENE_ID/scene.splinecode" /&gt;
+    &lt;/main&gt;
+  );
+}</code></pre>
+    </div>
+
+    <h3>Self-hosting the .splinecode file (CORS fix + watermark)</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-bash"># 1. In Spline editor: Export → For Web → Download .splinecode
+# 2. Place in Next.js public folder:
+#    public/scenes/hero.splinecode
+# 3. Reference with a relative path:</code></pre>
+    </div>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-tsx">'use client';
+import Spline from '@splinetool/react-spline/next';
+
+export default function Hero() {
+  return &lt;Spline scene="/scenes/hero.splinecode" /&gt;;
+}</code></pre>
+    </div>
+    <div class="tip"><strong>Tip:</strong> Self-hosting eliminates CORS errors, removes the Spline watermark on paid plans, and enables long-cache headers via your CDN (Vercel/Netlify serve <code>/public</code> assets automatically).</div>
+
+    <h3>Add cache headers for self-hosted scenes</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-js">// next.config.js
+const nextConfig = {
+  async headers() {
+    return [
+      {
+        source: '/scenes/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+    ];
+  },
+};
+module.exports = nextConfig;</code></pre>
+    </div>
+
+    <h2 id="html-embed">HTML / Web Component Embed</h2>
+    <p>Zero-dependency embed using the <code>&lt;spline-viewer&gt;</code> web component — works in any HTML page, Webflow, Wix, etc. No npm install needed.</p>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-html">&lt;!-- 1. Load the viewer from CDN --&gt;
+&lt;script
+  type="module"
+  src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"
+&gt;&lt;/script&gt;
+
+&lt;!-- 2. Embed the scene --&gt;
+&lt;spline-viewer
+  url="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode"
+  style="width: 100%; height: 100vh; display: block;"
+&gt;&lt;/spline-viewer&gt;</code></pre>
+    </div>
+    <div class="info"><strong>Version tip:</strong> Pin the viewer version (e.g. <code>@1.9.82</code>) to avoid breaking changes from <code>@latest</code>. Check <a href="https://www.npmjs.com/package/@splinetool/viewer" style="color:#60a5fa" target="_blank">npmjs.com</a> for the latest release.</div>
+
+    <h2 id="scene-categories">Free Scene Categories for Hero Sections</h2>
+    <p>Browse at <a href="https://community.spline.design" style="color:#f59e0b" target="_blank">community.spline.design</a>. Filter by Trending, Popular, or New. All community scenes are free to remix — fork into your account and customize colors/materials.</p>
+
+    <h3>Abstract / Organic Shapes</h3>
+    <p>Morphing blobs, fluid metaballs, flowing ribbons, amoeba forms. Best for SaaS, creative agencies, AI products.</p>
+    <p><span class="tag">blob</span><span class="tag">morph</span><span class="tag">fluid</span><span class="tag">organic</span><span class="tag">metaball</span><span class="tag">ribbon</span></p>
+    <div class="tip"><strong>Why it works:</strong> Subtle continuous movement draws the eye without competing with headline copy. Works best on dark backgrounds with warm or accent-colored blobs.</div>
+
+    <h3>Particle Systems</h3>
+    <p>Floating dots, star fields, connected network graphs, dust clouds, constellation patterns. Lightweight on GPU, highly customizable color palette.</p>
+    <p><span class="tag">particles</span><span class="tag">dots</span><span class="tag">network</span><span class="tag">stars</span><span class="tag">dust</span><span class="tag">constellation</span></p>
+
+    <h3>Geometric / Crystalline</h3>
+    <p>Low-poly shapes, icospheres, diamond facets, abstract crystals, wireframe meshes. Suits fintech, Web3, data-driven products, developer tools.</p>
+    <p><span class="tag">geometric</span><span class="tag">crystal</span><span class="tag">low-poly</span><span class="tag">diamond</span><span class="tag">wireframe</span><span class="tag">icosphere</span></p>
+
+    <h3>Product Mockups / Devices</h3>
+    <p>3D phone frames, laptop models, card UIs floating in space, packaging. Ideal for app or SaaS landing pages to show UI in context.</p>
+    <p><span class="tag">phone mockup</span><span class="tag">device</span><span class="tag">laptop</span><span class="tag">product</span><span class="tag">UI card</span><span class="tag">packaging</span></p>
+
+    <h3>Typography / 3D Text</h3>
+    <p>Extruded 3D letters, animated text reveals, glowing word art, inflated lettering. Strong for brand hero moments and wordmarks.</p>
+    <p><span class="tag">3d text</span><span class="tag">typography</span><span class="tag">extrude</span><span class="tag">letters</span><span class="tag">wordmark</span><span class="tag">inflate</span></p>
+
+    <h3>Space / Cosmic</h3>
+    <p>Planets, nebulae, orbit paths, glowing spheres, black holes. Extremely popular for AI and tech product heroes.</p>
+    <p><span class="tag">planet</span><span class="tag">space</span><span class="tag">orbit</span><span class="tag">nebula</span><span class="tag">glow</span><span class="tag">sphere</span></p>
+
+    <h3>Liquid / Glass / Chrome</h3>
+    <p>Glass morphism objects, liquid metal blobs, iridescent spheres, chrome surfaces. Trending for premium SaaS and luxury brands.</p>
+    <p><span class="tag">glass</span><span class="tag">liquid</span><span class="tag">iridescent</span><span class="tag">chrome</span><span class="tag">metallic</span><span class="tag">mirror</span></p>
+
+    <h3>Character / Mascot</h3>
+    <p>Animated 3D mascots, robotic figures, abstract avatars, friendly blobs with faces. Good for apps with personality and consumer products.</p>
+    <p><span class="tag">character</span><span class="tag">mascot</span><span class="tag">robot</span><span class="tag">avatar</span><span class="tag">creature</span></p>
+
+    <h3>Hana — New Interactive Canvas Scenes</h3>
+    <p>Spline's newest format (2024+) — combines 2D/3D canvas with AI-powered interactive scenes. Look for the <span class="tag">Hana</span> tag on community for the latest aesthetic direction.</p>
+
+    <div class="scene-grid">
+      <div class="scene-card">
+        <h4>Search strategy</h4>
+        <p>Use tags: "hero", "landing", "abstract", "dark", "minimal" on community.spline.design</p>
+      </div>
+      <div class="scene-card">
+        <h4>Remix workflow</h4>
+        <p>Fork → edit colors/materials/speed → publish → copy new scene URL</p>
+      </div>
+      <div class="scene-card">
+        <h4>Filter: Trending</h4>
+        <p>Best starting point — reflects current popular 3D aesthetics</p>
+      </div>
+      <div class="scene-card">
+        <h4>Scene URL format</h4>
+        <p><code>prod.spline.design/{ID}/scene.splinecode</code></p>
+      </div>
+    </div>
+
+    <h2 id="props-api">Props &amp; API Reference</h2>
+    <h3>Spline component props</h3>
+    <table>
+      <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+      <tr><td><code>scene</code></td><td>string</td><td>required</td><td>URL to <code>.splinecode</code> file</td></tr>
+      <tr><td><code>onLoad</code></td><td>(app: Application) =&gt; void</td><td>—</td><td>Fires when scene finishes loading</td></tr>
+      <tr><td><code>renderOnDemand</code></td><td>boolean</td><td>true</td><td>Only re-render on interaction (major perf win)</td></tr>
+      <tr><td><code>className</code></td><td>string</td><td>—</td><td>CSS class on the canvas wrapper</td></tr>
+      <tr><td><code>style</code></td><td>CSSProperties</td><td>—</td><td>Inline styles on the canvas wrapper</td></tr>
+      <tr><td><code>id</code></td><td>string</td><td>—</td><td>ID attribute on the canvas element</td></tr>
+      <tr><td><code>ref</code></td><td>React.Ref</td><td>—</td><td>Ref forwarded to the container div</td></tr>
+    </table>
+
+    <h3>Application methods (via onLoad callback)</h3>
+    <table>
+      <tr><th>Method</th><th>Returns</th><th>Description</th></tr>
+      <tr><td><code>findObjectByName(name)</code></td><td>SplineObject</td><td>Get object by its name in the Spline editor</td></tr>
+      <tr><td><code>findObjectById(uuid)</code></td><td>SplineObject</td><td>Get object by its UUID (copy from editor)</td></tr>
+      <tr><td><code>emitEvent(eventName, objName)</code></td><td>void</td><td>Trigger a named event on an object</td></tr>
+      <tr><td><code>emitEventReverse(eventName, objId)</code></td><td>void</td><td>Trigger event in reverse (e.g. mouse leave)</td></tr>
+      <tr><td><code>setZoom(level)</code></td><td>void</td><td>Programmatically set camera zoom level</td></tr>
+      <tr><td><code>setVariable(name, value)</code></td><td>void</td><td>Set a variable defined in the Spline editor</td></tr>
+      <tr><td><code>getVariable(name)</code></td><td>any</td><td>Read a scene variable's current value</td></tr>
+    </table>
+
+    <h2 id="events">Events — Mouse, Scroll &amp; Keyboard Triggers</h2>
+    <h3>Listening to scene events via React props</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-jsx">import Spline from '@splinetool/react-spline';
+
+export default function Interactive() {
+  function onMouseDown(e) {
+    if (e.target.name === 'Button') {
+      console.log('3D button clicked!', e.target);
+    }
+  }
+
+  function onMouseHover(e) {
+    console.log('Hovering over:', e.target.name);
+  }
+
+  return (
+    &lt;Spline
+      scene="https://prod.spline.design/YOUR_SCENE_ID/scene.splinecode"
+      onSplineMouseDown={onMouseDown}
+      onSplineMouseUp={(e) =&gt; console.log('released', e.target.name)}
+      onSplineMouseHover={onMouseHover}
+      onSplineKeyDown={(e) =&gt; console.log('key down', e)}
+      onSplineKeyUp={(e) =&gt; console.log('key up', e)}
+      onSplineScroll={(e) =&gt; console.log('scroll', e)}
+    /&gt;
+  );
+}</code></pre>
+    </div>
+
+    <h3>All event props</h3>
+    <table>
+      <tr><th>Prop</th><th>Trigger</th></tr>
+      <tr><td><code>onSplineMouseDown</code></td><td>Mouse/touch press on a 3D object</td></tr>
+      <tr><td><code>onSplineMouseUp</code></td><td>Mouse/touch release on a 3D object</td></tr>
+      <tr><td><code>onSplineMouseHover</code></td><td>Cursor enters a 3D object's bounds</td></tr>
+      <tr><td><code>onSplineKeyDown</code></td><td>Keyboard key pressed (scene has focus)</td></tr>
+      <tr><td><code>onSplineKeyUp</code></td><td>Keyboard key released</td></tr>
+      <tr><td><code>onSplineStart</code></td><td>Scene start event fires</td></tr>
+      <tr><td><code>onSplineLookAt</code></td><td>Camera look-at event</td></tr>
+      <tr><td><code>onSplineFollow</code></td><td>Follow trigger event</td></tr>
+      <tr><td><code>onSplineScroll</code></td><td>Scroll event within the scene</td></tr>
+    </table>
+
+    <h3>Emitting events from outside the scene</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-jsx">import { useRef } from 'react';
+import Spline from '@splinetool/react-spline';
+
+export default function Hero() {
+  const splineApp = useRef(null);
+
+  function onLoad(spline) {
+    splineApp.current = spline;
+  }
+
+  // Trigger the 'mouseHover' animation on the 'Orb' object
+  function triggerOrbHover() {
+    splineApp.current?.emitEvent('mouseHover', 'Orb');
+  }
+
+  // Reverse it (like mouse leave)
+  function releaseOrb() {
+    splineApp.current?.emitEventReverse('mouseHover', 'Orb');
+  }
+
+  return (
+    &lt;&gt;
+      &lt;Spline
+        scene="https://prod.spline.design/YOUR_SCENE_ID/scene.splinecode"
+        onLoad={onLoad}
+      /&gt;
+      &lt;button onMouseEnter={triggerOrbHover} onMouseLeave={releaseOrb}&gt;
+        Hover to animate
+      &lt;/button&gt;
+    &lt;/&gt;
+  );
+}</code></pre>
+    </div>
+
+    <h3>Mouse-follow (cursor tracking via variables)</h3>
+    <p>In the Spline editor: Events → Mouse Move → Look At / Follow Mouse handles cursor tracking without JS. For custom sensitivity, use scene variables:</p>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-jsx">import { useRef, useEffect } from 'react';
+import Spline from '@splinetool/react-spline';
+
+export default function MouseFollow() {
+  const splineApp = useRef(null);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (!splineApp.current) return;
+      // Normalize to -1..1 range
+      const x = (e.clientX / window.innerWidth) * 2 - 1;
+      const y = -(e.clientY / window.innerHeight) * 2 + 1;
+      // Pass to variables you've defined in the Spline editor
+      splineApp.current.setVariable?.('mouseX', x);
+      splineApp.current.setVariable?.('mouseY', y);
+    };
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  return (
+    &lt;Spline
+      scene="https://prod.spline.design/YOUR_SCENE_ID/scene.splinecode"
+      onLoad={(app) => { splineApp.current = app; }}
+    /&gt;
+  );
+}</code></pre>
+    </div>
+
+    <h3>Scroll-driven animation via variables</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-jsx">import { useRef, useEffect } from 'react';
+import Spline from '@splinetool/react-spline';
+
+export default function ScrollScene() {
+  const splineApp = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!splineApp.current) return;
+      const progress = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+      // Pass 0-1 scroll progress into Spline
+      splineApp.current.setVariable?.('scrollProgress', progress);
+      // Or emit a discrete event at a threshold
+      if (progress > 0.5) {
+        splineApp.current.emitEvent('scroll', 'Timeline');
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    &lt;Spline
+      scene="https://prod.spline.design/YOUR_SCENE_ID/scene.splinecode"
+      onLoad={(app) => { splineApp.current = app; }}
+      renderOnDemand={false}
+    /&gt;
+  );
+}</code></pre>
+    </div>
+
+    <h2 id="object-control">Object Control &amp; Scene Manipulation</h2>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-jsx">import { useRef } from 'react';
+import Spline from '@splinetool/react-spline';
+
+export default function SceneControl() {
+  const splineApp = useRef(null);
+  const cubeRef = useRef(null);
+
+  function onLoad(spline) {
+    splineApp.current = spline;
+    // Cache object reference on load — cheaper than finding it each time
+    cubeRef.current = spline.findObjectByName('Cube');
+  }
+
+  function moveRight() {
+    if (cubeRef.current) cubeRef.current.position.x += 10;
+  }
+
+  function rotateY() {
+    if (cubeRef.current) cubeRef.current.rotation.y += Math.PI / 4;
+  }
+
+  function zoomIn() {
+    splineApp.current?.setZoom(1.5);
+  }
+
+  return (
+    &lt;&gt;
+      &lt;Spline scene="..." onLoad={onLoad} /&gt;
+      &lt;button onClick={moveRight}&gt;Move&lt;/button&gt;
+      &lt;button onClick={rotateY}&gt;Rotate&lt;/button&gt;
+      &lt;button onClick={zoomIn}&gt;Zoom&lt;/button&gt;
+    &lt;/&gt;
+  );
+}</code></pre>
+    </div>
+
+    <h2 id="responsive">Responsive Design</h2>
+    <p>Spline's canvas auto-fills its container div. The key is making the container responsive — Spline handles aspect ratio internally.</p>
+
+    <h3>Full viewport hero</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-css">/* Full-bleed hero container */
+.spline-hero {
+  position: relative;
+  width: 100%;
+  height: 100svh; /* svh respects mobile browser chrome */
+  overflow: hidden;
+}
+
+/* Overlay content above the canvas */
+.hero-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 8vw;
+  z-index: 10;
+  pointer-events: none; /* pass mouse events through to Spline */
+}
+
+/* Re-enable pointer events for interactive elements */
+.hero-content button,
+.hero-content a {
+  pointer-events: all;
+}</code></pre>
+    </div>
+
+    <h3>Split layout — content left, 3D right</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-jsx">import Spline from '@splinetool/react-spline/next';
+
+export default function SplitHero() {
+  return (
+    &lt;section style={{
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      height: '100vh',
+    }}&gt;
+      &lt;div style={{ padding: '10vw', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}&gt;
+        &lt;h1&gt;Your headline&lt;/h1&gt;
+        &lt;p&gt;Description text&lt;/p&gt;
+        &lt;button&gt;Get started&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div style={{ position: 'relative', overflow: 'hidden' }}&gt;
+        &lt;Spline scene="https://prod.spline.design/YOUR_SCENE_ID/scene.splinecode" /&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+  );
+}</code></pre>
+    </div>
+
+    <h3>Mobile: skip Spline, show static fallback</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-jsx">'use client';
+import { useEffect, useState, Suspense, lazy } from 'react';
+
+const Spline = lazy(() => import('@splinetool/react-spline'));
+
+export default function AdaptiveHero() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 768px)');
+    setIsMobile(mq.matches);
+    const handler = (e) => setIsMobile(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+
+  // On mobile: static gradient saves ~170KB and GPU load
+  if (isMobile) {
+    return &lt;div style={{ height: '60vh', background: 'linear-gradient(135deg, #0a0a0a, #1a0a2e)' }} /&gt;;
+  }
+
+  return (
+    &lt;Suspense fallback={&lt;div style={{ height: '100vh', background: '#0a0a0a' }} /&gt;}&gt;
+      &lt;Spline scene="https://prod.spline.design/YOUR_SCENE_ID/scene.splinecode" /&gt;
+    &lt;/Suspense&gt;
+  );
+}</code></pre>
+    </div>
+    <div class="tip"><strong>Accessibility:</strong> Also check <code>prefers-reduced-motion</code> — replace Spline with a static image for users who have opted out of animation.</div>
+
+    <h2 id="performance">Performance Optimization</h2>
+
+    <h3>1. renderOnDemand (default: true) — most impactful</h3>
+    <p>When true, Spline only re-renders the WebGL canvas when user interaction occurs. Saves significant GPU time on idle frames. Keep this true unless you have continuously looping animations.</p>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-jsx">// Keep true (default) — idle scenes save GPU
+&lt;Spline scene="..." renderOnDemand={true} /&gt;
+
+// Set false only for continuously animating scenes (particles loop, timeline plays)
+&lt;Spline scene="..." renderOnDemand={false} /&gt;</code></pre>
+    </div>
+
+    <h3>2. Always lazy-load — never eager import</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-jsx">// Bad — blocks main bundle parse
+import Spline from '@splinetool/react-spline';
+
+// Good — splits into separate async chunk
+const Spline = React.lazy(() => import('@splinetool/react-spline'));
+
+// Next.js equivalent:
+const Spline = dynamic(() => import('@splinetool/react-spline'), { ssr: false });</code></pre>
+    </div>
+
+    <h3>3. Preload the scene file</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-html">&lt;!-- In Next.js app/layout.tsx or &lt;head&gt; --&gt;
+&lt;link
+  rel="preload"
+  href="https://prod.spline.design/YOUR_SCENE_ID/scene.splinecode"
+  as="fetch"
+  crossOrigin="anonymous"
+/&gt;</code></pre>
+    </div>
+
+    <h3>4. Intersection Observer — mount only when visible</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-jsx">'use client';
+import { useRef, useState, useEffect, Suspense, lazy } from 'react';
+
+const Spline = lazy(() => import('@splinetool/react-spline'));
+
+export default function LazyScene() {
+  const containerRef = useRef(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setInView(true); },
+      { threshold: 0.1 }
+    );
+    if (containerRef.current) observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    &lt;div ref={containerRef} style={{ height: '100vh' }}&gt;
+      {inView &amp;&amp; (
+        &lt;Suspense fallback={null}&gt;
+          &lt;Spline scene="https://prod.spline.design/YOUR_SCENE_ID/scene.splinecode" /&gt;
+        &lt;/Suspense&gt;
+      )}
+    &lt;/div&gt;
+  );
+}</code></pre>
+    </div>
+
+    <h3>5. Scene optimization in the Spline editor</h3>
+    <div class="info"><strong>In-editor checklist:</strong>
+      <ul style="margin-top:8px">
+        <li>Reduce polygon count — use Spline's mesh simplification tool</li>
+        <li>Compress textures — keep hero scene textures under 1024×1024</li>
+        <li>Keep particle count under 10,000 for 60fps on mid-range GPUs</li>
+        <li>Use the export quality slider — Medium is the right balance</li>
+        <li>Disable post-processing (bloom, DOF) unless scene centerpiece</li>
+        <li>Merge static geometry — fewer draw calls = better performance</li>
+        <li>Use baked lighting instead of real-time shadow-casting lights</li>
+      </ul>
+    </div>
+
+    <h3>6. Self-host with immutable cache</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-text">// Spline CDN scenes re-download on every visit (no cache control from their end)
+// Self-hosted scenes in /public get immutable cache headers → instant repeat visits
+
+// Netlify: add _headers file
+/scenes/*
+  Cache-Control: public, max-age=31536000, immutable
+
+// Vercel: add to next.config.js headers() (see Installation section)</code></pre>
+    </div>
+
+    <h2 id="gsap">GSAP Integration</h2>
+    <p>GSAP controls the page layer (DOM, CSS). Spline controls the 3D layer. Bridge them via the <code>onLoad</code> callback and direct SplineObject property mutation.</p>
+
+    <h3>Entrance animation — GSAP timeline triggers Spline event</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-jsx">'use client';
+import { useRef } from 'react';
+import Spline from '@splinetool/react-spline/next';
+import gsap from 'gsap';
+
+export default function GSAPHero() {
+  const headlineRef = useRef(null);
+  const ctaRef = useRef(null);
+  const splineApp = useRef(null);
+
+  function onSplineLoad(spline) {
+    splineApp.current = spline;
+
+    // Chain: DOM animates in, then triggers 3D entrance
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    tl.from(headlineRef.current, { y: 60, opacity: 0, duration: 1 })
+      .from(ctaRef.current, { y: 30, opacity: 0, duration: 0.7 }, '-=0.4')
+      .call(() => {
+        // Fire the 3D entrance animation after DOM settles
+        spline.emitEvent('start', 'HeroObject');
+      }, null, '-=0.2');
+  }
+
+  return (
+    &lt;section style={{ position: 'relative', height: '100vh', overflow: 'hidden' }}&gt;
+      &lt;Spline
+        scene="https://prod.spline.design/YOUR_SCENE_ID/scene.splinecode"
+        onLoad={onSplineLoad}
+        style={{ position: 'absolute', inset: 0 }}
+      /&gt;
+      &lt;div style={{ position: 'relative', zIndex: 10, padding: '20vh 8vw' }}&gt;
+        &lt;h1 ref={headlineRef}&gt;Build in 3D&lt;/h1&gt;
+        &lt;button ref={ctaRef}&gt;Get started&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+  );
+}</code></pre>
+    </div>
+
+    <h3>ScrollTrigger → drive Spline object rotation</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-jsx">'use client';
+import { useRef } from 'react';
+import Spline from '@splinetool/react-spline/next';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+export default function ScrollScene() {
+  const splineApp = useRef(null);
+  const sphereRef = useRef(null);
+
+  function onLoad(spline) {
+    splineApp.current = spline;
+    sphereRef.current = spline.findObjectByName('Sphere');
+
+    if (!sphereRef.current) return;
+
+    // GSAP tweens SplineObject properties directly
+    gsap.to(sphereRef.current.rotation, {
+      y: Math.PI * 2,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: 'body',
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 1,
+      },
+    });
+
+    gsap.to(sphereRef.current.position, {
+      z: -300,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: 'body',
+        start: '30% top',
+        end: '70% top',
+        scrub: 1.5,
+      },
+    });
+  }
+
+  return (
+    &lt;div style={{ height: '300vh' }}&gt;
+      &lt;div style={{ position: 'sticky', top: 0, height: '100vh' }}&gt;
+        &lt;Spline
+          scene="https://prod.spline.design/YOUR_SCENE_ID/scene.splinecode"
+          onLoad={onLoad}
+          renderOnDemand={false} {/* required for scrub animations */}
+        /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+    </div>
+    <div class="warn"><strong>Important:</strong> Set <code>renderOnDemand={false}</code> when using GSAP <code>scrub</code> or ticker-driven animations. With <code>renderOnDemand: true</code>, the canvas won't update between GSAP ticks since there's no user interaction event to trigger a re-render.</div>
+
+    <h3>GSAP ticker → continuous Spline update loop</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-jsx">import { useRef, useEffect } from 'react';
+import Spline from '@splinetool/react-spline/next';
+import gsap from 'gsap';
+
+export default function TickerScene() {
+  const splineApp = useRef(null);
+  const objRef = useRef(null);
+
+  function onLoad(spline) {
+    splineApp.current = spline;
+    objRef.current = spline.findObjectByName('Ring');
+  }
+
+  useEffect(() => {
+    const tick = () => {
+      if (!objRef.current) return;
+      objRef.current.rotation.y += 0.005;
+      // Force re-render each tick
+      splineApp.current?.requestRender?.();
+    };
+    gsap.ticker.add(tick);
+    return () => gsap.ticker.remove(tick);
+  }, []);
+
+  return &lt;Spline scene="..." onLoad={onLoad} renderOnDemand={false} /&gt;;
+}</code></pre>
+    </div>
+
+    <h2 id="framer">Framer Motion Integration</h2>
+
+    <h3>Fade-in with loading skeleton using AnimatePresence</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-jsx">'use client';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import Spline from '@splinetool/react-spline/next';
+
+export default function FramerSplineHero() {
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    &lt;section style={{ position: 'relative', height: '100vh' }}&gt;
+      {/* Skeleton that fades out when scene loads */}
+      &lt;AnimatePresence&gt;
+        {!loaded &amp;&amp; (
+          &lt;motion.div
+            key="skeleton"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8 }}
+            style={{
+              position: 'absolute', inset: 0,
+              background: 'linear-gradient(135deg, #0a0a0a 0%, #0f0f1a 100%)',
+            }}
+          /&gt;
+        )}
+      &lt;/AnimatePresence&gt;
+
+      {/* Scene fades in on load */}
+      &lt;motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: loaded ? 1 : 0 }}
+        transition={{ duration: 1.2, ease: 'easeOut' }}
+        style={{ height: '100%' }}
+      &gt;
+        &lt;Spline
+          scene="https://prod.spline.design/YOUR_SCENE_ID/scene.splinecode"
+          onLoad={() => setLoaded(true)}
+        /&gt;
+      &lt;/motion.div&gt;
+
+      {/* Content animates in after scene is ready */}
+      &lt;motion.div
+        initial={{ y: 40, opacity: 0 }}
+        animate={{ y: loaded ? 0 : 40, opacity: loaded ? 1 : 0 }}
+        transition={{ duration: 0.9, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        style={{ position: 'absolute', bottom: '10vh', left: '8vw', zIndex: 10 }}
+      &gt;
+        &lt;h1&gt;Your headline&lt;/h1&gt;
+      &lt;/motion.div&gt;
+    &lt;/section&gt;
+  );
+}</code></pre>
+    </div>
+
+    <h3>useScroll + useMotionValueEvent → drive Spline properties</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-jsx">'use client';
+import { useRef } from 'react';
+import { useScroll, useMotionValueEvent } from 'framer-motion';
+import Spline from '@splinetool/react-spline/next';
+
+export default function FramerScrollSpline() {
+  const containerRef = useRef(null);
+  const splineApp = useRef(null);
+  const objRef = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end end'],
+  });
+
+  useMotionValueEvent(scrollYProgress, 'change', (progress) => {
+    if (!objRef.current) return;
+    objRef.current.rotation.y = progress * Math.PI * 2;
+    objRef.current.scale.setScalar(1 + progress * 0.5);
+    splineApp.current?.requestRender?.();
+  });
+
+  function onLoad(spline) {
+    splineApp.current = spline;
+    objRef.current = spline.findObjectByName('HeroOrb');
+  }
+
+  return (
+    &lt;div ref={containerRef} style={{ height: '300vh' }}&gt;
+      &lt;div style={{ position: 'sticky', top: 0, height: '100vh' }}&gt;
+        &lt;Spline
+          scene="https://prod.spline.design/YOUR_SCENE_ID/scene.splinecode"
+          onLoad={onLoad}
+          renderOnDemand={false}
+        /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+    </div>
+
+    <h2 id="vanilla-js">Vanilla JS / @splinetool/runtime</h2>
+    <p>For non-React frameworks (Vue, Svelte, Astro, plain HTML) or direct canvas control without the React wrapper.</p>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-js">import { Application } from '@splinetool/runtime';
+
+const canvas = document.getElementById('spline-canvas');
+const spline = new Application(canvas);
+
+await spline.load('https://prod.spline.design/YOUR_SCENE_ID/scene.splinecode');
+
+// All the same methods are available
+const obj = spline.findObjectByName('Hero');
+obj.position.x += 50;
+spline.emitEvent('mouseHover', 'Hero');
+spline.setZoom(1.2);</code></pre>
+    </div>
+
+    <h3>Svelte</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-svelte">&lt;script&gt;
+  import { onMount, onDestroy } from 'svelte';
+  import { Application } from '@splinetool/runtime';
+
+  let canvas;
+  let spline;
+
+  onMount(async () => {
+    spline = new Application(canvas);
+    await spline.load('https://prod.spline.design/YOUR_SCENE_ID/scene.splinecode');
+  });
+
+  onDestroy(() => spline?.dispose?.());
+&lt;/script&gt;
+
+&lt;canvas bind:this={canvas} style="width:100%;height:100vh;" /&gt;</code></pre>
+    </div>
+
+    <h3>Vue 3 Composition API</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-vue">&lt;template&gt;
+  &lt;canvas ref="canvasEl" style="width:100%;height:100vh;" /&gt;
+&lt;/template&gt;
+
+&lt;script setup&gt;
+import { ref, onMounted, onUnmounted } from 'vue';
+import { Application } from '@splinetool/runtime';
+
+const canvasEl = ref(null);
+let spline = null;
+
+onMounted(async () => {
+  spline = new Application(canvasEl.value);
+  await spline.load('https://prod.spline.design/YOUR_SCENE_ID/scene.splinecode');
+});
+
+onUnmounted(() => spline?.dispose?.());
+&lt;/script&gt;</code></pre>
+    </div>
+
+    <h2 id="community">Community &amp; Resources</h2>
+    <div class="scene-grid">
+      <div class="scene-card">
+        <h4><a href="https://community.spline.design" style="color:#f59e0b" target="_blank">community.spline.design</a></h4>
+        <p>Browse and fork free scenes. Filters: Trending, Popular, New</p>
+      </div>
+      <div class="scene-card">
+        <h4><a href="https://spline.design" style="color:#f59e0b" target="_blank">spline.design</a></h4>
+        <p>Main editor — free tier includes unlimited public scene publishing</p>
+      </div>
+      <div class="scene-card">
+        <h4><a href="https://github.com/splinetool/react-spline" style="color:#f59e0b" target="_blank">react-spline GitHub</a></h4>
+        <p>Source code, issues, examples, latest API changes</p>
+      </div>
+      <div class="scene-card">
+        <h4><a href="https://docs.spline.design" style="color:#f59e0b" target="_blank">docs.spline.design</a></h4>
+        <p>Official docs — events, animation, Code API for Web, export options</p>
+      </div>
+    </div>
+
+    <h3>Search terms for hero-ready scenes</h3>
+    <p>Use these on <code>community.spline.design</code>:</p>
+    <p>
+      <span class="tag">abstract</span>
+      <span class="tag">hero</span>
+      <span class="tag">landing</span>
+      <span class="tag">dark</span>
+      <span class="tag">minimal</span>
+      <span class="tag">blob</span>
+      <span class="tag">particle</span>
+      <span class="tag">orb</span>
+      <span class="tag">crystal</span>
+      <span class="tag">sphere</span>
+      <span class="tag">gradient</span>
+      <span class="tag">glass</span>
+      <span class="tag">space</span>
+      <span class="tag">planet</span>
+      <span class="tag">geometric</span>
+      <span class="tag">wireframe</span>
+      <span class="tag">metal</span>
+      <span class="tag">Hana</span>
+    </p>
+
+    <h3>Workflow: community scene to production</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-text">1. community.spline.design → find a scene → click "Remix"
+2. Opens in your Spline editor account
+3. Customize: colors, materials, timing, particle count
+4. File → Publish → copy the prod.spline.design URL
+   OR: Export → For Web → Download .splinecode → /public/scenes/
+5. Embed with &lt;Spline scene="..." /&gt;
+6. Chrome DevTools → Performance tab → profile, check GPU usage
+7. Tune: renderOnDemand, scene quality, lazy loading threshold</code></pre>
+    </div>
+
+    <h3>Watermark</h3>
+    <div class="info"><strong>Info:</strong> The Spline watermark appears on scenes hosted on Spline's CDN under the free plan. To remove it: upgrade to a paid Spline plan, or self-host the <code>.splinecode</code> file from your own domain (the watermark is injected by the Spline CDN layer, not the viewer library).</div>
+
+    <h3>Scene URL format reference</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-text">// CDN-hosted (from Spline editor → Publish):
+https://prod.spline.design/{SCENE_ID}/scene.splinecode
+
+// Self-hosted (download + put in /public):
+/scenes/hero.splinecode
+
+// Get your URL: Spline Editor → File → Publish → copy URL
+//           or: Export → For Web → copy URL / download file
+
+// Embed event names (as strings in emitEvent):
+mouseDown | mouseHover | mouseUp | keyDown | keyUp | start | scroll | lookAt | follow</code></pre>
+    </div>
+
+  </div>
+</div>
+<script>
+hljs.highlightAll();
+document.querySelectorAll('.code-block').forEach(b => {
+  const btn = b.querySelector('.copy-btn');
+  if (btn) btn.onclick = () => {
+    navigator.clipboard.writeText(b.querySelector('code').innerText);
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1500);
+  };
+});
+function search(q) {
+  document.querySelectorAll('#content h2, #content h3, #content p').forEach(el => {
+    el.style.opacity = q && !el.textContent.toLowerCase().includes(q.toLowerCase()) ? '0.2' : '1';
+  });
+}
+</script>
+</body></html>

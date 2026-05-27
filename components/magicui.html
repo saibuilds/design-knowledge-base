@@ -1,381 +1,102 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Magic UI — Design KB</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0a0a0a;--card:#111111;--border:#1f1f1f;--accent:#f59e0b;--text:#e5e5e5;--muted:#737373;--green:#22c55e}
-body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif}
-a{color:inherit;text-decoration:none}
-.layout{display:flex;min-height:100vh}
-.sidebar{width:240px;background:var(--card);border-right:1px solid var(--border);padding:24px 0;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
-.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid var(--border);margin-bottom:16px}
-.sidebar-logo a{font-size:13px;font-weight:600;color:var(--accent);letter-spacing:.05em;text-transform:uppercase}
-.sidebar-logo p{font-size:11px;color:var(--muted);margin-top:4px}
-.nav-section{padding:8px 20px;font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:8px}
-.nav-link{display:flex;align-items:center;gap:8px;padding:8px 20px;font-size:13px;color:var(--muted);transition:.15s;border-left:2px solid transparent}
-.nav-link:hover,.nav-link.active{color:var(--text);background:rgba(245,158,11,.06);border-left-color:var(--accent)}
-.main{margin-left:240px;flex:1;padding:40px;max-width:900px}
-.page-header{margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border)}
-.badge{display:inline-block;font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(245,158,11,.15);color:var(--accent);border:1px solid rgba(245,158,11,.3);margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em}
-.page-header h1{font-size:28px;font-weight:700}
-.page-header p{color:var(--muted);font-size:14px;margin-top:8px;line-height:1.7;max-width:620px}
-.ext-links{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
-.ext-links a{font-size:12px;color:var(--accent);border:1px solid rgba(245,158,11,.3);padding:5px 12px;border-radius:6px;transition:.15s}
-.ext-links a:hover{background:rgba(245,158,11,.1)}
-.toc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:36px}
-.toc h3{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
-.toc ul{list-style:none;display:flex;flex-direction:column;gap:6px}
-.toc ul li a{font-size:13px;color:var(--muted);transition:.15s}
-.toc ul li a:hover{color:var(--accent)}
-.section{margin-bottom:48px}
-.section h2{font-size:18px;font-weight:600;margin-bottom:4px;padding-top:8px}
-.sub{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6}
-.code-block{position:relative;margin-bottom:20px;border-radius:10px;overflow:hidden;border:1px solid var(--border)}
-.code-header{display:flex;justify-content:space-between;align-items:center;padding:8px 16px;background:#0d0d0d;border-bottom:1px solid var(--border)}
-.code-lang{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase}
-.copy-btn{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);color:var(--accent);font-size:11px;padding:4px 10px;border-radius:5px;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s}
-.copy-btn:hover{background:rgba(245,158,11,.2)}
-.copy-btn.copied{color:var(--green);border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.1)}
-.code-block pre{margin:0!important;border-radius:0!important}
-.code-block pre code{font-size:13px!important;line-height:1.6!important}
-.info-box{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:16px;margin-bottom:20px;font-size:13px;line-height:1.7}
-.info-box strong{color:var(--accent)}
-.comp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-bottom:24px}
-.comp-tag{background:var(--card);border:1px solid var(--border);border-radius:7px;padding:10px 12px;font-size:12px;color:var(--muted)}
-.comp-tag strong{display:block;color:var(--text);font-size:13px;margin-bottom:2px}
-@media(max-width:768px){.sidebar{display:none}.main{margin-left:0}}
-</style>
-</head>
-<body>
-<div class="layout">
-<nav class="sidebar">
-  <div class="sidebar-logo"><a href="../index.html">Design KB</a><p>Web Design Knowledge Base</p></div>
-  <div class="nav-section">Hub</div>
-  <a class="nav-link" href="../index.html">&#8962; Dashboard</a>
-  <div class="nav-section">Animations</div>
-  <a class="nav-link" href="../animations/gsap.html">&#9889; GSAP</a>
-  <a class="nav-link" href="../animations/framer-motion.html">&#127902; Framer Motion</a>
-  <a class="nav-link" href="../animations/lenis.html">~ Lenis</a>
-  <div class="nav-section">Components</div>
-  <a class="nav-link" href="shadcn.html">&#9672; shadcn/ui</a>
-  <a class="nav-link" href="21st-dev.html">&#10022; 21st.dev</a>
-  <a class="nav-link active" href="magicui.html">&#10022; Magic UI</a>
-  <a class="nav-link" href="aceternity.html">&#9670; Aceternity UI</a>
-  <div class="nav-section">3D</div>
-  <a class="nav-link" href="../3d/r3f.html">&#9677; React Three Fiber</a>
-  <div class="nav-section">Reference Sites</div>
-  <a class="nav-link" href="../reference-sites/index.html">&#9678; Sites Index</a>
-  <a class="nav-link" href="../reference-sites/djcustomreno.html">&#8962; DJ Custom Reno</a>
-</nav>
-<main class="main">
-  <div class="page-header">
-    <div class="badge">Animated Component Library</div>
-    <h1>Magic UI</h1>
-    <p>150+ animated React components built on top of shadcn/ui, Framer Motion, and Tailwind CSS. Follows the same copy-paste registry model — you own the code. Perfect for landing pages and marketing sites that need to stand out.</p>
-    <div class="ext-links">
-      <a href="https://magicui.design/" target="_blank">Official Site</a>
-      <a href="https://magicui.design/docs" target="_blank">Docs</a>
-      <a href="https://github.com/magicuidesign/magicui" target="_blank">GitHub</a>
-      <a href="https://magicui.design/r" target="_blank">Registry</a>
-    </div>
-  </div>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>MagicUI - Design KB</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#e5e5e5;font-family:Inter,sans-serif;font-size:15px;line-height:1.6}.sidebar{position:fixed;left:0;top:0;width:220px;height:100vh;background:#111;border-right:1px solid #1f1f1f;padding:20px;overflow-y:auto}.sidebar h2{font-size:13px;color:#f59e0b;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}.sidebar a{display:block;color:#888;text-decoration:none;padding:6px 8px;border-radius:6px;font-size:13px;margin-bottom:2px}.sidebar a:hover{color:#fff;background:#1a1a1a}.main{margin-left:220px;padding:48px;max-width:900px}h1{font-size:32px;font-weight:700;color:#fff;margin-bottom:8px}h2{font-size:20px;font-weight:600;color:#fff;margin:40px 0 12px;padding-top:40px;border-top:1px solid #1f1f1f}h3{font-size:15px;font-weight:600;color:#d4d4d4;margin:24px 0 8px}p{color:#aaa;margin-bottom:12px}.tag{display:inline-block;background:#f59e0b15;border:1px solid #f59e0b40;color:#f59e0b;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.badge{display:inline-block;background:#1a1a1a;border:1px solid #2a2a2a;color:#888;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.code-block{position:relative;margin:16px 0}.copy-btn{position:absolute;top:8px;right:8px;background:#1f1f1f;border:1px solid #333;color:#888;padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer}pre{border-radius:8px;overflow:auto;font-size:13px}input[type=search]{width:100%;background:#111;border:1px solid #2a2a2a;color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;font-family:inherit;margin-bottom:32px;outline:none}.note{background:#f59e0b08;border:1px solid #f59e0b20;border-radius:8px;padding:16px;margin:16px 0}.note p{margin:0;color:#ccc}</style></head><body><div class="sidebar"><h2>Design KB</h2><a href="../index.html">Home</a><a href="../animations/gsap.html">GSAP</a><a href="../animations/framer-motion.html">Framer Motion</a><a href="../animations/lenis.html">Lenis</a><a href="../components/shadcn.html">shadcn/ui</a><a href="../components/magicui.html">MagicUI</a><a href="../components/aceternity.html">Aceternity</a><a href="../components/21st-dev.html">21st.dev</a><a href="../components/hover-dev.html">hover.dev</a><a href="../3d/r3f.html">React Three Fiber</a><a href="../3d/spline-scenes.html">Spline Scenes</a><a href="../reference-sites/awwwards.html">Awwwards</a><a href="../reference-sites/godly.html">Godly</a><a href="../reference-sites/lusion.html">Lusion</a></div><div class="main"><input type="search" placeholder="Search..." oninput="search(this.value)"><div id="content"><h1>MagicUI</h1><p>A collection of animated, copy-paste React components designed specifically for landing pages and marketing sites. MagicUI bridges the gap between shadcn/ui&#39;s utility-first approach and the need for visually distinctive, motion-rich components — with a philosophy that good design builds trust and communicates organizational competence.</p><h2>Overview</h2><p>MagicUI is inspired by shadcn/ui but focused on animated, attention-worthy components rather than functional primitives. Built for Next.js 15 + TypeScript. Copy-paste model — no CLI required for most components. Components span text animations, background patterns, special effects, buttons, device mockups, and data display. Over 150+ components across 10 categories. Templates available for SaaS, AI Agent, Dev Tool, Portfolio, Startup, and more.</p><h2>Component Categories</h2><h3>Text Animations (18+ components)</h3><span class="tag">Text Animate</span> <span class="tag">Typing Animation</span> <span class="tag">Aurora Text</span> <span class="tag">Video Text</span> <span class="tag">Number Ticker</span> <span class="tag">Animated Shiny Text</span> <span class="tag">Animated Gradient Text</span> <span class="tag">Text Reveal</span> <span class="tag">Hyper Text</span> <span class="tag">Word Rotate</span> <span class="tag">Morphing Text</span> <span class="tag">Spinning Text</span> <span class="tag">Sparkles Text</span> <span class="tag">Line Shadow Text</span> <span class="tag">Scroll Based Velocity</span> <span class="tag">Text 3D Flip</span> <span class="tag">Text Highlighter</span> <span class="tag">Dia Text Reveal</span> <h3>Background Patterns (10+ components)</h3><span class="tag">Flickering Grid</span> <span class="tag">Animated Grid Pattern</span> <span class="tag">Retro Grid</span> <span class="tag">Dot Pattern</span> <span class="tag">Grid Pattern</span> <span class="tag">Hexagon Pattern</span> <span class="tag">Striped Pattern</span> <span class="tag">Ripple</span> <span class="tag">Interactive Grid Pattern</span> <span class="tag">Light Rays</span> <span class="tag">Noise Texture</span> <h3>Special Effects</h3><span class="tag">Animated Beam</span> <span class="tag">Border Beam</span> <span class="tag">Shine Border</span> <span class="tag">Magic Card</span> <span class="tag">Glare Hover</span> <span class="tag">Meteors</span> <span class="tag">Confetti</span> <span class="tag">Particles</span> <span class="tag">Globe</span> <span class="tag">Orbiting Circles</span> <span class="tag">Avatar Circles</span> <span class="tag">Icon Cloud</span> <span class="tag">Lens</span> <span class="tag">Smooth Cursor</span> <span class="tag">Progressive Blur</span> <span class="tag">Dotted Map</span> <span class="tag">Pointer</span> <h3>Core Components</h3><span class="tag">Marquee</span> <span class="tag">Terminal</span> <span class="tag">Hero Video Dialog</span> <span class="tag">Bento Grid</span> <span class="tag">Animated List</span> <span class="tag">Dock</span> <span class="tag">Tweet Card</span> <span class="tag">Animated Theme Toggler</span> <h3>Buttons</h3><span class="tag">Rainbow Button</span> <span class="tag">Shimmer Button</span> <span class="tag">Ripple Button</span> <span class="tag">Shiny Button</span> <span class="tag">Pulsating Button</span> <span class="tag">Interactive Hover Button</span> <h3>Device Mockups</h3><span class="tag">Safari Browser Mockup</span> <span class="tag">iPhone Mockup</span> <span class="tag">Android Mockup</span> <h2>Key Design Techniques</h2><h3>Animated Beam</h3><p>Draws an animated SVG path between two elements — perfect for visualizing data flow in AI product diagrams or architecture overviews. The beam traces a curved path with a glowing gradient that animates along the path. Extremely effective for showing connections between components in a product&#39;s system architecture illustration.</p><h3>Border Beam</h3><p>Animated gradient that sweeps around a card&#39;s border in a continuous loop. Creates a "glowing border" effect that adds premium visual energy to feature cards, pricing cards, or hero CTAs. Customize the color, size, and duration to match brand palette.</p><h3>Globe Component</h3><p>Interactive 3D globe with location dots and animated arcs — visualizes global reach and connectivity. Built on cobe (a lightweight WebGL globe library). Commonly used in SaaS hero sections to communicate "worldwide" or "infrastructure" concepts without complex Three.js setup.</p><h3>Marquee</h3><p>Smooth infinite-scroll marquee with configurable speed, direction, and pause-on-hover. Used for logo clouds, testimonial tickers, and feature highlight strips. The vertical variant is useful for scrolling testimonial feeds. A fundamental component for any marketing page that needs to communicate social proof or partner logos.</p><h3>Magic Card</h3><p>Card with a spotlight/glow effect that follows the mouse cursor — creates a premium glass-morphism feel with 3D perspective tilt. The gradient glow tracks the cursor position within the card, creating a magnetic light effect. Stack multiple Magic Cards in a grid for a pricing or features section that feels alive.</p><h2>Templates</h2><span class="badge">SaaS</span> <span class="badge">AI Agent</span> <span class="badge">Dev Tool</span> <span class="badge">Mobile</span> <span class="badge">Startup</span> <span class="badge">Portfolio</span> <span class="badge">Changelog</span> <span class="badge">Blog</span> <span class="badge">CodeForge</span> <h2>Technology Stack</h2><span class="badge">Next.js 15</span> <span class="badge">TypeScript</span> <span class="badge">Tailwind CSS</span> <span class="badge">Framer Motion</span> <span class="badge">shadcn/ui compatible</span> <span class="badge">cobe (globe)</span> <span class="badge">canvas-confetti</span> <h2>Code Examples</h2><h3>Shimmer button</h3><div class="code-block"><button class="copy-btn">Copy</button><pre><code class="language-jsx">// components/ui/shimmer-button.tsx
+import React from 'react'
+import { cn } from '@/lib/utils'
 
-  <div class="toc">
-    <h3>Contents</h3>
-    <ul>
-      <li><a href="#install">Setup</a></li>
-      <li><a href="#components">Component Catalog</a></li>
-      <li><a href="#marquee">Marquee</a></li>
-      <li><a href="#animated-list">AnimatedList</a></li>
-      <li><a href="#bento">Bento Grid</a></li>
-      <li><a href="#text">Text Effects</a></li>
-      <li><a href="#bg">Background Effects</a></li>
-      <li><a href="#github-notes">GitHub README Notes</a></li>
-    </ul>
-  </div>
-
-  <div class="section" id="install">
-    <h2>Setup</h2>
-    <p class="sub">Requires shadcn/ui already initialized. Magic UI uses the same registry protocol.</p>
-    <div class="code-block">
-      <div class="code-header"><span class="code-lang">bash — install any Magic UI component</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-      <pre><code class="language-bash"># Prerequisite: shadcn/ui must be initialized
-npx shadcn@latest init
-
-# Install individual components
-npx shadcn@latest add "https://magicui.design/r/marquee"
-npx shadcn@latest add "https://magicui.design/r/animated-list"
-npx shadcn@latest add "https://magicui.design/r/bento-grid"
-npx shadcn@latest add "https://magicui.design/r/text-animate"
-npx shadcn@latest add "https://magicui.design/r/sparkles-text"
-npx shadcn@latest add "https://magicui.design/r/animated-gradient-text"
-npx shadcn@latest add "https://magicui.design/r/shine-border"
-npx shadcn@latest add "https://magicui.design/r/magic-card"
-npx shadcn@latest add "https://magicui.design/r/number-ticker"
-npx shadcn@latest add "https://magicui.design/r/orbiting-circles"</code></pre>
-    </div>
-  </div>
-
-  <div class="section" id="components">
-    <h2>Component Catalog</h2>
-    <p class="sub">Categories from the Magic UI registry.</p>
-    <div class="comp-grid">
-      <div class="comp-tag"><strong>Marquee</strong>Infinite scroll ticker</div>
-      <div class="comp-tag"><strong>AnimatedList</strong>Staggered notification list</div>
-      <div class="comp-tag"><strong>AnimatedBeam</strong>SVG beam connector</div>
-      <div class="comp-tag"><strong>Bento Grid</strong>Feature grid layout</div>
-      <div class="comp-tag"><strong>MagicCard</strong>Mouse-follow glow card</div>
-      <div class="comp-tag"><strong>ShineBorder</strong>Animated border shine</div>
-      <div class="comp-tag"><strong>NeonColors</strong>Neon glow card</div>
-      <div class="comp-tag"><strong>NumberTicker</strong>Counting number</div>
-      <div class="comp-tag"><strong>OrbitingCircles</strong>Orbit animation</div>
-      <div class="comp-tag"><strong>DotPattern</strong>Background dots</div>
-      <div class="comp-tag"><strong>GridPattern</strong>Background grid</div>
-      <div class="comp-tag"><strong>Particles</strong>Particle field</div>
-      <div class="comp-tag"><strong>Meteors</strong>Shooting stars</div>
-      <div class="comp-tag"><strong>Ripple</strong>Click ripple</div>
-      <div class="comp-tag"><strong>RetroGrid</strong>Perspective grid BG</div>
-      <div class="comp-tag"><strong>Warp Speed</strong>Starfield animation</div>
-      <div class="comp-tag"><strong>TextAnimate</strong>Text reveal effects</div>
-      <div class="comp-tag"><strong>SparklesText</strong>Sparkles on text</div>
-      <div class="comp-tag"><strong>GradientText</strong>Animated gradient</div>
-      <div class="comp-tag"><strong>TypingAnimation</strong>Typewriter effect</div>
-      <div class="comp-tag"><strong>BlurIn</strong>Blur reveal</div>
-      <div class="comp-tag"><strong>FadeText</strong>Fade+slide words</div>
-      <div class="comp-tag"><strong>BoxReveal</strong>Box wipe reveal</div>
-      <div class="comp-tag"><strong>WordRotate</strong>Rotating words</div>
-      <div class="comp-tag"><strong>HyperText</strong>Scramble text</div>
-      <div class="comp-tag"><strong>CoolMode</strong>Confetti click</div>
-      <div class="comp-tag"><strong>Confetti</strong>Celebration burst</div>
-      <div class="comp-tag"><strong>Rainbow</strong>Rainbow hover btn</div>
-      <div class="comp-tag"><strong>ShimmerButton</strong>Shimmer CTA</div>
-      <div class="comp-tag"><strong>Globe</strong>Interactive globe</div>
-      <div class="comp-tag"><strong>iPhone</strong>iPhone mockup</div>
-    </div>
-  </div>
-
-  <div class="section" id="marquee">
-    <h2>Marquee</h2>
-    <p class="sub">Infinite scrolling ticker — perfect for logos, testimonials, and feature lists. CSS animation with pause-on-hover.</p>
-    <div class="code-block">
-      <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-      <pre><code class="language-bash">npx shadcn@latest add "https://magicui.design/r/marquee"</code></pre>
-    </div>
-    <div class="code-block">
-      <div class="code-header"><span class="code-lang">jsx</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-      <pre><code class="language-jsx">import Marquee from '@/components/ui/marquee';
-
-const logos = ['Vercel', 'Stripe', 'Linear', 'Raycast', 'Clerk'];
-
-export function LogoTicker() {
-  return (
-    &lt;Marquee
-      pauseOnHover    // pause animation on mouse hover
-      reverse={false} // direction: false = left, true = right
-      speed={30}      // CSS animation duration in seconds
-      className="py-4"
-    &gt;
-      {logos.map(logo =&gt; (
-        &lt;div key={logo} className="mx-8 text-muted-foreground font-semibold text-lg"&gt;
-          {logo}
-        &lt;/div&gt;
-      ))}
-    &lt;/Marquee&gt;
-  );
+interface ShimmerButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  shimmerColor?: string
+  shimmerSize?: string
+  borderRadius?: string
+  shimmerDuration?: string
+  background?: string
 }
 
-// Double row (common pattern)
-export function TestimonialMarquee() {
+export const ShimmerButton = React.forwardRef<HTMLButtonElement, ShimmerButtonProps>(
+  ({ children, className, shimmerColor = '#ffffff', shimmerSize = '0.05em',
+    shimmerDuration = '3s', borderRadius = '100px', background = 'rgba(0,0,0,1)',
+    ...props }, ref) => {
+    return (
+      <button
+        style={{ '--shimmer-color': shimmerColor, '--spread': '90deg',
+          '--shimmer-size': shimmerSize, '--radius': borderRadius,
+          '--speed': shimmerDuration, '--cut': '0.1em', '--bg': background } as any}
+        className={cn(
+          'group relative z-0 flex cursor-pointer items-center justify-center',
+          'overflow-hidden whitespace-nowrap border border-white/10 px-6 py-3',
+          '[border-radius:var(--radius)] [background:var(--bg)]',
+          'text-white',
+          className
+        )}
+        ref={ref}
+        {...props}
+      >
+        <div className='absolute inset-0 overflow-visible [container-type:size]'>
+          <div className='absolute inset-0 h-[100cqh] animate-shimmer-slide [aspect-ratio:1] [border-radius:0] [mask:none]'>
+            <div className='absolute -inset-full w-auto rotate-0 [background:conic-gradient(from_calc(270deg-(var(--spread)*0.5)),transparent_0,var(--shimmer-color)_var(--spread),transparent_var(--spread))]' />
+          </div>
+        </div>
+        <span className='relative z-10'>{children}</span>
+      </button>
+    )
+  }
+)</code></pre></div><h3>Animated Beam (connecting two elements)</h3><div class="code-block"><button class="copy-btn">Copy</button><pre><code class="language-jsx">import { AnimatedBeam } from '@/components/ui/animated-beam'
+import { useRef } from 'react'
+
+export function BeamDemo() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const fromRef = useRef<HTMLDivElement>(null)
+  const toRef = useRef<HTMLDivElement>(null)
+
   return (
-    &lt;div className="flex flex-col gap-4"&gt;
-      &lt;Marquee pauseOnHover&gt;
-        {topRow.map(t =&gt; &lt;TestimonialCard key={t.id} {...t} /&gt;)}
-      &lt;/Marquee&gt;
-      &lt;Marquee pauseOnHover reverse&gt;
-        {bottomRow.map(t =&gt; &lt;TestimonialCard key={t.id} {...t} /&gt;)}
-      &lt;/Marquee&gt;
-    &lt;/div&gt;
-  );
-}</code></pre>
+    <div ref={containerRef} className='relative flex items-center justify-between p-10'>
+      <div ref={fromRef} className='h-12 w-12 rounded-full bg-white shadow-lg' />
+      <div ref={toRef} className='h-12 w-12 rounded-full bg-white shadow-lg' />
+      <AnimatedBeam
+        containerRef={containerRef}
+        fromRef={fromRef}
+        toRef={toRef}
+        gradientStartColor='#ffaa40'
+        gradientStopColor='#9c40ff'
+        duration={4}
+      />
     </div>
-  </div>
+  )
+}</code></pre></div><h3>Number Ticker (animated counting)</h3><div class="code-block"><button class="copy-btn">Copy</button><pre><code class="language-jsx">import { NumberTicker } from '@/components/ui/number-ticker'
 
-  <div class="section" id="animated-list">
-    <h2>AnimatedList</h2>
-    <p class="sub">Staggered list with smooth spring animations — great for activity feeds, notifications, and feature lists.</p>
-    <div class="code-block">
-      <div class="code-header"><span class="code-lang">jsx</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-      <pre><code class="language-jsx">import { AnimatedList } from '@/components/ui/animated-list';
-
-const notifications = [
-  { name: 'Payment received', description: '$299.00', icon: '💳', color: '#22c55e', time: '2s ago' },
-  { name: 'New subscriber', description: 'john@example.com', icon: '🎉', color: '#3b82f6', time: '5s ago' },
-  { name: 'Deploy complete', description: 'v2.4.1 → Production', icon: '🚀', color: '#8b5cf6', time: '12s ago' },
-];
-
-export function NotificationFeed() {
+// Counts up to the target number when it enters the viewport
+export function StatsSection() {
   return (
-    &lt;AnimatedList delay={1500}&gt; {/* delay in ms between items */}
-      {notifications.map(n =&gt; (
-        &lt;div key={n.name} className="flex items-center gap-3 rounded-xl bg-card p-4 border"&gt;
-          &lt;span className="text-2xl"&gt;{n.icon}&lt;/span&gt;
-          &lt;div&gt;
-            &lt;p className="font-semibold text-sm"&gt;{n.name}&lt;/p&gt;
-            &lt;p className="text-muted-foreground text-xs"&gt;{n.description}&lt;/p&gt;
-          &lt;/div&gt;
-          &lt;span className="ml-auto text-xs text-muted-foreground"&gt;{n.time}&lt;/span&gt;
-        &lt;/div&gt;
-      ))}
-    &lt;/AnimatedList&gt;
-  );
-}</code></pre>
+    <div className='grid grid-cols-3 gap-8 text-center'>
+      <div>
+        <NumberTicker value={120000} className='text-5xl font-bold text-white' />
+        <p className='text-zinc-400 mt-1'>Users worldwide</p>
+      </div>
+      <div>
+        <NumberTicker value={99.9} decimalPlaces={1} className='text-5xl font-bold text-white' />
+        <p className='text-zinc-400 mt-1'>Uptime %</p>
+      </div>
+      <div>
+        <NumberTicker value={4} className='text-5xl font-bold text-white' />
+        <p className='text-zinc-400 mt-1'>ms avg response</p>
+      </div>
     </div>
-  </div>
+  )
+}</code></pre></div><h3>Marquee logo cloud</h3><div class="code-block"><button class="copy-btn">Copy</button><pre><code class="language-jsx">import { Marquee } from '@/components/ui/marquee'
 
-  <div class="section" id="bento">
-    <h2>Bento Grid</h2>
-    <p class="sub">Apple-inspired feature grid with varying cell sizes. The most common landing page pattern in 2024-2026.</p>
-    <div class="code-block">
-      <div class="code-header"><span class="code-lang">jsx</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-      <pre><code class="language-jsx">import { BentoCard, BentoGrid } from '@/components/ui/bento-grid';
+const logos = ['Vercel', 'Linear', 'Stripe', 'Loom', 'Raycast', 'Arc']
 
-const features = [
-  {
-    Icon: CodeIcon,
-    name: 'Ship faster',
-    description: 'Copy-paste components into your codebase.',
-    href: '#',
-    cta: 'Learn more',
-    background: &lt;AnimatedBeam className="absolute inset-0" /&gt;,
-    className: 'lg:row-start-1 lg:row-end-4 lg:col-start-2 lg:col-end-3', // wide cell
-  },
-  {
-    Icon: ZapIcon,
-    name: 'Zero config',
-    description: 'Works out of the box with your existing setup.',
-    className: 'lg:col-start-1 lg:col-end-2 lg:row-start-1 lg:row-end-3',
-  },
-];
-
-export function FeaturesSection() {
+export function LogoCloud() {
   return (
-    &lt;BentoGrid className="lg:grid-rows-3"&gt;
-      {features.map(f =&gt; (
-        &lt;BentoCard key={f.name} {...f} /&gt;
-      ))}
-    &lt;/BentoGrid&gt;
-  );
-}</code></pre>
+    <div className='relative overflow-hidden py-8'>
+      {/* Fade edges */}
+      <div className='pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-black to-transparent z-10' />
+      <div className='pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-black to-transparent z-10' />
+      <Marquee pauseOnHover speed={30} className='[--duration:30s]'>
+        {logos.map(logo => (
+          <div key={logo} className='mx-8 text-zinc-500 font-semibold text-lg hover:text-white transition-colors'>
+            {logo}
+          </div>
+        ))}
+      </Marquee>
     </div>
-  </div>
-
-  <div class="section" id="text">
-    <h2>Text Effects</h2>
-    <div class="code-block">
-      <div class="code-header"><span class="code-lang">jsx — NumberTicker, HyperText, TypingAnimation</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-      <pre><code class="language-jsx">import { NumberTicker } from '@/components/ui/number-ticker';
-import { HyperText } from '@/components/ui/hyper-text';
-import { TypingAnimation } from '@/components/ui/typing-animation';
-import { TextAnimate } from '@/components/ui/text-animate';
-import { SparklesText } from '@/components/ui/sparkles-text';
-import { AnimatedGradientText } from '@/components/ui/animated-gradient-text';
-
-// Counting number
-&lt;NumberTicker value={100} className="text-7xl font-bold" /&gt;
-
-// Matrix/hacker text scramble
-&lt;HyperText text="DESIGN SYSTEM" className="text-4xl font-bold" /&gt;
-
-// Typewriter
-&lt;TypingAnimation text="Hello, World!" className="text-2xl" duration={80} /&gt;
-
-// Word-by-word animation
-&lt;TextAnimate animation="slideUp" by="word"&gt;
-  Build beautiful interfaces without the hassle.
-&lt;/TextAnimate&gt;
-
-// Sparkles on hover
-&lt;SparklesText text="Magic UI" className="text-5xl font-bold" /&gt;
-
-// Animated gradient text
-&lt;AnimatedGradientText&gt;
-  ✦ Introducing Magic UI
-&lt;/AnimatedGradientText&gt;</code></pre>
-    </div>
-  </div>
-
-  <div class="section" id="bg">
-    <h2>Background Effects</h2>
-    <div class="code-block">
-      <div class="code-header"><span class="code-lang">jsx</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-      <pre><code class="language-jsx">import { DotPattern } from '@/components/ui/dot-pattern';
-import { GridPattern } from '@/components/ui/grid-pattern';
-import { Particles } from '@/components/ui/particles';
-import { Meteors } from '@/components/ui/meteors';
-import { RetroGrid } from '@/components/ui/retro-grid';
-import { Ripple } from '@/components/ui/ripple';
-import { cn } from '@/lib/utils';
-
-// Dot pattern background
-&lt;DotPattern
-  className={cn('[mask-image:radial-gradient(300px_circle_at_center,white,transparent)]')}
-/&gt;
-
-// Grid pattern
-&lt;GridPattern
-  numSquares={30}
-  maxOpacity={0.1}
-  duration={3}
-  className="inset-x-0 inset-y-[-30%] h-[200%] skew-y-12"
-/&gt;
-
-// Floating particles
-&lt;Particles quantity={100} ease={80} color="#ffffff" /&gt;
-
-// Shooting stars / meteors
-&lt;Meteors number={20} /&gt;
-
-// Perspective grid (footer/hero)
-&lt;RetroGrid /&gt;
-
-// Ripple circles (hero behind CTA)
-&lt;Ripple /&gt;
-
-// Hero section pattern
-&lt;section className="relative overflow-hidden"&gt;
-  &lt;DotPattern className="absolute inset-0 opacity-50 [mask-image:radial-gradient(ellipse_at_center,white,transparent)]" /&gt;
-  &lt;div className="relative z-10"&gt;{/* content */}&lt;/div&gt;
-&lt;/section&gt;</code></pre>
-    </div>
-  </div>
-
-  <div class="section" id="github-notes">
-    <h2>GitHub README Notes</h2>
-    <div class="info-box">
-      <strong>From magicuidesign/magicui README:</strong> "Magic UI is a collection of re-usable components that you can copy and paste into your web apps. It primarily features components, blocks, and templates geared towards creating landing pages and user-facing marketing materials."<br/><br/>
-      <strong>Built on:</strong> shadcn/ui registry protocol + Framer Motion + Tailwind CSS + Radix UI<br/><br/>
-      <strong>Requirements:</strong> Next.js (or any React framework) + shadcn/ui initialized + Tailwind CSS + Framer Motion<br/><br/>
-      <strong>Stars:</strong> 18k+ GitHub stars (2025)<br/><br/>
-      <strong>Pricing:</strong> Free open-source components + paid Pro templates for complete landing page sections
-    </div>
-  </div>
-</main>
-</div>
-<script>
-hljs.highlightAll();
-function copyCode(btn){
-  const code = btn.closest('.code-block').querySelector('code').textContent;
-  navigator.clipboard.writeText(code).then(()=>{
-    btn.textContent='Copied!';btn.classList.add('copied');
-    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000);
-  });
-}
-</script>
-</body>
-</html>
+  )
+}</code></pre></div><h2>Implementation Notes</h2><div class="note"><p><strong>Install pattern:</strong> Check magicui.design/docs/installation for the CLI command. Most components: npx magicui-cli add [component-name]. Copy-paste also works for all components.</p></div><div class="note"><p><strong>Best use cases:</strong> MagicUI components excel in hero sections, feature grids, and stats sections of marketing/SaaS landing pages. The animated text components (Aurora Text, Animated Gradient Text) are immediately impactful for hero headlines.</p></div><div class="note"><p><strong>Globe for global products:</strong> The Globe component is one of the most-copied elements in modern SaaS sites. Use it in hero sections to communicate global infrastructure without complex 3D setup.</p></div><div class="note"><p><strong>Combine with shadcn/ui:</strong> MagicUI is designed to layer on top of a shadcn/ui installation. Use shadcn for functional components (forms, dialogs, dropdowns) and MagicUI for hero/marketing sections.</p></div></div></div><script>hljs.highlightAll();document.querySelectorAll(".code-block").forEach(b=>{const btn=b.querySelector(".copy-btn");if(btn)btn.onclick=()=>{navigator.clipboard.writeText(b.querySelector("code").innerText);btn.textContent="Copied!";setTimeout(()=>btn.textContent="Copy",1500);}});function search(q){document.querySelectorAll("#content h2,#content h3,#content p").forEach(el=>{el.style.opacity=q&&!el.textContent.toLowerCase().includes(q.toLowerCase())?"0.2":"1";});}</script></body></html>
