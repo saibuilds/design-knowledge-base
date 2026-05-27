@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian Properties — Find Your Perfect Home in Toronto</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0f0f0f;
+  --gold: #c9a96e;
+  --gold-light: #d4b47a;
+  --cream: #f5f0e8;
+  --muted: #6b6560;
+  --card: #161412;
+  --border: #222018;
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--cream); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 1.5rem 4rem;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(15,15,15,0.94); backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(201,169,110,0.12);
+}
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 500; color: var(--gold); letter-spacing: 0.05em; }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a { color: rgba(245,240,232,0.65); text-decoration: none; font-size: 0.85rem; font-weight: 400; letter-spacing: 0.02em; transition: color 0.2s; }
+.nav-links a:hover { color: var(--gold); }
+.nav-contact { font-size: 0.85rem; font-weight: 500; color: var(--gold); text-decoration: none; border: 1px solid rgba(201,169,110,0.4); padding: 0.55rem 1.4rem; border-radius: 1px; transition: all 0.2s; }
+.nav-contact:hover { background: var(--gold); color: #000; }
+
+/* HERO */
+.hero {
+  height: 100vh; position: relative; display: flex; align-items: center;
+  justify-content: center; text-align: center; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(15,15,15,0.6) 0%, rgba(15,15,15,0.2) 30%, rgba(15,15,15,0.4) 60%, rgba(15,15,15,0.85) 100%),
+    linear-gradient(135deg, #1a150e 0%, #2d2318 20%, #1a1510 40%, #0f0f0a 60%, #1a1408 80%, #0f0f0f 100%);
+  z-index: 0;
+}
+.hero-pattern {
+  position: absolute; inset: 0; z-index: 0; opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a96e' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-content { position: relative; z-index: 2; }
+.hero-eyebrow { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.35em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.75rem; }
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  font-weight: 400; line-height: 1.1; letter-spacing: -0.01em;
+  color: var(--cream); margin-bottom: 1.5rem; max-width: 800px; margin-left: auto; margin-right: auto;
+}
+.hero-title em { color: var(--gold); font-style: italic; }
+.hero-sub { font-size: 1rem; color: rgba(245,240,232,0.6); margin-bottom: 2.5rem; max-width: 440px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+.hero-search {
+  background: rgba(15,15,15,0.7); border: 1px solid rgba(201,169,110,0.25);
+  backdrop-filter: blur(12px); border-radius: 2px;
+  display: inline-flex; align-items: center; gap: 0;
+  overflow: hidden; max-width: 580px; width: 100%; margin: 0 auto;
+}
+.hero-search input {
+  background: none; border: none; padding: 1rem 1.5rem; flex: 1;
+  font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--cream); outline: none;
+}
+.hero-search input::placeholder { color: var(--muted); }
+.hero-search-btn {
+  background: var(--gold); color: #0f0f0f; border: none; padding: 1rem 1.75rem;
+  font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  transition: background 0.2s; white-space: nowrap;
+}
+.hero-search-btn:hover { background: var(--gold-light); }
+.hero-stats { display: flex; gap: 3rem; justify-content: center; margin-top: 3rem; }
+.hero-stat-num { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 500; color: var(--gold); }
+.hero-stat-label { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+.hero-scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+.hero-scroll-hint span { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; }
+.scroll-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: bounce 1.5s ease-in-out infinite; }
+@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+
+/* FILTER + LISTINGS */
+.listings-section { padding: 7rem 4rem; }
+.listings-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; }
+.listings-count { font-size: 0.85rem; color: var(--muted); }
+.filter-bar { display: flex; gap: 0.5rem; margin-bottom: 3rem; flex-wrap: wrap; }
+.filter-btn {
+  padding: 0.6rem 1.5rem; border: 1px solid var(--border); background: none;
+  color: var(--muted); font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 500;
+  cursor: pointer; border-radius: 1px; transition: all 0.2s; letter-spacing: 0.04em;
+}
+.filter-btn[data-active="true"], .filter-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,169,110,0.05); }
+
+.property-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+.property-card { background: var(--card); border: 1px solid var(--border); border-radius: 2px; overflow: hidden; cursor: pointer; transition: border-color 0.3s; }
+.property-card:hover { border-color: rgba(201,169,110,0.3); }
+.prop-image { position: relative; aspect-ratio: 4/3; overflow: hidden; }
+.prop-img-bg { position: absolute; inset: 0; transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94); }
+.property-card:hover .prop-img-bg { transform: scale(1.05); }
+.prop-img-bg:nth-child(1) { background: linear-gradient(135deg, #1a1a10, #2d2d18); }
+.property-card:nth-child(1) .prop-img-bg { background: linear-gradient(135deg, #1e1810, #2d2418); }
+.property-card:nth-child(2) .prop-img-bg { background: linear-gradient(135deg, #101a18, #182820); }
+.property-card:nth-child(3) .prop-img-bg { background: linear-gradient(135deg, #161016, #201820); }
+.property-card:nth-child(4) .prop-img-bg { background: linear-gradient(135deg, #101618, #182228); }
+.property-card:nth-child(5) .prop-img-bg { background: linear-gradient(135deg, #1a1a10, #252510); }
+.property-card:nth-child(6) .prop-img-bg { background: linear-gradient(135deg, #181010, #282010); }
+.prop-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; opacity: 0.2; z-index: 1; }
+.prop-overlay {
+  position: absolute; inset: 0; background: rgba(15,15,15,0.88);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.3s; z-index: 2;
+}
+.property-card:hover .prop-overlay { opacity: 1; }
+.prop-overlay-btn { border: 1px solid var(--gold); color: var(--gold); padding: 0.75rem 1.75rem; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Inter', sans-serif; }
+.prop-badge { position: absolute; top: 1rem; left: 1rem; background: var(--gold); color: #000; padding: 0.3rem 0.75rem; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; z-index: 3; }
+.prop-badge.new { background: var(--green, #22c55e); color: #000; }
+.prop-body { padding: 1.5rem; }
+.prop-type { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+.prop-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 500; margin-bottom: 0.4rem; color: var(--cream); }
+.prop-location { font-size: 0.8rem; color: var(--muted); margin-bottom: 1.25rem; }
+.prop-details { display: flex; gap: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+.prop-detail { text-align: center; }
+.prop-detail-val { font-size: 0.9rem; font-weight: 600; color: var(--cream); }
+.prop-detail-label { font-size: 0.65rem; color: var(--muted); margin-top: 0.15rem; text-transform: uppercase; letter-spacing: 0.08em; }
+.prop-price { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--gold); font-weight: 500; margin-top: 1rem; }
+
+/* MAP */
+.map-section { padding: 5rem 4rem; background: #0d0d0b; border-top: 1px solid var(--border); }
+.map-inner { max-width: 1100px; margin: 0 auto; }
+.map-container {
+  margin-top: 3rem; border: 1px solid var(--border); border-radius: 2px; overflow: hidden;
+  position: relative; aspect-ratio: 16/7;
+  background: linear-gradient(135deg, #141210, #1a1810, #121410);
+}
+.map-grid {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(201,169,110,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,169,110,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.map-label { position: absolute; font-family: 'Inter', sans-serif; font-size: 0.7rem; color: var(--muted); letter-spacing: 0.05em; }
+.map-label-main { font-size: 0.8rem; color: rgba(245,240,232,0.5); font-weight: 500; }
+.map-pin { position: absolute; z-index: 3; cursor: pointer; }
+.pin-dot { width: 12px; height: 12px; background: var(--gold); border-radius: 50%; position: relative; animation: pinPulse 2s ease-in-out infinite; }
+.pin-dot::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 1px solid rgba(201,169,110,0.4); animation: pinRing 2s ease-in-out infinite; }
+@keyframes pinPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.2)} }
+@keyframes pinRing { 0%{transform:scale(1);opacity:0.8} 100%{transform:scale(2.5);opacity:0} }
+.pin-label { position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%); background: rgba(15,15,15,0.9); border: 1px solid var(--border); padding: 0.3rem 0.6rem; white-space: nowrap; font-size: 0.7rem; color: var(--cream); border-radius: 1px; }
+
+/* AGENT */
+.agent-section { padding: 7rem 4rem; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+.agent-photo { aspect-ratio: 3/4; background: linear-gradient(135deg, #1a1510, #2d2418); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 6rem; opacity: 0.5; position: relative; overflow: hidden; }
+.agent-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(15,15,15,0.8), transparent 50%); }
+.agent-info {}
+.agent-title { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+.agent-name { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 400; margin-bottom: 1.5rem; line-height: 1.1; }
+.agent-bio { color: rgba(245,240,232,0.65); line-height: 1.8; font-size: 0.95rem; margin-bottom: 2rem; }
+.agent-stats { display: flex; gap: 2.5rem; margin-bottom: 2.5rem; padding: 1.5rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.agent-stat-num { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--gold); }
+.agent-stat-label { font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; }
+.agent-contacts { display: flex; gap: 1rem; flex-wrap: wrap; }
+.agent-btn { padding: 0.75rem 1.75rem; font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 500; border-radius: 1px; text-decoration: none; transition: all 0.2s; }
+.agent-btn-primary { background: var(--gold); color: #000; }
+.agent-btn-primary:hover { background: var(--gold-light); }
+.agent-btn-outline { border: 1px solid var(--border); color: var(--cream); }
+.agent-btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+/* MORTGAGE CALC */
+.mortgage-section { padding: 7rem 4rem; background: #0d0d0b; border-top: 1px solid var(--border); }
+.mortgage-inner { max-width: 820px; margin: 0 auto; }
+.mortgage-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 3rem; align-items: start; }
+.mort-slider-group { margin-bottom: 1.75rem; }
+.mort-slider-group label { display: flex; justify-content: space-between; margin-bottom: 0.6rem; font-size: 0.85rem; }
+.mort-val { font-weight: 600; color: var(--gold); }
+input[type=range] { width: 100%; -webkit-appearance: none; height: 2px; background: var(--border); border-radius: 2px; outline: none; cursor: pointer; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: var(--gold); border-radius: 50%; cursor: pointer; }
+.mort-results { background: var(--card); border: 1px solid var(--border); padding: 2.5rem; border-radius: 2px; }
+.mort-result-item { padding: 1.25rem 0; border-bottom: 1px solid var(--border); }
+.mort-result-item:last-child { border-bottom: none; }
+.mort-label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
+.mort-value { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold); }
+
+/* FOOTER */
+footer { padding: 4rem; border-top: 1px solid var(--border); display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; }
+.footer-brand .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--gold); margin-bottom: 1rem; }
+.footer-brand p { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+.footer-col h4 { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(245,240,232,0.5); margin-bottom: 1.25rem; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+.footer-col ul a { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+.footer-col ul a:hover { color: var(--gold); }
+.footer-bottom { padding: 2rem 4rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.footer-bottom p { font-size: 0.75rem; color: var(--muted); }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(35px); }
+
+@media (max-width: 900px) {
+  nav { padding: 1.25rem 1.5rem; }
+  .nav-links { display: none; }
+  .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+  .listings-section { padding: 4rem 1.5rem; }
+  .property-grid { grid-template-columns: 1fr; }
+  .map-section { padding: 4rem 1.5rem; }
+  .agent-section { padding: 4rem 1.5rem; grid-template-columns: 1fr; }
+  .mortgage-section { padding: 4rem 1.5rem; }
+  .mortgage-grid { grid-template-columns: 1fr; gap: 2rem; }
+  footer { padding: 3rem 1.5rem; grid-template-columns: 1fr 1fr; }
+  .footer-bottom { padding: 1.5rem 1.5rem; flex-direction: column; gap: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Meridian</div>
+  <ul class="nav-links">
+    <li><a href="#listings">Listings</a></li>
+    <li><a href="#map">Map</a></li>
+    <li><a href="#agent">Our Agent</a></li>
+    <li><a href="#mortgage">Mortgage</a></li>
+  </ul>
+  <a href="tel:4165550100" class="nav-contact">Contact Us</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Toronto Luxury Real Estate</div>
+    <h1 class="hero-title">Find Your Perfect<br>Home in <em>Toronto</em></h1>
+    <p class="hero-sub">Exclusive properties in Toronto's most coveted neighbourhoods. Curated for those who expect more.</p>
+    <div class="hero-search">
+      <input type="text" placeholder="Search by neighbourhood, address, or MLS #">
+      <button class="hero-search-btn">Search Homes</button>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">340+</div>
+        <div class="hero-stat-label">Active Listings</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">$2.4B</div>
+        <div class="hero-stat-label">Sales Volume</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">18yr</div>
+        <div class="hero-stat-label">In Market</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-dot"></div>
+  </div>
+</section>
+
+<section class="listings-section" id="listings">
+  <div class="listings-header reveal">
+    <div>
+      <div style="font-size:0.7rem;letter-spacing:0.25em;color:var(--gold);text-transform:uppercase;margin-bottom:0.5rem">Properties</div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:400">Featured Listings</h2>
+    </div>
+    <div class="listings-count">Showing 6 of 340 properties</div>
+  </div>
+  <div class="filter-bar reveal">
+    <button class="filter-btn" data-active="true" onclick="filterProps('all', this)">All</button>
+    <button class="filter-btn" onclick="filterProps('house', this)">House</button>
+    <button class="filter-btn" onclick="filterProps('condo', this)">Condo</button>
+    <button class="filter-btn" onclick="filterProps('townhouse', this)">Townhouse</button>
+  </div>
+  <div class="property-grid" id="propGrid">
+    <div class="property-card reveal" data-type="house">
+      <div class="prop-image">
+        <div class="prop-img-bg"></div>
+        <div class="prop-placeholder">🏡</div>
+        <div class="prop-badge">Featured</div>
+        <div class="prop-overlay"><div class="prop-overlay-btn">View Property</div></div>
+      </div>
+      <div class="prop-body">
+        <div class="prop-type">House</div>
+        <div class="prop-name">The Rosedale Manor</div>
+        <div class="prop-location">📍 Rosedale, Toronto</div>
+        <div class="prop-details">
+          <div class="prop-detail"><div class="prop-detail-val">5</div><div class="prop-detail-label">Beds</div></div>
+          <div class="prop-detail"><div class="prop-detail-val">4</div><div class="prop-detail-label">Baths</div></div>
+          <div class="prop-detail"><div class="prop-detail-val">4,200</div><div class="prop-detail-label">Sq Ft</div></div>
+          <div class="prop-detail"><div class="prop-detail-val">2</div><div class="prop-detail-label">Garage</div></div>
+        </div>
+        <div class="prop-price">$4,895,000</div>
+      </div>
+    </div>
+    <div class="property-card reveal" data-type="condo">
+      <div class="prop-image">
+        <div class="prop-img-bg"></div>
+        <div class="prop-placeholder">🏙️</div>
+        <div class="prop-badge new" style="background:#22c55e">New</div>
+        <div class="prop-overlay"><div class="prop-overlay-btn">View Property</div></div>
+      </div>
+      <div class="prop-body">
+        <div class="prop-type">Condo</div>
+        <div class="prop-name">Yorkville Penthouse</div>
+        <div class="prop-location">📍 Yorkville, Toronto</div>
+        <div class="prop-details">
+          <div class="prop-detail"><div class="prop-detail-val">3</div><div class="prop-detail-label">Beds</div></div>
+          <div class="prop-detail"><div class="prop-detail-val">3</div><div class="prop-detail-label">Baths</div></div>
+          <div class="prop-detail"><div class="prop-detail-val">2,850</div><div class="prop-detail-label">Sq Ft</div></div>
+          <div class="prop-detail"><div class="prop-detail-val">1</div><div class="prop-detail-label">Garage</div></div>
+        </div>
+        <div class="prop-price">$3,250,000</div>
+      </div>
+    </div>
+    <div class="property-card reveal" data-type="townhouse">
+      <div class="prop-image">
+        <div class="prop-img-bg"></div>
+        <div class="prop-placeholder">🏘️</div>
+        <div class="prop-overlay"><div class="prop-overlay-btn">View Property</div></div>
+      </div>
+      <div class="prop-body">
+        <div class="prop-type">Townhouse</div>
+        <div class="prop-name">Forest Hill Freehold</div>
+        <div class="prop-location">📍 Forest Hill, Toronto</div>
+        <div class="prop-details">
+          <div class="prop-detail"><div class="prop-detail-val">4</div><div class="prop-detail-label">Beds</div></div>
+          <div class="prop-detail"><div class="prop-detail-val">3</div><div class="prop-detail-label">Baths</div></div>
+          <div class="prop-detail"><div class="prop-detail-val">2,400</div><div class="prop-detail-label">Sq Ft</div></div>
+          <div class="prop-detail"><div class="prop-detail-val">1</div><div class="prop-detail-label">Garage</div></div>
+        </div>
+        <div class="prop-price">$2,195,000</div>
+      </div>
+    </div>
+    <div class="property-card reveal" data-type="house">
+      <div class="prop-image">
+        <div class="prop-img-bg"></div>
+        <div class="prop-placeholder">🏠</div>
+        <div class="prop-badge">Price Reduced</div>
+        <div class="prop-overlay"><div class="prop-overlay-btn">View Property</div></div>
+      </div>
+      <div class="prop-body">
+        <div class="prop-type">House</div>
+        <div class="prop-name">The Bridle Path Estate</div>
+        <div class="prop-location">📍 Bridle Path, Toronto</div>
+        <div class="prop-details">
+          <div class="prop-detail"><div class="prop-detail-val">7</div><div class="prop-detail-label">Beds</div></div>
+          <div class="prop-detail"><div class="prop-detail-val">6</div><div class="prop-detail-label">Baths</div></div>
+          <div class="prop-detail"><div class="prop-detail-val">8,500</div><div class="prop-detail-label">Sq Ft</div></div>
+          <div class="prop-detail"><div class="prop-detail-val">3</div><div class="prop-detail-label">Garage</div></div>
+        </div>
+        <div class="prop-price">$9,450,000</div>
+      </div>
+    </div>
+    <div class="property-card reveal" data-type="condo">
+      <div class="prop-image">
+        <div class="prop-img-bg"></div>
+        <div class="prop-placeholder">🌆</div>
+        <div class="prop-overlay"><div class="prop-overlay-btn">View Property</div></div>
+      </div>
+      <div class="prop-body">
+        <div class="prop-type">Condo</div>
+        <div class="prop-name">King West Loft</div>
+        <div class="prop-location">📍 King West, Toronto</div>
+        <div class="prop-details">
+          <div class="prop-detail"><div class="prop-detail-val">2</div><div class="prop-detail-label">Beds</div></div>
+          <div class="prop-detail"><div class="prop-detail-val">2</div><div class="prop-detail-label">Baths</div></div>
+          <div class="prop-detail"><div class="prop-detail-val">1,450</div><div class="prop-detail-label">Sq Ft</div></div>
+          <div class="prop-detail"><div class="prop-detail-val">1</div><div class="prop-detail-label">Garage</div></div>
+        </div>
+        <div class="prop-price">$1,295,000</div>
+      </div>
+    </div>
+    <div class="property-card reveal" data-type="townhouse">
+      <div class="prop-image">
+        <div class="prop-img-bg"></div>
+        <div class="prop-placeholder">🏗️</div>
+        <div class="prop-badge new" style="background:#22c55e">New</div>
+        <div class="prop-overlay"><div class="prop-overlay-btn">View Property</div></div>
+      </div>
+      <div class="prop-body">
+        <div class="prop-type">Townhouse</div>
+        <div class="prop-name">Leaside Row House</div>
+        <div class="prop-location">📍 Leaside, Toronto</div>
+        <div class="prop-details">
+          <div class="prop-detail"><div class="prop-detail-val">3</div><div class="prop-detail-label">Beds</div></div>
+          <div class="prop-detail"><div class="prop-detail-val">2</div><div class="prop-detail-label">Baths</div></div>
+          <div class="prop-detail"><div class="prop-detail-val">1,850</div><div class="prop-detail-label">Sq Ft</div></div>
+          <div class="prop-detail"><div class="prop-detail-val">1</div><div class="prop-detail-label">Garage</div></div>
+        </div>
+        <div class="prop-price">$1,875,000</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="map-section" id="map">
+  <div class="map-inner">
+    <div class="reveal" style="font-size:0.7rem;letter-spacing:0.25em;color:var(--gold);text-transform:uppercase;margin-bottom:0.5rem">Explore</div>
+    <h2 class="reveal" style="font-family:'Playfair Display',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:400;margin-bottom:0.5rem">Properties on the Map</h2>
+    <p class="reveal" style="color:var(--muted);font-size:0.9rem">Explore listings across Toronto's premium neighbourhoods</p>
+    <div class="map-container reveal">
+      <div class="map-grid"></div>
+      <div class="map-label map-label-main" style="top:20%;left:40%">TORONTO</div>
+      <div class="map-label" style="top:30%;left:48%">Lake Ontario</div>
+      <div class="map-label" style="top:25%;left:38%">Downtown Core</div>
+      <div class="map-pin" style="top:28%;left:42%"><div class="pin-dot"></div><div class="pin-label">Yorkville</div></div>
+      <div class="map-pin" style="top:22%;left:35%"><div class="pin-dot"></div><div class="pin-label">Forest Hill</div></div>
+      <div class="map-pin" style="top:35%;left:52%"><div class="pin-dot"></div><div class="pin-label">Rosedale</div></div>
+      <div class="map-pin" style="top:18%;left:55%"><div class="pin-dot"></div><div class="pin-label">Bridle Path</div></div>
+      <div class="map-pin" style="top:42%;left:44%"><div class="pin-dot"></div><div class="pin-label">King West</div></div>
+      <div class="map-pin" style="top:32%;left:60%"><div class="pin-dot"></div><div class="pin-label">Leaside</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="agent-section" id="agent">
+  <div class="agent-photo reveal">👤</div>
+  <div class="agent-info">
+    <div class="agent-title reveal">Your Agent</div>
+    <h2 class="agent-name reveal">Victoria Ashworth<br><span style="font-weight:400;font-style:italic;font-size:0.65em">Principal Broker, Meridian Properties</span></h2>
+    <p class="agent-bio reveal">With 18 years serving Toronto's luxury market, Victoria has facilitated over $2.4 billion in residential transactions. Her deep neighbourhood expertise, discreet negotiation style, and unmatched network give her clients an undeniable edge in competitive markets.</p>
+    <div class="agent-stats reveal">
+      <div>
+        <div class="agent-stat-num">$2.4B</div>
+        <div class="agent-stat-label">Sales Volume</div>
+      </div>
+      <div>
+        <div class="agent-stat-num">450+</div>
+        <div class="agent-stat-label">Homes Sold</div>
+      </div>
+      <div>
+        <div class="agent-stat-num">18yr</div>
+        <div class="agent-stat-label">Experience</div>
+      </div>
+    </div>
+    <div class="agent-contacts reveal">
+      <a href="tel:4165550100" class="agent-btn agent-btn-primary">Call Victoria</a>
+      <a href="mailto:victoria@meridianproperties.ca" class="agent-btn agent-btn-outline">Send Email</a>
+    </div>
+  </div>
+</section>
+
+<section class="mortgage-section" id="mortgage">
+  <div class="mortgage-inner">
+    <div class="reveal" style="font-size:0.7rem;letter-spacing:0.25em;color:var(--gold);text-transform:uppercase;margin-bottom:0.5rem">Finance</div>
+    <h2 class="reveal" style="font-family:'Playfair Display',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:400">Mortgage Calculator</h2>
+    <div class="mortgage-grid">
+      <div>
+        <div class="mort-slider-group reveal">
+          <label><span>Home Price</span><span class="mort-val" id="homePriceVal">$2,000,000</span></label>
+          <input type="range" id="homePrice" min="500000" max="10000000" step="50000" value="2000000" oninput="calcMortgage()">
+        </div>
+        <div class="mort-slider-group reveal">
+          <label><span>Down Payment</span><span class="mort-val" id="downPayVal">$400,000 (20%)</span></label>
+          <input type="range" id="downPay" min="5" max="50" step="1" value="20" oninput="calcMortgage()">
+        </div>
+        <div class="mort-slider-group reveal">
+          <label><span>Interest Rate</span><span class="mort-val" id="rateVal">5.25%</span></label>
+          <input type="range" id="intRate" min="2" max="10" step="0.25" value="5.25" oninput="calcMortgage()">
+        </div>
+        <div class="mort-slider-group reveal">
+          <label><span>Amortization</span><span class="mort-val" id="amortVal">25 years</span></label>
+          <input type="range" id="amort" min="10" max="30" step="5" value="25" oninput="calcMortgage()">
+        </div>
+      </div>
+      <div class="mort-results reveal">
+        <div class="mort-result-item">
+          <div class="mort-label">Monthly Payment</div>
+          <div class="mort-value" id="monthlyPay">$8,920</div>
+        </div>
+        <div class="mort-result-item">
+          <div class="mort-label">Loan Amount</div>
+          <div class="mort-value" id="loanAmt">$1,600,000</div>
+        </div>
+        <div class="mort-result-item">
+          <div class="mort-label">Total Interest Paid</div>
+          <div class="mort-value" id="totalInterest">$1,076,000</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">
+    <div class="footer-logo">Meridian</div>
+    <p>Toronto's premier luxury real estate brokerage. Serving Rosedale, Yorkville, Forest Hill, Bridle Path, and beyond since 2007.</p>
+  </div>
+  <div class="footer-col">
+    <h4>Properties</h4>
+    <ul>
+      <li><a href="#">Houses</a></li>
+      <li><a href="#">Condos</a></li>
+      <li><a href="#">Townhouses</a></li>
+      <li><a href="#">New Developments</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Services</h4>
+    <ul>
+      <li><a href="#">Buy a Home</a></li>
+      <li><a href="#">Sell Your Home</a></li>
+      <li><a href="#">Market Reports</a></li>
+      <li><a href="#">Property Valuation</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Contact</h4>
+    <ul>
+      <li><a href="#">(416) 555-0100</a></li>
+      <li><a href="#">info@meridian.ca</a></li>
+      <li><a href="#">Instagram</a></li>
+      <li><a href="#">LinkedIn</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <p>© 2026 Meridian Properties Inc. All rights reserved. Licensed Brokerage RECO.</p>
+  <p>Privacy Policy · Terms of Use</p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script>
+const lenis = new Lenis({ duration: 1.3, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+function raf(t) { lenis.raf(t); requestAnimationFrame(raf); }
+requestAnimationFrame(raf);
+
+gsap.registerPlugin(ScrollTrigger);
+gsap.from('.hero-eyebrow', { opacity: 0, y: 20, duration: 0.8, delay: 0.4 });
+gsap.from('.hero-title', { opacity: 0, y: 60, duration: 1.2, delay: 0.6, ease: 'power4.out' });
+gsap.from('.hero-sub', { opacity: 0, y: 20, duration: 0.8, delay: 1 });
+gsap.from('.hero-search', { opacity: 0, y: 20, duration: 0.8, delay: 1.2 });
+gsap.from('.hero-stats', { opacity: 0, y: 20, duration: 0.8, delay: 1.4 });
+
+document.querySelectorAll('.reveal').forEach(el => {
+  gsap.to(el, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
+});
+
+function filterProps(type, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.dataset.active = 'false');
+  btn.dataset.active = 'true';
+  document.querySelectorAll('.property-card').forEach(card => {
+    const show = type === 'all' || card.dataset.type === type;
+    card.style.display = show ? 'block' : 'none';
+    if (show) gsap.fromTo(card, { opacity: 0, scale: 0.96 }, { opacity: 1, scale: 1, duration: 0.4 });
+  });
+}
+
+function calcMortgage() {
+  const price = parseInt(document.getElementById('homePrice').value);
+  const dpPct = parseInt(document.getElementById('downPay').value) / 100;
+  const rate = parseFloat(document.getElementById('intRate').value) / 100 / 12;
+  const n = parseInt(document.getElementById('amort').value) * 12;
+  const dp = price * dpPct;
+  const loan = price - dp;
+  document.getElementById('homePriceVal').textContent = '$' + price.toLocaleString();
+  document.getElementById('downPayVal').textContent = '$' + Math.round(dp).toLocaleString() + ' (' + (dpPct * 100) + '%)';
+  document.getElementById('rateVal').textContent = parseFloat(document.getElementById('intRate').value) + '%';
+  document.getElementById('amortVal').textContent = document.getElementById('amort').value + ' years';
+  const monthly = loan * (rate * Math.pow(1 + rate, n)) / (Math.pow(1 + rate, n) - 1);
+  const totalPaid = monthly * n;
+  const totalInterest = totalPaid - loan;
+  document.getElementById('monthlyPay').textContent = '$' + Math.round(monthly).toLocaleString();
+  document.getElementById('loanAmt').textContent = '$' + loan.toLocaleString();
+  document.getElementById('totalInterest').textContent = '$' + Math.round(totalInterest).toLocaleString();
+}
+calcMortgage();
+</script>
+</body>
+</html>

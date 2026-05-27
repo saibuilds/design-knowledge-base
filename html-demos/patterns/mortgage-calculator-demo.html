@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClearPath Mortgage — Better Rates. Faster Approvals.</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #ffffff;
+      --surface: #f7f8fa;
+      --border: #e5e7eb;
+      --blue: #1d4ed8;
+      --dark-blue: #1e3a5f;
+      --green: #16a34a;
+      --text: #111827;
+      --muted: #6b7280;
+      --light-blue: #dbeafe;
+    }
+    html { scroll-behavior: auto; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; overflow-x: hidden; }
+
+    /* ── TOP PROGRESS BAR ── */
+    .progress-bar { position:fixed; top:0; left:0; width:100%; height:3px; background:var(--blue); transform-origin:left; transform:scaleX(0); z-index:999; }
+
+    /* ── NAVBAR ── */
+    .main-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 500;
+      background: rgba(255,255,255,0.95);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+    }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 32px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-size: 16px; font-weight: 800; color: var(--dark-blue); text-decoration: none; }
+    .nav-logo span { color: var(--blue); }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { font-size: 14px; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .nav-phone { font-size: 14px; font-weight: 600; color: var(--blue); text-decoration: none; }
+    .nav-cta { background: var(--blue); color: #fff; font-size: 13px; font-weight: 600; padding: 10px 22px; border-radius: 8px; border: none; cursor: pointer; text-decoration: none; transition: background 0.2s; }
+    .nav-cta:hover { background: #1e40af; }
+
+    /* ── TRUST SIGNAL BAR ── */
+    .trust-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 32px;
+    }
+    .trust-bar-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .trust-item { display: flex; align-items: center; gap: 8px; }
+    .trust-icon { font-size: 16px; color: var(--blue); }
+    .trust-title { font-size: 13px; font-weight: 600; color: var(--text); }
+    .trust-sub { font-size: 11px; color: var(--muted); }
+
+    /* ── HERO ── */
+    #hero {
+      padding: 140px 60px 100px;
+      background: var(--bg);
+    }
+    .hero-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .hero-left { opacity: 0; transform: translateY(30px); }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--blue);
+      background: var(--light-blue);
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+    }
+    .new-badge { background: var(--blue); color: #fff; font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 4px; margin-right: 4px; }
+    .hero-h1 { font-size: clamp(38px, 5vw, 58px); font-weight: 800; line-height: 1.15; letter-spacing: -0.03em; color: var(--dark-blue); margin-bottom: 20px; }
+    .hero-h1 span { color: var(--blue); }
+    .hero-p { font-size: 17px; color: var(--muted); line-height: 1.7; max-width: 480px; margin-bottom: 32px; }
+    .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 16px 32px; background: var(--blue); color: #fff; font-size: 15px; font-weight: 600; border-radius: 10px; border: none; cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+    .btn-primary:hover { background: #1e40af; transform: scale(1.02); }
+    .btn-secondary { display: inline-flex; align-items: center; gap: 8px; padding: 16px 28px; background: var(--bg); color: var(--text); font-size: 15px; font-weight: 500; border: 1px solid var(--border); border-radius: 10px; cursor: pointer; text-decoration: none; transition: border-color 0.2s; }
+    .btn-secondary:hover { border-color: #9ca3af; }
+    .friction-text { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+    .rate-display {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .rate-card {
+      background: var(--dark-blue);
+      border-radius: 14px;
+      padding: 18px 22px;
+      color: #fff;
+      min-width: 140px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .rate-type { font-size: 11px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+    .rate-num { font-size: 32px; font-weight: 800; letter-spacing: -0.02em; }
+    .rate-num span { font-size: 18px; color: rgba(255,255,255,0.7); }
+    .rate-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+    .rate-badge { display: inline-block; background: #16a34a; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; margin-top: 6px; }
+
+    /* ── CALCULATOR ── */
+    #calculator { padding: 80px 60px; background: var(--surface); }
+    .calc-container { max-width: 900px; margin: 0 auto; background: #fff; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+    .calc-header { padding: 24px 28px; border-bottom: 1px solid var(--border); }
+    .calc-header h3 { font-size: 18px; font-weight: 700; color: var(--text); }
+    .calc-header p { font-size: 13px; color: var(--muted); margin-top: 2px; }
+    .calc-body { display: grid; grid-template-columns: 1fr 1fr; }
+    .calc-inputs { padding: 28px; border-right: 1px solid var(--border); }
+    .calc-results-panel { background: var(--dark-blue); padding: 28px; display: flex; flex-direction: column; justify-content: center; }
+
+    /* Slider inputs */
+    .slider-group { margin-bottom: 24px; }
+    .slider-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+    .slider-label { font-size: 13px; font-weight: 500; color: var(--text); }
+    .slider-value { font-size: 13px; font-weight: 700; color: var(--blue); }
+    input[type="range"] {
+      width: 100%;
+      -webkit-appearance: none;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--border);
+      outline: none;
+      cursor: pointer;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--blue);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(29,78,216,0.3);
+    }
+    .slider-range { display: flex; justify-content: space-between; margin-top: 3px; font-size: 11px; color: var(--muted); }
+
+    /* Term buttons */
+    .term-btns { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 8px; }
+    .term-btn {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .term-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+    .term-btn:hover:not(.active) { border-color: var(--blue); color: var(--blue); }
+
+    /* Results panel */
+    .monthly-label { font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 6px; }
+    .monthly-amount { font-size: 52px; font-weight: 800; color: #fff; letter-spacing: -0.04em; line-height: 1; margin-bottom: 24px; }
+    .result-rows { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; display: flex; flex-direction: column; gap: 12px; }
+    .result-row { display: flex; justify-content: space-between; }
+    .result-row-label { font-size: 13px; color: rgba(255,255,255,0.5); }
+    .result-row-val { font-size: 13px; font-weight: 600; color: #fff; }
+    .apply-btn {
+      display: block;
+      width: 100%;
+      margin-top: 24px;
+      padding: 14px;
+      background: #fff;
+      color: var(--dark-blue);
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .apply-btn:hover { background: #f0f4ff; }
+
+    /* ── STATS (Blend-style) ── */
+    #stats { background: var(--dark-blue); }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .stat-item { padding: 60px 32px; text-align: center; border-right: 1px solid rgba(255,255,255,0.08); }
+    .stat-item:last-child { border-right: none; }
+    .stat-num { font-size: 52px; font-weight: 800; color: #fff; letter-spacing: -0.04em; line-height: 1; margin-bottom: 8px; }
+    .stat-label { font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.85); margin-bottom: 4px; }
+    .stat-desc { font-size: 13px; color: rgba(255,255,255,0.45); }
+
+    /* ── PROCESS ── */
+    #process { padding: 100px 60px; background: var(--surface); }
+    .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; max-width: 1100px; margin: 0 auto; position: relative; }
+    .process-grid::before {
+      content: '';
+      position: absolute;
+      top: 20px; left: 40px; right: 40px;
+      height: 1px;
+      background: var(--border);
+    }
+    .process-step { text-align: center; }
+    .process-num {
+      width: 40px; height: 40px;
+      border-radius: 100%;
+      border: 2px solid var(--blue);
+      background: #fff;
+      color: var(--blue);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      position: relative;
+      z-index: 2;
+    }
+    .process-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .process-duration { font-size: 12px; font-weight: 600; color: var(--blue); background: var(--light-blue); padding: 2px 10px; border-radius: 100px; display: inline-block; margin-bottom: 10px; }
+    .process-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* ── FAQ ── */
+    #faq { padding: 100px 60px; background: var(--bg); }
+    .faq-inner { max-width: 720px; margin: 0 auto; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-q {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      transition: color 0.2s;
+      gap: 16px;
+    }
+    .faq-q:hover { color: var(--blue); }
+    .faq-icon { font-size: 22px; font-weight: 300; color: var(--muted); flex-shrink: 0; transition: transform 0.3s, color 0.2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); color: var(--blue); }
+    .faq-item.open .faq-q { color: var(--blue); }
+    .faq-a { font-size: 14px; color: var(--muted); line-height: 1.7; padding-bottom: 20px; display: none; }
+
+    /* ── MULTI-STEP APPLICATION ── */
+    #apply { padding: 100px 60px; background: var(--surface); }
+    .apply-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; max-width: 1100px; margin: 0 auto; align-items: start; }
+    .apply-left h2 { font-size: 40px; font-weight: 800; color: var(--dark-blue); line-height: 1.15; margin-bottom: 20px; letter-spacing: -0.02em; }
+    .apply-left p { font-size: 16px; color: var(--muted); line-height: 1.7; margin-bottom: 32px; }
+    .benefit-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .benefit-list li { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--text); }
+    .benefit-check { width: 22px; height: 22px; border-radius: 100%; background: var(--light-blue); color: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+    .apply-form-card { background: #fff; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.06); }
+    .app-progress { height: 4px; background: var(--border); }
+    .app-progress-fill { height: 100%; background: var(--blue); transition: width 0.5s ease; }
+    .app-body { padding: 36px; }
+    .app-step-meta { display: flex; justify-content: space-between; margin-bottom: 6px; }
+    .app-step-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
+    .app-dots { display: flex; gap: 5px; }
+    .app-dot { height: 4px; width: 24px; border-radius: 2px; background: var(--border); transition: background 0.3s; }
+    .app-dot.done { background: var(--blue); }
+    .app-title { font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 24px; }
+    .app-field { margin-bottom: 16px; }
+    .app-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); display: block; margin-bottom: 6px; }
+    .app-input, .app-select {
+      width: 100%;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      color: var(--text);
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .app-input:focus, .app-select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(29,78,216,0.08); }
+    .app-select { appearance: none; color: var(--muted); }
+    .app-select option { color: var(--text); }
+    .app-radio-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .app-radio-opt {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      font-size: 14px;
+    }
+    .app-radio-opt.selected { border-color: var(--blue); background: #eff6ff; color: var(--blue); font-weight: 600; }
+    .app-radio-opt input { accent-color: var(--blue); }
+    .app-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; }
+    .app-back { font-size: 13px; font-weight: 500; color: var(--muted); background: none; border: none; cursor: pointer; transition: color 0.2s; padding: 0; }
+    .app-back:hover { color: var(--text); }
+    .app-next { padding: 13px 30px; background: var(--blue); color: #fff; font-size: 14px; font-weight: 600; border-radius: 8px; border: none; cursor: pointer; transition: background 0.2s; }
+    .app-next:hover { background: #1e40af; }
+    .app-friction { font-size: 11px; color: var(--muted); text-align: center; margin-top: 12px; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--dark-blue); padding: 60px; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .footer-logo { font-size: 16px; font-weight: 800; color: #fff; }
+    .footer-logo span { color: #60a5fa; }
+    .footer-copy { color: rgba(255,255,255,0.4); font-size: 13px; }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { color: rgba(255,255,255,0.4); font-size: 13px; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: rgba(255,255,255,0.8); }
+
+    .section-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue); display: block; margin-bottom: 12px; }
+    .section-title { font-size: clamp(32px, 4vw, 48px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; color: var(--dark-blue); }
+    .section-header-center { text-align: center; margin-bottom: 56px; }
+
+    @media (max-width: 900px) {
+      .hero-inner, .calc-body, .apply-wrapper { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .process-grid { grid-template-columns: 1fr 1fr; }
+      .process-grid::before { display: none; }
+      #hero, #calculator, #process, #faq, #apply { padding-left: 24px; padding-right: 24px; }
+      .calc-inputs { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- NAVBAR -->
+<nav class="main-nav">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">Clear<span>Path</span></a>
+    <ul class="nav-links">
+      <li><a href="#calculator">Calculator</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#apply">Apply</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="tel:18005550100" class="nav-phone">1-800-555-0100</a>
+      <a href="#apply" class="nav-cta">Apply Now</a>
+    </div>
+  </div>
+</nav>
+
+<!-- TRUST BAR -->
+<div class="trust-bar" style="margin-top:64px;">
+  <div class="trust-bar-inner">
+    <div class="trust-item">
+      <span class="trust-icon">🛡️</span>
+      <div>
+        <div class="trust-title">256-bit Encryption</div>
+        <div class="trust-sub">Bank-level security</div>
+      </div>
+    </div>
+    <div class="trust-item">
+      <span class="trust-icon">✅</span>
+      <div>
+        <div class="trust-title">FSRA Licensed</div>
+        <div class="trust-sub">Ontario regulated</div>
+      </div>
+    </div>
+    <div class="trust-item">
+      <span class="trust-icon">⭐</span>
+      <div>
+        <div class="trust-title">4.9 / 5 Rating</div>
+        <div class="trust-sub">12,400+ reviews</div>
+      </div>
+    </div>
+    <div class="trust-item">
+      <span class="trust-icon">📞</span>
+      <div>
+        <div class="trust-title">Call Us Anytime</div>
+        <div class="trust-sub">1-800-555-0100</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════
+     HERO: Trust-forward with rate display
+════════════════════════════ -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-left" id="heroLeft">
+      <div class="hero-eyebrow">
+        <span class="new-badge">NEW</span>
+        Now serving all of Ontario
+      </div>
+      <h1 class="hero-h1">Better Rates.<br>Faster Approvals.<br><span>Simpler Process.</span></h1>
+      <p class="hero-p">Get pre-approved in 3 minutes with no credit impact. Access 50+ lenders and get the lowest rate guaranteed — or we pay the difference.</p>
+      <div class="hero-ctas">
+        <a href="#apply" class="btn-primary">Apply Now — 3 min</a>
+        <a href="#calculator" class="btn-secondary">Calculate Payment</a>
+      </div>
+      <p class="friction-text">✓ No credit check &nbsp;·&nbsp; ✓ No commitment &nbsp;·&nbsp; ✓ Free forever</p>
+    </div>
+    <div>
+      <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:16px;">Today's Best Rates</p>
+      <div class="rate-display">
+        <div class="rate-card" id="rateCard1">
+          <div class="rate-type">5-Year Fixed</div>
+          <div class="rate-num">4.<span>89%</span></div>
+          <div class="rate-sub">Best available rate</div>
+          <span class="rate-badge">↓ Low</span>
+        </div>
+        <div class="rate-card" id="rateCard2">
+          <div class="rate-type">5-Year Variable</div>
+          <div class="rate-num">5.<span>15%</span></div>
+          <div class="rate-sub">Prime - 0.10%</div>
+        </div>
+        <div class="rate-card" id="rateCard3">
+          <div class="rate-type">3-Year Fixed</div>
+          <div class="rate-num">5.<span>09%</span></div>
+          <div class="rate-sub">Popular choice</div>
+        </div>
+      </div>
+      <p style="font-size:11px;color:var(--muted);margin-top:12px;">Rates updated daily. Subject to qualification. OAC.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     MORTGAGE CALCULATOR
+     Live sliders + instant results
+════════════════════════════ -->
+<section id="calculator">
+  <div class="calc-container">
+    <div class="calc-header">
+      <h3>Mortgage Calculator</h3>
+      <p>Estimate your monthly payment instantly</p>
+    </div>
+    <div class="calc-body">
+      <div class="calc-inputs">
+        <div class="slider-group">
+          <div class="slider-header">
+            <label class="slider-label">Home Price</label>
+            <span class="slider-value" id="priceDisplay">$850,000</span>
+          </div>
+          <input type="range" min="200000" max="3000000" step="10000" value="850000" id="priceSlider" />
+          <div class="slider-range"><span>$200K</span><span>$3M</span></div>
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-header">
+            <label class="slider-label">Down Payment</label>
+            <span class="slider-value" id="downDisplay">$170,000 (20%)</span>
+          </div>
+          <input type="range" min="0" max="50" step="1" value="20" id="downSlider" />
+          <div class="slider-range"><span>5%</span><span>50%</span></div>
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-header">
+            <label class="slider-label">Interest Rate</label>
+            <span class="slider-value" id="rateDisplay">5.25%</span>
+          </div>
+          <input type="range" min="100" max="1200" step="5" value="525" id="rateSlider" />
+          <div class="slider-range"><span>1.00%</span><span>12.00%</span></div>
+        </div>
+
+        <div>
+          <label class="slider-label" style="display:block;margin-bottom:8px;font-size:13px;font-weight:500;color:var(--text);">Amortization Period</label>
+          <div class="term-btns">
+            <button class="term-btn" data-years="10">10yr</button>
+            <button class="term-btn" data-years="15">15yr</button>
+            <button class="term-btn" data-years="20">20yr</button>
+            <button class="term-btn active" data-years="25">25yr</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="calc-results-panel">
+        <p class="monthly-label">Estimated Monthly Payment</p>
+        <p class="monthly-amount" id="monthlyResult">$4,631</p>
+        <div class="result-rows">
+          <div class="result-row">
+            <span class="result-row-label">Loan amount</span>
+            <span class="result-row-val" id="loanResult">$680,000</span>
+          </div>
+          <div class="result-row">
+            <span class="result-row-label">Total interest</span>
+            <span class="result-row-val" id="interestResult">$709,300</span>
+          </div>
+          <div class="result-row">
+            <span class="result-row-label">Total cost</span>
+            <span class="result-row-val" id="totalResult">$1,389,300</span>
+          </div>
+        </div>
+        <a href="#apply" class="apply-btn">Apply Now — 3 min, no credit impact</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     STATS (Blend-style)
+════════════════════════════ -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-num" data-target="50">0</div>
+      <div class="stat-label">Lender Network</div>
+      <div class="stat-desc">Access 50+ banks and credit unions</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-target="3">0</div>
+      <div class="stat-label">Minutes to Pre-Approve</div>
+      <div class="stat-desc">Digital application, no paperwork</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-target="98">0</div>
+      <div class="stat-label">Approval Rate</div>
+      <div class="stat-desc">98% of applicants get approved</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-target="2400">0</div>
+      <div class="stat-label">Clients Per Year</div>
+      <div class="stat-desc">Serving Ontario homebuyers</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     PROCESS STEPS (horizontal)
+════════════════════════════ -->
+<section id="process">
+  <div class="section-header-center">
+    <span class="section-eyebrow">How It Works</span>
+    <h2 class="section-title">Go from Application<br>to Keys in 4 Steps</h2>
+  </div>
+  <div class="process-grid">
+    <div class="process-step">
+      <div class="process-num">1</div>
+      <div class="process-title">Apply Online</div>
+      <div class="process-duration">3 minutes</div>
+      <p class="process-desc">Complete our simple digital form. No credit check at this stage. Zero paperwork.</p>
+    </div>
+    <div class="process-step">
+      <div class="process-num">2</div>
+      <div class="process-title">Lender Matching</div>
+      <div class="process-duration">Same day</div>
+      <p class="process-desc">We compare 50+ lenders and present your best options with honest side-by-side analysis.</p>
+    </div>
+    <div class="process-step">
+      <div class="process-num">3</div>
+      <div class="process-title">Pre-Approval</div>
+      <div class="process-duration">24–48 hours</div>
+      <p class="process-desc">Receive your pre-approval certificate. Shop for homes with confidence and credibility.</p>
+    </div>
+    <div class="process-step">
+      <div class="process-num">4</div>
+      <div class="process-title">Funding</div>
+      <div class="process-duration">10 business days</div>
+      <p class="process-desc">We handle all closing paperwork. Funds go directly to your lawyer. Get your keys.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     FAQ ACCORDION
+════════════════════════════ -->
+<section id="faq">
+  <div class="section-header-center">
+    <span class="section-eyebrow">Common Questions</span>
+    <h2 class="section-title">Frequently Asked<br>Questions</h2>
+  </div>
+  <div class="faq-inner">
+    <div class="faq-item">
+      <div class="faq-q">Does applying affect my credit score? <span class="faq-icon">+</span></div>
+      <p class="faq-a">No. Our initial pre-qualification uses a soft credit pull that does not appear on your credit report and has zero impact on your score. A hard pull only occurs when you formally accept a mortgage offer.</p>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How is ClearPath different from going to my bank? <span class="faq-icon">+</span></div>
+      <p class="faq-a">Your bank offers their own products only. We compare 50+ lenders simultaneously — including banks, credit unions, and monoline lenders — to find you the best rate for your specific situation. We're legally obligated to act in your interest, not the lender's.</p>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What documents do I need to apply? <span class="faq-icon">+</span></div>
+      <p class="faq-a">To start: nothing. For a full pre-approval you'll need 2 years of T4s, 90 days of bank statements, a recent pay stub, and government ID. We'll guide you through exactly what's needed.</p>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How much does ClearPath charge? <span class="faq-icon">+</span></div>
+      <p class="faq-a">Nothing. Our service is completely free for borrowers. We're compensated by the lender you choose. Legally, this cannot influence which lender we recommend — our fiduciary duty is to you.</p>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I get a mortgage if I'm self-employed? <span class="faq-icon">+</span></div>
+      <p class="faq-a">Yes. We specialize in self-employed mortgages and have access to lenders with flexible stated-income programs. We've successfully placed hundreds of self-employed borrowers who were turned down by their banks.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     MULTI-STEP APPLICATION FORM
+════════════════════════════ -->
+<section id="apply">
+  <div class="apply-wrapper">
+    <div class="apply-left">
+      <span class="section-eyebrow">Start Your Application</span>
+      <h2>Get Pre-Approved<br>in 3 Minutes</h2>
+      <p>No credit impact. No commitment. Our team reviews every application personally and calls you within 2 hours.</p>
+      <ul class="benefit-list">
+        <li><span class="benefit-check">✓</span>Access to 50+ lenders</li>
+        <li><span class="benefit-check">✓</span>Rate hold for 120 days</li>
+        <li><span class="benefit-check">✓</span>Lowest rate guarantee</li>
+        <li><span class="benefit-check">✓</span>Dedicated mortgage advisor</li>
+        <li><span class="benefit-check">✓</span>Close in as fast as 10 days</li>
+      </ul>
+    </div>
+
+    <div class="apply-form-card">
+      <div class="app-progress">
+        <div class="app-progress-fill" id="appProgress" style="width:33.3%"></div>
+      </div>
+      <div class="app-body">
+        <!-- Step 1 -->
+        <div id="appStep1">
+          <div class="app-step-meta">
+            <span class="app-step-label">Step 1 of 3</span>
+            <div class="app-dots">
+              <div class="app-dot done"></div>
+              <div class="app-dot"></div>
+              <div class="app-dot"></div>
+            </div>
+          </div>
+          <h2 class="app-title">What are you looking for?</h2>
+          <div class="app-field">
+            <label class="app-label">Mortgage Type</label>
+            <div class="app-radio-group">
+              <label class="app-radio-opt" onclick="appSelectRadio(this, 'mort_type')">
+                <input type="radio" name="mort_type" value="purchase"><span>Purchase</span>
+              </label>
+              <label class="app-radio-opt" onclick="appSelectRadio(this, 'mort_type')">
+                <input type="radio" name="mort_type" value="refinance"><span>Refinance</span>
+              </label>
+              <label class="app-radio-opt" onclick="appSelectRadio(this, 'mort_type')">
+                <input type="radio" name="mort_type" value="renewal"><span>Renewal</span>
+              </label>
+              <label class="app-radio-opt" onclick="appSelectRadio(this, 'mort_type')">
+                <input type="radio" name="mort_type" value="heloc"><span>HELOC</span>
+              </label>
+            </div>
+          </div>
+          <div class="app-field">
+            <label class="app-label">Estimated Property Value</label>
+            <select class="app-select">
+              <option value="">Select range...</option>
+              <option>$400K – $600K</option>
+              <option>$600K – $800K</option>
+              <option>$800K – $1.2M</option>
+              <option>$1.2M – $2M</option>
+              <option>$2M+</option>
+            </select>
+          </div>
+          <div class="app-nav">
+            <div></div>
+            <button class="app-next" onclick="appNextStep(2)">Continue →</button>
+          </div>
+          <p class="app-friction">3 min · No credit check · No commitment</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div id="appStep2" style="display:none;">
+          <div class="app-step-meta">
+            <span class="app-step-label">Step 2 of 3</span>
+            <div class="app-dots">
+              <div class="app-dot done"></div>
+              <div class="app-dot done"></div>
+              <div class="app-dot"></div>
+            </div>
+          </div>
+          <h2 class="app-title">Your income & employment</h2>
+          <div class="app-field">
+            <label class="app-label">Employment Status</label>
+            <div class="app-radio-group">
+              <label class="app-radio-opt" onclick="appSelectRadio(this, 'emp_status')">
+                <input type="radio" name="emp_status" value="employed"><span>Employed</span>
+              </label>
+              <label class="app-radio-opt" onclick="appSelectRadio(this, 'emp_status')">
+                <input type="radio" name="emp_status" value="self_emp"><span>Self-Employed</span>
+              </label>
+            </div>
+          </div>
+          <div class="app-field">
+            <label class="app-label">Annual Household Income</label>
+            <select class="app-select">
+              <option value="">Select range...</option>
+              <option>Under $75,000</option>
+              <option>$75,000 – $125,000</option>
+              <option>$125,000 – $200,000</option>
+              <option>$200,000+</option>
+            </select>
+          </div>
+          <div class="app-field">
+            <label class="app-label">Credit Score (Estimate)</label>
+            <div class="app-radio-group">
+              <label class="app-radio-opt" onclick="appSelectRadio(this, 'credit')">
+                <input type="radio" name="credit" value="exc"><span>Excellent 750+</span>
+              </label>
+              <label class="app-radio-opt" onclick="appSelectRadio(this, 'credit')">
+                <input type="radio" name="credit" value="good"><span>Good 680–749</span>
+              </label>
+              <label class="app-radio-opt" onclick="appSelectRadio(this, 'credit')">
+                <input type="radio" name="credit" value="fair"><span>Fair 620–679</span>
+              </label>
+              <label class="app-radio-opt" onclick="appSelectRadio(this, 'credit')">
+                <input type="radio" name="credit" value="unsure"><span>Not Sure</span>
+              </label>
+            </div>
+          </div>
+          <div class="app-nav">
+            <button class="app-back" onclick="appNextStep(1)">← Back</button>
+            <button class="app-next" onclick="appNextStep(3)">Continue →</button>
+          </div>
+          <p class="app-friction">1 more step · Soft pull only · Zero impact</p>
+        </div>
+
+        <!-- Step 3 -->
+        <div id="appStep3" style="display:none;">
+          <div class="app-step-meta">
+            <span class="app-step-label">Step 3 of 3</span>
+            <div class="app-dots">
+              <div class="app-dot done"></div>
+              <div class="app-dot done"></div>
+              <div class="app-dot done"></div>
+            </div>
+          </div>
+          <h2 class="app-title">Contact details</h2>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="app-field">
+              <label class="app-label">First Name</label>
+              <input class="app-input" type="text" placeholder="Sarah" />
+            </div>
+            <div class="app-field">
+              <label class="app-label">Last Name</label>
+              <input class="app-input" type="text" placeholder="Chen" />
+            </div>
+          </div>
+          <div class="app-field">
+            <label class="app-label">Email</label>
+            <input class="app-input" type="email" placeholder="sarah@example.com" />
+          </div>
+          <div class="app-field">
+            <label class="app-label">Phone</label>
+            <input class="app-input" type="tel" placeholder="(416) 555-0100" />
+          </div>
+          <div class="app-nav">
+            <button class="app-back" onclick="appNextStep(2)">← Back</button>
+            <button class="app-next" onclick="appSubmit()">Submit Application</button>
+          </div>
+          <p class="app-friction">We call within 2 hours · 100% confidential · FSRA regulated</p>
+        </div>
+
+        <!-- Success -->
+        <div id="appSuccess" style="display:none;text-align:center;padding:12px 0;">
+          <span style="font-size:56px;display:block;margin-bottom:20px;">🎉</span>
+          <h2 class="app-title" style="font-size:24px;">Application Received!</h2>
+          <p style="color:var(--muted);line-height:1.6;margin-bottom:16px;">A licensed mortgage advisor will call you within 2 hours to discuss your options. Check your email for a confirmation.</p>
+          <div style="background:var(--light-blue);border-radius:10px;padding:16px;margin-top:16px;">
+            <p style="font-size:13px;color:var(--blue);font-weight:600;">Today's best rate for your profile:</p>
+            <p style="font-size:32px;font-weight:800;color:var(--dark-blue);">4.89%</p>
+            <p style="font-size:12px;color:var(--muted);">5-Year fixed · Subject to qualification</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">Clear<span>Path</span></span>
+    <span class="footer-copy">© 2025 ClearPath Mortgage Inc. FSRA #13285. All rights reserved.</span>
+    <div class="footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Disclosure</a>
+      <a href="#">FSRA</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10*t)) });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(t => lenis.raf(t * 1000));
+  gsap.ticker.lagSmoothing(0);
+
+  // ── PROGRESS BAR ─────────────────────
+  gsap.to('#progressBar', {
+    scaleX: 1, ease: 'none', transformOrigin: 'left',
+    scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 0.3 }
+  });
+
+  // ── HERO ENTRANCE ────────────────────
+  gsap.to('#heroLeft', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', delay: 0.3 });
+  gsap.to(['#rateCard1','#rateCard2','#rateCard3'], {
+    opacity: 1, y: 0, stagger: 0.12, duration: 0.6, ease: 'power2.out', delay: 0.6
+  });
+
+  // ── MORTGAGE CALCULATOR ──────────────
+  let termYears = 25;
+  const fmt = n => new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD', maximumFractionDigits: 0 }).format(n);
+
+  function calcMortgage() {
+    const price = parseInt(document.getElementById('priceSlider').value);
+    const downPct = parseInt(document.getElementById('downSlider').value);
+    const rateRaw = parseInt(document.getElementById('rateSlider').value);
+    const rate = rateRaw / 100;
+    const down = Math.round(price * downPct / 100);
+    const principal = price - down;
+    const monthlyRate = rate / 100 / 12;
+    const n = termYears * 12;
+
+    let mp;
+    if (monthlyRate === 0) { mp = principal / n; }
+    else { mp = (principal * (monthlyRate * Math.pow(1+monthlyRate, n))) / (Math.pow(1+monthlyRate, n) - 1); }
+
+    const totalCost = mp * n;
+    const totalInterest = totalCost - principal;
+
+    document.getElementById('priceDisplay').textContent = fmt(price);
+    document.getElementById('downDisplay').textContent = fmt(down) + ' (' + downPct + '%)';
+    document.getElementById('rateDisplay').textContent = (rate).toFixed(2) + '%';
+    document.getElementById('monthlyResult').textContent = fmt(mp);
+    document.getElementById('loanResult').textContent = fmt(principal);
+    document.getElementById('interestResult').textContent = fmt(totalInterest);
+    document.getElementById('totalResult').textContent = fmt(totalCost);
+  }
+
+  ['priceSlider','downSlider','rateSlider'].forEach(id => {
+    document.getElementById(id).addEventListener('input', calcMortgage);
+  });
+
+  document.querySelectorAll('.term-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.term-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      termYears = parseInt(btn.dataset.years);
+      calcMortgage();
+    });
+  });
+  calcMortgage();
+
+  // ── STATS COUNTERS ───────────────────
+  const statSuffixes = { 50: '+', 3: ' min', 98: '%', 2400: '+' };
+  document.querySelectorAll('.stat-num').forEach(el => {
+    const target = parseInt(el.dataset.target);
+    const suffix = statSuffixes[target] || '';
+    const obj = { val: 0 };
+    gsap.to(obj, {
+      val: target, duration: 2, ease: 'power1.out',
+      onUpdate: () => el.textContent = Math.round(obj.val).toLocaleString() + suffix,
+      scrollTrigger: { trigger: '#stats', start: 'top 80%', once: true }
+    });
+  });
+
+  // ── PROCESS STEP REVEAL ──────────────
+  gsap.from('.process-step', {
+    opacity: 0, y: 30, stagger: 0.12, duration: 0.6, ease: 'power2.out',
+    scrollTrigger: { trigger: '#process', start: 'top 75%' }
+  });
+
+  // ── FAQ ACCORDION ────────────────────
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      const answer = item.querySelector('.faq-a');
+      const isOpen = item.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.faq-item').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-a').style.display = 'none';
+      });
+      // Open clicked
+      if (!isOpen) {
+        item.classList.add('open');
+        answer.style.display = 'block';
+        gsap.from(answer, { opacity: 0, y: -8, duration: 0.25, ease: 'power2.out' });
+      }
+    });
+  });
+
+  // ── MULTI-STEP FORM ──────────────────
+  function appNextStep(n) {
+    [1,2,3].forEach(i => { const el = document.getElementById('appStep'+i); if(el) el.style.display = 'none'; });
+    const target = document.getElementById('appStep'+n);
+    if (target) { target.style.display = 'block'; gsap.from(target, { opacity: 0, x: 20, duration: 0.3 }); }
+    document.getElementById('appProgress').style.width = (n * 33.33) + '%';
+  }
+
+  function appSelectRadio(label, name) {
+    document.querySelectorAll(`[name="${name}"]`).forEach(inp => inp.closest('.app-radio-opt').classList.remove('selected'));
+    label.classList.add('selected');
+  }
+
+  function appSubmit() {
+    document.getElementById('appStep3').style.display = 'none';
+    document.getElementById('appSuccess').style.display = 'block';
+    document.getElementById('appProgress').style.width = '100%';
+    gsap.from('#appSuccess', { opacity: 0, scale: 0.9, duration: 0.5, ease: 'back.out(1.5)' });
+  }
+
+  // ── SCROLL REVEALS ───────────────────
+  gsap.utils.toArray('.section-eyebrow, .section-title').forEach(el => {
+    gsap.from(el, {
+      opacity: 0, y: 20, duration: 0.6, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 85%' }
+    });
+  });
+</script>
+</body>
+</html>
