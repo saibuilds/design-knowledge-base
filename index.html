@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Knowledge Base</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a0a;
+  --surface:#111;
+  --border:#222;
+  --border-hover:#333;
+  --accent:#f59e0b;
+  --accent-dim:#7a4e00;
+  --text:#e5e5e5;
+  --muted:#666;
+  --code:#a3e635;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* ── Hero ── */
+.hero{padding:80px 48px 60px;max-width:1200px;margin:0 auto;border-bottom:1px solid var(--border)}
+.hero-eyebrow{font-size:12px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px}
+.hero-title{font-family:'Syne',sans-serif;font-size:clamp(40px,6vw,72px);font-weight:800;line-height:1.05;margin-bottom:16px;background:linear-gradient(135deg,#fff 0%,#999 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-desc{font-size:17px;color:var(--muted);max-width:560px;line-height:1.7;margin-bottom:32px}
+.hero-meta{display:flex;gap:24px;flex-wrap:wrap}
+.hero-stat{display:flex;flex-direction:column}
+.hero-stat-num{font-size:24px;font-weight:700;color:var(--accent)}
+.hero-stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+
+/* ── Search ── */
+.search-section{padding:32px 48px;max-width:1200px;margin:0 auto}
+.search-wrap{position:relative}
+.search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.search-bar{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px 14px 44px;color:var(--text);font-size:15px;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s}
+.search-bar:focus{border-color:var(--accent)}
+.search-bar::placeholder{color:var(--muted)}
+#search-results{margin-top:12px;display:none}
+.search-result{display:block;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;text-decoration:none;color:var(--text);font-size:13px;margin-bottom:6px;transition:border-color 0.15s}
+.search-result:hover{border-color:var(--accent)}
+.search-result-section{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* ── Sections Grid ── */
+.sections{padding:0 48px 48px;max-width:1200px;margin:0 auto}
+.section-header{display:flex;align-items:baseline;gap:12px;margin-bottom:20px;margin-top:48px}
+.section-title{font-size:18px;font-weight:600;color:var(--text)}
+.section-count{font-size:12px;color:var(--muted);background:var(--surface);border:1px solid var(--border);padding:2px 8px;border-radius:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 22px;text-decoration:none;color:inherit;transition:all 0.2s;display:block;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(245,158,11,0.04) 0%,transparent 60%);opacity:0;transition:opacity 0.2s}
+.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.card:hover::before{opacity:1}
+.card-icon{font-size:20px;margin-bottom:10px}
+.card-title{font-size:14px;font-weight:600;margin-bottom:5px;color:var(--text)}
+.card-desc{font-size:12px;color:var(--muted);line-height:1.55}
+.card-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:10px}
+.tag{background:#1a1a1a;border:1px solid #2a2a2a;color:#777;font-size:10px;padding:2px 6px;border-radius:3px}
+
+/* ── Prompts ── */
+.prompts-section{padding:0 48px 80px;max-width:1200px;margin:0 auto}
+.prompt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
+.prompt-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;transition:border-color 0.2s}
+.prompt-card:hover{border-color:var(--border-hover)}
+.prompt-label{font-size:11px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.prompt-text{font-size:13px;color:var(--muted);line-height:1.65;font-family:'Courier New',monospace;background:#0d0d0d;border:1px solid #1a1a1a;border-radius:6px;padding:12px;margin-bottom:10px}
+.prompt-copy{background:#1a1a1a;border:1px solid var(--border);color:var(--muted);padding:5px 12px;border-radius:5px;font-size:11px;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s}
+.prompt-copy:hover{background:var(--border);color:var(--accent)}
+.prompt-copy.copied{background:var(--accent);color:#000;border-color:var(--accent)}
+
+/* ── Footer ── */
+footer{border-top:1px solid var(--border);padding:24px 48px;max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+footer p{font-size:12px;color:var(--muted)}
+.footer-links{display:flex;gap:16px}
+.footer-links a{font-size:12px;color:var(--muted);text-decoration:none;transition:color 0.15s}
+.footer-links a:hover{color:var(--accent)}
+
+@media(max-width:768px){
+  .hero,.search-section,.sections,.prompts-section,footer{padding-left:20px;padding-right:20px}
+  .hero{padding-top:48px}
+}
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-eyebrow">Design Knowledge Base</div>
+  <h1 class="hero-title">Your Frontend<br>Design System</h1>
+  <p class="hero-desc">Animations, components, frameworks, 3D, and inspiration — all in one place. Built for fast reference while building.</p>
+  <div class="hero-meta">
+    <div class="hero-stat"><span class="hero-stat-num">35+</span><span class="hero-stat-label">Reference Pages</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">200+</span><span class="hero-stat-label">Code Recipes</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">6</span><span class="hero-stat-label">Categories</span></div>
+  </div>
+</div>
+
+<!-- Search -->
+<div class="search-section">
+  <div class="search-wrap">
+    <span class="search-icon">⌕</span>
+    <input class="search-bar" type="text" placeholder="Search pages... (e.g. 'GSAP ScrollTrigger', 'shadcn dialog', 'R3F mouse')" id="global-search" autocomplete="off">
+  </div>
+  <div id="search-results"></div>
+</div>
+
+<!-- Sections -->
+<div class="sections">
+
+  <div class="section-header">
+    <div class="section-title">Animations</div>
+    <div class="section-count">4 pages</div>
+  </div>
+  <div class="grid">
+    <a class="card" href="animations/gsap.html">
+      <div class="card-icon">⚡</div>
+      <div class="card-title">GSAP</div>
+      <div class="card-desc">Full cheatsheet: gsap.to/from/timeline, ScrollTrigger pins, scrub, stagger, cursor, counter.</div>
+      <div class="card-tags"><span class="tag">ScrollTrigger</span><span class="tag">Timeline</span><span class="tag">Stagger</span></div>
+    </a>
+    <a class="card" href="animations/framer-motion.html">
+      <div class="card-icon">🎬</div>
+      <div class="card-title">Framer Motion</div>
+      <div class="card-desc">Variants, page transitions, useInView, useScroll parallax, gesture interactions, layout animations.</div>
+      <div class="card-tags"><span class="tag">Variants</span><span class="tag">AnimatePresence</span><span class="tag">Next.js</span></div>
+    </a>
+    <a class="card" href="animations/lenis.html">
+      <div class="card-icon">🌊</div>
+      <div class="card-title">Lenis Smooth Scroll</div>
+      <div class="card-desc">Setup, React hook, GSAP ScrollTrigger sync, Next.js provider, scrollTo, config options.</div>
+      <div class="card-tags"><span class="tag">Smooth Scroll</span><span class="tag">GSAP Sync</span></div>
+    </a>
+    <a class="card" href="animations/three-js.html">
+      <div class="card-icon">📦</div>
+      <div class="card-title">Three.js</div>
+      <div class="card-desc">Core Three.js without React — scene, geometries, materials, raycasting, mouse interaction.</div>
+      <div class="card-tags"><span class="tag">WebGL</span><span class="tag">Scene</span><span class="tag">Raycasting</span></div>
+    </a>
+  </div>
+
+  <div class="section-header">
+    <div class="section-title">Components</div>
+    <div class="section-count">5 pages</div>
+  </div>
+  <div class="grid">
+    <a class="card" href="components/shadcn.html">
+      <div class="card-icon">🧩</div>
+      <div class="card-title">shadcn/ui</div>
+      <div class="card-desc">Full component catalog, dark theme CSS variables, button variants, form + Zod pattern, dialog.</div>
+      <div class="card-tags"><span class="tag">Radix UI</span><span class="tag">Tailwind</span><span class="tag">47 components</span></div>
+    </a>
+    <a class="card" href="components/magicui.html">
+      <div class="card-icon">✨</div>
+      <div class="card-title">Magic UI</div>
+      <div class="card-desc">Border Beam, Marquee, Word Rotate, Particles, Bento Grid, and 15+ animated components.</div>
+      <div class="card-tags"><span class="tag">Framer Motion</span><span class="tag">Animated</span></div>
+    </a>
+    <a class="card" href="components/aceternity.html">
+      <div class="card-icon">💡</div>
+      <div class="card-title">Aceternity UI</div>
+      <div class="card-desc">Spotlight effect, Lamp Effect, Floating Nav, Card hover, 3D Tilt — premium visual components.</div>
+      <div class="card-tags"><span class="tag">Spotlight</span><span class="tag">Lamp</span><span class="tag">3D</span></div>
+    </a>
+    <a class="card" href="components/21st-dev.html">
+      <div class="card-icon">🤖</div>
+      <div class="card-title">21st.dev</div>
+      <div class="card-desc">AI component library + MCP setup for Claude/Cursor. Prompt templates for instant component cloning.</div>
+      <div class="card-tags"><span class="tag">MCP</span><span class="tag">AI</span><span class="tag">Claude</span></div>
+    </a>
+    <a class="card" href="components/tailwind-blocks.html">
+      <div class="card-icon">🏗️</div>
+      <div class="card-title">Tailwind Blocks</div>
+      <div class="card-desc">Free/paid resource list, dark hero section HTML, services grid — copy-paste ready Tailwind blocks.</div>
+      <div class="card-tags"><span class="tag">Tailwind</span><span class="tag">HTML</span></div>
+    </a>
+  </div>
+
+  <div class="section-header">
+    <div class="section-title">Frameworks</div>
+    <div class="section-count">2 pages</div>
+  </div>
+  <div class="grid">
+    <a class="card" href="frameworks/nextjs.html">
+      <div class="card-icon">▲</div>
+      <div class="card-title">Next.js 14/15</div>
+      <div class="card-desc">App Router structure, metadata API, next/font with Tailwind, next/image, full-stack bootstrap.</div>
+      <div class="card-tags"><span class="tag">App Router</span><span class="tag">SSR</span><span class="tag">Metadata</span></div>
+    </a>
+    <a class="card" href="frameworks/astro.html">
+      <div class="card-icon">🚀</div>
+      <div class="card-title">Astro 4/5</div>
+      <div class="card-desc">Islands architecture, content collections, view transitions, React islands, server endpoints.</div>
+      <div class="card-tags"><span class="tag">Islands</span><span class="tag">MDX</span><span class="tag">SSG</span></div>
+    </a>
+  </div>
+
+  <div class="section-header">
+    <div class="section-title">3D</div>
+    <div class="section-count">3 pages</div>
+  </div>
+  <div class="grid">
+    <a class="card" href="3d/r3f.html">
+      <div class="card-icon">🌐</div>
+      <div class="card-title">React Three Fiber</div>
+      <div class="card-desc">Declarative Three.js: Canvas setup, useFrame, Drei helpers, GLTF models, Next.js dynamic import.</div>
+      <div class="card-tags"><span class="tag">R3F</span><span class="tag">Drei</span><span class="tag">useFrame</span></div>
+    </a>
+    <a class="card" href="3d/shaders.html">
+      <div class="card-icon">🔮</div>
+      <div class="card-title">GLSL Shaders</div>
+      <div class="card-desc">Vertex/fragment shaders, UV gradients, noise distortion, ShaderMaterial, shaderMaterial with Drei.</div>
+      <div class="card-tags"><span class="tag">GLSL</span><span class="tag">Uniforms</span><span class="tag">Noise</span></div>
+    </a>
+    <a class="card" href="animations/three-js.html">
+      <div class="card-icon">📐</div>
+      <div class="card-title">Three.js Core</div>
+      <div class="card-desc">Vanilla Three.js scene setup, geometries, materials, lights, raycasting, and animation loop.</div>
+      <div class="card-tags"><span class="tag">Scene</span><span class="tag">Materials</span></div>
+    </a>
+  </div>
+
+  <div class="section-header">
+    <div class="section-title">Assets</div>
+    <div class="section-count">2 pages</div>
+  </div>
+  <div class="grid">
+    <a class="card" href="assets/colors.html">
+      <div class="card-icon">🎨</div>
+      <div class="card-title">Color Palettes</div>
+      <div class="card-desc">Dark UI palettes, amber/blue/green accent scales, semantic colors, gradients. Click to copy hex.</div>
+      <div class="card-tags"><span class="tag">Dark UI</span><span class="tag">Gradients</span><span class="tag">CSS Vars</span></div>
+    </a>
+    <a class="card" href="assets/fonts.html">
+      <div class="card-icon">🔤</div>
+      <div class="card-title">Typography</div>
+      <div class="card-desc">Live font previews (Inter, Syne, Space Grotesk, DM Sans, Playfair), pairings, CSS type scale.</div>
+      <div class="card-tags"><span class="tag">Google Fonts</span><span class="tag">Type Scale</span></div>
+    </a>
+  </div>
+
+  <div class="section-header">
+    <div class="section-title">Inspiration & Reference</div>
+    <div class="section-count">5 pages</div>
+  </div>
+  <div class="grid">
+    <a class="card" href="inspiration/awwwards-patterns.html">
+      <div class="card-icon">🏆</div>
+      <div class="card-title">Awwwards Patterns</div>
+      <div class="card-desc">Nav overlays, kinetic typography, scroll pinning, custom cursors, page wipe transitions — with code.</div>
+      <div class="card-tags"><span class="tag">GSAP</span><span class="tag">Cursor</span><span class="tag">Scroll</span></div>
+    </a>
+    <a class="card" href="reference-sites/godly-patterns.html">
+      <div class="card-icon">✦</div>
+      <div class="card-title">Godly Patterns</div>
+      <div class="card-desc">Text reveals, image hover effects, bento grids, marquees, line-by-line scroll animations.</div>
+      <div class="card-tags"><span class="tag">Text</span><span class="tag">Images</span><span class="tag">Layout</span></div>
+    </a>
+    <a class="card" href="reference-sites/djcustomreno.html">
+      <div class="card-icon">🏠</div>
+      <div class="card-title">DJ Custom Reno</div>
+      <div class="card-desc">Full site audit: color palette, tech stack, routes, 7 improvement notes, Claude prompt templates.</div>
+      <div class="card-tags"><span class="tag">WordPress</span><span class="tag">Audit</span></div>
+    </a>
+    <a class="card" href="reference-sites/awwwards-patterns.html">
+      <div class="card-icon">📋</div>
+      <div class="card-title">Pattern Reference</div>
+      <div class="card-desc">Extended pattern library from Awwwards — scroll, interaction, and layout patterns with implementation notes.</div>
+      <div class="card-tags"><span class="tag">Patterns</span><span class="tag">Reference</span></div>
+    </a>
+    <a class="card" href="scraper/scraper.js">
+      <div class="card-icon">🕷️</div>
+      <div class="card-title">Site Scraper</div>
+      <div class="card-desc">Node.js scraper — extracts title, headings, nav, colors, meta. Respects robots.txt. 1 req/sec rate limit.</div>
+      <div class="card-tags"><span class="tag">Node.js</span><span class="tag">axios</span><span class="tag">cheerio</span></div>
+    </a>
+  </div>
+
+</div>
+
+<!-- Claude Prompt Templates -->
+<div class="prompts-section">
+  <div class="section-header" style="margin-top:0">
+    <div class="section-title">Claude Code Prompt Templates</div>
+    <div class="section-count">Copy + paste</div>
+  </div>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:24px;max-width:640px">Ready-made prompts that reference this knowledge base. Use these as starting points when building components with Claude.</p>
+
+  <div class="prompt-grid">
+
+    <div class="prompt-card">
+      <div class="prompt-label">Hero Section</div>
+      <div class="prompt-text">Build a dark hero section for a renovation company. Reference ~/design-knowledge-base/. Use DJ Custom Reno's color palette (#010101 bg, #2a53e8 accent). Add a GSAP word-reveal animation on load and a subtle Lenis scroll parallax on the background image. Use shadcn/ui Button component.</div>
+      <button class="prompt-copy" onclick="copyPrompt(this)">Copy</button>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-label">Scroll Animation</div>
+      <div class="prompt-text">Build a services section that uses GSAP ScrollTrigger to stagger-reveal cards as they enter the viewport. Reference ~/design-knowledge-base/animations/gsap.html for the stagger pattern. Use Lenis smooth scroll — reference ~/design-knowledge-base/animations/lenis.html for the Next.js provider setup.</div>
+      <button class="prompt-copy" onclick="copyPrompt(this)">Copy</button>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-label">3D Hero with R3F</div>
+      <div class="prompt-text">Build a 3D hero section using React Three Fiber. Reference ~/design-knowledge-base/3d/r3f.html. Add a floating torus knot that rotates based on mouse position. Use dynamic import with ssr:false for Next.js compatibility. Overlay centered headline text above the canvas.</div>
+      <button class="prompt-copy" onclick="copyPrompt(this)">Copy</button>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-label">Component Library</div>
+      <div class="prompt-text">Build a stats/metrics section using shadcn/ui Card components. Reference ~/design-knowledge-base/components/shadcn.html for the dark theme CSS variables. Add Border Beam animation from Magic UI (~/design-knowledge-base/components/magicui.html) on each card. Animate numbers with GSAP counter pattern.</div>
+      <button class="prompt-copy" onclick="copyPrompt(this)">Copy</button>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-label">Page Transition</div>
+      <div class="prompt-text">Add Framer Motion page transitions to a Next.js 14 App Router project. Reference ~/design-knowledge-base/animations/framer-motion.html for the AnimatePresence pattern. Use a full-screen wipe overlay (black, 0.5s ease). Wrap the root layout children with the transition component.</div>
+      <button class="prompt-copy" onclick="copyPrompt(this)">Copy</button>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-label">Full Site Bootstrap</div>
+      <div class="prompt-text">Bootstrap a Next.js 15 renovation company site. Reference ~/design-knowledge-base/frameworks/nextjs.html for setup. Use Inter + Syne fonts with the Tailwind CSS variable pattern shown. Add shadcn/ui, Lenis, and GSAP. Set up metadata for SEO using the static metadata pattern. Dark theme with amber accent (#f59e0b).</div>
+      <button class="prompt-copy" onclick="copyPrompt(this)">Copy</button>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-label">Awwwards-Style Nav</div>
+      <div class="prompt-text">Build a full-screen overlay navigation menu. Reference ~/design-knowledge-base/inspiration/awwwards-patterns.html for the GSAP clip-path reveal pattern. Links should stagger-animate in on open. Include a close button. Add smooth mouse-reactive position shift on the menu background (parallax on mouse move).</div>
+      <button class="prompt-copy" onclick="copyPrompt(this)">Copy</button>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-label">GLSL Shader Background</div>
+      <div class="prompt-text">Build a full-viewport animated GLSL shader background using React Three Fiber. Reference ~/design-knowledge-base/3d/shaders.html for the shaderMaterial + Drei pattern and the noise distortion vertex shader. Use uTime uniform for animation. Render a plane geometry that fills the screen behind page content.</div>
+      <button class="prompt-copy" onclick="copyPrompt(this)">Copy</button>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <p>Design Knowledge Base — Local reference, no tracking, no auth.</p>
+  <div class="footer-links">
+    <a href="animations/gsap.html">GSAP</a>
+    <a href="components/shadcn.html">shadcn</a>
+    <a href="frameworks/nextjs.html">Next.js</a>
+    <a href="3d/r3f.html">R3F</a>
+    <a href="assets/colors.html">Colors</a>
+    <a href="inspiration/index.html">Inspiration</a>
+  </div>
+</footer>
+
+<script>
+// ── Page index for search ──────────────────────────────────────────────────
+const pages = [
+  { title: 'GSAP Cheatsheet', section: 'Animations', url: 'animations/gsap.html', keywords: 'gsap timeline scrolltrigger stagger tween ease cursor counter pin scrub' },
+  { title: 'Framer Motion', section: 'Animations', url: 'animations/framer-motion.html', keywords: 'framer motion variants page transition useInView useScroll parallax gesture drag layout' },
+  { title: 'Lenis Smooth Scroll', section: 'Animations', url: 'animations/lenis.html', keywords: 'lenis smooth scroll gsap scrolltrigger sync provider react next.js scrollto' },
+  { title: 'Three.js Core', section: '3D / Animations', url: 'animations/three-js.html', keywords: 'threejs three.js scene geometry material light raycasting animation loop' },
+  { title: 'shadcn/ui', section: 'Components', url: 'components/shadcn.html', keywords: 'shadcn ui radix tailwind button dialog form zod sheet accordion badge card carousel' },
+  { title: 'Magic UI', section: 'Components', url: 'components/magicui.html', keywords: 'magic ui border beam marquee word rotate particles bento grid animated' },
+  { title: 'Aceternity UI', section: 'Components', url: 'components/aceternity.html', keywords: 'aceternity spotlight lamp floating nav card hover 3d tilt glare' },
+  { title: '21st.dev + MCP', section: 'Components', url: 'components/21st-dev.html', keywords: '21st dev mcp claude cursor ai component prompt template magic' },
+  { title: 'Tailwind Blocks', section: 'Components', url: 'components/tailwind-blocks.html', keywords: 'tailwind blocks hero services dark free paid copy paste' },
+  { title: 'Next.js Reference', section: 'Frameworks', url: 'frameworks/nextjs.html', keywords: 'nextjs next.js app router metadata font image optimization create-next-app seo og' },
+  { title: 'Astro Reference', section: 'Frameworks', url: 'frameworks/astro.html', keywords: 'astro islands content collections view transitions server endpoints mdx ssg react' },
+  { title: 'React Three Fiber', section: '3D', url: '3d/r3f.html', keywords: 'r3f react three fiber canvas useFrame drei orbitcontrols environment gltf model mouse' },
+  { title: 'GLSL Shaders', section: '3D', url: '3d/shaders.html', keywords: 'glsl shader vertex fragment uTime uniform vUv noise distortion wave gradient material' },
+  { title: 'Color Palettes', section: 'Assets', url: 'assets/colors.html', keywords: 'colors hex palette dark amber blue green gradient css variables swatches copy' },
+  { title: 'Typography / Fonts', section: 'Assets', url: 'assets/fonts.html', keywords: 'fonts inter syne space grotesk dm sans playfair type scale preview pairing' },
+  { title: 'Awwwards Patterns', section: 'Inspiration', url: 'inspiration/awwwards-patterns.html', keywords: 'awwwards overlay menu floating nav kinetic typography scramble clip-path horizontal scroll cursor wipe transition' },
+  { title: 'Godly Patterns', section: 'Inspiration', url: 'reference-sites/godly-patterns.html', keywords: 'godly text reveal line scramble counter image hover marquee bento grid' },
+  { title: 'DJ Custom Reno Analysis', section: 'Reference Sites', url: 'reference-sites/djcustomreno.html', keywords: 'dj custom reno wordpress elementor color palette routes services audit improvement' },
+];
+
+const CACHE_KEY = 'dkb_search_cache';
+
+function getSearchIndex() {
+  const cached = localStorage.getItem(CACHE_KEY);
+  if (cached) {
+    try { return JSON.parse(cached); } catch {}
+  }
+  localStorage.setItem(CACHE_KEY, JSON.stringify(pages));
+  return pages;
+}
+
+const searchInput = document.getElementById('global-search');
+const searchResults = document.getElementById('search-results');
+const index = getSearchIndex();
+
+searchInput.addEventListener('input', function() {
+  const q = this.value.trim().toLowerCase();
+  if (!q) {
+    searchResults.style.display = 'none';
+    searchResults.innerHTML = '';
+    return;
+  }
+
+  const matches = index.filter(p =>
+    p.title.toLowerCase().includes(q) ||
+    p.keywords.toLowerCase().includes(q) ||
+    p.section.toLowerCase().includes(q)
+  );
+
+  if (matches.length === 0) {
+    searchResults.innerHTML = '<div style="color:var(--muted);font-size:13px;padding:10px 14px">No results found</div>';
+    searchResults.style.display = 'block';
+    return;
+  }
+
+  searchResults.innerHTML = matches.slice(0, 8).map(p => `
+    <a class="search-result" href="${p.url}">
+      ${p.title}
+      <div class="search-result-section">${p.section}</div>
+    </a>
+  `).join('');
+  searchResults.style.display = 'block';
+});
+
+// Close search results when clicking outside
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.search-wrap')) {
+    searchResults.style.display = 'none';
+  }
+});
+
+// ── Prompt copy ──────────────────────────────────────────────────────────────
+function copyPrompt(btn) {
+  const text = btn.previousElementSibling.textContent.trim();
+  navigator.clipboard.writeText(text);
+  btn.textContent = 'Copied!';
+  btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>React Three Fiber — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0a;--card:#111111;--border:#1f1f1f;--accent:#f59e0b;--text:#e5e5e5;--muted:#737373;--green:#22c55e}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif}
+a{color:inherit;text-decoration:none}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:240px;background:var(--card);border-right:1px solid var(--border);padding:24px 0;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.sidebar-logo a{font-size:13px;font-weight:600;color:var(--accent);letter-spacing:.05em;text-transform:uppercase}
+.sidebar-logo p{font-size:11px;color:var(--muted);margin-top:4px}
+.nav-section{padding:8px 20px;font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:8px}
+.nav-link{display:flex;align-items:center;gap:8px;padding:8px 20px;font-size:13px;color:var(--muted);transition:.15s;border-left:2px solid transparent}
+.nav-link:hover,.nav-link.active{color:var(--text);background:rgba(245,158,11,.06);border-left-color:var(--accent)}
+.main{margin-left:240px;flex:1;padding:40px;max-width:900px}
+.page-header{margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.badge{display:inline-block;font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(245,158,11,.15);color:var(--accent);border:1px solid rgba(245,158,11,.3);margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em}
+.page-header h1{font-size:28px;font-weight:700}
+.page-header p{color:var(--muted);font-size:14px;margin-top:8px;line-height:1.7;max-width:620px}
+.ext-links{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+.ext-links a{font-size:12px;color:var(--accent);border:1px solid rgba(245,158,11,.3);padding:5px 12px;border-radius:6px;transition:.15s}
+.ext-links a:hover{background:rgba(245,158,11,.1)}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:36px}
+.toc h3{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
+.toc ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.toc ul li a{font-size:13px;color:var(--muted);transition:.15s}
+.toc ul li a:hover{color:var(--accent)}
+.section{margin-bottom:48px}
+.section h2{font-size:18px;font-weight:600;margin-bottom:4px;padding-top:8px}
+.sub{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6}
+.code-block{position:relative;margin-bottom:20px;border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+.code-header{display:flex;justify-content:space-between;align-items:center;padding:8px 16px;background:#0d0d0d;border-bottom:1px solid var(--border)}
+.code-lang{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase}
+.copy-btn{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);color:var(--accent);font-size:11px;padding:4px 10px;border-radius:5px;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s}
+.copy-btn:hover{background:rgba(245,158,11,.2)}
+.copy-btn.copied{color:var(--green);border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.1)}
+.code-block pre{margin:0!important;border-radius:0!important}
+.code-block pre code{font-size:13px!important;line-height:1.6!important}
+.info-box{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:16px;margin-bottom:20px;font-size:13px;line-height:1.7}
+.info-box strong{color:var(--accent)}
+.props-table{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:13px}
+.props-table th{text-align:left;padding:10px 12px;border-bottom:1px solid var(--border);font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.props-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+.props-table td:first-child{color:var(--accent);font-family:monospace;font-size:12px}
+.props-table td:last-child{color:#aaa;line-height:1.6}
+.props-table tr:last-child td{border-bottom:none}
+@media(max-width:768px){.sidebar{display:none}.main{margin-left:0}}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <div class="sidebar-logo"><a href="../index.html">Design KB</a><p>Web Design Knowledge Base</p></div>
+  <div class="nav-section">Hub</div>
+  <a class="nav-link" href="../index.html">&#8962; Dashboard</a>
+  <div class="nav-section">Animations</div>
+  <a class="nav-link" href="../animations/gsap.html">&#9889; GSAP</a>
+  <a class="nav-link" href="../animations/framer-motion.html">&#127902; Framer Motion</a>
+  <a class="nav-link" href="../animations/lenis.html">~ Lenis</a>
+  <div class="nav-section">Components</div>
+  <a class="nav-link" href="../components/shadcn.html">&#9672; shadcn/ui</a>
+  <a class="nav-link" href="../components/21st-dev.html">&#10022; 21st.dev</a>
+  <a class="nav-link" href="../components/magicui.html">&#10022; Magic UI</a>
+  <a class="nav-link" href="../components/aceternity.html">&#9670; Aceternity UI</a>
+  <div class="nav-section">3D</div>
+  <a class="nav-link active" href="r3f.html">&#9677; React Three Fiber</a>
+  <div class="nav-section">Reference Sites</div>
+  <a class="nav-link" href="../reference-sites/index.html">&#9678; Sites Index</a>
+  <a class="nav-link" href="../reference-sites/djcustomreno.html">&#8962; DJ Custom Reno</a>
+</nav>
+<main class="main">
+  <div class="page-header">
+    <div class="badge">3D Graphics</div>
+    <h1>React Three Fiber</h1>
+    <p>React renderer for Three.js. Write declarative 3D scenes using JSX components. Pairs with @react-three/drei for helpers, @react-three/postprocessing for visual effects, and @react-three/rapier for physics simulation.</p>
+    <div class="ext-links">
+      <a href="https://r3f.docs.pmnd.rs/" target="_blank">R3F Docs</a>
+      <a href="https://drei.docs.pmnd.rs/" target="_blank">Drei Docs</a>
+      <a href="https://github.com/pmndrs/react-three-fiber" target="_blank">GitHub R3F</a>
+      <a href="https://github.com/pmndrs/drei" target="_blank">GitHub Drei</a>
+    </div>
+  </div>
+
+  <div class="toc">
+    <h3>Contents</h3>
+    <ul>
+      <li><a href="#install">Installation</a></li>
+      <li><a href="#canvas">Canvas and Scene Setup</a></li>
+      <li><a href="#meshes">Meshes, Geometries, Materials</a></li>
+      <li><a href="#useframe">useFrame Animation Loop</a></li>
+      <li><a href="#drei">Drei Helpers Reference</a></li>
+      <li><a href="#lights">Lighting</a></li>
+      <li><a href="#post">Postprocessing Effects</a></li>
+      <li><a href="#shaders">Custom Shaders</a></li>
+      <li><a href="#patterns">Production Pattern</a></li>
+    </ul>
+  </div>
+
+  <div class="section" id="install">
+    <h2>Installation</h2>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-bash">npm install three @react-three/fiber @react-three/drei
+npm install @react-three/postprocessing   # bloom, DOF, etc.
+npm install @react-three/rapier           # physics
+npm install @types/three                  # TypeScript</code></pre>
+    </div>
+    <div class="info-box">
+      <strong>Next.js App Router:</strong> Three.js needs browser APIs. Wrap in dynamic import with ssr:false, or mark as 'use client'. The Canvas element must render client-side only.
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">tsx — Next.js safe import</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-tsx">import dynamic from 'next/dynamic';
+
+const Scene = dynamic(() => import('@/components/three/Scene'), { ssr: false });
+
+export default function Page() {
+  return (
+    &lt;main&gt;
+      &lt;Scene /&gt;
+    &lt;/main&gt;
+  );
+}</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="canvas">
+    <h2>Canvas and Scene Setup</h2>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">tsx</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-tsx">'use client';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls, Environment } from '@react-three/drei';
+import { Suspense } from 'react';
+
+export default function Scene() {
+  return (
+    &lt;Canvas
+      style={{ width: '100%', height: '100vh' }}
+      camera={{ position: [0, 0, 5], fov: 75 }}
+      gl={{ antialias: true, alpha: true }}   // alpha: transparent bg
+      shadows                                  // enable shadow maps
+      dpr={[1, 2]}                            // pixel ratio range
+      onCreated={({ gl }) =&gt; gl.setClearColor('#000000', 0)}
+    &gt;
+      &lt;Suspense fallback={null}&gt;
+        &lt;ambientLight intensity={0.5} /&gt;
+        &lt;directionalLight position={[5, 5, 5]} intensity={1} castShadow /&gt;
+
+        &lt;mesh&gt;
+          &lt;boxGeometry args={[1, 1, 1]} /&gt;
+          &lt;meshStandardMaterial color="orange" /&gt;
+        &lt;/mesh&gt;
+
+        &lt;OrbitControls enableZoom enablePan enableRotate /&gt;
+        &lt;Environment preset="city" /&gt;
+      &lt;/Suspense&gt;
+    &lt;/Canvas&gt;
+  );
+}</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="meshes">
+    <h2>Meshes, Geometries, Materials</h2>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">tsx</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-tsx">// Mesh = geometry + material
+&lt;mesh position={[0, 0, 0]} rotation={[0, Math.PI / 4, 0]} scale={1.5}&gt;
+  &lt;boxGeometry args={[1, 1, 1]} /&gt;
+  &lt;meshStandardMaterial color="#f59e0b" metalness={0.5} roughness={0.3} /&gt;
+&lt;/mesh&gt;
+
+// Geometries
+&lt;sphereGeometry args={[1, 32, 32]} /&gt;           // radius, wSeg, hSeg
+&lt;cylinderGeometry args={[0.5, 0.5, 2, 32]} /&gt;  // topR, bottomR, height, seg
+&lt;torusGeometry args={[1, 0.3, 16, 100]} /&gt;     // radius, tube, rSeg, tSeg
+&lt;planeGeometry args={[5, 5, 50, 50]} /&gt;         // w, h, wSeg, hSeg
+&lt;icosahedronGeometry args={[1, 4]} /&gt;           // radius, detail
+
+// Materials
+&lt;meshBasicMaterial color="red" /&gt;              // no lighting needed
+&lt;meshStandardMaterial color="blue" metalness={0.8} roughness={0.2} /&gt;
+&lt;meshPhysicalMaterial                          // glass
+  color="white" transmission={0.9} thickness={0.5} roughness={0.05} ior={1.5}
+/&gt;
+&lt;meshNormalMaterial /&gt;                         // debug normals
+&lt;pointsMaterial size={0.05} color="white" /&gt;   // particles
+
+// Textured
+import { useTexture } from '@react-three/drei';
+function TexturedMesh() {
+  const map = useTexture('/textures/wood.jpg');
+  return &lt;mesh&gt;&lt;boxGeometry /&gt;&lt;meshStandardMaterial map={map} /&gt;&lt;/mesh&gt;;
+}</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="useframe">
+    <h2>useFrame Animation Loop</h2>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">tsx</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-tsx">import { useFrame } from '@react-three/fiber';
+import { useRef } from 'react';
+import type { Mesh } from 'three';
+
+function RotatingCube() {
+  const meshRef = useRef&lt;Mesh&gt;(null);
+
+  useFrame((state, delta) =&gt; {
+    // delta = seconds since last frame (~0.016 at 60fps)
+    if (!meshRef.current) return;
+    meshRef.current.rotation.y += delta * 0.8;
+    // Breathing scale
+    meshRef.current.scale.setScalar(1 + Math.sin(state.clock.elapsedTime * 2) * 0.05);
+  });
+
+  return (
+    &lt;mesh ref={meshRef}&gt;
+      &lt;boxGeometry /&gt;
+      &lt;meshStandardMaterial color="orange" /&gt;
+    &lt;/mesh&gt;
+  );
+}
+
+// Mouse follow
+function MouseFollower() {
+  const meshRef = useRef&lt;Mesh&gt;(null);
+  useFrame(({ pointer }) =&gt; {
+    if (!meshRef.current) return;
+    meshRef.current.position.x += (pointer.x * 3 - meshRef.current.position.x) * 0.05;
+    meshRef.current.position.y += (pointer.y * 3 - meshRef.current.position.y) * 0.05;
+  });
+  return &lt;mesh ref={meshRef}&gt;&lt;sphereGeometry args={[0.3]} /&gt;&lt;meshNormalMaterial /&gt;&lt;/mesh&gt;;
+}
+
+// quickTo for smooth lerp (pair with GSAP)
+import gsap from 'gsap';
+const moveX = gsap.quickTo(obj, 'x', { duration: 0.3 });
+useFrame(({ pointer }) =&gt; moveX(pointer.x * 3));</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="drei">
+    <h2>Drei Helpers Reference</h2>
+    <table class="props-table">
+      <tr><th>Helper</th><th>Description</th></tr>
+      <tr><td>OrbitControls</td><td>Mouse orbit, zoom, pan. Add autoRotate for auto-spin.</td></tr>
+      <tr><td>Environment</td><td>HDR environment lighting. Presets: city, studio, sunset, forest, apartment, dawn, night, park, lobby, warehouse</td></tr>
+      <tr><td>ContactShadows</td><td>Fake (cheap) shadow blob on ground plane — no real shadow maps needed</td></tr>
+      <tr><td>Float</td><td>Gentle floating/bobbing animation. Props: speed, rotationIntensity, floatIntensity</td></tr>
+      <tr><td>Text</td><td>3D text via troika-three-text. Props: font, fontSize, color, anchorX/Y</td></tr>
+      <tr><td>Html</td><td>HTML rendered at a 3D position. Props: center, distanceFactor, occlude</td></tr>
+      <tr><td>useGLTF</td><td>Load and cache .glb models with Draco decompression</td></tr>
+      <tr><td>useTexture</td><td>Load and cache textures. Pass string or object of {map, normalMap, etc.}</td></tr>
+      <tr><td>PresentationControls</td><td>Touch-friendly drag rotation, no scroll hijack — ideal for product viewers</td></tr>
+      <tr><td>Stage</td><td>Complete product demo setup: lighting + environment + shadows in one component</td></tr>
+      <tr><td>Center</td><td>Auto-centers geometry/model. Crucial for imported models with off-center origins.</td></tr>
+      <tr><td>Bounds</td><td>Fits camera to scene content with padding</td></tr>
+      <tr><td>ScrollControls</td><td>Scroll-linked scenes within R3F. Alternative to GSAP for pure 3D scroll.</td></tr>
+      <tr><td>Stars</td><td>Particle star field. Props: radius, depth, count, factor, saturation, fade</td></tr>
+      <tr><td>Sparkles</td><td>Sparkle particles. Props: count, scale, size, speed, color, noise</td></tr>
+      <tr><td>MeshReflectorMaterial</td><td>Mirror/wet floor reflection material</td></tr>
+      <tr><td>MeshTransmissionMaterial</td><td>High-quality glass/crystal material</td></tr>
+      <tr><td>SoftShadows</td><td>PCF soft shadow sampling — add inside Canvas</td></tr>
+      <tr><td>Loader</td><td>Progress bar UI for Suspense loading state</td></tr>
+    </table>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">tsx — drei usage</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-tsx">import {
+  OrbitControls, Environment, Float, Text, Html,
+  useGLTF, ContactShadows, Stage, Stars, Sparkles,
+  PresentationControls
+} from '@react-three/drei';
+
+// GLTF model
+function Model() {
+  const { scene } = useGLTF('/product.glb');
+  return &lt;primitive object={scene} /&gt;;
+}
+useGLTF.preload('/product.glb'); // preload before component renders
+
+// Floating wrapper
+&lt;Float speed={2} rotationIntensity={0.5} floatIntensity={1}&gt;
+  &lt;Model /&gt;
+&lt;/Float&gt;
+
+// HTML label attached to 3D position
+&lt;Html position={[0, 1.5, 0]} center distanceFactor={5}&gt;
+  &lt;div style={{ background: 'black', color: 'white', padding: '4px 8px', borderRadius: '4px' }}&gt;
+    Label
+  &lt;/div&gt;
+&lt;/Html&gt;
+
+// Product demo — one-liner setup
+&lt;Stage environment="city" intensity={0.6} shadows="contact"&gt;
+  &lt;Center&gt;&lt;Model /&gt;&lt;/Center&gt;
+&lt;/Stage&gt;
+
+// Star field + sparkles
+&lt;Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} /&gt;
+&lt;Sparkles count={200} scale={4} size={2} speed={0.4} color="gold" /&gt;</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="lights">
+    <h2>Lighting</h2>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">tsx</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-tsx">// Ambient — uniform fill (no direction, no shadows)
+&lt;ambientLight intensity={0.3} /&gt;
+
+// Directional — sun-like parallel rays
+&lt;directionalLight
+  position={[5, 10, 5]}
+  intensity={1.5}
+  castShadow
+  shadow-mapSize={[2048, 2048]}
+  shadow-camera-far={50}
+/&gt;
+
+// Point — omnidirectional bulb
+&lt;pointLight position={[0, 3, 0]} intensity={2} color="#ff9900" decay={2} /&gt;
+
+// Spot — cone of light
+&lt;spotLight
+  position={[0, 10, 0]}
+  angle={Math.PI / 6}
+  penumbra={0.3}    // soft edge 0-1
+  intensity={2}
+  castShadow
+/&gt;
+
+// Best practice for product renders
+&lt;ambientLight intensity={0.2} /&gt;
+&lt;Environment preset="studio" /&gt;
+&lt;directionalLight position={[5, 8, 3]} intensity={0.8} castShadow /&gt;</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="post">
+    <h2>Postprocessing Effects</h2>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">tsx</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-tsx">import { EffectComposer, Bloom, DepthOfField, ChromaticAberration, Vignette, Noise } from '@react-three/postprocessing';
+import { BlendFunction } from 'postprocessing';
+
+// Add inside Canvas
+&lt;EffectComposer&gt;
+  &lt;Bloom
+    intensity={0.5}
+    luminanceThreshold={0.9}   // only bright areas glow
+    luminanceSmoothing={0.025}
+    mipmapBlur                  // better quality
+  /&gt;
+  &lt;DepthOfField focusDistance={0.02} focalLength={0.02} bokehScale={3} /&gt;
+  &lt;ChromaticAberration offset={[0.002, 0.002]} /&gt;
+  &lt;Vignette eskil={false} offset={0.1} darkness={1.1} /&gt;
+  &lt;Noise opacity={0.02} /&gt;
+&lt;/EffectComposer&gt;</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="shaders">
+    <h2>Custom Shaders</h2>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">tsx</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-tsx">import { shaderMaterial } from '@react-three/drei';
+import { extend, useFrame } from '@react-three/fiber';
+import { useRef } from 'react';
+import * as THREE from 'three';
+
+const WaveMaterial = shaderMaterial(
+  { uTime: 0, uColor: new THREE.Color(0.2, 0.5, 1.0) },
+  // Vertex shader
+  `uniform float uTime; varying vec2 vUv;
+   void main() {
+     vUv = uv;
+     vec3 pos = position;
+     pos.z += sin(pos.x * 3.0 + uTime * 2.0) * 0.15;
+     gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+   }`,
+  // Fragment shader
+  `uniform vec3 uColor; uniform float uTime; varying vec2 vUv;
+   void main() {
+     float wave = 0.5 + 0.5 * sin(vUv.x * 10.0 + uTime);
+     gl_FragColor = vec4(uColor * wave, 1.0);
+   }`
+);
+
+extend({ WaveMaterial });
+
+function WavePlane() {
+  const matRef = useRef&lt;any&gt;(null);
+  useFrame(({ clock }) =&gt; { matRef.current.uTime = clock.elapsedTime; });
+  return (
+    &lt;mesh rotation={[-Math.PI / 2, 0, 0]}&gt;
+      &lt;planeGeometry args={[5, 5, 64, 64]} /&gt;
+      &lt;waveMaterial ref={matRef} side={THREE.DoubleSide} /&gt;
+    &lt;/mesh&gt;
+  );
+}</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="patterns">
+    <h2>Production Pattern — Scroll-Animated Product Viewer</h2>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">tsx — complete scene</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-tsx">'use client';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { OrbitControls, Environment, Float, useGLTF, Center, Loader, ContactShadows } from '@react-three/drei';
+import { EffectComposer, Bloom } from '@react-three/postprocessing';
+import { Suspense, useRef } from 'react';
+import type { Group } from 'three';
+
+function Model({ scrollProgress = 0 }) {
+  const { scene } = useGLTF('/product.glb');
+  const groupRef = useRef&lt;Group&gt;(null);
+
+  useFrame(({ clock }) =&gt; {
+    if (!groupRef.current) return;
+    groupRef.current.rotation.y = scrollProgress * Math.PI * 2;
+    groupRef.current.position.y = Math.sin(clock.elapsedTime * 0.5) * 0.05;
+  });
+
+  return (
+    &lt;group ref={groupRef}&gt;
+      &lt;Center&gt;&lt;primitive object={scene} /&gt;&lt;/Center&gt;
+    &lt;/group&gt;
+  );
+}
+useGLTF.preload('/product.glb');
+
+export default function ProductViewer({ scrollProgress = 0 }: { scrollProgress?: number }) {
+  return (
+    &lt;div style={{ width: '100%', height: '100vh', position: 'relative' }}&gt;
+      &lt;Canvas
+        camera={{ position: [0, 0.5, 4], fov: 40 }}
+        dpr={[1, 2]}
+        gl={{ antialias: true, alpha: true }}
+        shadows
+      &gt;
+        &lt;Suspense fallback={null}&gt;
+          &lt;ambientLight intensity={0.2} /&gt;
+          &lt;Environment preset="studio" /&gt;
+          &lt;Float speed={1.5} rotationIntensity={0.2}&gt;
+            &lt;Model scrollProgress={scrollProgress} /&gt;
+          &lt;/Float&gt;
+          &lt;ContactShadows position={[0, -1.5, 0]} opacity={0.4} blur={2.5} far={4} /&gt;
+          &lt;EffectComposer&gt;
+            &lt;Bloom intensity={0.25} luminanceThreshold={0.9} mipmapBlur /&gt;
+          &lt;/EffectComposer&gt;
+        &lt;/Suspense&gt;
+        &lt;OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.3} /&gt;
+      &lt;/Canvas&gt;
+      &lt;Loader /&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+    </div>
+  </div>
+</main>
+</div>
+<script>
+hljs.highlightAll();
+function copyCode(btn){
+  const code = btn.closest('.code-block').querySelector('code').textContent;
+  navigator.clipboard.writeText(code).then(()=>{
+    btn.textContent='Copied!';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000);
+  });
+}
+</script>
+</body>
+</html>

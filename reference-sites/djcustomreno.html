@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DJ Custom Reno Analysis — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#e5e5e5;display:flex;min-height:100vh}
+.sidebar{width:240px;background:#111;border-right:1px solid #222;padding:24px 0;position:fixed;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid #222;margin-bottom:16px}
+.sidebar-logo a{text-decoration:none;color:#f59e0b;font-weight:700;font-size:16px}
+.sidebar-logo span{display:block;color:#666;font-size:11px;margin-top:2px}
+.nav-section{padding:0 12px;margin-bottom:8px}
+.nav-label{font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:1px;padding:0 8px;margin-bottom:6px}
+.nav-item{display:block;padding:7px 8px;border-radius:6px;color:#999;text-decoration:none;font-size:13px;transition:all 0.15s}
+.nav-item:hover,.nav-item.active{background:#1a1a1a;color:#f59e0b}
+.main{margin-left:240px;flex:1;padding:40px;max-width:calc(100vw - 240px)}
+.search-bar{width:100%;background:#111;border:1px solid #222;border-radius:8px;padding:12px 16px;color:#e5e5e5;font-size:14px;font-family:'Inter',sans-serif;margin-bottom:32px;outline:none;transition:border-color 0.2s}
+.search-bar:focus{border-color:#f59e0b}
+h1{font-size:28px;font-weight:700;margin-bottom:8px}
+.subtitle{color:#666;margin-bottom:32px;font-size:15px}
+h2{font-size:18px;font-weight:600;margin:32px 0 14px;color:#f59e0b}
+.card{background:#111;border:1px solid #222;border-radius:12px;padding:20px;margin-bottom:16px}
+.meta-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:24px}
+.meta-item{background:#111;border:1px solid #222;border-radius:8px;padding:14px}
+.meta-label{font-size:11px;color:#555;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.meta-value{font-size:14px;color:#e5e5e5;font-weight:500}
+.swatches{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
+.swatch{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer}
+.swatch-box{width:72px;height:72px;border-radius:8px;border:1px solid #333;transition:transform 0.15s}
+.swatch-box:hover{transform:scale(1.05)}
+.swatch-hex{font-size:11px;color:#777;font-family:'Courier New',monospace}
+.swatch-name{font-size:11px;color:#555}
+.routes-list{list-style:none}
+.routes-list li{padding:8px 12px;border-bottom:1px solid #1a1a1a;font-size:13px;color:#999;display:flex;align-items:center;gap:8px}
+.routes-list li:last-child{border-bottom:none}
+.routes-list .route-path{font-family:'Courier New',monospace;color:#a3e635;font-size:12px}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.service-item{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:6px;padding:10px 12px;font-size:13px;color:#ccc}
+.improvement-item{background:#1a1a1a;border-left:3px solid #f59e0b;border-radius:0 6px 6px 0;padding:12px 14px;margin-bottom:8px}
+.improvement-title{font-size:13px;font-weight:600;color:#e5e5e5;margin-bottom:4px}
+.improvement-desc{font-size:12px;color:#666;line-height:1.5}
+.tag{display:inline-block;background:#1a1a1a;border:1px solid #333;border-radius:4px;padding:2px 8px;font-size:11px;color:#888;margin-right:6px}
+.copy-toast{position:fixed;bottom:24px;right:24px;background:#f59e0b;color:#000;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:600;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:9999}
+.copy-toast.show{opacity:1}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><a href="../index.html">Design KB</a><span>Knowledge Base</span></div>
+  <div class="nav-section"><div class="nav-label">Reference Sites</div>
+    <a class="nav-item" href="index.html">Overview</a>
+    <a class="nav-item active" href="djcustomreno.html">DJ Custom Reno</a>
+    <a class="nav-item" href="awwwards-patterns.html">Awwwards Patterns</a>
+    <a class="nav-item" href="godly-patterns.html">Godly Patterns</a>
+  </div>
+  <div class="nav-section"><div class="nav-label">Components</div>
+    <a class="nav-item" href="../components/shadcn.html">shadcn/ui</a>
+    <a class="nav-item" href="../components/21st-dev.html">21st.dev</a>
+  </div>
+  <div class="nav-section"><div class="nav-label">Assets</div>
+    <a class="nav-item" href="../assets/colors.html">Colors</a>
+    <a class="nav-item" href="../assets/fonts.html">Fonts</a>
+  </div>
+</nav>
+<main class="main">
+  <input class="search-bar" type="text" placeholder="Search analysis..." id="search">
+  <h1>DJ Custom Reno</h1>
+  <p class="subtitle"><a href="https://djcustomreno.ca" target="_blank" style="color:#f59e0b">djcustomreno.ca</a> — Renovation company website analysis and improvement notes</p>
+
+  <h2>Site Overview</h2>
+  <div class="meta-grid">
+    <div class="meta-item" data-searchable><div class="meta-label">Industry</div><div class="meta-value">Home Renovation</div></div>
+    <div class="meta-item" data-searchable><div class="meta-label">Location</div><div class="meta-value">Canada</div></div>
+    <div class="meta-item" data-searchable><div class="meta-label">Design Style</div><div class="meta-value">Dark, Bold, Electric</div></div>
+    <div class="meta-item" data-searchable><div class="meta-label">Primary CTA</div><div class="meta-value">Get a Quote / Contact</div></div>
+    <div class="meta-item" data-searchable><div class="meta-label">Target User</div><div class="meta-value">Homeowners, Property Owners</div></div>
+    <div class="meta-item" data-searchable><div class="meta-label">Animation Level</div><div class="meta-value">Moderate</div></div>
+  </div>
+
+  <h2>Detected Tech Stack</h2>
+  <div class="card" data-searchable>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <span class="tag">WordPress</span>
+      <span class="tag">Elementor (likely)</span>
+      <span class="tag">jQuery</span>
+      <span class="tag">Google Fonts</span>
+      <span class="tag">Contact Form 7</span>
+      <span class="tag">Yoast SEO</span>
+    </div>
+    <p style="font-size:13px;color:#666;margin-top:12px;line-height:1.6">Standard WordPress + page builder stack. The design is constrained by the builder. Rebuilding in Next.js would dramatically improve performance, animation capability, and mobile UX.</p>
+  </div>
+
+  <h2>Color Palette</h2>
+  <div class="card" data-searchable>
+    <div class="swatches">
+      <div class="swatch" onclick="copyHex('#010101')">
+        <div class="swatch-box" style="background:#010101"></div>
+        <div class="swatch-hex">#010101</div>
+        <div class="swatch-name">Background</div>
+      </div>
+      <div class="swatch" onclick="copyHex('#232323')">
+        <div class="swatch-box" style="background:#232323"></div>
+        <div class="swatch-hex">#232323</div>
+        <div class="swatch-name">Card BG</div>
+      </div>
+      <div class="swatch" onclick="copyHex('#2a53e8')">
+        <div class="swatch-box" style="background:#2a53e8"></div>
+        <div class="swatch-hex">#2a53e8</div>
+        <div class="swatch-name">Electric Blue</div>
+      </div>
+      <div class="swatch" onclick="copyHex('#ffbc0b')">
+        <div class="swatch-box" style="background:#ffbc0b"></div>
+        <div class="swatch-hex">#ffbc0b</div>
+        <div class="swatch-name">Gold</div>
+      </div>
+      <div class="swatch" onclick="copyHex('#ffffff')">
+        <div class="swatch-box" style="background:#ffffff;border-color:#444"></div>
+        <div class="swatch-hex">#ffffff</div>
+        <div class="swatch-name">Text</div>
+      </div>
+      <div class="swatch" onclick="copyHex('#aaaaaa')">
+        <div class="swatch-box" style="background:#aaaaaa"></div>
+        <div class="swatch-hex">#aaaaaa</div>
+        <div class="swatch-name">Body Text</div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:#666">Click any swatch to copy hex code. The dual accent system (blue for links/interactive, gold for CTAs/highlights) is the signature visual element.</p>
+  </div>
+
+  <h2>Site Routes / Pages</h2>
+  <div class="card" data-searchable>
+    <ul class="routes-list">
+      <li><span class="route-path">/</span> — Homepage: Hero, services intro, before/after, testimonials, CTA</li>
+      <li><span class="route-path">/services</span> — Services overview page</li>
+      <li><span class="route-path">/kitchen-renovations</span> — Kitchen service detail</li>
+      <li><span class="route-path">/bathroom-renovations</span> — Bathroom service detail</li>
+      <li><span class="route-path">/basement-renovations</span> — Basement service detail</li>
+      <li><span class="route-path">/flooring</span> — Flooring services</li>
+      <li><span class="route-path">/painting</span> — Interior/exterior painting</li>
+      <li><span class="route-path">/gallery</span> — Project portfolio / before-after photos</li>
+      <li><span class="route-path">/about</span> — Team, story, credentials</li>
+      <li><span class="route-path">/contact</span> — Contact form + location</li>
+      <li><span class="route-path">/free-quote</span> — Quote request form</li>
+    </ul>
+  </div>
+
+  <h2>Services Offered</h2>
+  <div class="services-grid" data-searchable>
+    <div class="service-item">Kitchen Renovations</div>
+    <div class="service-item">Bathroom Renovations</div>
+    <div class="service-item">Basement Finishing</div>
+    <div class="service-item">Flooring Installation</div>
+    <div class="service-item">Interior Painting</div>
+    <div class="service-item">Exterior Painting</div>
+    <div class="service-item">Tile Installation</div>
+    <div class="service-item">Drywall</div>
+    <div class="service-item">Trim & Millwork</div>
+    <div class="service-item">Deck Building</div>
+    <div class="service-item">General Contracting</div>
+    <div class="service-item">Home Additions</div>
+  </div>
+
+  <h2>Improvement Notes</h2>
+
+  <div class="improvement-item" data-searchable>
+    <div class="improvement-title">Performance — Rebuild in Next.js</div>
+    <div class="improvement-desc">Current WordPress/Elementor stack loads 4-6MB of JS. A Next.js rebuild with static generation would achieve sub-1s LCP. Use ISR for dynamic content (gallery, testimonials).</div>
+  </div>
+
+  <div class="improvement-item" data-searchable>
+    <div class="improvement-title">Hero — Add scroll-triggered text reveal</div>
+    <div class="improvement-desc">Current hero is static image + text. Adding a GSAP timeline on load (nav fade in → headline reveal → subtext → CTA button) would dramatically increase perceived quality. Use lenis for smooth scroll throughout.</div>
+  </div>
+
+  <div class="improvement-item" data-searchable>
+    <div class="improvement-title">Services — Replace static cards with animated grid</div>
+    <div class="improvement-desc">Use a bento grid layout (Magic UI) with stagger-in scroll animation. Each service card gets an icon, micro-animation on hover (border beam), and links to the service detail page.</div>
+  </div>
+
+  <div class="improvement-item" data-searchable>
+    <div class="improvement-title">Gallery — Before/After slider</div>
+    <div class="improvement-desc">Aceternity's Compare Slider component is perfect here. Before/after drag comparison with smooth CSS transition. Add a filterable masonry grid for the full portfolio.</div>
+  </div>
+
+  <div class="improvement-item" data-searchable>
+    <div class="improvement-title">Trust signals — Animated stats section</div>
+    <div class="improvement-desc">Add a stats bar with animated counters (GSAP or Magic UI NumberTicker): "200+ Projects Completed", "15+ Years Experience", "98% Client Satisfaction". Trigger on scroll entry.</div>
+  </div>
+
+  <div class="improvement-item" data-searchable>
+    <div class="improvement-title">Typography — Upgrade to Syne + Inter pairing</div>
+    <div class="improvement-desc">Replace the current generic font with Syne 800 for headings (bold, distinctive) and Inter 400 for body. This pairing signals premium without being cold.</div>
+  </div>
+
+  <div class="improvement-item" data-searchable>
+    <div class="improvement-title">Mobile — Fix the nav menu</div>
+    <div class="improvement-desc">The current mobile menu is a basic WordPress dropdown. Replace with an Aceternity FloatingNav or a full-screen overlay menu with staggered link animation. Use Sheet from shadcn for the overlay.</div>
+  </div>
+
+  <h2>Claude Prompt Templates (for rebuilding)</h2>
+  <div class="card" data-searchable>
+    <p style="font-size:12px;color:#666;margin-bottom:12px">Copy-paste prompts for rebuilding this site:</p>
+    <div style="background:#0a0a0a;border:1px solid #222;border-radius:6px;padding:14px;font-size:12px;font-family:'Courier New',monospace;color:#ccc;margin-bottom:8px;cursor:pointer" onclick="copyText(this)">
+      Build the homepage hero for a renovation company. Reference ~/design-knowledge-base/reference-sites/djcustomreno.html for the color palette (#010101 bg, #2a53e8 blue, #ffbc0b gold). Use GSAP for the load animation sequence (nav → headline → subtext → CTA). Add Lenis smooth scroll. Stack: Next.js 15, Tailwind, TypeScript.
+    </div>
+    <div style="background:#0a0a0a;border:1px solid #222;border-radius:6px;padding:14px;font-size:12px;font-family:'Courier New',monospace;color:#ccc;cursor:pointer" onclick="copyText(this)">
+      Build a services section for djcustomreno.ca rebuild. Use a 3-column bento grid with Magic UI BorderBeam on hover. Services: Kitchen, Bathroom, Basement, Flooring, Painting, Tile. Each card has icon + title + short desc. Stagger animate cards in on scroll (Framer Motion useInView). Colors: bg #111, border #222, accent #ffbc0b.
+    </div>
+  </div>
+</main>
+<div class="copy-toast" id="toast">Copied!</div>
+<script>
+function copyHex(hex) {
+  navigator.clipboard.writeText(hex);
+  const toast = document.getElementById('toast');
+  toast.textContent = 'Copied ' + hex;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 1800);
+}
+function copyText(el) {
+  navigator.clipboard.writeText(el.innerText);
+  const toast = document.getElementById('toast');
+  toast.textContent = 'Prompt copied!';
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 1800);
+}
+document.getElementById('search').addEventListener('input', function() {
+  const q = this.value.toLowerCase();
+  document.querySelectorAll('[data-searchable]').forEach(el => {
+    el.style.display = el.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+});
+</script>
+</body>
+</html>

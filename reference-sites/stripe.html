@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Stripe Analysis — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0a;--card:#111111;--border:#1f1f1f;--accent:#f59e0b;--text:#e5e5e5;--muted:#737373;--green:#22c55e}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh}
+a{color:inherit;text-decoration:none}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:240px;background:var(--card);border-right:1px solid var(--border);padding:24px 0;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.sidebar-logo span{font-size:13px;font-weight:600;color:var(--accent);letter-spacing:.05em;text-transform:uppercase}
+.sidebar-logo p{font-size:11px;color:var(--muted);margin-top:4px}
+.nav-section{padding:8px 20px;font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:8px}
+.nav-link{display:flex;align-items:center;gap:8px;padding:8px 20px;font-size:13px;color:var(--muted);transition:.15s;border-left:2px solid transparent}
+.nav-link:hover,.nav-link.active{color:var(--text);background:rgba(245,158,11,.06);border-left-color:var(--accent)}
+.main{margin-left:240px;flex:1;padding:40px;max-width:1100px}
+h1{font-size:28px;font-weight:700;background:linear-gradient(135deg,#f59e0b,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.meta{display:flex;gap:12px;align-items:center;margin-bottom:32px;flex-wrap:wrap}
+.badge{font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(245,158,11,.1);color:var(--accent);border:1px solid rgba(245,158,11,.2);font-weight:500}
+.url-link{font-size:13px;color:var(--muted)}
+.url-link a{color:var(--accent)}
+.section{margin-bottom:40px}
+.section-title{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:12px}
+.card h3{font-size:14px;font-weight:600;margin-bottom:8px}
+.card p,.card li{font-size:13px;color:var(--muted);line-height:1.7}
+.card ul{padding-left:16px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.palette{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.swatch{display:flex;flex-direction:column;align-items:center;gap:6px}
+.swatch-color{width:52px;height:52px;border-radius:8px;border:1px solid rgba(255,255,255,.08)}
+.swatch-label{font-size:10px;color:var(--muted);font-family:monospace}
+pre{position:relative;border-radius:10px;overflow:hidden;margin-top:12px}
+.copy-btn{position:absolute;top:10px;right:10px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);color:var(--accent);font-size:11px;padding:4px 10px;border-radius:5px;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s;z-index:2}
+.copy-btn:hover{background:rgba(245,158,11,.2)}
+.copy-btn.copied{color:var(--green);border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.1)}
+.prompt-box{background:var(--card);border:1px solid rgba(245,158,11,.2);border-radius:12px;padding:20px;margin-bottom:12px;position:relative}
+.prompt-box h4{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:10px}
+.prompt-box p{font-size:13px;color:var(--muted);line-height:1.7;white-space:pre-wrap;word-break:break-word;font-family:'Inter',sans-serif}
+/* Stripe demo */
+.stripe-demo{background:linear-gradient(135deg,#0d0d2b 0%,#1a1a4e 40%,#2d1b5e 70%,#1a0d3d 100%);border-radius:12px;padding:48px 32px;position:relative;overflow:hidden}
+.stripe-demo::before{content:'';position:absolute;top:-50%;left:-20%;width:70%;height:200%;background:radial-gradient(ellipse,rgba(99,102,241,.3),transparent 60%);pointer-events:none}
+.stripe-demo::after{content:'';position:absolute;top:20%;right:-10%;width:50%;height:150%;background:radial-gradient(ellipse,rgba(236,72,153,.2),transparent 60%);pointer-events:none}
+.stripe-demo h2{position:relative;font-size:clamp(28px,4vw,52px);font-weight:700;letter-spacing:-0.03em;color:#fff;line-height:1.1;z-index:1;max-width:520px}
+.stripe-demo p{position:relative;color:rgba(255,255,255,.65);font-size:16px;margin-top:16px;max-width:440px;line-height:1.65;z-index:1}
+.stripe-btn{position:relative;display:inline-flex;align-items:center;gap:8px;margin-top:24px;padding:12px 24px;background:#635bff;color:white;border-radius:6px;font-size:14px;font-weight:500;z-index:1;cursor:pointer;border:none;transition:.15s}
+.stripe-btn:hover{background:#4f46e5;transform:translateY(-1px)}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <div class="sidebar-logo"><span>Design KB</span><p>Web Design Knowledge Base</p></div>
+  <div class="nav-section">Hub</div>
+  <a class="nav-link" href="../index.html">⌂ Dashboard</a>
+  <div class="nav-section">Reference Sites</div>
+  <a class="nav-link" href="awwwards.html">◎ Awwwards</a>
+  <a class="nav-link" href="godly.html">◎ Godly</a>
+  <a class="nav-link" href="lusion.html">◎ Lusion</a>
+  <a class="nav-link" href="linear.html">◎ Linear</a>
+  <a class="nav-link" href="vercel.html">◎ Vercel</a>
+  <a class="nav-link active" href="stripe.html">◎ Stripe</a>
+  <a class="nav-link" href="cosmos.html">◎ Cosmos</a>
+  <a class="nav-link" href="mobbin.html">◎ Mobbin</a>
+</nav>
+<main class="main">
+  <h1>Stripe — Gradients, Transitions & Typography</h1>
+  <div class="meta">
+    <span class="badge">Payments Platform</span>
+    <span class="badge">Gradient Mastery</span>
+    <span class="badge">Section Transitions</span>
+    <span class="badge">Typography Excellence</span>
+    <span class="url-link">→ <a href="https://stripe.com" target="_blank">stripe.com</a></span>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Live Demo — Stripe-Style Gradient Hero</div>
+    <div class="stripe-demo">
+      <h2>Financial infrastructure for the internet.</h2>
+      <p>Millions of companies of all sizes use Stripe to accept payments, send payouts, and manage their businesses online.</p>
+      <button class="stripe-btn">Start now →</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Color Palette</div>
+    <div class="card">
+      <p>Stripe's palette is deep indigo/violet — rich, professional, not generic "tech blue". Their gradient style is diagonal with multiple warm-to-cool stops:</p>
+      <div class="palette">
+        <div class="swatch"><div class="swatch-color" style="background:#0d0d2b"></div><span class="swatch-label">#0d0d2b</span></div>
+        <div class="swatch"><div class="swatch-color" style="background:#635bff"></div><span class="swatch-label">#635bff</span></div>
+        <div class="swatch"><div class="swatch-color" style="background:#80e9ff"></div><span class="swatch-label">#80e9ff</span></div>
+        <div class="swatch"><div class="swatch-color" style="background:#7a73ff"></div><span class="swatch-label">#7a73ff</span></div>
+        <div class="swatch"><div class="swatch-color" style="background:#ff80ff"></div><span class="swatch-label">#ff80ff</span></div>
+        <div class="swatch"><div class="swatch-color" style="background:#4f46e5"></div><span class="swatch-label">#4f46e5</span></div>
+        <div class="swatch"><div class="swatch-color" style="background:#fff"></div><span class="swatch-label">#ffffff</span></div>
+        <div class="swatch"><div class="swatch-color" style="background:#0a2540"></div><span class="swatch-label">#0a2540</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Gradient Techniques</div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Hero Background Gradient</h3>
+        <ul>
+          <li>Multi-stop diagonal linear-gradient (135deg) for base</li>
+          <li>Layered radial-gradient blobs for glow spots</li>
+          <li>Colors flow: deep navy → indigo → violet → magenta</li>
+          <li>CSS transition between gradient stops on scroll (JS-driven)</li>
+          <li>Never pure flat color — always slight gradient even in "plain" sections</li>
+          <li>Animated: gradient position shifts slowly via keyframe loop</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Section Gradient Transitions</h3>
+        <ul>
+          <li>Adjacent sections "blend" via overlapping gradients on their borders</li>
+          <li>Section bottom has a gradient fade to the next section's bg color</li>
+          <li>SVG wave dividers with gradient fill instead of sharp horizontal lines</li>
+          <li>Background color gradients from #0d0d2b (hero) to #fff (middle) to #f6f9fc (features)</li>
+          <li>The scroll experience feels like moving through one continuous gradient world</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Typography</div>
+    <div class="card">
+      <ul>
+        <li><strong>Font:</strong> Sohne (custom licensed) — geometric, strong, modern sans-serif. Fallback: system-ui or "Helvetica Neue"</li>
+        <li><strong>Hero headline:</strong> 60–80px, weight 700, letter-spacing -0.025em, line-height 1.05 — tight and impactful</li>
+        <li><strong>Subheadline:</strong> 20–24px, weight 400–500, color rgba(255,255,255,.65), line-height 1.6</li>
+        <li><strong>Feature section headings:</strong> 34–40px, weight 600, dark color #0a2540 (on white sections)</li>
+        <li><strong>Body:</strong> 17–18px, line-height 1.7, color #425466 (on white) or rgba(255,255,255,.7) (on dark)</li>
+        <li><strong>All-caps labels:</strong> 13px, weight 600, letter-spacing 0.1em — used for category/section labels</li>
+        <li><strong>Stripe's type hallmark:</strong> extremely generous line-height + comfortable measure (max 65ch) for readability</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Section Transitions</div>
+    <div class="card">
+      <ul>
+        <li><strong>Wave SVG dividers:</strong> Custom wave shapes between sections using SVG path with gradient fill — never hard horizontal cuts</li>
+        <li><strong>Gradient dissolve:</strong> Section backgrounds fade into each other — implemented via overlapping ::before/::after with gradient-to-transparent</li>
+        <li><strong>Color journey:</strong> Dark purple hero → light blue/white features → pure white middle sections → light gray footer — systematic progression</li>
+        <li><strong>Sticky scroll animations:</strong> Product UI screenshots "build up" on scroll — rows of a dashboard appear one by one with ScrollTrigger</li>
+        <li><strong>Parallax at section boundaries:</strong> Background graphic elements continue past their section boundary, creating depth overlap</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Layout Patterns</div>
+    <div class="card">
+      <ul>
+        <li><strong>Container:</strong> max-width 1080px, centered, 32px horizontal padding</li>
+        <li><strong>Hero:</strong> centered text, large headline, subtitle, two CTAs, followed by a large product screenshot with gradient border/glow</li>
+        <li><strong>Features alternating:</strong> Text left / UI screenshot right, then Text right / UI screenshot left — creates reading rhythm</li>
+        <li><strong>Stats band:</strong> Full-width section with 3–4 large stats (e.g. "$1T+ processed") — simple grid, massive numbers</li>
+        <li><strong>Testimonials:</strong> Card grid with company logo, quote, name/title — white cards on light gray bg</li>
+        <li><strong>CTA section:</strong> Full-width dark gradient section with large headline + two buttons, used before footer</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">What to Steal from Stripe</div>
+    <div class="card">
+      <ul>
+        <li><strong>Diagonal multi-stop gradients:</strong> bg: linear-gradient(135deg, #0d0d2b 0%, #1a1a4e 40%, #2d1b5e 70%, #1a0d3d 100%) — richer than 2-stop gradients</li>
+        <li><strong>Wave section dividers:</strong> Replace horizontal lines with SVG waves — instantly elevates page polish</li>
+        <li><strong>Radial glow blobs:</strong> Position large radial-gradient pseudo-elements off-center — creates the signature "Stripe glow"</li>
+        <li><strong>Product screenshot as hero graphic:</strong> Your app UI in a browser frame with gradient glow — makes it feel real and aspirational</li>
+        <li><strong>Color progression across page:</strong> Plan your sections to transition dark→light→dark — creates journey, not just sections</li>
+        <li><strong>Generous type settings:</strong> line-height 1.7 for body text, max-width 65ch — dramatically improves readability</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Claude Prompts</div>
+    <div class="prompt-box">
+      <h4>Stripe-Style Hero with Radial Glow</h4>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+      <p>Build a Stripe-inspired hero section in Next.js with Tailwind. Background: linear-gradient(135deg, #0d0d2b 0%, #1a1a4e 40%, #2d1b5e 70%, #1a0d3d 100%). Add two radial glow pseudo-elements: one indigo blob top-left (rgba(99,102,241,0.3), 60% ellipse), one pink blob bottom-right (rgba(236,72,153,0.2), 50% ellipse). Centered content: all-caps label (13px, letter-spacing 0.1em, color #80e9ff), H1 70px weight-700 tracking-[-0.025em] text-white max-w-3xl, subtitle 20px rgba(255,255,255,0.65) max-w-xl, CTA button bg-[#635bff] hover:bg-[#4f46e5]. Below text: product UI screenshot in a browser chrome mockup with a gradient border glow (box-shadow: 0 0 60px rgba(99,102,241,0.4)).</p>
+    </div>
+    <div class="prompt-box">
+      <h4>SVG Wave Section Divider</h4>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+      <p>Create a React WaveDivider component that creates a smooth SVG wave transition between two colored sections. The component takes topColor and bottomColor props. The SVG path should create a gentle wave shape (1440x80 viewBox) with a gradient fill from topColor to bottomColor. Place it between sections using position: relative, margin-bottom: -1px to prevent seams. Offer a 'flip' prop that inverts the wave direction. This replaces all sharp section borders with organic transitions.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Code Snippet — Animated Gradient Background</div>
+    <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-tsx">// Stripe-style animated gradient background
+// The gradient slowly shifts position using a CSS keyframe animation
+
+export function AnimatedGradientBg({ children }: { children: React.ReactNode }) {
+  return (
+    &lt;div className="relative overflow-hidden" style={{ background: "#0d0d2b" }}&gt;
+      {/* Animated gradient layer */}
+      &lt;div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: `
+            linear-gradient(135deg, #0d0d2b 0%, #1a1a4e 40%, #2d1b5e 70%, #1a0d3d 100%)
+          `,
+          animation: "gradientShift 8s ease infinite",
+          backgroundSize: "200% 200%",
+        }}
+      /&gt;
+      {/* Glow blob 1 — indigo */}
+      &lt;div
+        className="absolute pointer-events-none"
+        style={{
+          top: "-20%", left: "-10%",
+          width: "60%", height: "80%",
+          background: "radial-gradient(ellipse, rgba(99,102,241,0.3) 0%, transparent 60%)",
+        }}
+      /&gt;
+      {/* Glow blob 2 — pink */}
+      &lt;div
+        className="absolute pointer-events-none"
+        style={{
+          bottom: "-20%", right: "-10%",
+          width: "50%", height: "70%",
+          background: "radial-gradient(ellipse, rgba(236,72,153,0.2) 0%, transparent 60%)",
+        }}
+      /&gt;
+      {/* Content */}
+      &lt;div className="relative z-10"&gt;{children}&lt;/div&gt;
+      &lt;style&gt;{`
+        @keyframes gradientShift {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+      `}&lt;/style&gt;
+    &lt;/div&gt;
+  );
+}
+
+// Wave Divider Component
+export function WaveDivider({ topColor = "#0d0d2b", bottomColor = "#fff", flip = false }) {
+  return (
+    &lt;div style={{ marginBottom: -1, lineHeight: 0 }}&gt;
+      &lt;svg
+        viewBox="0 0 1440 80"
+        xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="none"
+        style={{ display: "block", width: "100%", transform: flip ? "scaleY(-1)" : "none" }}
+      &gt;
+        &lt;defs&gt;
+          &lt;linearGradient id="waveGrad" x1="0" x2="0" y1="0" y2="1"&gt;
+            &lt;stop offset="0%" stopColor={topColor} /&gt;
+            &lt;stop offset="100%" stopColor={bottomColor} /&gt;
+          &lt;/linearGradient&gt;
+        &lt;/defs&gt;
+        &lt;path
+          d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z"
+          fill="url(#waveGrad)"
+        /&gt;
+      &lt;/svg&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+  </div>
+</main>
+</div>
+<script>
+hljs.highlightAll();
+function copyPrompt(btn){const text=btn.nextElementSibling.textContent;navigator.clipboard.writeText(text).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000)})}
+function copyCode(btn){const code=btn.parentElement.querySelector('code').textContent;navigator.clipboard.writeText(code).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000)})}
+</script>
+</body>
+</html>

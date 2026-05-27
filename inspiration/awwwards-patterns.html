@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Awwwards Patterns — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#e5e5e5;display:flex;min-height:100vh}
+.sidebar{width:240px;background:#111;border-right:1px solid #222;padding:24px 0;position:fixed;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid #222;margin-bottom:16px}
+.sidebar-logo a{text-decoration:none;color:#f59e0b;font-weight:700;font-size:16px}
+.sidebar-logo span{display:block;color:#666;font-size:11px;margin-top:2px}
+.nav-section{padding:0 12px;margin-bottom:8px}
+.nav-label{font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:1px;padding:0 8px;margin-bottom:6px}
+.nav-item{display:block;padding:7px 8px;border-radius:6px;color:#999;text-decoration:none;font-size:13px;transition:all 0.15s}
+.nav-item:hover,.nav-item.active{background:#1a1a1a;color:#f59e0b}
+.main{margin-left:240px;flex:1;padding:40px;max-width:calc(100vw - 240px)}
+.search-bar{width:100%;background:#111;border:1px solid #222;border-radius:8px;padding:12px 16px;color:#e5e5e5;font-size:14px;font-family:'Inter',sans-serif;margin-bottom:32px;outline:none;transition:border-color 0.2s}
+.search-bar:focus{border-color:#f59e0b}
+h1{font-size:28px;font-weight:700;margin-bottom:8px}
+.subtitle{color:#666;margin-bottom:32px;font-size:15px}
+h2{font-size:20px;font-weight:600;margin:40px 0 16px;color:#f59e0b;border-bottom:1px solid #222;padding-bottom:10px}
+.recipe{background:#111;border:1px solid #222;border-radius:12px;padding:20px;margin-bottom:16px}
+.recipe-title{font-size:14px;font-weight:600;margin-bottom:4px}
+.recipe-desc{font-size:13px;color:#666;margin-bottom:14px}
+.code-wrap{position:relative}
+pre{border-radius:8px;overflow-x:auto;font-size:13px;line-height:1.6}
+.copy-btn{position:absolute;top:8px;right:8px;background:#222;border:1px solid #333;color:#999;padding:4px 10px;border-radius:5px;font-size:11px;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s;z-index:10}
+.copy-btn:hover{background:#333;color:#f59e0b}
+.copy-btn.copied{background:#f59e0b;color:#000;border-color:#f59e0b}
+.tip{background:#1a1a1a;border-left:3px solid #f59e0b;padding:10px 14px;border-radius:0 6px 6px 0;font-size:13px;color:#999;margin:12px 0}
+code{background:#1a1a1a;padding:1px 5px;border-radius:3px;font-size:12px;font-family:'Courier New',monospace;color:#a3e635}
+.pattern-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.badge{background:#1a1a1a;border:1px solid #2a2a2a;color:#888;font-size:11px;padding:3px 8px;border-radius:4px}
+.badge.gsap{border-color:#3b3b00;color:#a3a300}
+.badge.css{border-color:#003b3b;color:#00a3a3}
+.badge.r3f{border-color:#3b003b;color:#a300a3}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><a href="../index.html">Design KB</a><span>Knowledge Base</span></div>
+  <div class="nav-section"><div class="nav-label">Inspiration</div>
+    <a class="nav-item" href="index.html">Overview</a>
+    <a class="nav-item active" href="awwwards-patterns.html">Awwwards Patterns</a>
+    <a class="nav-item" href="../reference-sites/godly-patterns.html">Godly Patterns</a>
+  </div>
+  <div class="nav-section"><div class="nav-label">Animations</div>
+    <a class="nav-item" href="../animations/gsap.html">GSAP</a>
+    <a class="nav-item" href="../animations/framer-motion.html">Framer Motion</a>
+    <a class="nav-item" href="../animations/lenis.html">Lenis</a>
+  </div>
+  <div class="nav-section"><div class="nav-label">3D</div>
+    <a class="nav-item" href="../3d/r3f.html">R3F</a>
+    <a class="nav-item" href="../3d/shaders.html">Shaders</a>
+  </div>
+</nav>
+<main class="main">
+  <input class="search-bar" type="text" placeholder="Search Awwwards patterns..." id="search">
+  <h1>Awwwards Patterns</h1>
+  <p class="subtitle">Deconstructed patterns from SOTD and SOTM winners. Each pattern includes implementation code.</p>
+
+  <h2>Navigation Patterns</h2>
+
+  <div class="recipe" data-searchable>
+    <div class="recipe-title">Full-screen overlay menu</div>
+    <div class="recipe-desc">Menu expands to cover viewport with staggered link reveal. Used on agency sites like Active Theory, Resn.</div>
+    <div class="pattern-meta"><span class="badge gsap">GSAP</span><span class="badge css">CSS</span></div>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code class="language-javascript">// GSAP overlay menu open/close
+const tl = gsap.timeline({ paused: true });
+
+tl.to('.menu-overlay', {
+  clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+  duration: 0.6,
+  ease: 'power3.inOut'
+})
+.from('.menu-link', {
+  y: 80,
+  opacity: 0,
+  duration: 0.5,
+  stagger: 0.07,
+  ease: 'power3.out'
+}, '-=0.2');
+
+// CSS starting state
+// .menu-overlay { clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); }
+
+document.querySelector('.menu-btn').addEventListener('click', () => {
+  tl.reversed() ? tl.play() : tl.reverse();
+});</code></pre>
+    </div>
+  </div>
+
+  <div class="recipe" data-searchable>
+    <div class="recipe-title">Floating pill navigation</div>
+    <div class="recipe-desc">Compact pill nav that appears on scroll, floats above content. Common on portfolio sites.</div>
+    <div class="pattern-meta"><span class="badge gsap">GSAP</span><span class="badge css">CSS</span></div>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code class="language-javascript">// Show floating nav after scrolling past hero
+ScrollTrigger.create({
+  start: '100px top',
+  onEnter: () => gsap.to('.floating-nav', {
+    y: 0,
+    opacity: 1,
+    duration: 0.4,
+    ease: 'power2.out'
+  }),
+  onLeaveBack: () => gsap.to('.floating-nav', {
+    y: -20,
+    opacity: 0,
+    duration: 0.3
+  })
+});
+
+/* CSS */
+/* .floating-nav {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: rgba(10,10,10,0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid #222;
+  border-radius: 9999px;
+  padding: 10px 24px;
+  opacity: 0;
+} */</code></pre>
+    </div>
+  </div>
+
+  <h2>Hero Patterns</h2>
+
+  <div class="recipe" data-searchable>
+    <div class="recipe-title">Kinetic typography — scramble text</div>
+    <div class="recipe-desc">Characters scramble to reveal final text on load. Seen on tech/agency sites.</div>
+    <div class="pattern-meta"><span class="badge css">JS</span></div>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code class="language-javascript">function scrambleText(el, finalText, duration = 1200) {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%';
+  const steps = 20;
+  const interval = duration / steps;
+  let step = 0;
+
+  const timer = setInterval(() => {
+    el.textContent = finalText
+      .split('')
+      .map((char, i) => {
+        if (char === ' ') return ' ';
+        if (i < (step / steps) * finalText.length) return char;
+        return chars[Math.floor(Math.random() * chars.length)];
+      })
+      .join('');
+
+    if (++step > steps) {
+      clearInterval(timer);
+      el.textContent = finalText;
+    }
+  }, interval);
+}
+
+// Usage
+scrambleText(document.querySelector('h1'), 'DESIGN STUDIO', 1500);</code></pre>
+    </div>
+  </div>
+
+  <div class="recipe" data-searchable>
+    <div class="recipe-title">Large type with clip-path reveal</div>
+    <div class="recipe-desc">Words slide up into view from behind a mask. Standard on award sites.</div>
+    <div class="pattern-meta"><span class="badge gsap">GSAP</span><span class="badge css">CSS</span></div>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code class="language-javascript">// Each word wrapped in .word-wrap > .word
+gsap.from('.word', {
+  y: '110%',
+  duration: 0.9,
+  stagger: 0.08,
+  ease: 'power4.out',
+  delay: 0.3
+});
+
+/* CSS — the clip container */
+/* .word-wrap {
+  overflow: hidden;
+  display: inline-block;
+}
+.word {
+  display: inline-block;
+} */</code></pre>
+    </div>
+  </div>
+
+  <div class="recipe" data-searchable>
+    <div class="recipe-title">3D object hero with R3F</div>
+    <div class="recipe-desc">WebGL canvas behind hero text, object rotates on mouse move.</div>
+    <div class="pattern-meta"><span class="badge r3f">R3F</span></div>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code class="language-tsx">'use client';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { Environment, Float } from '@react-three/drei';
+import { useRef } from 'react';
+
+function HeroObject() {
+  const ref = useRef(null);
+  useFrame((state) => {
+    if (!ref.current) return;
+    ref.current.rotation.y = state.mouse.x * 0.4;
+    ref.current.rotation.x = -state.mouse.y * 0.2;
+  });
+  return (
+    &lt;Float speed={2} rotationIntensity={0.3} floatIntensity={0.5}&gt;
+      &lt;mesh ref={ref}&gt;
+        &lt;torusKnotGeometry args={[0.8, 0.25, 256, 32]} /&gt;
+        &lt;meshStandardMaterial color="#f59e0b" metalness={0.8} roughness={0.1} /&gt;
+      &lt;/mesh&gt;
+    &lt;/Float&gt;
+  );
+}
+
+export default function Hero3D() {
+  return (
+    &lt;section style={{ position: 'relative', height: '100vh' }}&gt;
+      &lt;div style={{ position: 'absolute', inset: 0 }}&gt;
+        &lt;Canvas camera={{ position: [0, 0, 4] }} gl={{ alpha: true }}&gt;
+          &lt;ambientLight intensity={0.5} /&gt;
+          &lt;Environment preset="city" /&gt;
+          &lt;HeroObject /&gt;
+        &lt;/Canvas&gt;
+      &lt;/div&gt;
+      &lt;div style={{ position: 'relative', zIndex: 10 }}&gt;
+        &lt;h1&gt;Your Studio Name&lt;/h1&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+  );
+}</code></pre>
+    </div>
+  </div>
+
+  <h2>Scroll Patterns</h2>
+
+  <div class="recipe" data-searchable>
+    <div class="recipe-title">Pinned horizontal scroll section</div>
+    <div class="recipe-desc">Section pins while user scrolls, content moves horizontally. Used for project showcases.</div>
+    <div class="pattern-meta"><span class="badge gsap">GSAP + ScrollTrigger</span></div>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code class="language-javascript">const track = document.querySelector('.h-track');
+const panels = gsap.utils.toArray('.h-panel');
+
+gsap.to(panels, {
+  xPercent: -100 * (panels.length - 1),
+  ease: 'none',
+  scrollTrigger: {
+    trigger: '.h-scroll-section',
+    pin: true,
+    scrub: 1,
+    snap: 1 / (panels.length - 1),
+    end: () => '+=' + track.offsetWidth
+  }
+});
+
+/* CSS
+.h-scroll-section { overflow: hidden; }
+.h-track { display: flex; width: calc(300vw); }
+.h-panel { width: 100vw; height: 100vh; flex-shrink: 0; } */</code></pre>
+    </div>
+  </div>
+
+  <div class="recipe" data-searchable>
+    <div class="recipe-title">Scroll-scrub text reveal</div>
+    <div class="recipe-desc">Words light up as user scrolls through them. Seen on editorial and agency sites.</div>
+    <div class="pattern-meta"><span class="badge gsap">GSAP + ScrollTrigger</span></div>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code class="language-javascript">// Split text into spans first (or use SplitText plugin)
+const words = document.querySelectorAll('.reveal-word');
+
+words.forEach((word, i) => {
+  gsap.fromTo(word,
+    { color: '#333' },
+    {
+      color: '#e5e5e5',
+      scrollTrigger: {
+        trigger: word,
+        start: 'top 80%',
+        end: 'top 40%',
+        scrub: 1
+      }
+    }
+  );
+});</code></pre>
+    </div>
+  </div>
+
+  <h2>Interaction Patterns</h2>
+
+  <div class="recipe" data-searchable>
+    <div class="recipe-title">Custom magnetic cursor</div>
+    <div class="recipe-desc">Cursor dot that lags behind and scales up on hover. Standard on creative agencies.</div>
+    <div class="pattern-meta"><span class="badge gsap">GSAP</span></div>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code class="language-javascript">const cursor = document.querySelector('.cursor');
+const follower = document.querySelector('.cursor-follower');
+
+let mouseX = 0, mouseY = 0;
+let followerX = 0, followerY = 0;
+
+window.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  gsap.to(cursor, { x: mouseX, y: mouseY, duration: 0.1 });
+});
+
+// Smooth follower
+gsap.ticker.add(() => {
+  followerX += (mouseX - followerX) * 0.1;
+  followerY += (mouseY - followerY) * 0.1;
+  gsap.set(follower, { x: followerX, y: followerY });
+});
+
+// Hover effect on interactive elements
+document.querySelectorAll('a, button').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    gsap.to(cursor, { scale: 3, duration: 0.3 });
+  });
+  el.addEventListener('mouseleave', () => {
+    gsap.to(cursor, { scale: 1, duration: 0.3 });
+  });
+});
+
+/* CSS
+.cursor, .cursor-follower {
+  width: 8px; height: 8px;
+  background: #f59e0b;
+  border-radius: 50%;
+  position: fixed;
+  top: -4px; left: -4px;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+}
+.cursor-follower { width: 32px; height: 32px; top: -16px; left: -16px; opacity: 0.4; } */</code></pre>
+    </div>
+  </div>
+
+  <div class="recipe" data-searchable>
+    <div class="recipe-title">Page transition wipe</div>
+    <div class="recipe-desc">Full-screen overlay slides in/out between route changes. With Framer Motion in Next.js.</div>
+    <div class="pattern-meta"><span class="badge r3f">Framer Motion</span></div>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code class="language-tsx">// components/PageTransition.tsx
+'use client';
+import { motion, AnimatePresence } from 'framer-motion';
+import { usePathname } from 'next/navigation';
+
+export function PageTransition({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+
+  return (
+    &lt;AnimatePresence mode="wait"&gt;
+      &lt;motion.div key={pathname}&gt;
+        {/* Wipe overlay */}
+        &lt;motion.div
+          className="fixed inset-0 bg-black z-50 pointer-events-none"
+          initial={{ scaleY: 0, transformOrigin: 'top' }}
+          animate={{ scaleY: 0, transformOrigin: 'bottom' }}
+          exit={{ scaleY: 1, transformOrigin: 'top' }}
+          transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
+        /&gt;
+        {/* Page content */}
+        &lt;motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, transition: { delay: 0.3 } }}
+          exit={{ opacity: 0 }}
+        &gt;
+          {children}
+        &lt;/motion.div&gt;
+      &lt;/motion.div&gt;
+    &lt;/AnimatePresence&gt;
+  );
+}</code></pre>
+    </div>
+  </div>
+
+  <div class="tip">Most Awwwards winners combine Lenis smooth scroll + GSAP ScrollTrigger for scroll animations, plus a custom cursor, page transitions, and text reveal animations. Start with the scroll setup, then layer interactions.</div>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+hljs.highlightAll();
+function copyCode(btn) {
+  const code = btn.nextElementSibling.querySelector('code').innerText;
+  navigator.clipboard.writeText(code);
+  btn.textContent = 'Copied!';
+  btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+}
+document.getElementById('search').addEventListener('input', function() {
+  const q = this.value.toLowerCase();
+  document.querySelectorAll('[data-searchable]').forEach(el => {
+    el.style.display = el.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Next.js — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#e5e5e5;display:flex;min-height:100vh}
+.sidebar{width:240px;background:#111;border-right:1px solid #222;padding:24px 0;position:fixed;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid #222;margin-bottom:16px}
+.sidebar-logo a{text-decoration:none;color:#f59e0b;font-weight:700;font-size:16px}
+.sidebar-logo span{display:block;color:#666;font-size:11px;margin-top:2px}
+.nav-section{padding:0 12px;margin-bottom:8px}
+.nav-label{font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:1px;padding:0 8px;margin-bottom:6px}
+.nav-item{display:block;padding:7px 8px;border-radius:6px;color:#999;text-decoration:none;font-size:13px;transition:all 0.15s}
+.nav-item:hover,.nav-item.active{background:#1a1a1a;color:#f59e0b}
+.main{margin-left:240px;flex:1;padding:40px;max-width:calc(100vw - 240px)}
+.search-bar{width:100%;background:#111;border:1px solid #222;border-radius:8px;padding:12px 16px;color:#e5e5e5;font-size:14px;font-family:'Inter',sans-serif;margin-bottom:32px;outline:none;transition:border-color 0.2s}
+.search-bar:focus{border-color:#f59e0b}
+h1{font-size:28px;font-weight:700;margin-bottom:8px}
+.subtitle{color:#666;margin-bottom:32px;font-size:15px}
+h2{font-size:20px;font-weight:600;margin:40px 0 16px;color:#f59e0b;border-bottom:1px solid #222;padding-bottom:10px}
+.recipe{background:#111;border:1px solid #222;border-radius:12px;padding:20px;margin-bottom:16px}
+.recipe-title{font-size:14px;font-weight:600;margin-bottom:4px}
+.recipe-desc{font-size:13px;color:#666;margin-bottom:14px}
+.code-wrap{position:relative}
+pre{border-radius:8px;overflow-x:auto;font-size:13px;line-height:1.6}
+.copy-btn{position:absolute;top:8px;right:8px;background:#222;border:1px solid #333;color:#999;padding:4px 10px;border-radius:5px;font-size:11px;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s;z-index:10}
+.copy-btn:hover{background:#333;color:#f59e0b}
+.copy-btn.copied{background:#f59e0b;color:#000;border-color:#f59e0b}
+.tip{background:#1a1a1a;border-left:3px solid #f59e0b;padding:10px 14px;border-radius:0 6px 6px 0;font-size:13px;color:#999;margin:12px 0}
+code{background:#1a1a1a;padding:1px 5px;border-radius:3px;font-size:12px;font-family:'Courier New',monospace;color:#a3e635}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><a href="../index.html">Design KB</a><span>Knowledge Base</span></div>
+  <div class="nav-section"><div class="nav-label">Frameworks</div>
+    <a class="nav-item" href="index.html">Overview</a>
+    <a class="nav-item active" href="nextjs.html">Next.js</a>
+    <a class="nav-item" href="astro.html">Astro</a>
+  </div>
+  <div class="nav-section"><div class="nav-label">Components</div>
+    <a class="nav-item" href="../components/shadcn.html">shadcn/ui</a>
+  </div>
+</nav>
+<main class="main">
+  <input class="search-bar" type="text" placeholder="Search Next.js patterns..." id="search">
+  <h1>Next.js Reference</h1>
+  <p class="subtitle">App Router patterns, metadata, fonts, and performance tips for Next.js 14/15</p>
+
+  <h2>Project Bootstrap</h2>
+  <div class="recipe" data-searchable>
+    <div class="recipe-title">Full stack setup (Next.js + Tailwind + shadcn)</div>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code class="language-bash">npx create-next-app@latest my-app \
+  --typescript --tailwind --eslint --app --src-dir
+
+cd my-app
+
+# Add shadcn
+npx shadcn@latest init
+
+# Add animations
+npm install framer-motion gsap lenis
+
+# Add 3D (optional)
+npm install three @react-three/fiber @react-three/drei</code></pre>
+    </div>
+  </div>
+
+  <h2>App Router Structure</h2>
+  <div class="recipe" data-searchable>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code class="language-text">app/
+├── layout.tsx          ← Root layout (html, body, providers)
+├── page.tsx            ← Homepage /
+├── globals.css         ← Global styles
+├── (marketing)/        ← Route group (no URL segment)
+│   ├── about/page.tsx  ← /about
+│   └── services/
+│       ├── page.tsx    ← /services
+│       └── [slug]/     ← Dynamic route
+│           └── page.tsx ← /services/kitchen
+├── api/                ← API routes
+│   └── contact/
+│       └── route.ts    ← POST /api/contact
+└── not-found.tsx       ← 404 page</code></pre>
+    </div>
+  </div>
+
+  <h2>Metadata & SEO</h2>
+  <div class="recipe" data-searchable>
+    <div class="recipe-title">Static + dynamic metadata</div>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code class="language-typescript">// app/layout.tsx — static metadata
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: { default: 'DJ Custom Reno', template: '%s | DJ Custom Reno' },
+  description: 'Premium renovation services in your area.',
+  openGraph: {
+    type: 'website',
+    url: 'https://djcustomreno.ca',
+    title: 'DJ Custom Reno',
+    description: 'Premium renovation services.',
+    images: [{ url: '/og-image.jpg', width: 1200, height: 630 }]
+  },
+  twitter: { card: 'summary_large_image' }
+};
+
+// app/services/[slug]/page.tsx — dynamic metadata
+export async function generateMetadata({ params }): Promise&lt;Metadata&gt; {
+  const service = await getService(params.slug);
+  return {
+    title: service.name,
+    description: service.description
+  };
+}</code></pre>
+    </div>
+  </div>
+
+  <h2>Font Optimization</h2>
+  <div class="recipe" data-searchable>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code class="language-typescript">// app/layout.tsx
+import { Inter, Syne } from 'next/font/google';
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap'
+});
+
+const syne = Syne({
+  subsets: ['latin'],
+  variable: '--font-syne',
+  weight: ['400', '500', '600', '700', '800']
+});
+
+export default function Layout({ children }) {
+  return (
+    &lt;html lang="en" className={`${inter.variable} ${syne.variable}`}&gt;
+      &lt;body className="font-sans"&gt;{children}&lt;/body&gt;
+    &lt;/html&gt;
+  );
+}
+
+// tailwind.config.ts
+theme: {
+  extend: {
+    fontFamily: {
+      sans: ['var(--font-inter)'],
+      display: ['var(--font-syne)']
+    }
+  }
+}</code></pre>
+    </div>
+  </div>
+
+  <h2>Image Optimization</h2>
+  <div class="recipe" data-searchable>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code class="language-tsx">import Image from 'next/image';
+
+// Hero image (above fold — priority)
+&lt;Image
+  src="/hero.jpg"
+  alt="Renovation hero"
+  fill
+  priority          // preload — use for above-fold images
+  sizes="100vw"
+  className="object-cover"
+/&gt;
+
+// Portfolio grid image
+&lt;Image
+  src={project.image}
+  alt={project.title}
+  width={800}
+  height={600}
+  className="rounded-lg"
+  loading="lazy"    // default, but explicit
+  placeholder="blur"
+  blurDataURL={project.blurUrl}
+/&gt;</code></pre>
+    </div>
+  </div>
+
+  <div class="tip">For animation libraries (GSAP, Framer Motion, Three.js) in App Router, add <code>'use client'</code> at the top of any component that uses browser APIs, refs, or state.</div>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+hljs.highlightAll();
+function copyCode(btn) {
+  const code = btn.nextElementSibling.querySelector('code').innerText;
+  navigator.clipboard.writeText(code);
+  btn.textContent = 'Copied!';
+  btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+}
+document.getElementById('search').addEventListener('input', function() {
+  const q = this.value.toLowerCase();
+  document.querySelectorAll('[data-searchable]').forEach(el => {
+    el.style.display = el.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+});
+</script>
+</body>
+</html>

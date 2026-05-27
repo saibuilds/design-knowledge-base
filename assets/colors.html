@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Color Palettes — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#e5e5e5;display:flex;min-height:100vh}
+.sidebar{width:240px;background:#111;border-right:1px solid #222;padding:24px 0;position:fixed;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid #222;margin-bottom:16px}
+.sidebar-logo a{text-decoration:none;color:#f59e0b;font-weight:700;font-size:16px}
+.sidebar-logo span{display:block;color:#666;font-size:11px;margin-top:2px}
+.nav-section{padding:0 12px;margin-bottom:8px}
+.nav-label{font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:1px;padding:0 8px;margin-bottom:6px}
+.nav-item{display:block;padding:7px 8px;border-radius:6px;color:#999;text-decoration:none;font-size:13px;transition:all 0.15s}
+.nav-item:hover,.nav-item.active{background:#1a1a1a;color:#f59e0b}
+.main{margin-left:240px;flex:1;padding:40px}
+.search-bar{width:100%;background:#111;border:1px solid #222;border-radius:8px;padding:12px 16px;color:#e5e5e5;font-size:14px;font-family:'Inter',sans-serif;margin-bottom:32px;outline:none;transition:border-color 0.2s}
+.search-bar:focus{border-color:#f59e0b}
+h1{font-size:28px;font-weight:700;margin-bottom:8px}
+.subtitle{color:#666;margin-bottom:32px;font-size:15px}
+h2{font-size:18px;font-weight:600;margin:32px 0 16px;color:#e5e5e5}
+.palette-card{background:#111;border:1px solid #222;border-radius:12px;padding:20px;margin-bottom:20px}
+.palette-name{font-weight:600;margin-bottom:4px;font-size:15px}
+.palette-desc{color:#666;font-size:13px;margin-bottom:16px}
+.swatches{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.swatch{display:flex;flex-direction:column;align-items:center;gap:6px}
+.swatch-color{width:64px;height:64px;border-radius:8px;border:1px solid #333;cursor:pointer;transition:transform 0.15s}
+.swatch-color:hover{transform:scale(1.05)}
+.swatch-label{font-size:10px;color:#777;font-family:'Courier New',monospace}
+.swatch-name{font-size:11px;color:#999}
+.tag{display:inline-block;background:#1a1a1a;border:1px solid #333;border-radius:4px;padding:2px 8px;font-size:11px;color:#888;margin-right:6px}
+.copy-toast{position:fixed;bottom:24px;right:24px;background:#f59e0b;color:#000;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:600;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:9999}
+.copy-toast.show{opacity:1}
+.gradient-preview{height:48px;border-radius:8px;margin-bottom:12px}
+.usage-note{background:#1a1a1a;border-left:3px solid #f59e0b;padding:10px 14px;border-radius:0 6px 6px 0;font-size:12px;color:#999;margin-top:12px}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><a href="../index.html">Design KB</a><span>Knowledge Base</span></div>
+  <div class="nav-section"><div class="nav-label">Main</div>
+    <a class="nav-item" href="../index.html">Hub</a>
+  </div>
+  <div class="nav-section"><div class="nav-label">Reference</div>
+    <a class="nav-item" href="../reference-sites/index.html">Reference Sites</a>
+    <a class="nav-item" href="../reference-sites/djcustomreno.html">DJ Custom Reno</a>
+  </div>
+  <div class="nav-section"><div class="nav-label">Components</div>
+    <a class="nav-item" href="../components/index.html">Overview</a>
+    <a class="nav-item" href="../components/shadcn.html">shadcn/ui</a>
+    <a class="nav-item" href="../components/21st-dev.html">21st.dev</a>
+    <a class="nav-item" href="../components/magicui.html">Magic UI</a>
+    <a class="nav-item" href="../components/aceternity.html">Aceternity</a>
+  </div>
+  <div class="nav-section"><div class="nav-label">Animations</div>
+    <a class="nav-item" href="../animations/gsap.html">GSAP</a>
+    <a class="nav-item" href="../animations/framer-motion.html">Framer Motion</a>
+    <a class="nav-item" href="../animations/lenis.html">Lenis</a>
+    <a class="nav-item" href="../animations/three-js.html">Three.js</a>
+  </div>
+  <div class="nav-section"><div class="nav-label">3D</div>
+    <a class="nav-item" href="../3d/index.html">Overview</a>
+    <a class="nav-item" href="../3d/r3f.html">R3F</a>
+    <a class="nav-item" href="../3d/shaders.html">Shaders</a>
+  </div>
+  <div class="nav-section"><div class="nav-label">Assets</div>
+    <a class="nav-item" href="index.html">Overview</a>
+    <a class="nav-item" href="fonts.html">Fonts</a>
+    <a class="nav-item active" href="colors.html">Colors</a>
+  </div>
+</nav>
+<main class="main">
+  <input class="search-bar" type="text" placeholder="Search palettes, hex codes, names..." id="search">
+  <h1>Color Palettes</h1>
+  <p class="subtitle">Curated palettes with swatches — click any swatch to copy hex code</p>
+
+  <h2>Dark UI Palettes</h2>
+
+  <div class="palette-card" data-searchable>
+    <div class="palette-name">Obsidian Dark</div>
+    <div class="palette-desc">The classic ultra-dark palette. Perfect for premium SaaS, portfolios, agencies.</div>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch-color" style="background:#0a0a0a" onclick="copySwatch('#0a0a0a',this)"></div><div class="swatch-label">#0a0a0a</div><div class="swatch-name">Background</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#111111" onclick="copySwatch('#111111',this)"></div><div class="swatch-label">#111111</div><div class="swatch-name">Card</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#1a1a1a" onclick="copySwatch('#1a1a1a',this)"></div><div class="swatch-label">#1a1a1a</div><div class="swatch-name">Elevated</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#222222" onclick="copySwatch('#222222',this)"></div><div class="swatch-label">#222222</div><div class="swatch-name">Border</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#555555" onclick="copySwatch('#555555',this)"></div><div class="swatch-label">#555555</div><div class="swatch-name">Muted</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#e5e5e5" onclick="copySwatch('#e5e5e5',this)"></div><div class="swatch-label">#e5e5e5</div><div class="swatch-name">Text</div></div>
+    </div>
+    <div><span class="tag">dark</span><span class="tag">minimal</span><span class="tag">premium</span></div>
+    <div class="usage-note">Use with amber #f59e0b or blue #3b82f6 as accent. Pairs with Inter, Geist, or DM Sans.</div>
+  </div>
+
+  <div class="palette-card" data-searchable>
+    <div class="palette-name">DJ Custom Reno</div>
+    <div class="palette-desc">Extracted from djcustomreno.ca — dark with electric blue + gold accent.</div>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch-color" style="background:#010101" onclick="copySwatch('#010101',this)"></div><div class="swatch-label">#010101</div><div class="swatch-name">Background</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#232323" onclick="copySwatch('#232323',this)"></div><div class="swatch-label">#232323</div><div class="swatch-name">Card</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#2a53e8" onclick="copySwatch('#2a53e8',this)"></div><div class="swatch-label">#2a53e8</div><div class="swatch-name">Accent Blue</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#ffbc0b" onclick="copySwatch('#ffbc0b',this)"></div><div class="swatch-label">#ffbc0b</div><div class="swatch-name">Gold</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#ffffff" onclick="copySwatch('#ffffff',this)"></div><div class="swatch-label">#ffffff</div><div class="swatch-name">Text</div></div>
+    </div>
+    <div><span class="tag">dark</span><span class="tag">electric</span><span class="tag">brand</span></div>
+    <div class="usage-note">Dual accent system — blue for interactive/links, gold for highlights/CTAs. High contrast, bold.</div>
+  </div>
+
+  <div class="palette-card" data-searchable>
+    <div class="palette-name">Midnight Slate</div>
+    <div class="palette-desc">Slate-based dark with subtle blue tones. Used by Vercel, Linear, Notion.</div>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch-color" style="background:#0f172a" onclick="copySwatch('#0f172a',this)"></div><div class="swatch-label">#0f172a</div><div class="swatch-name">Background</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#1e293b" onclick="copySwatch('#1e293b',this)"></div><div class="swatch-label">#1e293b</div><div class="swatch-name">Card</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#334155" onclick="copySwatch('#334155',this)"></div><div class="swatch-label">#334155</div><div class="swatch-name">Border</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#64748b" onclick="copySwatch('#64748b',this)"></div><div class="swatch-label">#64748b</div><div class="swatch-name">Muted</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#6366f1" onclick="copySwatch('#6366f1',this)"></div><div class="swatch-label">#6366f1</div><div class="swatch-name">Indigo</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#f8fafc" onclick="copySwatch('#f8fafc',this)"></div><div class="swatch-label">#f8fafc</div><div class="swatch-name">Text</div></div>
+    </div>
+    <div><span class="tag">dark</span><span class="tag">slate</span><span class="tag">saas</span></div>
+  </div>
+
+  <h2>Accent Colors</h2>
+
+  <div class="palette-card" data-searchable>
+    <div class="palette-name">Amber / Gold Scale</div>
+    <div class="palette-desc">Warm amber range — ideal for luxury, highlights, and CTAs on dark backgrounds.</div>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch-color" style="background:#78350f" onclick="copySwatch('#78350f',this)"></div><div class="swatch-label">#78350f</div><div class="swatch-name">900</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#b45309" onclick="copySwatch('#b45309',this)"></div><div class="swatch-label">#b45309</div><div class="swatch-name">700</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#d97706" onclick="copySwatch('#d97706',this)"></div><div class="swatch-label">#d97706</div><div class="swatch-name">600</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#f59e0b" onclick="copySwatch('#f59e0b',this)"></div><div class="swatch-label">#f59e0b</div><div class="swatch-name">500 ★</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#fbbf24" onclick="copySwatch('#fbbf24',this)"></div><div class="swatch-label">#fbbf24</div><div class="swatch-name">400</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#fcd34d" onclick="copySwatch('#fcd34d',this)"></div><div class="swatch-label">#fcd34d</div><div class="swatch-name">300</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#fef3c7" onclick="copySwatch('#fef3c7',this)"></div><div class="swatch-label">#fef3c7</div><div class="swatch-name">100</div></div>
+    </div>
+    <div><span class="tag">amber</span><span class="tag">gold</span><span class="tag">tailwind</span></div>
+  </div>
+
+  <div class="palette-card" data-searchable>
+    <div class="palette-name">Electric Blue Scale</div>
+    <div class="palette-desc">Vibrant blue range — interactive elements, links, highlights.</div>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch-color" style="background:#1d4ed8" onclick="copySwatch('#1d4ed8',this)"></div><div class="swatch-label">#1d4ed8</div><div class="swatch-name">700</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#2563eb" onclick="copySwatch('#2563eb',this)"></div><div class="swatch-label">#2563eb</div><div class="swatch-name">600</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#3b82f6" onclick="copySwatch('#3b82f6',this)"></div><div class="swatch-label">#3b82f6</div><div class="swatch-name">500 ★</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#60a5fa" onclick="copySwatch('#60a5fa',this)"></div><div class="swatch-label">#60a5fa</div><div class="swatch-name">400</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#93c5fd" onclick="copySwatch('#93c5fd',this)"></div><div class="swatch-label">#93c5fd</div><div class="swatch-name">300</div></div>
+    </div>
+    <div><span class="tag">blue</span><span class="tag">electric</span><span class="tag">tailwind</span></div>
+  </div>
+
+  <h2>Gradients</h2>
+
+  <div class="palette-card" data-searchable>
+    <div class="palette-name">Aurora Dark</div>
+    <div class="palette-desc">Purple-to-cyan — popular in crypto, AI, and tech products.</div>
+    <div class="gradient-preview" style="background:linear-gradient(135deg,#7c3aed,#2563eb,#06b6d4)"></div>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch-color" style="background:#7c3aed" onclick="copySwatch('#7c3aed',this)"></div><div class="swatch-label">#7c3aed</div><div class="swatch-name">Violet</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#2563eb" onclick="copySwatch('#2563eb',this)"></div><div class="swatch-label">#2563eb</div><div class="swatch-name">Blue</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#06b6d4" onclick="copySwatch('#06b6d4',this)"></div><div class="swatch-label">#06b6d4</div><div class="swatch-name">Cyan</div></div>
+    </div>
+    <div class="usage-note">CSS: <code>background: linear-gradient(135deg, #7c3aed, #2563eb, #06b6d4)</code></div>
+  </div>
+
+  <div class="palette-card" data-searchable>
+    <div class="palette-name">Fire Gold</div>
+    <div class="palette-desc">Amber-to-red — premium, energy, luxury brands.</div>
+    <div class="gradient-preview" style="background:linear-gradient(135deg,#f59e0b,#ef4444)"></div>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch-color" style="background:#f59e0b" onclick="copySwatch('#f59e0b',this)"></div><div class="swatch-label">#f59e0b</div><div class="swatch-name">Amber</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#f97316" onclick="copySwatch('#f97316',this)"></div><div class="swatch-label">#f97316</div><div class="swatch-name">Orange</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#ef4444" onclick="copySwatch('#ef4444',this)"></div><div class="swatch-label">#ef4444</div><div class="swatch-name">Red</div></div>
+    </div>
+    <div class="usage-note">CSS: <code>background: linear-gradient(135deg, #f59e0b, #ef4444)</code></div>
+  </div>
+
+  <div class="palette-card" data-searchable>
+    <div class="palette-name">Ghost White</div>
+    <div class="palette-desc">Subtle white-to-transparent — borders, glow effects, shimmer animations.</div>
+    <div class="gradient-preview" style="background:linear-gradient(135deg,rgba(255,255,255,0.1),rgba(255,255,255,0.02));border:1px solid #333"></div>
+    <div class="usage-note">CSS: <code>background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02))</code><br>Perfect for glassmorphism cards on dark backgrounds.</div>
+  </div>
+
+  <h2>Semantic Colors</h2>
+
+  <div class="palette-card" data-searchable>
+    <div class="palette-name">Status Colors (Dark Theme)</div>
+    <div class="palette-desc">Accessible status colors tuned for dark backgrounds.</div>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch-color" style="background:#22c55e" onclick="copySwatch('#22c55e',this)"></div><div class="swatch-label">#22c55e</div><div class="swatch-name">Success</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#eab308" onclick="copySwatch('#eab308',this)"></div><div class="swatch-label">#eab308</div><div class="swatch-name">Warning</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#ef4444" onclick="copySwatch('#ef4444',this)"></div><div class="swatch-label">#ef4444</div><div class="swatch-name">Error</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#3b82f6" onclick="copySwatch('#3b82f6',this)"></div><div class="swatch-label">#3b82f6</div><div class="swatch-name">Info</div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#a855f7" onclick="copySwatch('#a855f7',this)"></div><div class="swatch-label">#a855f7</div><div class="swatch-name">Feature</div></div>
+    </div>
+  </div>
+</main>
+<div class="copy-toast" id="toast">Copied!</div>
+<script>
+function copySwatch(hex, el) {
+  navigator.clipboard.writeText(hex);
+  const toast = document.getElementById('toast');
+  toast.textContent = `Copied ${hex}`;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 1800);
+}
+document.getElementById('search').addEventListener('input', function() {
+  const q = this.value.toLowerCase();
+  document.querySelectorAll('[data-searchable]').forEach(card => {
+    card.style.display = card.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Awwwards Patterns — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#e5e5e5;display:flex;min-height:100vh}
+.sidebar{width:240px;background:#111;border-right:1px solid #222;padding:24px 0;position:fixed;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid #222;margin-bottom:16px}
+.sidebar-logo a{text-decoration:none;color:#f59e0b;font-weight:700;font-size:16px}
+.sidebar-logo span{display:block;color:#666;font-size:11px;margin-top:2px}
+.nav-section{padding:0 12px;margin-bottom:8px}
+.nav-label{font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:1px;padding:0 8px;margin-bottom:6px}
+.nav-item{display:block;padding:7px 8px;border-radius:6px;color:#999;text-decoration:none;font-size:13px;transition:all 0.15s}
+.nav-item:hover,.nav-item.active{background:#1a1a1a;color:#f59e0b}
+.main{margin-left:240px;flex:1;padding:40px;max-width:calc(100vw - 240px)}
+.search-bar{width:100%;background:#111;border:1px solid #222;border-radius:8px;padding:12px 16px;color:#e5e5e5;font-size:14px;font-family:'Inter',sans-serif;margin-bottom:32px;outline:none;transition:border-color 0.2s}
+.search-bar:focus{border-color:#f59e0b}
+h1{font-size:28px;font-weight:700;margin-bottom:8px}
+.subtitle{color:#666;margin-bottom:32px;font-size:15px}
+h2{font-size:18px;font-weight:600;margin:32px 0 14px;color:#f59e0b}
+.pattern-card{background:#111;border:1px solid #222;border-radius:12px;padding:20px;margin-bottom:14px}
+.pattern-name{font-size:15px;font-weight:600;margin-bottom:6px}
+.pattern-desc{font-size:13px;color:#666;line-height:1.6;margin-bottom:10px}
+.pattern-tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{display:inline-block;background:#1a1a1a;border:1px solid #333;border-radius:4px;padding:2px 8px;font-size:11px;color:#888}
+.tag-tech{border-color:#2a53e8;color:#6b8ff7}
+.tip{background:#1a1a1a;border-left:3px solid #f59e0b;padding:10px 14px;border-radius:0 6px 6px 0;font-size:13px;color:#999;margin:12px 0}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><a href="../index.html">Design KB</a><span>Knowledge Base</span></div>
+  <div class="nav-section"><div class="nav-label">Reference Sites</div>
+    <a class="nav-item" href="index.html">Overview</a>
+    <a class="nav-item" href="djcustomreno.html">DJ Custom Reno</a>
+    <a class="nav-item active" href="awwwards-patterns.html">Awwwards Patterns</a>
+    <a class="nav-item" href="godly-patterns.html">Godly Patterns</a>
+  </div>
+</nav>
+<main class="main">
+  <input class="search-bar" type="text" placeholder="Search patterns..." id="search">
+  <h1>Awwwards Patterns</h1>
+  <p class="subtitle">Recurring design patterns observed across Awwwards-winning sites. Use these as inspiration.</p>
+
+  <h2>Navigation Patterns</h2>
+
+  <div class="pattern-card" data-searchable>
+    <div class="pattern-name">Full-screen overlay menu</div>
+    <div class="pattern-desc">Hamburger icon triggers a full-screen dark overlay with large, staggered nav links that animate in from below. Often includes a footer row with social links. Closing plays reverse animation.</div>
+    <div class="pattern-tags"><span class="tag">Navigation</span><span class="tag-tech tag">GSAP / Framer</span><span class="tag">Agency</span></div>
+  </div>
+
+  <div class="pattern-card" data-searchable>
+    <div class="pattern-name">Floating pill navigation</div>
+    <div class="pattern-desc">A small pill-shaped nav that floats fixed at top center. Contains 3-5 links + a CTA button. Shrinks on scroll. Glassmorphism or solid dark background. Popularized by Linear, Vercel, and agency sites.</div>
+    <div class="pattern-tags"><span class="tag">Navigation</span><span class="tag-tech tag">Framer Motion</span><span class="tag">SaaS</span></div>
+  </div>
+
+  <h2>Hero Patterns</h2>
+
+  <div class="pattern-card" data-searchable>
+    <div class="pattern-name">Kinetic typography hero</div>
+    <div class="pattern-desc">Large display text fills most of the viewport. Words animate in one at a time or letter by letter using SplitText / custom split. Background is minimal (gradient, video, or solid dark). CTA appears after text sequence completes.</div>
+    <div class="pattern-tags"><span class="tag">Hero</span><span class="tag-tech tag">GSAP SplitText</span><span class="tag">Agency</span></div>
+  </div>
+
+  <div class="pattern-card" data-searchable>
+    <div class="pattern-name">Full-bleed video hero</div>
+    <div class="pattern-desc">Autoplay muted video fills the viewport. Text overlaid with mix-blend-mode or semi-transparent overlay. Scroll arrow bounces at bottom. Often paired with a scroll-to-darken gradient overlay.</div>
+    <div class="pattern-tags"><span class="tag">Hero</span><span class="tag">Video</span><span class="tag">Construction</span><span class="tag">Luxury</span></div>
+  </div>
+
+  <div class="pattern-card" data-searchable>
+    <div class="pattern-name">3D object hero</div>
+    <div class="pattern-desc">Three.js or R3F 3D object (product, abstract shape, globe) rotates or reacts to mouse movement. Text is layered on top. The object typically goes from center on load to bottom-right on scroll (parallax depth shift).</div>
+    <div class="pattern-tags"><span class="tag">Hero</span><span class="tag-tech tag">Three.js / R3F</span><span class="tag">Tech / Product</span></div>
+  </div>
+
+  <h2>Scroll Patterns</h2>
+
+  <div class="pattern-card" data-searchable>
+    <div class="pattern-name">Pinned horizontal scroll panel</div>
+    <div class="pattern-desc">A section pins in the viewport and horizontal panels scroll by as the user scrolls vertically. Used to present portfolio items, process steps, or case studies. GSAP ScrollTrigger with pin + horizontal xPercent tween.</div>
+    <div class="pattern-tags"><span class="tag">Scroll</span><span class="tag-tech tag">GSAP ScrollTrigger</span><span class="tag">Portfolio</span></div>
+  </div>
+
+  <div class="pattern-card" data-searchable>
+    <div class="pattern-name">Sticky sidebar + scrolling content</div>
+    <div class="pattern-desc">Left column (title/counter) sticks while right column scrolls through items. Each item triggers a state change in the left column (image swap, number increment). Used for case studies and process sections.</div>
+    <div class="pattern-tags"><span class="tag">Scroll</span><span class="tag-tech tag">GSAP / IntersectionObserver</span><span class="tag">Agency</span></div>
+  </div>
+
+  <div class="pattern-card" data-searchable>
+    <div class="pattern-name">Scrub parallax layers</div>
+    <div class="pattern-desc">Multiple image/element layers at different depths that move at different speeds as the user scrolls. Creates a cinematic 3D depth effect. Implemented with GSAP scrub or Framer's useTransform on multiple elements.</div>
+    <div class="pattern-tags"><span class="tag">Scroll</span><span class="tag">Parallax</span><span class="tag-tech tag">GSAP scrub</span></div>
+  </div>
+
+  <h2>Interaction Patterns</h2>
+
+  <div class="pattern-card" data-searchable>
+    <div class="pattern-name">Custom cursor with follower</div>
+    <div class="pattern-desc">Default cursor hidden. Custom dot follows mouse at native speed. Larger ring follows with spring lag. On hover over links/buttons: cursor enlarges, changes color, or shows a label ("View", "Drag"). GSAP quickSetter for performance.</div>
+    <div class="pattern-tags"><span class="tag">Cursor</span><span class="tag-tech tag">GSAP</span><span class="tag">Agency</span></div>
+  </div>
+
+  <div class="pattern-card" data-searchable>
+    <div class="pattern-name">Page transition wipe</div>
+    <div class="pattern-desc">On link click: a colored panel wipes across the screen (top-to-bottom or left-to-right), then the new page wipes in from the other direction. Logo/nav element morphs during transition. Common colors: black, brand accent, white.</div>
+    <div class="pattern-tags"><span class="tag">Transition</span><span class="tag-tech tag">GSAP / Framer</span><span class="tag">Agency</span></div>
+  </div>
+
+  <div class="tip">To find current Awwwards winners for reference, visit <a href="https://www.awwwards.com/websites/" target="_blank" style="color:#f59e0b">awwwards.com/websites</a>. Filter by "Site of the Day" and look in the Technology filter for "GSAP" or "WebGL" to find technically impressive sites.</div>
+</main>
+<script>
+document.getElementById('search').addEventListener('input', function() {
+  const q = this.value.toLowerCase();
+  document.querySelectorAll('[data-searchable]').forEach(el => {
+    el.style.display = el.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Godly Patterns — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#e5e5e5;display:flex;min-height:100vh}
+.sidebar{width:240px;background:#111;border-right:1px solid #222;padding:24px 0;position:fixed;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid #222;margin-bottom:16px}
+.sidebar-logo a{text-decoration:none;color:#f59e0b;font-weight:700;font-size:16px}
+.sidebar-logo span{display:block;color:#666;font-size:11px;margin-top:2px}
+.nav-section{padding:0 12px;margin-bottom:8px}
+.nav-label{font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:1px;padding:0 8px;margin-bottom:6px}
+.nav-item{display:block;padding:7px 8px;border-radius:6px;color:#999;text-decoration:none;font-size:13px;transition:all 0.15s}
+.nav-item:hover,.nav-item.active{background:#1a1a1a;color:#f59e0b}
+.main{margin-left:240px;flex:1;padding:40px;max-width:calc(100vw - 240px)}
+.search-bar{width:100%;background:#111;border:1px solid #222;border-radius:8px;padding:12px 16px;color:#e5e5e5;font-size:14px;font-family:'Inter',sans-serif;margin-bottom:32px;outline:none;transition:border-color 0.2s}
+.search-bar:focus{border-color:#f59e0b}
+h1{font-size:28px;font-weight:700;margin-bottom:8px}
+.subtitle{color:#666;margin-bottom:32px;font-size:15px}
+h2{font-size:18px;font-weight:600;margin:32px 0 14px;color:#f59e0b}
+.pattern-card{background:#111;border:1px solid #222;border-radius:12px;padding:20px;margin-bottom:14px}
+.pattern-name{font-size:15px;font-weight:600;margin-bottom:6px}
+.pattern-desc{font-size:13px;color:#666;line-height:1.6;margin-bottom:10px}
+.pattern-tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{display:inline-block;background:#1a1a1a;border:1px solid #333;border-radius:4px;padding:2px 8px;font-size:11px;color:#888}
+.tip{background:#1a1a1a;border-left:3px solid #f59e0b;padding:10px 14px;border-radius:0 6px 6px 0;font-size:13px;color:#999;margin:12px 0}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><a href="../index.html">Design KB</a><span>Knowledge Base</span></div>
+  <div class="nav-section"><div class="nav-label">Reference Sites</div>
+    <a class="nav-item" href="index.html">Overview</a>
+    <a class="nav-item" href="djcustomreno.html">DJ Custom Reno</a>
+    <a class="nav-item" href="awwwards-patterns.html">Awwwards Patterns</a>
+    <a class="nav-item active" href="godly-patterns.html">Godly Patterns</a>
+  </div>
+</nav>
+<main class="main">
+  <input class="search-bar" type="text" placeholder="Search patterns..." id="search">
+  <h1>Godly Patterns</h1>
+  <p class="subtitle">Design patterns collected from <a href="https://godly.website" target="_blank" style="color:#f59e0b">godly.website</a> — curated animation and interaction references</p>
+
+  <h2>Text Animation Patterns</h2>
+
+  <div class="pattern-card" data-searchable>
+    <div class="pattern-name">Line-by-line text reveal</div>
+    <div class="pattern-desc">Each line of a heading reveals from behind a clipping mask, as if a shutter is opening. The text translates Y from 100% to 0% inside an overflow:hidden container. Very popular on Godly-featured agency sites.</div>
+    <div class="pattern-tags"><span class="tag">Text</span><span class="tag">Hero</span><span class="tag">Mask reveal</span></div>
+  </div>
+
+  <div class="pattern-card" data-searchable>
+    <div class="pattern-name">Scramble text effect</div>
+    <div class="pattern-desc">On hover or load, text scrambles through random characters before settling on the final word. GSAP's ScrambleText plugin or custom JS implementations. Popular for nav items, labels, and data-driven sites.</div>
+    <div class="pattern-tags"><span class="tag">Text</span><span class="tag">Hover</span><span class="tag">Interactive</span></div>
+  </div>
+
+  <div class="pattern-card" data-searchable>
+    <div class="pattern-name">Number counting on scroll</div>
+    <div class="pattern-desc">Stats/metrics animate from 0 to their final value when they enter the viewport. Eased with power2 or power3. Common in "Our Results" sections. Makes data feel dynamic and earned.</div>
+    <div class="pattern-tags"><span class="tag">Stats</span><span class="tag">Scroll</span><span class="tag">Counter</span></div>
+  </div>
+
+  <h2>Image & Media Patterns</h2>
+
+  <div class="pattern-card" data-searchable>
+    <div class="pattern-name">Image reveal on scroll</div>
+    <div class="pattern-desc">An image is hidden behind a solid color block. On scroll, the block slides away (clip-path or transform) revealing the image underneath. Creates a dramatic presentation effect. Often used for portfolio thumbnails.</div>
+    <div class="pattern-tags"><span class="tag">Image</span><span class="tag">Scroll</span><span class="tag">clip-path</span></div>
+  </div>
+
+  <div class="pattern-card" data-searchable>
+    <div class="pattern-name">Hover image follow</div>
+    <div class="pattern-desc">On a list of project items, hovering reveals a large preview image that follows the mouse. The image fades in/out with scale and opacity. Creates a sense of depth and interactivity in text-heavy lists.</div>
+    <div class="pattern-tags"><span class="tag">Image</span><span class="tag">Hover</span><span class="tag">Cursor follow</span></div>
+  </div>
+
+  <h2>Layout Patterns</h2>
+
+  <div class="pattern-card" data-searchable>
+    <div class="pattern-name">Marquee logo row</div>
+    <div class="pattern-desc">Client logos or brand names scroll continuously in a ticker marquee. Often has a second row scrolling in reverse. Pause on hover. CSS animation or Magic UI's Marquee component. Signals social proof efficiently.</div>
+    <div class="pattern-tags"><span class="tag">Layout</span><span class="tag">Social proof</span><span class="tag">Continuous</span></div>
+  </div>
+
+  <div class="pattern-card" data-searchable>
+    <div class="pattern-name">Bento grid features</div>
+    <div class="pattern-desc">Features/services presented in a grid of differently-sized cards (bento box style). Cards have varying heights and widths creating visual interest. Each card contains a mini-demo, icon, or illustration. Popularized by Apple and Linear.</div>
+    <div class="pattern-tags"><span class="tag">Layout</span><span class="tag">Features</span><span class="tag">Grid</span></div>
+  </div>
+
+  <div class="tip">Browse Godly directly at <a href="https://godly.website" target="_blank" style="color:#f59e0b">godly.website</a> — filter by "Animation", "Dark", or "Agency" to find relevant inspiration. Most featured sites use GSAP + Lenis as the animation stack.</div>
+</main>
+<script>
+document.getElementById('search').addEventListener('input', function() {
+  const q = this.value.toLowerCase();
+  document.querySelectorAll('[data-searchable]').forEach(el => {
+    el.style.display = el.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+});
+</script>
+</body>
+</html>

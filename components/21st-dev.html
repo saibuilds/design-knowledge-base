@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>21st.dev — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0a;--card:#111111;--border:#1f1f1f;--accent:#f59e0b;--text:#e5e5e5;--muted:#737373;--green:#22c55e}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif}
+a{color:inherit;text-decoration:none}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:240px;background:var(--card);border-right:1px solid var(--border);padding:24px 0;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.sidebar-logo a{font-size:13px;font-weight:600;color:var(--accent);letter-spacing:.05em;text-transform:uppercase}
+.sidebar-logo p{font-size:11px;color:var(--muted);margin-top:4px}
+.nav-section{padding:8px 20px;font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:8px}
+.nav-link{display:flex;align-items:center;gap:8px;padding:8px 20px;font-size:13px;color:var(--muted);transition:.15s;border-left:2px solid transparent}
+.nav-link:hover,.nav-link.active{color:var(--text);background:rgba(245,158,11,.06);border-left-color:var(--accent)}
+.main{margin-left:240px;flex:1;padding:40px;max-width:900px}
+.page-header{margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.badge{display:inline-block;font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(245,158,11,.15);color:var(--accent);border:1px solid rgba(245,158,11,.3);margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em}
+.page-header h1{font-size:28px;font-weight:700}
+.page-header p{color:var(--muted);font-size:14px;margin-top:8px;line-height:1.7;max-width:620px}
+.ext-links{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+.ext-links a{font-size:12px;color:var(--accent);border:1px solid rgba(245,158,11,.3);padding:5px 12px;border-radius:6px;transition:.15s}
+.ext-links a:hover{background:rgba(245,158,11,.1)}
+.section{margin-bottom:48px}
+.section h2{font-size:18px;font-weight:600;margin-bottom:4px;padding-top:8px}
+.sub{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6}
+.code-block{position:relative;margin-bottom:20px;border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+.code-header{display:flex;justify-content:space-between;align-items:center;padding:8px 16px;background:#0d0d0d;border-bottom:1px solid var(--border)}
+.code-lang{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase}
+.copy-btn{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);color:var(--accent);font-size:11px;padding:4px 10px;border-radius:5px;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s}
+.copy-btn:hover{background:rgba(245,158,11,.2)}
+.copy-btn.copied{color:var(--green);border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.1)}
+.code-block pre{margin:0!important;border-radius:0!important}
+.code-block pre code{font-size:13px!important;line-height:1.6!important}
+.info-box{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:16px;margin-bottom:20px;font-size:13px;line-height:1.7}
+.info-box strong{color:var(--accent)}
+@media(max-width:768px){.sidebar{display:none}.main{margin-left:0}}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <div class="sidebar-logo"><a href="../index.html">Design KB</a><p>Web Design Knowledge Base</p></div>
+  <div class="nav-section">Hub</div>
+  <a class="nav-link" href="../index.html">&#8962; Dashboard</a>
+  <div class="nav-section">Animations</div>
+  <a class="nav-link" href="../animations/gsap.html">&#9889; GSAP</a>
+  <a class="nav-link" href="../animations/framer-motion.html">&#127902; Framer Motion</a>
+  <a class="nav-link" href="../animations/lenis.html">~ Lenis</a>
+  <div class="nav-section">Components</div>
+  <a class="nav-link" href="shadcn.html">&#9672; shadcn/ui</a>
+  <a class="nav-link active" href="21st-dev.html">&#10022; 21st.dev</a>
+  <a class="nav-link" href="magicui.html">&#10022; Magic UI</a>
+  <a class="nav-link" href="aceternity.html">&#9670; Aceternity UI</a>
+  <div class="nav-section">3D</div>
+  <a class="nav-link" href="../3d/r3f.html">&#9677; React Three Fiber</a>
+  <div class="nav-section">Reference Sites</div>
+  <a class="nav-link" href="../reference-sites/index.html">&#9678; Sites Index</a>
+  <a class="nav-link" href="../reference-sites/djcustomreno.html">&#8962; DJ Custom Reno</a>
+</nav>
+<main class="main">
+  <div class="page-header">
+    <div class="badge">AI Component Marketplace</div>
+    <h1>21st.dev</h1>
+    <p>AI-powered component marketplace for shipping UI 10x faster. Search components, install via shadcn registry protocol, and integrate directly with Cursor IDE via the Magic MCP server. Built for the AI-assisted development era.</p>
+    <div class="ext-links">
+      <a href="https://21st.dev" target="_blank">Official Site</a>
+      <a href="https://21st.dev/docs" target="_blank">Docs</a>
+      <a href="https://21st.dev/components" target="_blank">Browse Components</a>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>What is 21st.dev?</h2>
+    <p class="sub">A marketplace where developers publish and discover UI components. Uses the shadcn registry spec so every component installs with one command.</p>
+    <div class="info-box">
+      <strong>Key differentiator:</strong> 21st.dev includes a <strong>Magic MCP server</strong> that integrates directly with Cursor, Windsurf, and other AI IDEs. When you ask your AI assistant to "add a hero section", it searches 21st.dev and installs the best match automatically — no manual browsing.<br/><br/>
+      <strong>Format:</strong> All components follow the shadcn registry format. Install with <code>npx shadcn@latest add [url]</code> or via the Magic MCP tool.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Installing Components</h2>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">bash — CLI install</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-bash"># Search and install from 21st.dev
+npx shadcn@latest add "https://21st.dev/r/shadcn/animated-hero"
+npx shadcn@latest add "https://21st.dev/r/shadcn/navigation-menu"
+npx shadcn@latest add "https://21st.dev/r/shadcn/pricing-section"
+npx shadcn@latest add "https://21st.dev/r/shadcn/testimonials"
+npx shadcn@latest add "https://21st.dev/r/shadcn/footer"
+npx shadcn@latest add "https://21st.dev/r/shadcn/feature-section"</code></pre>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Magic MCP — Cursor Integration</h2>
+    <p class="sub">The Magic MCP server lets your AI assistant (Cursor, Windsurf) browse and install 21st.dev components on command.</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">json — .cursor/mcp.json</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-json">{
+  "mcpServers": {
+    "21st-magic": {
+      "command": "npx",
+      "args": ["-y", "@21st-dev/magic@latest", "API_KEY=your-key-here"]
+    }
+  }
+}</code></pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">text — Cursor chat prompts</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-plaintext">// In Cursor chat with Magic MCP active:
+"Add a hero section with gradient text and CTA buttons"
+"Install a pricing table with 3 tiers"
+"Add a features bento grid section"
+"Install a dark theme testimonials carousel"
+"Add an animated navigation menu with dropdowns"</code></pre>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Component Categories</h2>
+    <div class="info-box">
+      <strong>Sections:</strong> Hero, Features, Pricing, Testimonials, FAQ, CTA, Footer, About<br/>
+      <strong>Navigation:</strong> Navbar, Sidebar, Breadcrumb, Mobile menu<br/>
+      <strong>Marketing:</strong> Social proof, Logo ticker, Stats, Team grid<br/>
+      <strong>Forms:</strong> Contact, Newsletter, Auth pages, Multi-step<br/>
+      <strong>Overlays:</strong> Modal, Sheet, Command palette, Notifications<br/>
+      <strong>Data:</strong> Tables, Charts, Dashboards, Analytics widgets<br/>
+      <strong>Animations:</strong> Animated counters, Reveal effects, Loading states<br/><br/>
+      Each component is standalone (includes all required sub-components), responsive, and dark-mode compatible.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Publishing Components</h2>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">bash — publish your own component</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-bash"># Login to 21st.dev
+npx @21st-dev/cli login
+
+# Publish a component from your project
+npx @21st-dev/cli publish components/ui/my-component.tsx
+
+# The component gets a registry URL:
+# https://21st.dev/r/your-username/my-component</code></pre>
+    </div>
+  </div>
+</main>
+</div>
+<script>
+hljs.highlightAll();
+function copyCode(btn){
+  const code = btn.closest('.code-block').querySelector('code').textContent;
+  navigator.clipboard.writeText(code).then(()=>{
+    btn.textContent='Copied!';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000);
+  });
+}
+</script>
+</body>
+</html>

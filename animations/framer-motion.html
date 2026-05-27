@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Framer Motion — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0a;--card:#111111;--border:#1f1f1f;--accent:#f59e0b;--text:#e5e5e5;--muted:#737373;--green:#22c55e}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif}
+a{color:inherit;text-decoration:none}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:240px;background:var(--card);border-right:1px solid var(--border);padding:24px 0;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.sidebar-logo a{font-size:13px;font-weight:600;color:var(--accent);letter-spacing:.05em;text-transform:uppercase}
+.sidebar-logo p{font-size:11px;color:var(--muted);margin-top:4px}
+.nav-section{padding:8px 20px;font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:8px}
+.nav-link{display:flex;align-items:center;gap:8px;padding:8px 20px;font-size:13px;color:var(--muted);transition:.15s;border-left:2px solid transparent}
+.nav-link:hover,.nav-link.active{color:var(--text);background:rgba(245,158,11,.06);border-left-color:var(--accent)}
+.main{margin-left:240px;flex:1;padding:40px;max-width:900px}
+.page-header{margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.badge{display:inline-block;font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(245,158,11,.15);color:var(--accent);border:1px solid rgba(245,158,11,.3);margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em}
+.page-header h1{font-size:28px;font-weight:700}
+.page-header p{color:var(--muted);font-size:14px;margin-top:8px;line-height:1.7;max-width:620px}
+.ext-links{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+.ext-links a{font-size:12px;color:var(--accent);border:1px solid rgba(245,158,11,.3);padding:5px 12px;border-radius:6px;transition:.15s}
+.ext-links a:hover{background:rgba(245,158,11,.1)}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:36px}
+.toc h3{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
+.toc ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.toc ul li a{font-size:13px;color:var(--muted);transition:.15s}
+.toc ul li a:hover{color:var(--accent)}
+.section{margin-bottom:48px}
+.section h2{font-size:18px;font-weight:600;margin-bottom:4px;padding-top:8px}
+.sub{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6}
+.code-block{position:relative;margin-bottom:20px;border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+.code-header{display:flex;justify-content:space-between;align-items:center;padding:8px 16px;background:#0d0d0d;border-bottom:1px solid var(--border)}
+.code-lang{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase}
+.copy-btn{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);color:var(--accent);font-size:11px;padding:4px 10px;border-radius:5px;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s}
+.copy-btn:hover{background:rgba(245,158,11,.2)}
+.copy-btn.copied{color:var(--green);border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.1)}
+.code-block pre{margin:0!important;border-radius:0!important}
+.code-block pre code{font-size:13px!important;line-height:1.6!important}
+.info-box{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:16px;margin-bottom:20px;font-size:13px;line-height:1.7}
+.info-box strong{color:var(--accent)}
+.props-table{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:13px}
+.props-table th{text-align:left;padding:10px 12px;border-bottom:1px solid var(--border);font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.props-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+.props-table td:first-child{color:var(--accent);font-family:monospace;font-size:12px}
+.props-table td:last-child{color:#aaa;line-height:1.6}
+.props-table tr:last-child td{border-bottom:none}
+@media(max-width:768px){.sidebar{display:none}.main{margin-left:0}}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <div class="sidebar-logo"><a href="../index.html">Design KB</a><p>Web Design Knowledge Base</p></div>
+  <div class="nav-section">Hub</div>
+  <a class="nav-link" href="../index.html">&#8962; Dashboard</a>
+  <div class="nav-section">Animations</div>
+  <a class="nav-link" href="gsap.html">&#9889; GSAP</a>
+  <a class="nav-link active" href="framer-motion.html">&#127902; Framer Motion</a>
+  <a class="nav-link" href="lenis.html">~ Lenis</a>
+  <div class="nav-section">Components</div>
+  <a class="nav-link" href="../components/shadcn.html">&#9672; shadcn/ui</a>
+  <a class="nav-link" href="../components/21st-dev.html">&#10022; 21st.dev</a>
+  <a class="nav-link" href="../components/magicui.html">&#10022; Magic UI</a>
+  <a class="nav-link" href="../components/aceternity.html">&#9670; Aceternity UI</a>
+  <div class="nav-section">3D</div>
+  <a class="nav-link" href="../3d/r3f.html">&#9677; React Three Fiber</a>
+  <div class="nav-section">Reference Sites</div>
+  <a class="nav-link" href="../reference-sites/index.html">&#9678; Sites Index</a>
+  <a class="nav-link" href="../reference-sites/djcustomreno.html">&#8962; DJ Custom Reno</a>
+</nav>
+<main class="main">
+  <div class="page-header">
+    <div class="badge">React Animation Library</div>
+    <h1>Framer Motion</h1>
+    <p>The most popular React animation library. Declarative animations with a simple props API, gesture support, layout animations, scroll-linked effects, and AnimatePresence for mount/unmount transitions. Powers Framer's visual editor.</p>
+    <div class="ext-links">
+      <a href="https://www.framer.com/motion/" target="_blank">Official Site</a>
+      <a href="https://www.framer.com/motion/introduction/" target="_blank">Docs</a>
+      <a href="https://github.com/framer/motion" target="_blank">GitHub</a>
+      <a href="https://www.framer.com/motion/examples/" target="_blank">Examples</a>
+    </div>
+  </div>
+
+  <div class="toc">
+    <h3>Contents</h3>
+    <ul>
+      <li><a href="#install">Installation</a></li>
+      <li><a href="#motion">motion.* Component</a></li>
+      <li><a href="#variants">Variants</a></li>
+      <li><a href="#animate-presence">AnimatePresence</a></li>
+      <li><a href="#gestures">Gestures</a></li>
+      <li><a href="#layout">Layout Animations</a></li>
+      <li><a href="#scroll">useScroll &amp; useTransform</a></li>
+      <li><a href="#spring">Spring &amp; Transition</a></li>
+      <li><a href="#hooks">Useful Hooks</a></li>
+      <li><a href="#patterns">Common Patterns</a></li>
+    </ul>
+  </div>
+
+  <div class="section" id="install">
+    <h2>Installation</h2>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-bash">npm install framer-motion
+# or: yarn add framer-motion  |  pnpm add framer-motion</code></pre>
+    </div>
+    <div class="info-box">
+      <strong>Note:</strong> In Next.js App Router, import from 'framer-motion' works in client components. Use the 'use client' directive. For server components, wrap animated content in a client component boundary.
+    </div>
+  </div>
+
+  <div class="section" id="motion">
+    <h2>motion.* Component</h2>
+    <p class="sub">Any HTML or SVG element can be made animatable by prefixing with "motion." — e.g. motion.div, motion.section, motion.svg.</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">jsx</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-jsx">import { motion } from 'framer-motion';
+
+// Basic animate prop
+&lt;motion.div
+  animate={{ x: 100, opacity: 1 }}
+  initial={{ x: 0, opacity: 0 }}
+  exit={{ x: -100, opacity: 0 }}
+  transition={{ duration: 0.5, ease: 'easeOut' }}
+/&gt;
+
+// Mount animation (initial to animate)
+&lt;motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+/&gt;
+
+// All animatable properties
+&lt;motion.div
+  animate={{
+    x: 100,             // translateX (px)
+    y: -50,             // translateY (px)
+    rotate: 360,        // degrees
+    scale: 1.5,
+    scaleX: 2,
+    opacity: 0.8,
+    backgroundColor: '#f59e0b',
+    borderRadius: '50%',
+    width: '200px',
+    pathLength: 1,      // SVG path drawing
+    filter: 'blur(0px)'
+  }}
+/&gt;
+
+// Keyframes (array syntax)
+&lt;motion.div
+  animate={{
+    x: [0, 100, 50, 100],
+    opacity: [0, 1, 0.5, 1],
+  }}
+  transition={{
+    duration: 2,
+    times: [0, 0.3, 0.6, 1],  // progress points (0-1) for each keyframe
+    ease: ['easeIn', 'easeOut', 'linear']
+  }}
+/&gt;</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="variants">
+    <h2>Variants</h2>
+    <p class="sub">Variants let you define named animation states and orchestrate parent-child animations. The most powerful pattern in Framer Motion.</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">jsx</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-jsx">// Define variants as objects
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,   // stagger child animations by 0.1s
+      delayChildren: 0.2,     // wait 0.2s before starting children
+      when: 'beforeChildren',  // 'beforeChildren' | 'afterChildren'
+    }
+  },
+  exit: { opacity: 0, transition: { staggerChildren: 0.05, staggerDirection: -1 } }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
+  },
+  exit: { opacity: 0, y: -10 }
+};
+
+// Parent automatically propagates variant names to children
+function AnimatedList({ items }) {
+  return (
+    &lt;motion.ul
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    &gt;
+      {items.map(item =&gt; (
+        &lt;motion.li key={item.id} variants={itemVariants}&gt;
+          {item.text}
+        &lt;/motion.li&gt;
+      ))}
+    &lt;/motion.ul&gt;
+  );
+}
+
+// whileHover / whileTap / whileFocus
+&lt;motion.button
+  variants={buttonVariants}
+  whileHover="hover"
+  whileTap="tap"
+  whileFocus="focus"
+/&gt;</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="animate-presence">
+    <h2>AnimatePresence</h2>
+    <p class="sub">Enables exit animations when components unmount. Wrap conditional renders or route changes with AnimatePresence.</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">jsx</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-jsx">import { AnimatePresence, motion } from 'framer-motion';
+
+// Toggle component visibility
+function Modal({ isOpen, onClose }) {
+  return (
+    &lt;AnimatePresence&gt;
+      {isOpen &amp;&amp; (
+        &lt;motion.div
+          className="modal-overlay"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={onClose}
+        &gt;
+          &lt;motion.div
+            className="modal"
+            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.95, opacity: 0, y: 10 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            onClick={e =&gt; e.stopPropagation()}
+          &gt;
+            {/* content */}
+          &lt;/motion.div&gt;
+        &lt;/motion.div&gt;
+      )}
+    &lt;/AnimatePresence&gt;
+  );
+}
+
+// Page transitions (Next.js App Router)
+// app/template.jsx — template re-renders on every navigation
+'use client';
+export default function Template({ children }) {
+  return (
+    &lt;AnimatePresence mode="wait"&gt;
+      &lt;motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -8 }}
+        transition={{ duration: 0.3, ease: 'easeInOut' }}
+      &gt;
+        {children}
+      &lt;/motion.div&gt;
+    &lt;/AnimatePresence&gt;
+  );
+}
+
+// AnimatePresence mode prop
+// "sync"     — enter and exit at same time (default)
+// "wait"     — wait for exit to finish before entering
+// "popLayout" — animate out element is popped from layout flow</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="gestures">
+    <h2>Gestures</h2>
+    <p class="sub">Framer Motion has built-in gesture support with while* props and event handlers.</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">jsx</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-jsx">// Hover and tap gestures
+&lt;motion.button
+  whileHover={{ scale: 1.05, backgroundColor: '#f59e0b' }}
+  whileTap={{ scale: 0.95 }}
+  whileFocus={{ outline: '2px solid #f59e0b' }}
+  transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+&gt;
+  Click me
+&lt;/motion.button&gt;
+
+// Drag
+&lt;motion.div
+  drag                           // drag on both axes
+  drag="x"                       // or constrain to x axis
+  dragConstraints={{ left: -100, right: 100, top: 0, bottom: 0 }}
+  dragElastic={0.2}              // bounciness at constraints (0 = rigid)
+  dragMomentum={true}            // throw momentum after release
+  onDragStart={(event, info) =&gt; console.log(info.point)}
+  onDrag={(event, info) =&gt; console.log(info.offset)}
+  onDragEnd={(event, info) =&gt; console.log(info.velocity)}
+  whileDrag={{ scale: 1.1, cursor: 'grabbing' }}
+/&gt;
+
+// Constrain drag to a container ref
+const constraintsRef = useRef(null);
+&lt;div ref={constraintsRef} className="container"&gt;
+  &lt;motion.div drag dragConstraints={constraintsRef} /&gt;
+&lt;/div&gt;
+
+// Pan events
+&lt;motion.div
+  onPanStart={(e, info) =&gt; {}}
+  onPan={(e, info) =&gt; console.log(info.delta, info.offset, info.velocity)}
+  onPanEnd={(e, info) =&gt; {}}
+/&gt;</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="layout">
+    <h2>Layout Animations</h2>
+    <p class="sub">The layout prop automatically animates an element when its layout changes — no manual calculations needed.</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">jsx</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-jsx">// Animate layout changes automatically
+&lt;motion.div layout&gt; ... &lt;/motion.div&gt;
+
+// layout="position" — only animate x/y, not size
+// layout="size"     — only animate size, not position
+// layout="preserve-aspect" — maintain aspect ratio during resize
+
+// Shared layout — element moves between positions across components
+// Use layoutId to link elements
+function TabIndicator({ activeTab }) {
+  return tabs.map(tab =&gt; (
+    &lt;button key={tab.id} onClick={() =&gt; setActiveTab(tab.id)}&gt;
+      {tab.label}
+      {activeTab === tab.id &amp;&amp; (
+        &lt;motion.div
+          layoutId="tab-indicator"  // must match across positions
+          className="underline"
+          transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+        /&gt;
+      )}
+    &lt;/button&gt;
+  ));
+}
+
+// LayoutGroup — needed when layoutId elements are in different components
+import { LayoutGroup } from 'framer-motion';
+&lt;LayoutGroup&gt;
+  &lt;ComponentA /&gt;
+  &lt;ComponentB /&gt;
+&lt;/LayoutGroup&gt;</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="scroll">
+    <h2>useScroll &amp; useTransform</h2>
+    <p class="sub">useScroll tracks scroll position. useTransform maps scroll values to animation values — the Framer Motion way to do parallax and scroll-linked animations.</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">jsx</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-jsx">import { useScroll, useTransform, useSpring, motion } from 'framer-motion';
+import { useRef } from 'react';
+
+// Global scroll progress
+function ScrollProgressBar() {
+  const { scrollYProgress } = useScroll();
+  return &lt;motion.div className="progress-bar" style={{ scaleX: scrollYProgress }} /&gt;;
+}
+
+// Element-relative scroll
+function ParallaxSection() {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start']  // [when element enters, when element leaves]
+    // offset options: "start" | "center" | "end" | "0.8" | px value
+  });
+
+  // Map scroll 0-1 to pixel values
+  const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [0.8, 1]);
+
+  // Smooth the motion value with spring
+  const smoothY = useSpring(y, { stiffness: 100, damping: 30 });
+
+  return (
+    &lt;section ref={ref}&gt;
+      &lt;motion.div style={{ y: smoothY, opacity, scale }}&gt;
+        Parallax content
+      &lt;/motion.div&gt;
+    &lt;/section&gt;
+  );
+}
+
+// useScrollVelocity — scroll speed
+import { useScrollVelocity } from 'framer-motion';
+const velocity = useScrollVelocity(scrollYProgress);
+const skewX = useTransform(velocity, [-2000, 0, 2000], [-15, 0, 15]);</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="spring">
+    <h2>Spring &amp; Transition Config</h2>
+    <p class="sub">Framer Motion has two animation engines: spring (physics-based) and tween (duration-based). Spring is the default.</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">jsx</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-jsx">// Spring (physics-based — no duration)
+transition={{
+  type: 'spring',
+  stiffness: 300,    // higher = faster/stiffer
+  damping: 20,       // higher = less bounce
+  mass: 1,           // higher = more inertia
+  velocity: 0,       // initial velocity
+  restDelta: 0.001,  // when to consider animation done
+  restSpeed: 0.001
+}}
+
+// Common spring presets
+// Snappy: stiffness:400, damping:25
+// Bouncy: stiffness:200, damping:10
+// Gentle: stiffness:100, damping:20
+// Stiff:  stiffness:700, damping:35
+
+// Tween (duration-based)
+transition={{
+  type: 'tween',     // or just omit type and set duration
+  duration: 0.5,
+  ease: 'easeOut',
+  // ease can be: 'linear' | 'easeIn' | 'easeOut' | 'easeInOut'
+  // or cubic bezier: [0.22, 1, 0.36, 1]
+  // or named: 'anticipate' | 'backIn' | 'backOut' | 'backInOut' | 'circIn' etc
+  delay: 0.2,
+  repeat: Infinity,
+  repeatType: 'reverse', // 'loop' | 'reverse' | 'mirror'
+  repeatDelay: 1
+}}
+
+// Per-property transitions
+&lt;motion.div
+  animate={{ x: 100, opacity: 1 }}
+  transition={{
+    x: { type: 'spring', stiffness: 300 },
+    opacity: { duration: 0.3, ease: 'easeIn' }
+  }}
+/&gt;</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="hooks">
+    <h2>Useful Hooks</h2>
+    <table class="props-table">
+      <tr><th>Hook</th><th>Description</th></tr>
+      <tr><td>useAnimation()</td><td>Imperative animation control — trigger animations programmatically with controls.start(), controls.stop()</td></tr>
+      <tr><td>useMotionValue()</td><td>Create a motion value to drive animations without re-renders. Use with useTransform.</td></tr>
+      <tr><td>useTransform()</td><td>Map one motion value to another with a range. Essential for scroll-linked animations.</td></tr>
+      <tr><td>useSpring()</td><td>Smooth a motion value using spring physics</td></tr>
+      <tr><td>useScroll()</td><td>Track scroll position (scrollY, scrollX, scrollYProgress 0-1)</td></tr>
+      <tr><td>useScrollVelocity()</td><td>Get scroll speed — useful for skew effects</td></tr>
+      <tr><td>useInView()</td><td>Returns true when element is in viewport. Pass once:true for enter-only.</td></tr>
+      <tr><td>useDragControls()</td><td>Start drag from a different element (e.g. drag handle)</td></tr>
+      <tr><td>useReducedMotion()</td><td>Returns true if user prefers reduced motion — respect accessibility</td></tr>
+      <tr><td>useAnimate()</td><td>New in v10 — scope + imperative animate() function for sequences</td></tr>
+    </table>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">jsx — useAnimation (imperative control)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-jsx">import { useAnimation, motion } from 'framer-motion';
+
+function PulseButton() {
+  const controls = useAnimation();
+
+  async function handleClick() {
+    await controls.start({ scale: 1.2, duration: 0.1 });
+    await controls.start({ scale: 1, duration: 0.2 });
+    // Can chain sequences with await
+  }
+
+  return (
+    &lt;motion.button animate={controls} onClick={handleClick}&gt;
+      Click
+    &lt;/motion.button&gt;
+  );
+}</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="patterns">
+    <h2>Common Patterns</h2>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">jsx — scroll-triggered fade in (useInView)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-jsx">import { motion, useInView } from 'framer-motion';
+import { useRef } from 'react';
+
+function FadeIn({ children, delay = 0 }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  return (
+    &lt;motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+    &gt;
+      {children}
+    &lt;/motion.div&gt;
+  );
+}</code></pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">jsx — marquee / ticker with Framer Motion</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-jsx">import { motion } from 'framer-motion';
+
+function Marquee({ children, speed = 30 }) {
+  return (
+    &lt;div style={{ overflow: 'hidden', display: 'flex' }}&gt;
+      &lt;motion.div
+        style={{ display: 'flex', gap: '2rem' }}
+        animate={{ x: ['0%', '-50%'] }}
+        transition={{ duration: speed, repeat: Infinity, ease: 'linear' }}
+      &gt;
+        {/* Duplicate content for seamless loop */}
+        {children}
+        {children}
+      &lt;/motion.div&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">jsx — reduced motion accessibility</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-jsx">import { useReducedMotion, motion } from 'framer-motion';
+
+function AccessibleAnimation({ children }) {
+  const prefersReducedMotion = useReducedMotion();
+
+  return (
+    &lt;motion.div
+      initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: prefersReducedMotion ? 0.01 : 0.6 }}
+    &gt;
+      {children}
+    &lt;/motion.div&gt;
+  );
+}</code></pre>
+    </div>
+  </div>
+</main>
+</div>
+<script>
+hljs.highlightAll();
+function copyCode(btn){
+  const code = btn.closest('.code-block').querySelector('code').textContent;
+  navigator.clipboard.writeText(code).then(()=>{
+    btn.textContent='Copied!';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000);
+  });
+}
+</script>
+</body>
+</html>

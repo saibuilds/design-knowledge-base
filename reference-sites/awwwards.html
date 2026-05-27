@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Awwwards Analysis — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0a;--card:#111111;--border:#1f1f1f;--accent:#f59e0b;--text:#e5e5e5;--muted:#737373;--green:#22c55e}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh}
+a{color:inherit;text-decoration:none}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:240px;background:var(--card);border-right:1px solid var(--border);padding:24px 0;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.sidebar-logo span{font-size:13px;font-weight:600;color:var(--accent);letter-spacing:.05em;text-transform:uppercase}
+.sidebar-logo p{font-size:11px;color:var(--muted);margin-top:4px}
+.nav-section{padding:8px 20px;font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:8px}
+.nav-link{display:flex;align-items:center;gap:8px;padding:8px 20px;font-size:13px;color:var(--muted);transition:.15s;border-left:2px solid transparent}
+.nav-link:hover,.nav-link.active{color:var(--text);background:rgba(245,158,11,.06);border-left-color:var(--accent)}
+.main{margin-left:240px;flex:1;padding:40px;max-width:1100px}
+h1{font-size:28px;font-weight:700;background:linear-gradient(135deg,#f59e0b,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.meta{display:flex;gap:12px;align-items:center;margin-bottom:32px;flex-wrap:wrap}
+.badge{font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(245,158,11,.1);color:var(--accent);border:1px solid rgba(245,158,11,.2);font-weight:500}
+.url-link{font-size:13px;color:var(--muted);font-family:'Inter',sans-serif}
+.url-link a{color:var(--accent)}
+.section{margin-bottom:40px}
+.section-title{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:12px}
+.card h3{font-size:14px;font-weight:600;margin-bottom:8px;color:var(--text)}
+.card p,.card li{font-size:13px;color:var(--muted);line-height:1.7}
+.card ul{padding-left:16px}
+.palette{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.swatch{display:flex;flex-direction:column;align-items:center;gap:6px}
+.swatch-color{width:52px;height:52px;border-radius:8px;border:1px solid rgba(255,255,255,.08)}
+.swatch-label{font-size:10px;color:var(--muted);font-family:monospace}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tag{display:inline-block;font-size:10px;padding:3px 8px;border-radius:4px;background:rgba(245,158,11,.08);color:var(--accent);border:1px solid rgba(245,158,11,.15);font-weight:500;margin:2px}
+.winners-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.winner-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;position:relative;overflow:hidden}
+.winner-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#f59e0b,#f97316)}
+.winner-card h4{font-size:13px;font-weight:600;margin-bottom:4px}
+.winner-card p{font-size:12px;color:var(--muted);line-height:1.5}
+.winner-card .award{font-size:10px;color:var(--accent);font-weight:600;margin-top:8px;letter-spacing:.05em}
+pre{position:relative;border-radius:10px;overflow:hidden;margin-top:12px}
+.copy-btn{position:absolute;top:10px;right:10px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);color:var(--accent);font-size:11px;padding:4px 10px;border-radius:5px;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s;z-index:2}
+.copy-btn:hover{background:rgba(245,158,11,.2)}
+.copy-btn.copied{color:var(--green);border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.1)}
+.prompt-box{background:var(--card);border:1px solid rgba(245,158,11,.2);border-radius:12px;padding:20px;margin-bottom:12px;position:relative}
+.prompt-box h4{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:10px}
+.prompt-box p{font-size:13px;color:var(--muted);line-height:1.7;white-space:pre-wrap;word-break:break-word;font-family:'Inter',sans-serif}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <div class="sidebar-logo"><span>Design KB</span><p>Web Design Knowledge Base</p></div>
+  <div class="nav-section">Hub</div>
+  <a class="nav-link" href="../index.html">⌂ Dashboard</a>
+  <div class="nav-section">Reference Sites</div>
+  <a class="nav-link active" href="awwwards.html">◎ Awwwards</a>
+  <a class="nav-link" href="godly.html">◎ Godly</a>
+  <a class="nav-link" href="lusion.html">◎ Lusion</a>
+  <a class="nav-link" href="linear.html">◎ Linear</a>
+  <a class="nav-link" href="vercel.html">◎ Vercel</a>
+  <a class="nav-link" href="stripe.html">◎ Stripe</a>
+  <a class="nav-link" href="cosmos.html">◎ Cosmos</a>
+  <a class="nav-link" href="mobbin.html">◎ Mobbin</a>
+  <div class="nav-section">Animations</div>
+  <a class="nav-link" href="../animations/gsap.html">⚡ GSAP</a>
+  <a class="nav-link" href="../animations/framer-motion.html">🎞 Framer Motion</a>
+</nav>
+<main class="main">
+  <h1>Awwwards — Web Design Awards</h1>
+  <div class="meta">
+    <span class="badge">Award Gallery</span>
+    <span class="badge">Design Inspiration</span>
+    <span class="badge">Portfolio Reference</span>
+    <span class="url-link">→ <a href="https://www.awwwards.com/websites/" target="_blank">awwwards.com/websites/</a></span>
+  </div>
+
+  <div class="section">
+    <div class="section-title">What Awwwards Is</div>
+    <div class="card">
+      <p>Awwwards is the premier web design award platform judging sites on Design (40%), Usability (20%), Creativity (20%), and Content (20%). Sites receive nominations from the community and are judged by a panel. Top honors: Site of the Day (SOTD), Developer Award, Honorable Mention. The platform features over 30,000 awarded sites spanning agency portfolios, product sites, editorial, interactive experiments, and immersive 3D experiences.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Common Design Patterns in Award Winners</div>
+    <div class="winners-grid">
+      <div class="winner-card">
+        <h4>Full-Screen Hero + WebGL</h4>
+        <p>Immersive entry with 3D canvas, particle systems, or distortion shaders covering the entire viewport.</p>
+        <div class="award">SOTD PATTERN</div>
+      </div>
+      <div class="winner-card">
+        <h4>Horizontal Scroll Sections</h4>
+        <p>GSAP-powered horizontal scroll panels for case studies, timelines, or portfolio pieces.</p>
+        <div class="award">DEVELOPER AWARD PATTERN</div>
+      </div>
+      <div class="winner-card">
+        <h4>SVG Path Morphing</h4>
+        <p>Animated SVG shapes that morph on scroll or mouse move using GSAP MorphSVG or CSS animations.</p>
+        <div class="award">HONORABLE MENTION PATTERN</div>
+      </div>
+      <div class="winner-card">
+        <h4>Kinetic Typography</h4>
+        <p>Large type that animates letter-by-letter, splits into lines, or tracks cursor movement.</p>
+        <div class="award">SOTD PATTERN</div>
+      </div>
+      <div class="winner-card">
+        <h4>Image Grid Hover Distortion</h4>
+        <p>CSS or shader-based image distortion on hover, often with cursor-following displacement maps.</p>
+        <div class="award">DEVELOPER AWARD PATTERN</div>
+      </div>
+      <div class="winner-card">
+        <h4>Noise Texture Overlays</h4>
+        <p>Grainy, film-grain texture layered over gradients and backgrounds for tactile depth.</p>
+        <div class="award">COMMON PATTERN</div>
+      </div>
+      <div class="winner-card">
+        <h4>Magnetic Cursor</h4>
+        <p>Custom cursor that snaps/attracts to interactive elements with spring physics.</p>
+        <div class="award">INTERACTION PATTERN</div>
+      </div>
+      <div class="winner-card">
+        <h4>Clip-Path Reveals</h4>
+        <p>Content sections revealed via animated clip-path on scroll, creating wipe/iris transitions.</p>
+        <div class="award">COMMON PATTERN</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Color Palette Trends (Award Winners)</div>
+    <div class="card">
+      <p>Dominant palettes across SOTD winners in 2024–2025:</p>
+      <div class="palette">
+        <div class="swatch"><div class="swatch-color" style="background:#0a0a0a"></div><span class="swatch-label">#0a0a0a</span></div>
+        <div class="swatch"><div class="swatch-color" style="background:#f5f0e8"></div><span class="swatch-label">#f5f0e8</span></div>
+        <div class="swatch"><div class="swatch-color" style="background:#c8ff00"></div><span class="swatch-label">#c8ff00</span></div>
+        <div class="swatch"><div class="swatch-color" style="background:#ff4d00"></div><span class="swatch-label">#ff4d00</span></div>
+        <div class="swatch"><div class="swatch-color" style="background:#1a1a2e"></div><span class="swatch-label">#1a1a2e</span></div>
+        <div class="swatch"><div class="swatch-color" style="background:#e8d5c4"></div><span class="swatch-label">#e8d5c4</span></div>
+        <div class="swatch"><div class="swatch-color" style="background:#7c3aed"></div><span class="swatch-label">#7c3aed</span></div>
+        <div class="swatch"><div class="swatch-color" style="background:#ffffff"></div><span class="swatch-label">#ffffff</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Typography Patterns</div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Editorial / Agency Style</h3>
+        <ul>
+          <li>Variable fonts with weight/width animation on scroll</li>
+          <li>Huge display sizes: 120–200px headers</li>
+          <li>Mixed serif + grotesque pairings</li>
+          <li>Popular: Neue Haas Grotesk, Editorial New, PP Neue Montreal</li>
+          <li>Tight leading: line-height 0.85–0.95 for headlines</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Product / SaaS Style</h3>
+        <ul>
+          <li>Clean sans-serifs: Inter, Geist, Sohne</li>
+          <li>Gradient text on hero headlines</li>
+          <li>Mono accents for code/technical labels</li>
+          <li>Precise type scales: 12/14/16/20/32/48/64px</li>
+          <li>Letter-spacing: -0.02em to -0.04em on large headings</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Animation / Interaction Notes</div>
+    <div class="card">
+      <ul>
+        <li><strong>Page transitions:</strong> Full-page overlay wipes (clip-path or GSAP cover panels) are near-universal in top-scoring sites</li>
+        <li><strong>Scroll-linked:</strong> Progress bar, parallax depth (foreground/background layers), pinned scroll scenes</li>
+        <li><strong>Cursor:</strong> Custom cursor is expected — circle follower, magnetic snap, blend-mode inversion</li>
+        <li><strong>Load animation:</strong> Counter loading screen, logo reveal, staggered text entrance</li>
+        <li><strong>Image hover:</strong> 3D tilt (CSS perspective + JS mouse tracking), displacement maps via WebGL</li>
+        <li><strong>Sound:</strong> Optional ambient audio toggle (click-on-demand, not autoplay)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">What Makes Sites Win</div>
+    <div class="card">
+      <ul>
+        <li><strong>Design (40%):</strong> Visual hierarchy, whitespace, color harmony, consistent grid, original aesthetic</li>
+        <li><strong>Usability (20%):</strong> Navigation clarity, loading speed, accessible interactions, mobile adaptation</li>
+        <li><strong>Creativity (20%):</strong> Unexpected layouts, novel interactions, conceptual coherence, uniqueness</li>
+        <li><strong>Content (20%):</strong> Copy quality, imagery resolution, video direction, storytelling arc</li>
+        <li><strong>Key differentiators:</strong> Smooth 60fps animations, no janky scroll, purposeful micro-interactions, cohesive brand language throughout</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Techniques Worth Stealing</div>
+    <div class="card">
+      <ul>
+        <li><strong>Split text entrance:</strong> Split headline into chars/words, stagger animate each with GSAP or Framer Motion (y: 100 → 0, opacity 0→1)</li>
+        <li><strong>Scroll-scrubbed background color:</strong> Transition bg color between sections using ScrollTrigger scrub</li>
+        <li><strong>Marquee ticker:</strong> Infinite scrolling text band used as section dividers — adds motion without complexity</li>
+        <li><strong>Noise grain overlay:</strong> CSS pseudo-element with SVG feTurbulence filter or a tileable PNG at low opacity (~0.04)</li>
+        <li><strong>Magnetic buttons:</strong> Track mouse distance, translate button toward cursor within 80px radius using gsap.to()</li>
+        <li><strong>Variable font weight on scroll:</strong> Animate font-variation-settings weight from 100 to 900 as user scrolls</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Claude Prompts to Recreate Awwwards-Style Patterns</div>
+    <div class="prompt-box">
+      <h4>Awwwards-Style Hero with Split Text + Cursor</h4>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+      <p>Build an Awwwards-quality hero section in React with: (1) split text entrance where each word animates from y:60 to y:0 with opacity 0→1, staggered 0.08s using Framer Motion, (2) a custom magnetic cursor — a 24px circle that follows mouse with spring physics and snaps to buttons within 80px, changing blend mode to 'difference' on hover, (3) full-viewport dark background #0a0a0a, (4) noise grain overlay using a CSS filter SVG feTurbulence pseudo-element at 0.04 opacity. Font: Neue Haas Grotesk or fallback system-ui, 120px weight 700, letter-spacing -0.03em.</p>
+    </div>
+    <div class="prompt-box">
+      <h4>Horizontal Scroll Portfolio Section</h4>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+      <p>Create a GSAP horizontal scroll section for a portfolio. Pin the section for 400vh of vertical scroll. Translate the inner track from x:0 to x:-80% based on scroll progress using ScrollTrigger scrub:1. Each project card is 500px wide with an image, project name in large type, and category tag. On hover, the image scales to 1.05 and a color overlay fades in. Add a progress bar at the bottom tracking scroll position within this section.</p>
+    </div>
+    <div class="prompt-box">
+      <h4>Page Transition with Cover Panel</h4>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+      <p>Build a page transition in Next.js App Router using a full-viewport cover panel. On link click: a dark panel (#111) animates from scaleY:0 (bottom) to scaleY:1 covering the screen (0.4s ease), then the new page content fades in as the panel animates out to scaleY:0 from the top. Use Framer Motion AnimatePresence with layout-aware exit animations. The panel should use transform-origin: bottom on enter and top on exit.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Code Snippet — Awwwards Split Text Entrance</div>
+    <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-tsx">// Tailwind + Framer Motion — Split text word-by-word entrance
+import { motion } from "framer-motion";
+
+const container = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08 } }
+};
+
+const word = {
+  hidden: { y: 60, opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] } }
+};
+
+export function SplitHero({ text }: { text: string }) {
+  const words = text.split(" ");
+  return (
+    &lt;section className="relative min-h-screen bg-[#0a0a0a] flex items-center overflow-hidden"&gt;
+      {/* Noise grain overlay */}
+      &lt;div className="pointer-events-none absolute inset-0 opacity-[0.04]"
+        style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")", backgroundSize: "200px" }}
+      /&gt;
+      &lt;div className="px-8 md:px-16"&gt;
+        &lt;motion.h1
+          className="text-[clamp(48px,10vw,140px)] font-bold tracking-[-0.03em] text-white leading-[0.9] flex flex-wrap gap-x-[0.25em]"
+          variants={container}
+          initial="hidden"
+          animate="visible"
+        &gt;
+          {words.map((w, i) =&gt; (
+            &lt;div key={i} className="overflow-hidden"&gt;
+              &lt;motion.span className="block" variants={word}&gt;{w}&lt;/motion.span&gt;
+            &lt;/div&gt;
+          ))}
+        &lt;/motion.h1&gt;
+        &lt;motion.p
+          className="mt-8 text-[#737373] text-lg max-w-xl"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.5 }}
+        &gt;
+          Award-winning design starts with purposeful motion.
+        &lt;/motion.p&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+  );
+}</code></pre>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Code Snippet — Magnetic Button</div>
+    <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-tsx">// Magnetic button — attracts toward cursor within proximity radius
+import { useRef } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
+
+export function MagneticButton({ children }: { children: React.ReactNode }) {
+  const ref = useRef&lt;HTMLButtonElement&gt;(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const sx = useSpring(x, { stiffness: 200, damping: 20 });
+  const sy = useSpring(y, { stiffness: 200, damping: 20 });
+
+  const handleMouseMove = (e: React.MouseEvent) =&gt; {
+    const btn = ref.current!;
+    const rect = btn.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dist = Math.hypot(e.clientX - cx, e.clientY - cy);
+    if (dist &lt; 80) {
+      x.set((e.clientX - cx) * 0.35);
+      y.set((e.clientY - cy) * 0.35);
+    }
+  };
+
+  const handleMouseLeave = () => { x.set(0); y.set(0); };
+
+  return (
+    &lt;motion.button
+      ref={ref}
+      style={{ x: sx, y: sy }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="px-8 py-4 border border-white/20 rounded-full text-white text-sm font-medium hover:bg-white hover:text-black transition-colors duration-300"
+    &gt;
+      {children}
+    &lt;/motion.button&gt;
+  );
+}</code></pre>
+  </div>
+</main>
+</div>
+<script>
+hljs.highlightAll();
+function copyPrompt(btn){
+  const text = btn.nextElementSibling.textContent;
+  navigator.clipboard.writeText(text).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000)});
+}
+function copyCode(btn){
+  const code = btn.parentElement.querySelector('code').textContent;
+  navigator.clipboard.writeText(code).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000)});
+}
+</script>
+</body>
+</html>

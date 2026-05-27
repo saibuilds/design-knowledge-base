@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>shadcn/ui — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0a;--card:#111111;--border:#1f1f1f;--accent:#f59e0b;--text:#e5e5e5;--muted:#737373;--green:#22c55e}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif}
+a{color:inherit;text-decoration:none}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:240px;background:var(--card);border-right:1px solid var(--border);padding:24px 0;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.sidebar-logo a{font-size:13px;font-weight:600;color:var(--accent);letter-spacing:.05em;text-transform:uppercase}
+.sidebar-logo p{font-size:11px;color:var(--muted);margin-top:4px}
+.nav-section{padding:8px 20px;font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:8px}
+.nav-link{display:flex;align-items:center;gap:8px;padding:8px 20px;font-size:13px;color:var(--muted);transition:.15s;border-left:2px solid transparent}
+.nav-link:hover,.nav-link.active{color:var(--text);background:rgba(245,158,11,.06);border-left-color:var(--accent)}
+.main{margin-left:240px;flex:1;padding:40px;max-width:900px}
+.page-header{margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.badge{display:inline-block;font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(245,158,11,.15);color:var(--accent);border:1px solid rgba(245,158,11,.3);margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em}
+.page-header h1{font-size:28px;font-weight:700}
+.page-header p{color:var(--muted);font-size:14px;margin-top:8px;line-height:1.7;max-width:620px}
+.ext-links{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+.ext-links a{font-size:12px;color:var(--accent);border:1px solid rgba(245,158,11,.3);padding:5px 12px;border-radius:6px;transition:.15s}
+.ext-links a:hover{background:rgba(245,158,11,.1)}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:36px}
+.toc h3{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
+.toc ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.toc ul li a{font-size:13px;color:var(--muted);transition:.15s}
+.toc ul li a:hover{color:var(--accent)}
+.section{margin-bottom:48px}
+.section h2{font-size:18px;font-weight:600;margin-bottom:4px;padding-top:8px}
+.sub{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6}
+.code-block{position:relative;margin-bottom:20px;border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+.code-header{display:flex;justify-content:space-between;align-items:center;padding:8px 16px;background:#0d0d0d;border-bottom:1px solid var(--border)}
+.code-lang{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase}
+.copy-btn{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);color:var(--accent);font-size:11px;padding:4px 10px;border-radius:5px;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s}
+.copy-btn:hover{background:rgba(245,158,11,.2)}
+.copy-btn.copied{color:var(--green);border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.1)}
+.code-block pre{margin:0!important;border-radius:0!important}
+.code-block pre code{font-size:13px!important;line-height:1.6!important}
+.info-box{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:16px;margin-bottom:20px;font-size:13px;line-height:1.7}
+.info-box strong{color:var(--accent)}
+.comp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-bottom:24px}
+.comp-tag{background:var(--card);border:1px solid var(--border);border-radius:7px;padding:10px 12px;font-size:12px;color:var(--muted)}
+.comp-tag strong{display:block;color:var(--text);font-size:13px;margin-bottom:2px}
+@media(max-width:768px){.sidebar{display:none}.main{margin-left:0}}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <div class="sidebar-logo"><a href="../index.html">Design KB</a><p>Web Design Knowledge Base</p></div>
+  <div class="nav-section">Hub</div>
+  <a class="nav-link" href="../index.html">&#8962; Dashboard</a>
+  <div class="nav-section">Animations</div>
+  <a class="nav-link" href="../animations/gsap.html">&#9889; GSAP</a>
+  <a class="nav-link" href="../animations/framer-motion.html">&#127902; Framer Motion</a>
+  <a class="nav-link" href="../animations/lenis.html">~ Lenis</a>
+  <div class="nav-section">Components</div>
+  <a class="nav-link active" href="shadcn.html">&#9672; shadcn/ui</a>
+  <a class="nav-link" href="21st-dev.html">&#10022; 21st.dev</a>
+  <a class="nav-link" href="magicui.html">&#10022; Magic UI</a>
+  <a class="nav-link" href="aceternity.html">&#9670; Aceternity UI</a>
+  <div class="nav-section">3D</div>
+  <a class="nav-link" href="../3d/r3f.html">&#9677; React Three Fiber</a>
+  <div class="nav-section">Reference Sites</div>
+  <a class="nav-link" href="../reference-sites/index.html">&#9678; Sites Index</a>
+  <a class="nav-link" href="../reference-sites/djcustomreno.html">&#8962; DJ Custom Reno</a>
+</nav>
+<main class="main">
+  <div class="page-header">
+    <div class="badge">Component Library</div>
+    <h1>shadcn/ui</h1>
+    <p>Not a component library — it's a collection of reusable components you copy into your project. Built on Radix UI primitives and styled with Tailwind CSS. You own the code, customize everything, no version lock-in. The most popular React UI approach in 2024-2026 with 80k+ GitHub stars.</p>
+    <div class="ext-links">
+      <a href="https://ui.shadcn.com/" target="_blank">Official Site</a>
+      <a href="https://ui.shadcn.com/docs" target="_blank">Docs</a>
+      <a href="https://github.com/shadcn-ui/ui" target="_blank">GitHub</a>
+      <a href="https://ui.shadcn.com/themes" target="_blank">Themes</a>
+    </div>
+  </div>
+
+  <div class="toc">
+    <h3>Contents</h3>
+    <ul>
+      <li><a href="#install">Project Setup</a></li>
+      <li><a href="#add">Adding Components (CLI)</a></li>
+      <li><a href="#components">Full Component Catalog</a></li>
+      <li><a href="#theming">Theming &amp; CSS Variables</a></li>
+      <li><a href="#cn">cn() Utility + CVA</a></li>
+      <li><a href="#patterns">Usage Patterns</a></li>
+      <li><a href="#github-notes">GitHub README Notes</a></li>
+    </ul>
+  </div>
+
+  <div class="section" id="install">
+    <h2>Project Setup</h2>
+    <p class="sub">Requires React + Tailwind CSS. Works with Next.js, Vite, Remix, Astro, Laravel.</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">bash — new Next.js project from scratch</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-bash">npx create-next-app@latest my-app --typescript --tailwind --eslint --app --src-dir
+cd my-app
+npx shadcn@latest init</code></pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">bash — init prompts</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-bash"># Which style? > Default / New York
+# Which base color? > Zinc / Slate / Stone / Gray / Neutral
+# Use CSS variables? > Yes
+
+# Files created:
+# components/ui/         — components go here
+# lib/utils.ts           — cn() utility
+# components.json        — shadcn config
+# app/globals.css        — CSS variables added</code></pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">json — components.json</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-json">{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "tailwind.config.ts",
+    "css": "app/globals.css",
+    "baseColor": "zinc",
+    "cssVariables": true
+  },
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils",
+    "ui": "@/components/ui"
+  }
+}</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="add">
+    <h2>Adding Components (CLI)</h2>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-bash"># Add individual components
+npx shadcn@latest add button
+npx shadcn@latest add dialog
+npx shadcn@latest add form input label
+
+# Add multiple at once
+npx shadcn@latest add button card dialog form input label select textarea
+
+# Force overwrite (re-copies from registry, overwrites local edits)
+npx shadcn@latest add button --overwrite
+
+# See what changed vs. upstream
+npx shadcn@latest diff button
+
+# Add from third-party registry (Magic UI, 21st.dev)
+npx shadcn@latest add "https://magicui.design/r/marquee"
+npx shadcn@latest add "https://21st.dev/r/shadcn/animated-button"</code></pre>
+    </div>
+    <div class="info-box">
+      <strong>Key insight:</strong> Each add command copies source into <code>components/ui/</code>. Edit these files directly — there's no upstream to break. Third-party registries follow the same spec.
+    </div>
+  </div>
+
+  <div class="section" id="components">
+    <h2>Full Component Catalog</h2>
+    <div class="comp-grid">
+      <div class="comp-tag"><strong>Accordion</strong>Collapsible sections</div>
+      <div class="comp-tag"><strong>Alert</strong>Status messages</div>
+      <div class="comp-tag"><strong>AlertDialog</strong>Confirmation modal</div>
+      <div class="comp-tag"><strong>AspectRatio</strong>Maintain ratio</div>
+      <div class="comp-tag"><strong>Avatar</strong>User + fallback</div>
+      <div class="comp-tag"><strong>Badge</strong>Status labels</div>
+      <div class="comp-tag"><strong>Breadcrumb</strong>Nav path</div>
+      <div class="comp-tag"><strong>Button</strong>All variants</div>
+      <div class="comp-tag"><strong>Calendar</strong>Date picker UI</div>
+      <div class="comp-tag"><strong>Card</strong>Content container</div>
+      <div class="comp-tag"><strong>Carousel</strong>Embla-based</div>
+      <div class="comp-tag"><strong>Chart</strong>Recharts wrapper</div>
+      <div class="comp-tag"><strong>Checkbox</strong>Accessible check</div>
+      <div class="comp-tag"><strong>Collapsible</strong>Show/hide</div>
+      <div class="comp-tag"><strong>Command</strong>⌘K palette</div>
+      <div class="comp-tag"><strong>ContextMenu</strong>Right-click</div>
+      <div class="comp-tag"><strong>DataTable</strong>TanStack Table</div>
+      <div class="comp-tag"><strong>DatePicker</strong>Calendar+Input</div>
+      <div class="comp-tag"><strong>Dialog</strong>Modal dialog</div>
+      <div class="comp-tag"><strong>Drawer</strong>Bottom sheet</div>
+      <div class="comp-tag"><strong>DropdownMenu</strong>Dropdown</div>
+      <div class="comp-tag"><strong>Form</strong>RHF wrapper</div>
+      <div class="comp-tag"><strong>HoverCard</strong>Preview hover</div>
+      <div class="comp-tag"><strong>Input</strong>Text input</div>
+      <div class="comp-tag"><strong>InputOTP</strong>OTP code input</div>
+      <div class="comp-tag"><strong>Label</strong>Accessible label</div>
+      <div class="comp-tag"><strong>Menubar</strong>App menu</div>
+      <div class="comp-tag"><strong>NavigationMenu</strong>Nav+submenu</div>
+      <div class="comp-tag"><strong>Pagination</strong>Page controls</div>
+      <div class="comp-tag"><strong>Popover</strong>Floating content</div>
+      <div class="comp-tag"><strong>Progress</strong>Progress bar</div>
+      <div class="comp-tag"><strong>RadioGroup</strong>Radio buttons</div>
+      <div class="comp-tag"><strong>ResizablePanels</strong>Drag resize</div>
+      <div class="comp-tag"><strong>ScrollArea</strong>Custom scrollbar</div>
+      <div class="comp-tag"><strong>Select</strong>Custom select</div>
+      <div class="comp-tag"><strong>Separator</strong>Divider</div>
+      <div class="comp-tag"><strong>Sheet</strong>Side panel</div>
+      <div class="comp-tag"><strong>Sidebar</strong>App sidebar</div>
+      <div class="comp-tag"><strong>Skeleton</strong>Loading state</div>
+      <div class="comp-tag"><strong>Slider</strong>Range input</div>
+      <div class="comp-tag"><strong>Sonner</strong>Toast (Sonner)</div>
+      <div class="comp-tag"><strong>Switch</strong>Toggle switch</div>
+      <div class="comp-tag"><strong>Table</strong>Data table</div>
+      <div class="comp-tag"><strong>Tabs</strong>Tab panels</div>
+      <div class="comp-tag"><strong>Textarea</strong>Multi-line</div>
+      <div class="comp-tag"><strong>Toggle</strong>Toggle button</div>
+      <div class="comp-tag"><strong>ToggleGroup</strong>Toggle set</div>
+      <div class="comp-tag"><strong>Tooltip</strong>Hover tooltip</div>
+    </div>
+  </div>
+
+  <div class="section" id="theming">
+    <h2>Theming &amp; CSS Variables</h2>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">css — globals.css (key variables)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-css">@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;        /* main brand color */
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --border: 240 5.9% 90%;
+    --ring: 240 10% 3.9%;
+    --radius: 0.5rem;
+  }
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --border: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+  }
+}
+
+/* Custom amber brand — override primary */
+:root {
+  --primary: 38 92% 50%;           /* amber-500 hsl */
+  --primary-foreground: 0 0% 2%;   /* near-black on amber */
+  --radius: 0.375rem;              /* slightly less rounded */
+}</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="cn">
+    <h2>cn() Utility + CVA</h2>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">typescript — lib/utils.ts</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-typescript">import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+// Usage: handles conflicts correctly
+cn('p-4', 'p-8')                    // → 'p-8'
+cn('text-red-500', 'text-blue-500') // → 'text-blue-500'
+cn('flex', isRow && 'flex-row', !isRow && 'flex-col')
+
+// cva() for component variants
+import { cva, type VariantProps } from 'class-variance-authority';
+
+const buttonVariants = cva(
+  'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50',
+  {
+    variants: {
+      variant: {
+        default:     'bg-primary text-primary-foreground hover:bg-primary/90',
+        destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+        outline:     'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+        secondary:   'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+        ghost:       'hover:bg-accent hover:text-accent-foreground',
+        link:        'text-primary underline-offset-4 hover:underline',
+      },
+      size: {
+        default: 'h-10 px-4 py-2',
+        sm:      'h-9 rounded-md px-3',
+        lg:      'h-11 rounded-md px-8',
+        icon:    'h-10 w-10',
+      },
+    },
+    defaultVariants: { variant: 'default', size: 'default' },
+  }
+);
+
+type ButtonProps = React.ButtonHTMLAttributes&lt;HTMLButtonElement&gt; &amp; VariantProps&lt;typeof buttonVariants&gt;;
+
+export function Button({ className, variant, size, ...props }: ButtonProps) {
+  return &lt;button className={cn(buttonVariants({ variant, size, className }))} {...props} /&gt;;
+}</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="patterns">
+    <h2>Usage Patterns</h2>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">jsx — Button all variants</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-jsx">import { Button } from '@/components/ui/button';
+import { Loader2, Plus } from 'lucide-react';
+
+&lt;Button&gt;Default&lt;/Button&gt;
+&lt;Button variant="outline"&gt;Outline&lt;/Button&gt;
+&lt;Button variant="ghost"&gt;Ghost&lt;/Button&gt;
+&lt;Button variant="destructive"&gt;Delete&lt;/Button&gt;
+&lt;Button variant="secondary"&gt;Secondary&lt;/Button&gt;
+&lt;Button variant="link"&gt;Link style&lt;/Button&gt;
+&lt;Button size="sm"&gt;Small&lt;/Button&gt;
+&lt;Button size="lg"&gt;Large&lt;/Button&gt;
+&lt;Button size="icon"&gt;&lt;Plus className="h-4 w-4" /&gt;&lt;/Button&gt;
+&lt;Button disabled&gt;Disabled&lt;/Button&gt;
+&lt;Button disabled&gt;&lt;Loader2 className="mr-2 h-4 w-4 animate-spin" /&gt; Loading...&lt;/Button&gt;
+&lt;Button asChild&gt;&lt;a href="/about"&gt;As Anchor&lt;/a&gt;&lt;/Button&gt;</code></pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">jsx — Dialog modal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-jsx">import {
+  Dialog, DialogContent, DialogDescription,
+  DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose
+} from '@/components/ui/dialog';
+
+&lt;Dialog&gt;
+  &lt;DialogTrigger asChild&gt;&lt;Button&gt;Open&lt;/Button&gt;&lt;/DialogTrigger&gt;
+  &lt;DialogContent className="sm:max-w-md"&gt;
+    &lt;DialogHeader&gt;
+      &lt;DialogTitle&gt;Title&lt;/DialogTitle&gt;
+      &lt;DialogDescription&gt;Subtitle / description text here.&lt;/DialogDescription&gt;
+    &lt;/DialogHeader&gt;
+    &lt;div className="py-4"&gt;{/* content */}&lt;/div&gt;
+    &lt;DialogFooter&gt;
+      &lt;DialogClose asChild&gt;&lt;Button variant="outline"&gt;Cancel&lt;/Button&gt;&lt;/DialogClose&gt;
+      &lt;Button&gt;Confirm&lt;/Button&gt;
+    &lt;/DialogFooter&gt;
+  &lt;/DialogContent&gt;
+&lt;/Dialog&gt;</code></pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">jsx — Form with RHF + Zod</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-jsx">'use client';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+
+const schema = z.object({
+  name: z.string().min(2, 'Min 2 characters'),
+  email: z.string().email('Invalid email'),
+});
+
+export function ContactForm() {
+  const form = useForm({ resolver: zodResolver(schema), defaultValues: { name: '', email: '' } });
+
+  return (
+    &lt;Form {...form}&gt;
+      &lt;form onSubmit={form.handleSubmit(console.log)} className="space-y-4"&gt;
+        &lt;FormField control={form.control} name="name" render={({ field }) =&gt; (
+          &lt;FormItem&gt;
+            &lt;FormLabel&gt;Name&lt;/FormLabel&gt;
+            &lt;FormControl&gt;&lt;Input placeholder="Your name" {...field} /&gt;&lt;/FormControl&gt;
+            &lt;FormMessage /&gt;
+          &lt;/FormItem&gt;
+        )} /&gt;
+        &lt;Button type="submit"&gt;Submit&lt;/Button&gt;
+      &lt;/form&gt;
+    &lt;/Form&gt;
+  );
+}</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="github-notes">
+    <h2>GitHub README Notes</h2>
+    <div class="info-box">
+      <strong>Philosophy:</strong> "This is NOT a component library. It's a collection of reusable components that you can copy and paste into your apps." — No npm install, no versioning, full ownership.<br/><br/>
+      <strong>Radix UI foundation:</strong> All interactive components (Dialog, Select, Dropdown, Popover, etc.) are built on Radix UI primitives with full WAI-ARIA accessibility. shadcn only adds styles.<br/><br/>
+      <strong>Two built-in styles:</strong> <strong>default</strong> — rounder, softer; <strong>new-york</strong> — sharper, denser. Set at init time in components.json.<br/><br/>
+      <strong>Registry protocol:</strong> The same registry spec powers Magic UI, 21st.dev, and other third-party registries. Install any of them with: <code>npx shadcn@latest add [registry-url]</code><br/><br/>
+      <strong>Package:</strong> The CLI is <code>shadcn</code> (not <code>shadcn-ui</code> — the old package). Always use <code>npx shadcn@latest</code>.
+    </div>
+  </div>
+</main>
+</div>
+<script>
+hljs.highlightAll();
+function copyCode(btn){
+  const code = btn.closest('.code-block').querySelector('code').textContent;
+  navigator.clipboard.writeText(code).then(()=>{
+    btn.textContent='Copied!';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000);
+  });
+}
+</script>
+</body>
+</html>

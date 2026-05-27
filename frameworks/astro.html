@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Astro — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#e5e5e5;display:flex;min-height:100vh}
+.sidebar{width:240px;background:#111;border-right:1px solid #222;padding:24px 0;position:fixed;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid #222;margin-bottom:16px}
+.sidebar-logo a{text-decoration:none;color:#f59e0b;font-weight:700;font-size:16px}
+.sidebar-logo span{display:block;color:#666;font-size:11px;margin-top:2px}
+.nav-section{padding:0 12px;margin-bottom:8px}
+.nav-label{font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:1px;padding:0 8px;margin-bottom:6px}
+.nav-item{display:block;padding:7px 8px;border-radius:6px;color:#999;text-decoration:none;font-size:13px;transition:all 0.15s}
+.nav-item:hover,.nav-item.active{background:#1a1a1a;color:#f59e0b}
+.main{margin-left:240px;flex:1;padding:40px;max-width:calc(100vw - 240px)}
+.search-bar{width:100%;background:#111;border:1px solid #222;border-radius:8px;padding:12px 16px;color:#e5e5e5;font-size:14px;font-family:'Inter',sans-serif;margin-bottom:32px;outline:none;transition:border-color 0.2s}
+.search-bar:focus{border-color:#f59e0b}
+h1{font-size:28px;font-weight:700;margin-bottom:8px}
+.subtitle{color:#666;margin-bottom:32px;font-size:15px}
+h2{font-size:20px;font-weight:600;margin:40px 0 16px;color:#f59e0b;border-bottom:1px solid #222;padding-bottom:10px}
+.recipe{background:#111;border:1px solid #222;border-radius:12px;padding:20px;margin-bottom:16px}
+.recipe-title{font-size:14px;font-weight:600;margin-bottom:4px}
+.recipe-desc{font-size:13px;color:#666;margin-bottom:14px}
+.code-wrap{position:relative}
+pre{border-radius:8px;overflow-x:auto;font-size:13px;line-height:1.6}
+.copy-btn{position:absolute;top:8px;right:8px;background:#222;border:1px solid #333;color:#999;padding:4px 10px;border-radius:5px;font-size:11px;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s;z-index:10}
+.copy-btn:hover{background:#333;color:#f59e0b}
+.copy-btn.copied{background:#f59e0b;color:#000;border-color:#f59e0b}
+.tip{background:#1a1a1a;border-left:3px solid #f59e0b;padding:10px 14px;border-radius:0 6px 6px 0;font-size:13px;color:#999;margin:12px 0}
+code{background:#1a1a1a;padding:1px 5px;border-radius:3px;font-size:12px;font-family:'Courier New',monospace;color:#a3e635}
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-bottom:24px}
+.badge{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:12px}
+.badge-title{font-size:13px;font-weight:600;color:#e5e5e5;margin-bottom:3px}
+.badge-desc{font-size:11px;color:#555}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><a href="../index.html">Design KB</a><span>Knowledge Base</span></div>
+  <div class="nav-section"><div class="nav-label">Frameworks</div>
+    <a class="nav-item" href="index.html">Overview</a>
+    <a class="nav-item" href="nextjs.html">Next.js</a>
+    <a class="nav-item active" href="astro.html">Astro</a>
+  </div>
+  <div class="nav-section"><div class="nav-label">Components</div>
+    <a class="nav-item" href="../components/shadcn.html">shadcn/ui</a>
+    <a class="nav-item" href="../components/magicui.html">Magic UI</a>
+    <a class="nav-item" href="../components/aceternity.html">Aceternity UI</a>
+  </div>
+  <div class="nav-section"><div class="nav-label">Animations</div>
+    <a class="nav-item" href="../animations/gsap.html">GSAP</a>
+    <a class="nav-item" href="../animations/framer-motion.html">Framer Motion</a>
+  </div>
+</nav>
+<main class="main">
+  <input class="search-bar" type="text" placeholder="Search Astro patterns..." id="search">
+  <h1>Astro Reference</h1>
+  <p class="subtitle">Islands architecture, content collections, and static site patterns for Astro 4/5</p>
+
+  <h2>When to Use Astro vs Next.js</h2>
+  <div class="badge-grid" data-searchable>
+    <div class="badge"><div class="badge-title">Use Astro for</div><div class="badge-desc">Marketing sites, blogs, portfolios, docs — mostly static content</div></div>
+    <div class="badge"><div class="badge-title">Use Next.js for</div><div class="badge-desc">Apps with auth, user data, frequent server state, full-stack APIs</div></div>
+    <div class="badge"><div class="badge-title">Astro strength</div><div class="badge-desc">Zero JS by default — ships HTML/CSS only unless you opt in</div></div>
+    <div class="badge"><div class="badge-title">Astro islands</div><div class="badge-desc">Hydrate only the components that need interactivity</div></div>
+  </div>
+
+  <h2>Bootstrap</h2>
+  <div class="recipe" data-searchable>
+    <div class="recipe-title">Create + configure Astro project</div>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code class="language-bash">npm create astro@latest my-site
+# Choose: Empty / With blog / Use TypeScript → Strict
+
+cd my-site
+
+# Add React islands (for interactive components)
+npx astro add react
+
+# Add Tailwind
+npx astro add tailwind
+
+# Add MDX (for content with components)
+npx astro add mdx
+
+# Add sitemap (automatic)
+npx astro add sitemap</code></pre>
+    </div>
+  </div>
+
+  <h2>Project Structure</h2>
+  <div class="recipe" data-searchable>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code class="language-text">src/
+├── pages/
+│   ├── index.astro         ← /
+│   ├── about.astro         ← /about
+│   ├── blog/
+│   │   ├── index.astro     ← /blog
+│   │   └── [slug].astro    ← /blog/my-post
+│   └── api/
+│       └── contact.ts      ← POST /api/contact (server endpoint)
+├── layouts/
+│   └── BaseLayout.astro    ← shared HTML wrapper
+├── components/
+│   ├── Header.astro        ← Astro component (0 JS)
+│   └── Counter.tsx         ← React island (interactive)
+├── content/
+│   ├── config.ts           ← Collection schemas (Zod)
+│   └── blog/               ← .md / .mdx files
+│       └── first-post.md
+└── styles/
+    └── global.css</code></pre>
+    </div>
+  </div>
+
+  <h2>Astro Component Basics</h2>
+  <div class="recipe" data-searchable>
+    <div class="recipe-title">Component anatomy (.astro file)</div>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code class="language-astro">---
+// Frontmatter = server-side JS (runs at build time)
+import Header from '../components/Header.astro';
+import { getCollection } from 'astro:content';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Default description' } = Astro.props;
+const posts = await getCollection('blog');
+---
+
+&lt;!-- Template = HTML with expressions --&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;title&gt;{title}&lt;/title&gt;
+    &lt;meta name="description" content={description} /&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;Header /&gt;
+    &lt;main&gt;
+      &lt;slot /&gt; &lt;!-- children go here --&gt;
+    &lt;/main&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+
+&lt;style&gt;
+  /* Scoped CSS — only applies to this component */
+  main { padding: 2rem; }
+&lt;/style&gt;</code></pre>
+    </div>
+  </div>
+
+  <h2>Islands Architecture</h2>
+  <div class="recipe" data-searchable>
+    <div class="recipe-title">React component with client directive</div>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code class="language-astro">---
+// In an .astro file
+import Counter from '../components/Counter.tsx';
+import HeavyChart from '../components/HeavyChart.tsx';
+---
+
+&lt;!-- client:load — hydrate immediately on page load --&gt;
+&lt;Counter client:load /&gt;
+
+&lt;!-- client:idle — hydrate when browser is idle --&gt;
+&lt;Counter client:idle /&gt;
+
+&lt;!-- client:visible — hydrate when scrolled into view --&gt;
+&lt;HeavyChart client:visible /&gt;
+
+&lt;!-- client:only="react" — skip SSR entirely, render client-side only --&gt;
+&lt;ThreeCanvas client:only="react" /&gt;
+
+&lt;!-- No directive = 0 JavaScript shipped --&gt;
+&lt;StaticCard /&gt;</code></pre>
+    </div>
+  </div>
+
+  <div class="tip">Use <code>client:only="react"</code> for Three.js / R3F components — they need <code>window</code> and WebGL which aren't available at build time.</div>
+
+  <h2>Content Collections</h2>
+  <div class="recipe" data-searchable>
+    <div class="recipe-title">Define schema + query posts</div>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code class="language-typescript">// src/content/config.ts
+import { defineCollection, z } from 'astro:content';
+
+const blog = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    date: z.date(),
+    description: z.string(),
+    image: z.string().optional(),
+    tags: z.array(z.string()).default([])
+  })
+});
+
+export const collections = { blog };
+
+// src/pages/blog/index.astro
+---
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog');
+const sorted = posts.sort((a, b) =>
+  b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+{sorted.map(post => (
+  &lt;article&gt;
+    &lt;a href={`/blog/${post.slug}`}&gt;{post.data.title}&lt;/a&gt;
+    &lt;p&gt;{post.data.description}&lt;/p&gt;
+  &lt;/article&gt;
+))}</code></pre>
+    </div>
+  </div>
+
+  <div class="recipe" data-searchable>
+    <div class="recipe-title">Dynamic route for blog posts</div>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code class="language-astro">---
+// src/pages/blog/[slug].astro
+import { getCollection, getEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post }
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+---
+
+&lt;article&gt;
+  &lt;h1&gt;{post.data.title}&lt;/h1&gt;
+  &lt;Content /&gt;
+&lt;/article&gt;</code></pre>
+    </div>
+  </div>
+
+  <h2>Metadata & SEO</h2>
+  <div class="recipe" data-searchable>
+    <div class="recipe-title">BaseLayout with SEO props</div>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code class="language-astro">---
+// src/layouts/BaseLayout.astro
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  canonical?: string;
+}
+
+const {
+  title,
+  description,
+  image = '/og-default.jpg',
+  canonical = Astro.url.href
+} = Astro.props;
+
+const siteUrl = 'https://mysite.com';
+---
+
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8" /&gt;
+  &lt;meta name="viewport" content="width=device-width" /&gt;
+  &lt;title&gt;{title}&lt;/title&gt;
+  &lt;meta name="description" content={description} /&gt;
+  &lt;link rel="canonical" href={canonical} /&gt;
+
+  &lt;!-- Open Graph --&gt;
+  &lt;meta property="og:title" content={title} /&gt;
+  &lt;meta property="og:description" content={description} /&gt;
+  &lt;meta property="og:image" content={`${siteUrl}${image}`} /&gt;
+  &lt;meta property="og:type" content="website" /&gt;
+
+  &lt;!-- Twitter --&gt;
+  &lt;meta name="twitter:card" content="summary_large_image" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;slot /&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    </div>
+  </div>
+
+  <h2>View Transitions (MPA animations)</h2>
+  <div class="recipe" data-searchable>
+    <div class="recipe-title">Built-in page transitions</div>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code class="language-astro">---
+// src/layouts/BaseLayout.astro
+import { ViewTransitions } from 'astro:transitions';
+---
+
+&lt;html&gt;
+&lt;head&gt;
+  &lt;ViewTransitions /&gt; &lt;!-- enables SPA-like transitions --&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;slot /&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+&lt;!-- Animate specific elements with transition:name --&gt;
+&lt;img
+  src={post.data.image}
+  transition:name={`hero-${post.slug}`}
+  transition:animate="slide"
+/&gt;
+
+&lt;!-- Custom transition animations (CSS) --&gt;
+&lt;style&gt;
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+  }
+  @keyframes fade-out {
+    to { opacity: 0; transform: translateY(-10px); }
+  }
+  ::view-transition-old(root) { animation: fade-out 0.2s ease; }
+  ::view-transition-new(root) { animation: fade-in 0.2s ease; }
+&lt;/style&gt;</code></pre>
+    </div>
+  </div>
+
+  <div class="tip">Astro View Transitions work across the full MPA — no React needed. They're based on the browser's native View Transitions API with a polyfill for older browsers.</div>
+
+  <h2>Server Endpoints (API Routes)</h2>
+  <div class="recipe" data-searchable>
+    <div class="recipe-title">Contact form API endpoint</div>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code class="language-typescript">// src/pages/api/contact.ts
+import type { APIRoute } from 'astro';
+
+export const POST: APIRoute = async ({ request }) => {
+  const data = await request.formData();
+  const name = data.get('name');
+  const email = data.get('email');
+  const message = data.get('message');
+
+  if (!name || !email || !message) {
+    return new Response(JSON.stringify({ error: 'Missing fields' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+
+  // Send email, save to DB, etc.
+  // await sendEmail({ name, email, message });
+
+  return new Response(JSON.stringify({ success: true }), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' }
+  });
+};
+
+// astro.config.mjs — must enable SSR for server endpoints
+// output: 'hybrid' (static by default, server where needed)
+// or output: 'server' (all server-rendered)</code></pre>
+    </div>
+  </div>
+
+  <h2>Astro Config</h2>
+  <div class="recipe" data-searchable>
+    <div class="recipe-title">astro.config.mjs — common setup</div>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code class="language-javascript">// astro.config.mjs
+import { defineConfig } from 'astro/config';
+import react from '@astrojs/react';
+import tailwind from '@astrojs/tailwind';
+import sitemap from '@astrojs/sitemap';
+import mdx from '@astrojs/mdx';
+
+export default defineConfig({
+  site: 'https://mysite.com',   // required for sitemap + canonical URLs
+  output: 'hybrid',             // static by default, opt-in to SSR per page
+  integrations: [
+    react(),
+    tailwind({ applyBaseStyles: false }),
+    sitemap(),
+    mdx()
+  ],
+  image: {
+    // Allow external image domains
+    domains: ['images.unsplash.com']
+  }
+});</code></pre>
+    </div>
+  </div>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+hljs.highlightAll();
+function copyCode(btn) {
+  const code = btn.nextElementSibling.querySelector('code').innerText;
+  navigator.clipboard.writeText(code);
+  btn.textContent = 'Copied!';
+  btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+}
+document.getElementById('search').addEventListener('input', function() {
+  const q = this.value.toLowerCase();
+  document.querySelectorAll('[data-searchable]').forEach(el => {
+    el.style.display = el.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+});
+</script>
+</body>
+</html>

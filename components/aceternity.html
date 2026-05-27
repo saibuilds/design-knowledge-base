@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Aceternity UI — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0a;--card:#111111;--border:#1f1f1f;--accent:#f59e0b;--text:#e5e5e5;--muted:#737373;--green:#22c55e}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif}
+a{color:inherit;text-decoration:none}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:240px;background:var(--card);border-right:1px solid var(--border);padding:24px 0;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.sidebar-logo a{font-size:13px;font-weight:600;color:var(--accent);letter-spacing:.05em;text-transform:uppercase}
+.sidebar-logo p{font-size:11px;color:var(--muted);margin-top:4px}
+.nav-section{padding:8px 20px;font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:8px}
+.nav-link{display:flex;align-items:center;gap:8px;padding:8px 20px;font-size:13px;color:var(--muted);transition:.15s;border-left:2px solid transparent}
+.nav-link:hover,.nav-link.active{color:var(--text);background:rgba(245,158,11,.06);border-left-color:var(--accent)}
+.main{margin-left:240px;flex:1;padding:40px;max-width:900px}
+.page-header{margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.badge{display:inline-block;font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(245,158,11,.15);color:var(--accent);border:1px solid rgba(245,158,11,.3);margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em}
+.page-header h1{font-size:28px;font-weight:700}
+.page-header p{color:var(--muted);font-size:14px;margin-top:8px;line-height:1.7;max-width:620px}
+.ext-links{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+.ext-links a{font-size:12px;color:var(--accent);border:1px solid rgba(245,158,11,.3);padding:5px 12px;border-radius:6px;transition:.15s}
+.ext-links a:hover{background:rgba(245,158,11,.1)}
+.section{margin-bottom:48px}
+.section h2{font-size:18px;font-weight:600;margin-bottom:4px;padding-top:8px}
+.sub{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6}
+.code-block{position:relative;margin-bottom:20px;border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+.code-header{display:flex;justify-content:space-between;align-items:center;padding:8px 16px;background:#0d0d0d;border-bottom:1px solid var(--border)}
+.code-lang{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase}
+.copy-btn{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);color:var(--accent);font-size:11px;padding:4px 10px;border-radius:5px;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s}
+.copy-btn:hover{background:rgba(245,158,11,.2)}
+.copy-btn.copied{color:var(--green);border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.1)}
+.code-block pre{margin:0!important;border-radius:0!important}
+.code-block pre code{font-size:13px!important;line-height:1.6!important}
+.info-box{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:16px;margin-bottom:20px;font-size:13px;line-height:1.7}
+.info-box strong{color:var(--accent)}
+.comp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-bottom:24px}
+.comp-tag{background:var(--card);border:1px solid var(--border);border-radius:7px;padding:10px 12px;font-size:12px;color:var(--muted)}
+.comp-tag strong{display:block;color:var(--text);font-size:13px;margin-bottom:2px}
+@media(max-width:768px){.sidebar{display:none}.main{margin-left:0}}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <div class="sidebar-logo"><a href="../index.html">Design KB</a><p>Web Design Knowledge Base</p></div>
+  <div class="nav-section">Hub</div>
+  <a class="nav-link" href="../index.html">&#8962; Dashboard</a>
+  <div class="nav-section">Animations</div>
+  <a class="nav-link" href="../animations/gsap.html">&#9889; GSAP</a>
+  <a class="nav-link" href="../animations/framer-motion.html">&#127902; Framer Motion</a>
+  <a class="nav-link" href="../animations/lenis.html">~ Lenis</a>
+  <div class="nav-section">Components</div>
+  <a class="nav-link" href="shadcn.html">&#9672; shadcn/ui</a>
+  <a class="nav-link" href="21st-dev.html">&#10022; 21st.dev</a>
+  <a class="nav-link" href="magicui.html">&#10022; Magic UI</a>
+  <a class="nav-link active" href="aceternity.html">&#9670; Aceternity UI</a>
+  <div class="nav-section">3D</div>
+  <a class="nav-link" href="../3d/r3f.html">&#9677; React Three Fiber</a>
+  <div class="nav-section">Reference Sites</div>
+  <a class="nav-link" href="../reference-sites/index.html">&#9678; Sites Index</a>
+  <a class="nav-link" href="../reference-sites/djcustomreno.html">&#8962; DJ Custom Reno</a>
+</nav>
+<main class="main">
+  <div class="page-header">
+    <div class="badge">Animated Component Library</div>
+    <h1>Aceternity UI</h1>
+    <p>Trendy, visually rich animated components built with Framer Motion and Tailwind CSS. Made by Manu Arora. Focused on wow-factor effects — spotlight, glowing cards, wavy backgrounds, 3D card effects. Copy-paste like shadcn.</p>
+    <div class="ext-links">
+      <a href="https://ui.aceternity.com/" target="_blank">Official Site</a>
+      <a href="https://ui.aceternity.com/components" target="_blank">Components</a>
+      <a href="https://github.com/aceternity/ui" target="_blank">GitHub</a>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Component Catalog</h2>
+    <div class="comp-grid">
+      <div class="comp-tag"><strong>Spotlight</strong>Mouse-follow light</div>
+      <div class="comp-tag"><strong>BackgroundBeams</strong>Beam effect BG</div>
+      <div class="comp-tag"><strong>WavyBackground</strong>Wavy canvas BG</div>
+      <div class="comp-tag"><strong>AuroraBackground</strong>Aurora borealis</div>
+      <div class="comp-tag"><strong>GlobeDemo</strong>Interactive globe</div>
+      <div class="comp-tag"><strong>BackgroundBoxes</strong>Colored grid BG</div>
+      <div class="comp-tag"><strong>Meteors</strong>Shooting stars</div>
+      <div class="comp-tag"><strong>StarBackground</strong>Twinkling stars</div>
+      <div class="comp-tag"><strong>CardHoverEffect</strong>3D hover tilt</div>
+      <div class="comp-tag"><strong>CardSpotlight</strong>Glow on hover</div>
+      <div class="comp-tag"><strong>3D Card</strong>Perspective tilt</div>
+      <div class="comp-tag"><strong>BentoGrid</strong>Feature grid</div>
+      <div class="comp-tag"><strong>InfiniteMoving Cards</strong>Ticker cards</div>
+      <div class="comp-tag"><strong>AnimatedTestimonials</strong>Auto-advance</div>
+      <div class="comp-tag"><strong>Compare</strong>Before/after</div>
+      <div class="comp-tag"><strong>Glare Card</strong>Glass glare</div>
+      <div class="comp-tag"><strong>PlaceholderVanish</strong>Input animation</div>
+      <div class="comp-tag"><strong>TextGenerateEffect</strong>Word-by-word</div>
+      <div class="comp-tag"><strong>TypewriterEffect</strong>Typewriter</div>
+      <div class="comp-tag"><strong>FlipWords</strong>Flip word cycle</div>
+      <div class="comp-tag"><strong>StickyScroll</strong>Sticky timeline</div>
+      <div class="comp-tag"><strong>TracingBeam</strong>Scroll tracer</div>
+      <div class="comp-tag"><strong>Timeline</strong>Vertical timeline</div>
+      <div class="comp-tag"><strong>HeroParallax</strong>Parallax products</div>
+      <div class="comp-tag"><strong>ContainerScroll</strong>Scroll container</div>
+      <div class="comp-tag"><strong>GoogleGeminiEffect</strong>Beam paths</div>
+      <div class="comp-tag"><strong>Vortex</strong>Vortex canvas</div>
+      <div class="comp-tag"><strong>BackgroundGradient</strong>Glow border</div>
+      <div class="comp-tag"><strong>MovingBorderBtn</strong>Animated border</div>
+      <div class="comp-tag"><strong>LampEffect</strong>Lamp light</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Spotlight</h2>
+    <p class="sub">Mouse-following spotlight effect — the #1 most-used Aceternity component for hero sections.</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">jsx</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-jsx">import { Spotlight } from '@/components/ui/spotlight';
+
+export function HeroSection() {
+  return (
+    &lt;div className="relative min-h-screen overflow-hidden bg-black/[0.96] antialiased"&gt;
+      &lt;Spotlight
+        className="-top-40 left-0 md:-top-20 md:left-60"
+        fill="white"  // spotlight color
+      /&gt;
+      &lt;div className="relative z-10 flex flex-col items-center justify-center min-h-screen"&gt;
+        &lt;h1 className="text-6xl font-bold text-white"&gt;
+          Build something amazing
+        &lt;/h1&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Card Hover Effect</h2>
+    <p class="sub">Animated card grid with hover reveal — great for feature lists and portfolio grids.</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">jsx</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-jsx">import { HoverEffect } from '@/components/ui/card-hover-effect';
+
+const items = [
+  { title: 'Speed', description: 'Build 10x faster with our components.', link: '#' },
+  { title: 'Scale', description: 'From prototype to production effortlessly.', link: '#' },
+  { title: 'Security', description: 'Enterprise-grade security built in.', link: '#' },
+];
+
+export function Features() {
+  return &lt;HoverEffect items={items} className="max-w-4xl mx-auto" /&gt;;
+}</code></pre>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Background Effects</h2>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">jsx — wavy, aurora, beams, vortex</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-jsx">import { WavyBackground } from '@/components/ui/wavy-background';
+import { AuroraBackground } from '@/components/ui/aurora-background';
+import { BackgroundBeams } from '@/components/ui/background-beams';
+import { Vortex } from '@/components/ui/vortex';
+import { BackgroundGradient } from '@/components/ui/background-gradient';
+
+// Wavy canvas background
+&lt;WavyBackground className="max-w-4xl mx-auto pb-40" colors={['#38bdf8', '#818cf8', '#c084fc']}&gt;
+  &lt;h1 className="text-4xl font-bold text-white text-center"&gt;Hero Text&lt;/h1&gt;
+&lt;/WavyBackground&gt;
+
+// Aurora borealis
+&lt;AuroraBackground&gt;
+  &lt;div className="relative z-10"&gt;Content&lt;/div&gt;
+&lt;/AuroraBackground&gt;
+
+// Beam paths background
+&lt;div className="relative min-h-screen"&gt;
+  &lt;BackgroundBeams /&gt;
+  &lt;div className="relative z-10"&gt;Content&lt;/div&gt;
+&lt;/div&gt;
+
+// Vortex swirl
+&lt;Vortex backgroundColor="black" className="min-h-screen"&gt;
+  &lt;h1 className="text-white text-5xl font-bold"&gt;Into the vortex&lt;/h1&gt;
+&lt;/Vortex&gt;
+
+// Glowing border card
+&lt;BackgroundGradient className="rounded-[22px] p-4 bg-zinc-900"&gt;
+  &lt;p className="text-white"&gt;Glowing card content&lt;/p&gt;
+&lt;/BackgroundGradient&gt;</code></pre>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Scroll Effects</h2>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">jsx — sticky scroll, tracing beam, hero parallax</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-jsx">import { StickyScroll } from '@/components/ui/sticky-scroll-reveal';
+import { TracingBeam } from '@/components/ui/tracing-beam';
+import { HeroParallax } from '@/components/ui/hero-parallax';
+
+// Sticky scroll reveal — content on left, sticky image on right
+const content = [
+  {
+    title: 'Collaborative Editing',
+    description: 'Work together in real-time with your team.',
+    content: &lt;div className="bg-gradient-to-br from-cyan-500 to-emerald-500 h-full w-full" /&gt;,
+  },
+  {
+    title: 'Real-time Changes',
+    description: 'See changes as they happen.',
+    content: &lt;img src="/demo.png" alt="demo" /&gt;,
+  },
+];
+&lt;StickyScroll content={content} /&gt;
+
+// Tracing beam — animated line follows scroll
+&lt;TracingBeam className="px-6"&gt;
+  &lt;div className="max-w-2xl mx-auto"&gt;
+    {/* Long form content, blog post, etc. */}
+  &lt;/div&gt;
+&lt;/TracingBeam&gt;
+
+// Hero parallax — floating product cards on scroll
+const products = [
+  { title: 'Product 1', link: '#', thumbnail: '/img1.jpg' },
+  // ... 14 total recommended
+];
+&lt;HeroParallax products={products} /&gt;</code></pre>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Text Effects</h2>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">jsx</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-jsx">import { TextGenerateEffect } from '@/components/ui/text-generate-effect';
+import { TypewriterEffect } from '@/components/ui/typewriter-effect';
+import { FlipWords } from '@/components/ui/flip-words';
+
+// Word-by-word fade in
+const words = 'Build beautiful websites with ease.';
+&lt;TextGenerateEffect words={words} className="text-4xl font-bold" /&gt;
+
+// Typewriter with colored highlight
+const words2 = [
+  { text: 'Build' },
+  { text: 'awesome' },
+  { text: 'apps' },
+  { text: 'with', className: 'text-blue-500' },
+  { text: 'Aceternity.', className: 'text-blue-500' },
+];
+&lt;TypewriterEffect words={words2} className="text-4xl font-bold" /&gt;
+
+// Rotating/flipping words
+const flip = ['beautiful', 'modern', 'fast', 'reliable'];
+&lt;h1&gt;Build &lt;FlipWords words={flip} /&gt; websites&lt;/h1&gt;</code></pre>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Moving Border Button</h2>
+    <p class="sub">CTA button with animated gradient border — one of the most-copied Aceternity components.</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">jsx</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-jsx">import { MovingBorder } from '@/components/ui/moving-border';
+
+&lt;MovingBorder duration={3000} rx="30%" ry="30%"&gt;
+  &lt;button className="bg-black text-white px-8 py-3 font-semibold rounded-full"&gt;
+    Get Started
+  &lt;/button&gt;
+&lt;/MovingBorder&gt;
+
+// Or use the pre-built Button variant
+import { Button } from '@/components/ui/moving-border';
+&lt;Button
+  borderRadius="1.75rem"
+  className="bg-black text-white border-slate-800"
+&gt;
+  Border button
+&lt;/Button&gt;</code></pre>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Placeholder &amp; Vanish Input</h2>
+    <p class="sub">Input field that animates through placeholder suggestions and vanishes on submit.</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">jsx</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-jsx">import { PlaceholderAndVanishInput } from '@/components/ui/placeholder-and-vanish-input';
+
+const placeholders = [
+  'What is the meaning of life?',
+  'Who painted the Mona Lisa?',
+  'What is the speed of light?',
+];
+
+&lt;PlaceholderAndVanishInput
+  placeholders={placeholders}
+  onChange={e =&gt; console.log(e.target.value)}
+  onSubmit={e =&gt; { e.preventDefault(); console.log('submitted'); }}
+/&gt;</code></pre>
+    </div>
+  </div>
+</main>
+</div>
+<script>
+hljs.highlightAll();
+function copyCode(btn){
+  const code = btn.closest('.code-block').querySelector('code').textContent;
+  navigator.clipboard.writeText(code).then(()=>{
+    btn.textContent='Copied!';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000);
+  });
+}
+</script>
+</body>
+</html>

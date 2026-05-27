@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frameworks — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#e5e5e5;display:flex;min-height:100vh}
+.sidebar{width:240px;background:#111;border-right:1px solid #222;padding:24px 0;position:fixed;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid #222;margin-bottom:16px}
+.sidebar-logo a{text-decoration:none;color:#f59e0b;font-weight:700;font-size:16px}
+.sidebar-logo span{display:block;color:#666;font-size:11px;margin-top:2px}
+.nav-section{padding:0 12px;margin-bottom:8px}
+.nav-label{font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:1px;padding:0 8px;margin-bottom:6px}
+.nav-item{display:block;padding:7px 8px;border-radius:6px;color:#999;text-decoration:none;font-size:13px;transition:all 0.15s}
+.nav-item:hover,.nav-item.active{background:#1a1a1a;color:#f59e0b}
+.main{margin-left:240px;flex:1;padding:40px}
+h1{font-size:28px;font-weight:700;margin-bottom:8px}
+.subtitle{color:#666;margin-bottom:32px;font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.card{background:#111;border:1px solid #222;border-radius:12px;padding:24px;text-decoration:none;color:inherit;transition:all 0.2s;display:block}
+.card:hover{border-color:#f59e0b;transform:translateY(-2px)}
+.card-title{font-size:16px;font-weight:600;margin-bottom:6px;color:#e5e5e5}
+.card-desc{font-size:13px;color:#666;line-height:1.5}
+.card-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.tag{background:#1a1a1a;border:1px solid #2a2a2a;color:#888;font-size:11px;padding:2px 8px;border-radius:4px}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><a href="../index.html">Design KB</a><span>Knowledge Base</span></div>
+  <div class="nav-section"><div class="nav-label">Frameworks</div>
+    <a class="nav-item active" href="index.html">Overview</a>
+    <a class="nav-item" href="nextjs.html">Next.js</a>
+    <a class="nav-item" href="astro.html">Astro</a>
+  </div>
+  <div class="nav-section"><div class="nav-label">Components</div>
+    <a class="nav-item" href="../components/shadcn.html">shadcn/ui</a>
+    <a class="nav-item" href="../components/magicui.html">Magic UI</a>
+    <a class="nav-item" href="../components/aceternity.html">Aceternity UI</a>
+  </div>
+</nav>
+<main class="main">
+  <h1>Frameworks</h1>
+  <p class="subtitle">Next.js and Astro — when to use each, core patterns, and production setup</p>
+  <div class="grid">
+    <a class="card" href="nextjs.html">
+      <div class="card-title">Next.js 14/15</div>
+      <div class="card-desc">App Router, metadata API, font optimization, image optimization, and full-stack patterns with server components.</div>
+      <div class="card-tags"><span class="tag">App Router</span><span class="tag">SSR</span><span class="tag">TypeScript</span><span class="tag">Tailwind</span></div>
+    </a>
+    <a class="card" href="astro.html">
+      <div class="card-title">Astro 4/5</div>
+      <div class="card-desc">Islands architecture for content-heavy sites. Zero JS by default, React islands, content collections, view transitions.</div>
+      <div class="card-tags"><span class="tag">Islands</span><span class="tag">SSG</span><span class="tag">MDX</span><span class="tag">React</span></div>
+    </a>
+  </div>
+</main>
+</body>
+</html>

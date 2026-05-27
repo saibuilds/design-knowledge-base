@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>GSAP + ScrollTrigger — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0a;--card:#111111;--border:#1f1f1f;--accent:#f59e0b;--text:#e5e5e5;--muted:#737373;--green:#22c55e}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif}
+a{color:inherit;text-decoration:none}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:240px;background:var(--card);border-right:1px solid var(--border);padding:24px 0;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.sidebar-logo a{font-size:13px;font-weight:600;color:var(--accent);letter-spacing:.05em;text-transform:uppercase}
+.sidebar-logo p{font-size:11px;color:var(--muted);margin-top:4px}
+.nav-section{padding:8px 20px;font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:8px}
+.nav-link{display:flex;align-items:center;gap:8px;padding:8px 20px;font-size:13px;color:var(--muted);transition:.15s;border-left:2px solid transparent}
+.nav-link:hover,.nav-link.active{color:var(--text);background:rgba(245,158,11,.06);border-left-color:var(--accent)}
+.main{margin-left:240px;flex:1;padding:40px;max-width:900px}
+.page-header{margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.badge{display:inline-block;font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(245,158,11,.15);color:var(--accent);border:1px solid rgba(245,158,11,.3);margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em}
+.page-header h1{font-size:28px;font-weight:700}
+.page-header p{color:var(--muted);font-size:14px;margin-top:8px;line-height:1.7;max-width:620px}
+.ext-links{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+.ext-links a{font-size:12px;color:var(--accent);border:1px solid rgba(245,158,11,.3);padding:5px 12px;border-radius:6px;transition:.15s}
+.ext-links a:hover{background:rgba(245,158,11,.1)}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:36px}
+.toc h3{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
+.toc ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.toc ul li a{font-size:13px;color:var(--muted);transition:.15s}
+.toc ul li a:hover{color:var(--accent)}
+.section{margin-bottom:48px}
+.section h2{font-size:18px;font-weight:600;margin-bottom:4px;padding-top:8px}
+.sub{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6}
+.code-block{position:relative;margin-bottom:20px;border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+.code-header{display:flex;justify-content:space-between;align-items:center;padding:8px 16px;background:#0d0d0d;border-bottom:1px solid var(--border)}
+.code-lang{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase}
+.copy-btn{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);color:var(--accent);font-size:11px;padding:4px 10px;border-radius:5px;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s}
+.copy-btn:hover{background:rgba(245,158,11,.2)}
+.copy-btn.copied{color:var(--green);border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.1)}
+.code-block pre{margin:0!important;border-radius:0!important}
+.code-block pre code{font-size:13px!important;line-height:1.6!important}
+.info-box{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:16px;margin-bottom:20px;font-size:13px;line-height:1.7}
+.info-box strong{color:var(--accent)}
+.props-table{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:13px}
+.props-table th{text-align:left;padding:10px 12px;border-bottom:1px solid var(--border);font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.props-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+.props-table td:first-child{color:var(--accent);font-family:monospace;font-size:12px}
+.props-table td:last-child{color:#aaa;line-height:1.6}
+.props-table tr:last-child td{border-bottom:none}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.tip-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px}
+.tip-card h4{font-size:13px;font-weight:600;margin-bottom:6px;color:var(--accent)}
+.tip-card p{font-size:12px;color:var(--muted);line-height:1.6}
+@media(max-width:768px){.sidebar{display:none}.main{margin-left:0}.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <div class="sidebar-logo"><a href="../index.html">Design KB</a><p>Web Design Knowledge Base</p></div>
+  <div class="nav-section">Hub</div>
+  <a class="nav-link" href="../index.html">&#8962; Dashboard</a>
+  <div class="nav-section">Animations</div>
+  <a class="nav-link active" href="gsap.html">&#9889; GSAP</a>
+  <a class="nav-link" href="framer-motion.html">&#127902; Framer Motion</a>
+  <a class="nav-link" href="lenis.html">~ Lenis</a>
+  <div class="nav-section">Components</div>
+  <a class="nav-link" href="../components/shadcn.html">&#9672; shadcn/ui</a>
+  <a class="nav-link" href="../components/21st-dev.html">&#10022; 21st.dev</a>
+  <a class="nav-link" href="../components/magicui.html">&#10022; Magic UI</a>
+  <a class="nav-link" href="../components/aceternity.html">&#9670; Aceternity UI</a>
+  <div class="nav-section">3D</div>
+  <a class="nav-link" href="../3d/r3f.html">&#9677; React Three Fiber</a>
+  <div class="nav-section">Reference Sites</div>
+  <a class="nav-link" href="../reference-sites/index.html">&#9678; Sites Index</a>
+  <a class="nav-link" href="../reference-sites/djcustomreno.html">&#8962; DJ Custom Reno</a>
+</nav>
+<main class="main">
+  <div class="page-header">
+    <div class="badge">Animation Library</div>
+    <h1>GSAP + ScrollTrigger</h1>
+    <p>GreenSock Animation Platform — the industry-standard JavaScript animation library. ScrollTrigger is its most powerful plugin, enabling scroll-linked animations, pinning, parallax, and scrubbing. Used by Apple, Google, and Awwwards-winning sites.</p>
+    <div class="ext-links">
+      <a href="https://gsap.com/docs/v3/Plugins/ScrollTrigger/" target="_blank">Official Docs</a>
+      <a href="https://gsap.com/cheatsheet/" target="_blank">Cheat Sheet</a>
+      <a href="https://codepen.io/GreenSock" target="_blank">CodePen Examples</a>
+      <a href="https://github.com/gsap/GSAP" target="_blank">GitHub</a>
+    </div>
+  </div>
+
+  <div class="toc">
+    <h3>Contents</h3>
+    <ul>
+      <li><a href="#install">Installation &amp; Setup</a></li>
+      <li><a href="#tweens">Basic Tweens (to / from / fromTo)</a></li>
+      <li><a href="#timelines">Timelines &amp; Position Parameter</a></li>
+      <li><a href="#scrolltrigger">ScrollTrigger Basics</a></li>
+      <li><a href="#scrub">Scrub Animations</a></li>
+      <li><a href="#pin">Pinning &amp; Horizontal Scroll</a></li>
+      <li><a href="#stagger">Stagger &amp; Batch</a></li>
+      <li><a href="#eases">Eases Reference</a></li>
+      <li><a href="#react">React Patterns</a></li>
+      <li><a href="#github-notes">GitHub README Notes</a></li>
+    </ul>
+  </div>
+
+  <div class="section" id="install">
+    <h2>Installation &amp; Setup</h2>
+    <p class="sub">GSAP core and ScrollTrigger are free. Club plugins (SplitText, MorphSVG, DrawSVG) require a paid membership.</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-bash">npm install gsap
+# or: yarn add gsap  |  pnpm add gsap</code></pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">javascript — register plugins (required)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-javascript">import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+import { TextPlugin } from 'gsap/TextPlugin';
+import { Flip } from 'gsap/Flip';
+
+// MUST call registerPlugin before using any plugin
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, TextPlugin, Flip);</code></pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">html — CDN (no bundler)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-html">&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"&gt;&lt;/script&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"&gt;&lt;/script&gt;</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="tweens">
+    <h2>Basic Tweens</h2>
+    <p class="sub">The three tween methods are your daily drivers. GSAP transforms are GPU-accelerated and always use matrix3d under the hood.</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">javascript</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-javascript">// gsap.to() — animate current values TO the target
+gsap.to('.box', {
+  x: 200,           // translateX (px)
+  y: -50,           // translateY (px)
+  xPercent: -50,    // translateX (%)
+  rotation: 360,    // rotate in degrees
+  rotationX: 45,    // 3D rotateX
+  scale: 1.5,       // scaleX and scaleY
+  scaleX: 2,
+  opacity: 0.5,
+  width: '200px',   // CSS property
+  backgroundColor: '#f59e0b',
+  duration: 1,
+  ease: 'power2.out',
+  delay: 0.5,
+  repeat: 2,        // repeat 2 more times (total: 3)
+  yoyo: true,       // reverse on alternating repeats
+  repeatDelay: 0.5, // pause between repeats
+  onComplete: () => console.log('done'),
+  onUpdate: () => {},
+  onStart: () => {},
+  onRepeat: () => {}
+});
+
+// gsap.from() — animate FROM these values to current CSS
+gsap.from('.hero h1', { y: 60, opacity: 0, duration: 0.8, ease: 'power3.out' });
+
+// gsap.fromTo() — explicit start AND end
+gsap.fromTo('.card',
+  { opacity: 0, y: 40 },
+  { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }
+);
+
+// gsap.set() — instant (no animation), good for initial state
+gsap.set('.element', { opacity: 0, y: 20 });
+
+// Kill a tween
+const tween = gsap.to('.box', { x: 500, duration: 2 });
+tween.kill();
+
+// Targeting — all these work
+gsap.to('.selector', { x: 100 });
+gsap.to(document.querySelector('#el'), { x: 100 });
+gsap.to(document.querySelectorAll('li'), { x: 100 });
+gsap.to([el1, el2], { x: 100 });</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="timelines">
+    <h2>Timelines &amp; Position Parameter</h2>
+    <p class="sub">Timelines sequence tweens. The position parameter is the most powerful feature — it controls exactly when each tween starts.</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">javascript</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-javascript">const tl = gsap.timeline({
+  defaults: { ease: 'power2.out', duration: 0.6 },
+  onComplete: () => console.log('sequence complete'),
+  repeat: -1,    // -1 = infinite repeat
+  yoyo: true,
+  paused: true   // don't autoplay
+});
+
+// Position parameter — the key to orchestration
+tl.from('.a', { x: -100 })           // appends to end (default)
+  .from('.b', { x: 100 }, '&lt;')       // "&lt;" = same start as previous
+  .from('.c', { y: 50  }, '&lt;0.2')    // 0.2s AFTER previous STARTS
+  .from('.d', { opacity:0 }, '+=0.5') // 0.5s AFTER previous ENDS
+  .from('.e', { scale: 0 }, '-=0.3')  // 0.3s BEFORE previous ends
+  .from('.f', { rotation:180 }, 1.5); // at exactly 1.5s mark
+
+// Labels for readability
+tl.addLabel('intro')
+  .from('.logo', { opacity: 0 })
+  .addLabel('content', '+=0.3')
+  .from('.heading', { y: 30, opacity: 0 }, 'content')
+  .from('.body', { y: 20, opacity: 0 }, 'content+=0.2');
+
+// Timeline control methods
+tl.play();
+tl.pause();
+tl.reverse();
+tl.restart();
+tl.seek(2);         // jump to 2 seconds
+tl.progress(0.5);   // jump to 50%
+tl.timeScale(2);    // play at 2x speed
+tl.kill();          // destroy it</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="scrolltrigger">
+    <h2>ScrollTrigger Basics</h2>
+    <p class="sub">ScrollTrigger adds scroll-based triggering to any GSAP tween or timeline. The start/end strings use "[trigger edge] [viewport edge]" syntax.</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">javascript</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-javascript">import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+// Attach to a tween
+gsap.from('.section h2', {
+  scrollTrigger: {
+    trigger: '.section h2',    // element that triggers animation
+    start: 'top 80%',          // [trigger edge] [viewport edge]
+    end: 'bottom 20%',
+    toggleActions: 'play none none reverse',
+    // toggleActions: onEnter onLeave onEnterBack onLeaveBack
+    // Possible values: play | pause | resume | reset | restart | complete | reverse | none
+    markers: false,            // set true during dev to see trigger lines
+    id: 'heading-trigger',
+  },
+  y: 50,
+  opacity: 0,
+  duration: 0.8,
+});
+
+// Start/end position strings:
+// "top top"      — top of trigger element = top of viewport
+// "top center"   — top of trigger element = center of viewport
+// "top 80%"      — top of trigger at 80% down viewport
+// "center center"
+// "bottom top"   — bottom of trigger = top of viewport
+// "top +=200"    — 200px below top of viewport
+// "top -=100"    — 100px above top of viewport
+
+// Standalone ScrollTrigger (callbacks only)
+ScrollTrigger.create({
+  trigger: '#section',
+  start: 'top center',
+  end: 'bottom center',
+  onEnter: () =&gt; el.classList.add('active'),
+  onLeave: () =&gt; el.classList.remove('active'),
+  onEnterBack: () =&gt; el.classList.add('active'),
+  onLeaveBack: () =&gt; el.classList.remove('active'),
+  onUpdate: self =&gt; console.log('progress', self.progress.toFixed(2)),
+  onToggle: self =&gt; console.log('active:', self.isActive),
+});
+
+// Refresh (call after dynamic content loads)
+ScrollTrigger.refresh();
+
+// Kill all (use in React cleanup)
+ScrollTrigger.getAll().forEach(t =&gt; t.kill());</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="scrub">
+    <h2>Scrub Animations</h2>
+    <p class="sub">Scrub ties animation progress directly to scroll position — the animation plays forward/backward as you scroll. Essential for parallax and storytelling sites.</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">javascript</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-javascript">// scrub: true — instant link (no smoothing)
+gsap.to('.parallax-img', {
+  y: -200,
+  ease: 'none',  // use 'none' for scrub
+  scrollTrigger: {
+    trigger: '.section',
+    start: 'top bottom',
+    end: 'bottom top',
+    scrub: true
+  }
+});
+
+// scrub: 0.5 — lag in seconds (smooth catch-up)
+gsap.to('.text', {
+  x: 300,
+  scrollTrigger: {
+    trigger: '.section',
+    scrub: 0.5  // 0.5s to catch up to scroll position
+  }
+});
+
+// Scrubbed timeline — the cinematic scroll pattern
+const tl = gsap.timeline({
+  scrollTrigger: {
+    trigger: '#cinematic-scene',
+    start: 'top top',
+    end: '+=3000',   // 3000px scroll drives whole timeline
+    pin: true,
+    scrub: 1,
+    snap: { snapTo: 'labels', duration: { min: 0.2, max: 0.5 } }
+  }
+});
+
+tl.addLabel('start')
+  .to('.circle', { scale: 5, opacity: 0 })
+  .addLabel('reveal')
+  .from('.headline', { opacity: 0, y: 40 }, '&lt;')
+  .to('.bg', { backgroundColor: '#000' })
+  .addLabel('end')
+  .to('.logo', { scale: 1.2, opacity: 1 });</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="pin">
+    <h2>Pinning &amp; Horizontal Scroll</h2>
+    <p class="sub">Pin an element in the viewport while the user scrolls through a defined range — essential for immersive sections.</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">javascript</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-javascript">// Simple pin
+ScrollTrigger.create({
+  trigger: '#hero',
+  start: 'top top',
+  end: '+=800',
+  pin: true,
+  pinSpacing: true  // adds margin below to prevent layout jump
+});
+
+// Horizontal scroll (most common pattern)
+const panels = gsap.utils.toArray('.panel');
+gsap.to(panels, {
+  xPercent: -100 * (panels.length - 1),
+  ease: 'none',
+  scrollTrigger: {
+    trigger: '.h-scroll-wrap',
+    pin: true,
+    scrub: 1,
+    snap: 1 / (panels.length - 1),
+    start: 'top top',
+    end: () =&gt; '+=' + document.querySelector('.h-scroll-wrap').scrollWidth
+  }
+});
+
+// Parallax layers using data attributes
+gsap.utils.toArray('[data-parallax]').forEach(layer =&gt; {
+  const speed = parseFloat(layer.dataset.parallax) || 0.5;
+  gsap.to(layer, {
+    y: () =&gt; -200 * speed,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: layer.closest('section'),
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: true,
+      invalidateOnRefresh: true  // recalculate on window resize
+    }
+  });
+});</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="stagger">
+    <h2>Stagger &amp; Batch</h2>
+    <p class="sub">Animate groups of elements with offset timing. Use ScrollTrigger.batch() for large lists to avoid creating hundreds of ScrollTriggers.</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">javascript</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-javascript">// Simple stagger
+gsap.from('.card', {
+  y: 40,
+  opacity: 0,
+  duration: 0.6,
+  stagger: 0.1,  // 0.1s between each element
+  ease: 'power2.out',
+  scrollTrigger: {
+    trigger: '.cards-container',
+    start: 'top 75%'
+  }
+});
+
+// Advanced stagger object
+gsap.from('.grid-item', {
+  scale: 0.85,
+  opacity: 0,
+  duration: 0.5,
+  stagger: {
+    amount: 0.8,       // total time distributed across all elements
+    from: 'center',    // 'start' | 'center' | 'end' | 'random' | index
+    grid: [3, 4],      // [rows, cols] for 2D grid animations
+    axis: 'y'          // stagger along y axis in grid
+  }
+});
+
+// Batch — best for large lists
+ScrollTrigger.batch('.fade-up', {
+  interval: 0.1,   // min time between batches
+  batchMax: 5,     // max elements per batch
+  onEnter: elements =&gt; {
+    gsap.from(elements, {
+      opacity: 0,
+      y: 30,
+      duration: 0.6,
+      stagger: 0.08,
+      ease: 'power2.out'
+    });
+  },
+  start: 'top 90%',
+  once: true
+});</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="eases">
+    <h2>Eases Reference</h2>
+    <p class="sub">Each ease has .in, .out, and .inOut variants. Some accept amplitude/period parameters.</p>
+    <table class="props-table">
+      <tr><th>Ease</th><th>Best For</th></tr>
+      <tr><td>power1–4.out</td><td>General UI — the everyday default. Higher number = more dramatic</td></tr>
+      <tr><td>back.out(1.7)</td><td>Elements popping in — slight overshoot then settle</td></tr>
+      <tr><td>elastic.out(1, 0.3)</td><td>Springy/playful interactions, toggles</td></tr>
+      <tr><td>bounce.out</td><td>Ball-like physical bounce</td></tr>
+      <tr><td>circ.out</td><td>Fast entrance, very smooth decel</td></tr>
+      <tr><td>expo.out</td><td>Rapid start creeping to stop — dramatic hero reveals</td></tr>
+      <tr><td>sine.inOut</td><td>Smooth organic motion, breathing/looping animations</td></tr>
+      <tr><td>none / linear</td><td>Scroll-scrubbed animations, progress bars, constant motion</td></tr>
+      <tr><td>steps(12)</td><td>Frame-by-frame, sprite sheet animations</td></tr>
+      <tr><td>CustomEase.create('id', 'M0,0 C...')</td><td>Brand-specific motion language, total bezier control</td></tr>
+    </table>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">javascript — CustomEase</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-javascript">import { CustomEase } from 'gsap/CustomEase';
+gsap.registerPlugin(CustomEase);
+
+// Create once, reuse by name
+CustomEase.create('brandEase', 'M0,0 C0.126,0.382 0.282,0.674 0.44,0.822 0.632,1.002 0.818,1.001 1,1');
+
+gsap.to('.box', {
+  x: 500,
+  ease: 'brandEase',
+  duration: 1
+});
+
+// Get ease path from https://gsap.com/docs/v3/Eases/CustomEase</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="react">
+    <h2>React Patterns</h2>
+    <p class="sub">Always use gsap.context() to scope animations to a container ref. Always return ctx.revert() from the useEffect cleanup.</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">jsx — correct React cleanup pattern</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-jsx">import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
+
+export function AnimatedSection() {
+  const containerRef = useRef(null);
+
+  useEffect(() =&gt; {
+    // gsap.context() scopes all selectors to containerRef
+    const ctx = gsap.context(() =&gt; {
+
+      // Entrance animation
+      gsap.from('.animate-title', {
+        y: 50, opacity: 0, duration: 0.8, ease: 'power3.out',
+        scrollTrigger: { trigger: '.animate-title', start: 'top 80%', once: true }
+      });
+
+      // Staggered cards
+      gsap.from('.animate-card', {
+        y: 30, opacity: 0, duration: 0.5, stagger: 0.1, ease: 'power2.out',
+        scrollTrigger: { trigger: '.animate-card', start: 'top 85%', once: true }
+      });
+
+    }, containerRef); // scope = containerRef element
+
+    return () =&gt; ctx.revert(); // cleans up all tweens and ScrollTriggers
+  }, []);
+
+  return (
+    &lt;section ref={containerRef}&gt;
+      &lt;h2 className="animate-title"&gt;Title&lt;/h2&gt;
+      &lt;div className="grid"&gt;
+        &lt;div className="animate-card"&gt;Card 1&lt;/div&gt;
+        &lt;div className="animate-card"&gt;Card 2&lt;/div&gt;
+        &lt;div className="animate-card"&gt;Card 3&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+  );
+}</code></pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">jsx — counter animation hook</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-jsx">import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+export function AnimatedCounter({ target, suffix = '' }) {
+  const ref = useRef(null);
+
+  useEffect(() =&gt; {
+    const obj = { val: 0 };
+    const tween = gsap.to(obj, {
+      val: target,
+      duration: 2,
+      ease: 'power1.out',
+      onUpdate: () =&gt; {
+        if (ref.current) {
+          ref.current.textContent = Math.round(obj.val).toLocaleString() + suffix;
+        }
+      },
+      scrollTrigger: {
+        trigger: ref.current,
+        start: 'top 85%',
+        once: true
+      }
+    });
+    return () =&gt; tween.kill();
+  }, [target, suffix]);
+
+  return &lt;span ref={ref}&gt;0{suffix}&lt;/span&gt;;
+}</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="github-notes">
+    <h2>GitHub README Notes</h2>
+    <p class="sub">Key facts from the official GSAP GitHub repository (gsap/GSAP).</p>
+    <div class="info-box">
+      <strong>Performance:</strong> GSAP is approximately 20x faster than jQuery for animations. It uses requestAnimationFrame, hardware-accelerated transforms, and avoids layout thrashing by batching reads/writes.<br/><br/>
+      <strong>Free plugins:</strong> ScrollTrigger, ScrollTo, Flip, MotionPath, Observer, Draggable, EasePack, CustomEase, TextPlugin, DrawSVG (basic)<br/><br/>
+      <strong>Club (paid) plugins:</strong> SplitText, MorphSVG, DrawSVG (full), ScrollSmoother, GSDevTools, InertiaPlugin<br/><br/>
+      <strong>ScrollSmoother:</strong> Official smooth scroll (Club only) — wraps content in a scrollable container. Alternative to Lenis for GSAP users on Club plan.<br/><br/>
+      <strong>Version:</strong> GSAP 3.x (current as of 2026). GSAP 2.x is deprecated. Import from 'gsap' not 'gsap/TweenMax'.
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">javascript — useful utility methods</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-javascript">// gsap.utils — very useful helpers
+gsap.utils.toArray('.items');          // NodeList to Array
+gsap.utils.clamp(0, 100, value);       // clamp a value
+gsap.utils.mapRange(0,1, 100,500, v); // map from one range to another
+gsap.utils.wrap(0, 5, index);          // wrap index around range
+gsap.utils.normalize(0, 100, value);  // normalize to 0-1
+gsap.utils.random(10, 50, true);      // random number (true = snap to int)
+gsap.utils.shuffle(array);            // shuffle an array in place
+gsap.utils.interpolate(a, b, t);      // interpolate between values
+
+// gsap.getProperty() — read current GSAP property
+const x = gsap.getProperty('.box', 'x');
+const opacity = gsap.getProperty('#el', 'opacity');
+
+// gsap.quickTo() — ultra-fast repeated updates (mouse follow, etc.)
+const moveX = gsap.quickTo('.cursor', 'x', { duration: 0.3, ease: 'power3' });
+const moveY = gsap.quickTo('.cursor', 'y', { duration: 0.3, ease: 'power3' });
+document.addEventListener('mousemove', e =&gt; { moveX(e.clientX); moveY(e.clientY); });</code></pre>
+    </div>
+  </div>
+</main>
+</div>
+<script>
+hljs.highlightAll();
+function copyCode(btn){
+  const code = btn.closest('.code-block').querySelector('code').textContent;
+  navigator.clipboard.writeText(code).then(()=>{
+    btn.textContent='Copied!';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000);
+  });
+}
+</script>
+</body>
+</html>

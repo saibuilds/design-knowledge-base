@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>react-three-fiber — Design KB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#e5e5e5;font-family:'Inter',sans-serif;font-size:15px;line-height:1.6}
+.sidebar{position:fixed;left:0;top:0;width:220px;height:100vh;background:#111;border-right:1px solid #1f1f1f;padding:20px;overflow-y:auto;z-index:100}
+.sidebar h2{font-size:13px;color:#f59e0b;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}
+.sidebar a{display:block;color:#888;text-decoration:none;padding:6px 8px;border-radius:6px;font-size:13px;margin-bottom:2px;transition:.15s}
+.sidebar a:hover{color:#fff;background:#1a1a1a}
+.main{margin-left:220px;padding:48px;max-width:900px}
+h1{font-size:32px;font-weight:700;color:#fff;margin-bottom:8px}
+h2{font-size:20px;font-weight:600;color:#fff;margin:40px 0 12px;padding-top:40px;border-top:1px solid #1f1f1f}
+h3{font-size:15px;font-weight:600;color:#d4d4d4;margin:24px 0 8px}
+p{color:#aaa;margin-bottom:12px}
+.badge{display:inline-block;background:#1a1a1a;border:1px solid #2a2a2a;color:#888;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}
+.code-block{position:relative;margin:16px 0}
+.copy-btn{position:absolute;top:8px;right:8px;background:#1f1f1f;border:1px solid #333;color:#888;padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer;font-family:inherit;transition:.15s}
+.copy-btn:hover{color:#fff;background:#2a2a2a}
+pre{border-radius:8px;overflow:auto;font-size:13px}
+.tag{display:inline-block;background:#f59e0b15;border:1px solid #f59e0b40;color:#f59e0b;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}
+input[type=search]{width:100%;background:#111;border:1px solid #2a2a2a;color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;font-family:inherit;margin-bottom:32px;outline:none}
+input[type=search]:focus{border-color:#f59e0b50}
+.file-item{background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px 16px;margin-bottom:8px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#888}
+.file-item span{color:#f59e0b}
+</style>
+</head>
+<body>
+<div class="sidebar">
+  <h2>Design KB</h2>
+  <a href="../index.html">🏠 Home</a>
+  <a href="../animations/gsap.html">GSAP</a>
+  <a href="../animations/framer-motion.html">Framer Motion</a>
+  <a href="../animations/lenis.html">Lenis</a>
+  <a href="../components/shadcn.html">shadcn/ui</a>
+  <a href="../components/magicui.html">MagicUI</a>
+  <a href="../components/aceternity.html">Aceternity</a>
+  <a href="../components/21st-dev.html">21st.dev</a>
+  <a href="../3d/r3f.html">React Three Fiber</a>
+  <a href="../reference-sites/index.html">Reference Sites</a>
+</div>
+<div class="main">
+  <input type="search" placeholder="Search..." oninput="search(this.value)">
+  <div id="content"><h1>react-three-fiber</h1><p>Patterns extracted from <a href="https://github.com/pmndrs/react-three-fiber" style="color:#f59e0b">pmndrs/react-three-fiber</a></p>
+<h2>index.tsx</h2>
+<div class="code-block">
+  <button class="copy-btn">Copy</button>
+  <pre><code class="language-typescript">import * as ReactThreeFiber from './three-types'
+export { ReactThreeFiber }
+export * from './three-types'
+export * from './core'
+export * from './web/Canvas'
+export { createPointerEvents as events } from './web/events'
+</code></pre>
+</div>
+<h2>native.tsx</h2>
+<div class="code-block">
+  <button class="copy-btn">Copy</button>
+  <pre><code class="language-typescript">import * as ReactThreeFiber from './three-types'
+export { ReactThreeFiber }
+export * from './three-types'
+export * from './core'
+export * from './native/Canvas'
+export { createTouchEvents as events } from './native/events'
+
+import { Platform } from 'react-native'
+import { polyfills } from './native/polyfills'
+
+if (Platform.OS !== 'web') polyfills()
+</code></pre>
+</div>
+<h2>three-types.ts</h2>
+<div class="code-block">
+  <button class="copy-btn">Copy</button>
+  <pre><code class="language-typescript">import type * as THREE from 'three'
+import type {} from 'react'
+import type {} from 'react/jsx-runtime'
+import type {} from 'react/jsx-dev-runtime'
+import type { Args, EventHandlers, InstanceProps, ConstructorRepresentation } from './core'
+import type { Overwrite, Mutable } from './core/utils'
+
+type MutableOrReadonlyParameters&lt;T extends (...args: any) =&gt; any&gt; = Parameters&lt;T&gt; | Readonly&lt;Parameters&lt;T&gt;&gt;
+
+export interface MathRepresentation {
+  set(...args: number[]): any
+}
+export interface VectorRepresentation extends MathRepresentation {
+  setScalar(value: number): any
+}
+export type MathTypes = MathRepresentation | THREE.Euler | THREE.Color
+
+export type MathType&lt;T extends MathTypes&gt; = T extends THREE.Color
+  ? Args&lt;typeof THREE.Color&gt; | THREE.ColorRepresentation
+  : T extends VectorRepresentation | THREE.Layers | THREE.Euler
+  ? T | MutableOrReadonlyParameters&lt;T['set']&gt; | number
+  : T | MutableOrReadonlyParameters&lt;T['set']&gt;
+
+export type MathProps&lt;P&gt; = {
+  [K in keyof P as P[K] extends MathTypes ? K : never]: P[K] extends MathTypes ? MathType&lt;P[K]&gt; : never
+}
+
+export type Vector2 = MathType&lt;THREE.Vector2&gt;
+export type Vector3 = MathType&lt;THREE.Vector3&gt;
+export type Vector4 = MathType&lt;THREE.Vector4&gt;
+export type Color = MathType&lt;THREE.Color&gt;
+export type Layers = MathType&lt;THREE.Layers&gt;
+export type Quaternion = MathType&lt;THREE.Quaternion&gt;
+export type Euler = MathType&lt;THREE.Euler&gt;
+export type Matrix3 = MathType&lt;THREE.Matrix3&gt;
+export type Matrix4 = MathType&lt;THREE.Matrix4&gt;
+
+export interface RaycastableRepresentation {
+  raycast(raycaster: THREE.Raycaster, intersects: THREE.Intersection[]): void
+}
+export type EventProps&lt;P&gt; = P extends RaycastableRepresentation ? Partial&lt;EventHandlers&gt; : {}
+
+export interface ReactProps&lt;P&gt; {
+  children?: React.ReactNode
+  ref?: React.Ref&lt;P&gt;
+  key?: React.Key
+}
+
+export type ElementProps&lt;T extends ConstructorRepresentation, P = InstanceType&lt;T&gt;&gt; = Partial&lt;
+  Overwrite&lt;P, MathProps&lt;P&gt; & ReactProps&lt;P&gt; & EventProps&lt;P&gt;&gt;
+&gt;
+
+export type ThreeElement&lt;T extends</code></pre>
+</div></div>
+</div>
+<script>
+hljs.highlightAll();
+document.querySelectorAll('.code-block').forEach(block => {
+  const btn = block.querySelector('.copy-btn');
+  if(btn) btn.onclick = () => {
+    navigator.clipboard.writeText(block.querySelector('code').innerText);
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1500);
+  };
+});
+function search(q) {
+  const els = document.querySelectorAll('#content h2, #content h3, #content p, #content .file-item');
+  els.forEach(el => { el.style.opacity = q && !el.textContent.toLowerCase().includes(q.toLowerCase()) ? '0.2' : '1'; });
+}
+</script>
+</body>
+</html>

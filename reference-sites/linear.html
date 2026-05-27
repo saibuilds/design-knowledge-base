@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Linear App Analysis — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0a;--card:#111111;--border:#1f1f1f;--accent:#f59e0b;--text:#e5e5e5;--muted:#737373;--green:#22c55e}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh}
+a{color:inherit;text-decoration:none}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:240px;background:var(--card);border-right:1px solid var(--border);padding:24px 0;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.sidebar-logo span{font-size:13px;font-weight:600;color:var(--accent);letter-spacing:.05em;text-transform:uppercase}
+.sidebar-logo p{font-size:11px;color:var(--muted);margin-top:4px}
+.nav-section{padding:8px 20px;font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:8px}
+.nav-link{display:flex;align-items:center;gap:8px;padding:8px 20px;font-size:13px;color:var(--muted);transition:.15s;border-left:2px solid transparent}
+.nav-link:hover,.nav-link.active{color:var(--text);background:rgba(245,158,11,.06);border-left-color:var(--accent)}
+.main{margin-left:240px;flex:1;padding:40px;max-width:1100px}
+h1{font-size:28px;font-weight:700;background:linear-gradient(135deg,#f59e0b,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.meta{display:flex;gap:12px;align-items:center;margin-bottom:32px;flex-wrap:wrap}
+.badge{font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(245,158,11,.1);color:var(--accent);border:1px solid rgba(245,158,11,.2);font-weight:500}
+.url-link{font-size:13px;color:var(--muted)}
+.url-link a{color:var(--accent)}
+.section{margin-bottom:40px}
+.section-title{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:12px}
+.card h3{font-size:14px;font-weight:600;margin-bottom:8px}
+.card p,.card li{font-size:13px;color:var(--muted);line-height:1.7}
+.card ul{padding-left:16px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.palette{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.swatch{display:flex;flex-direction:column;align-items:center;gap:6px}
+.swatch-color{width:52px;height:52px;border-radius:8px;border:1px solid rgba(255,255,255,.08)}
+.swatch-label{font-size:10px;color:var(--muted);font-family:monospace}
+pre{position:relative;border-radius:10px;overflow:hidden;margin-top:12px}
+.copy-btn{position:absolute;top:10px;right:10px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);color:var(--accent);font-size:11px;padding:4px 10px;border-radius:5px;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s;z-index:2}
+.copy-btn:hover{background:rgba(245,158,11,.2)}
+.copy-btn.copied{color:var(--green);border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.1)}
+.prompt-box{background:var(--card);border:1px solid rgba(245,158,11,.2);border-radius:12px;padding:20px;margin-bottom:12px;position:relative}
+.prompt-box h4{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:10px}
+.prompt-box p{font-size:13px;color:var(--muted);line-height:1.7;white-space:pre-wrap;word-break:break-word;font-family:'Inter',sans-serif}
+/* Linear-inspired demo UI */
+.linear-demo{background:#0f0f12;border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:24px;margin-top:16px}
+.linear-hero-text{font-size:clamp(32px,5vw,56px);font-weight:600;letter-spacing:-0.03em;line-height:1.05;color:#fff;margin-bottom:16px}
+.linear-hero-text .gradient-word{background:linear-gradient(90deg,#5e6ad2,#a78bfa,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.linear-sub{font-size:17px;color:rgba(255,255,255,.5);line-height:1.6;max-width:480px;margin-bottom:24px}
+.linear-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:#5e6ad2;color:white;border-radius:8px;font-size:14px;font-weight:500;border:none;cursor:pointer;transition:.15s}
+.linear-btn:hover{background:#4f5bc0;transform:translateY(-1px)}
+.linear-btn-ghost{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:transparent;color:rgba(255,255,255,.7);border-radius:8px;font-size:14px;border:1px solid rgba(255,255,255,.1);cursor:pointer;transition:.15s;margin-left:8px}
+.linear-btn-ghost:hover{background:rgba(255,255,255,.05);color:#fff}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <div class="sidebar-logo"><span>Design KB</span><p>Web Design Knowledge Base</p></div>
+  <div class="nav-section">Hub</div>
+  <a class="nav-link" href="../index.html">⌂ Dashboard</a>
+  <div class="nav-section">Reference Sites</div>
+  <a class="nav-link" href="awwwards.html">◎ Awwwards</a>
+  <a class="nav-link" href="godly.html">◎ Godly</a>
+  <a class="nav-link" href="lusion.html">◎ Lusion</a>
+  <a class="nav-link active" href="linear.html">◎ Linear</a>
+  <a class="nav-link" href="vercel.html">◎ Vercel</a>
+  <a class="nav-link" href="stripe.html">◎ Stripe</a>
+  <a class="nav-link" href="cosmos.html">◎ Cosmos</a>
+  <a class="nav-link" href="mobbin.html">◎ Mobbin</a>
+</nav>
+<main class="main">
+  <h1>Linear — Dark Theme SaaS Perfection</h1>
+  <div class="meta">
+    <span class="badge">SaaS Product</span>
+    <span class="badge">Dark Theme</span>
+    <span class="badge">Micro-interactions</span>
+    <span class="badge">Type Scale</span>
+    <span class="url-link">→ <a href="https://linear.app" target="_blank">linear.app</a></span>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Live Design Demo</div>
+    <div class="linear-demo">
+      <div class="linear-hero-text">Built for modern<br/><span class="gradient-word">product teams</span></div>
+      <div class="linear-sub">Linear is the project management tool designed for high-performance teams. Streamline issues, sprints, and product roadmaps.</div>
+      <button class="linear-btn">Get started free →</button>
+      <button class="linear-btn-ghost">See how it works</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Color Palette</div>
+    <div class="card">
+      <p>Linear's palette is cool-toned dark with purple/indigo accents — feeling precise, technical, and premium:</p>
+      <div class="palette">
+        <div class="swatch"><div class="swatch-color" style="background:#0f0f12"></div><span class="swatch-label">#0f0f12</span></div>
+        <div class="swatch"><div class="swatch-color" style="background:#1a1a24"></div><span class="swatch-label">#1a1a24</span></div>
+        <div class="swatch"><div class="swatch-color" style="background:#222230"></div><span class="swatch-label">#222230</span></div>
+        <div class="swatch"><div class="swatch-color" style="background:#5e6ad2"></div><span class="swatch-label">#5e6ad2</span></div>
+        <div class="swatch"><div class="swatch-color" style="background:#a78bfa"></div><span class="swatch-label">#a78bfa</span></div>
+        <div class="swatch"><div class="swatch-color" style="background:#ec4899"></div><span class="swatch-label">#ec4899</span></div>
+        <div class="swatch"><div class="swatch-color" style="background:rgba(255,255,255,.7)"></div><span class="swatch-label">#fff @ 70%</span></div>
+        <div class="swatch"><div class="swatch-color" style="background:rgba(255,255,255,.15)"></div><span class="swatch-label">#fff @ 15%</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Typography Scale</div>
+    <div class="card">
+      <ul>
+        <li><strong>Font:</strong> Inter (their brand font, they literally use it as baseline)</li>
+        <li><strong>Hero H1:</strong> clamp(40px, 6vw, 72px) — weight 600, letter-spacing -0.03em, line-height 1.05</li>
+        <li><strong>Section H2:</strong> 36–48px, weight 600, -0.025em tracking</li>
+        <li><strong>Feature headline:</strong> 20–24px, weight 500, -0.01em</li>
+        <li><strong>Body text:</strong> 16–17px, weight 400, line-height 1.65, color rgba(255,255,255,.6)</li>
+        <li><strong>Labels/captions:</strong> 12–13px, weight 500, letter-spacing 0.02em, all caps optional</li>
+        <li><strong>Key insight:</strong> tight letter-spacing (-0.03em) on large headings, slightly looser (0) on body — creates hierarchy through tracking alone</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Micro-Interactions</div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Button States</h3>
+        <ul>
+          <li>Primary btn: bg #5e6ad2, hover darkens slightly + translateY(-1px)</li>
+          <li>Ghost btn: border rgba(255,255,255,.1), hover fills with rgba(255,255,255,.05)</li>
+          <li>Active: scale(0.97) for 100ms on press</li>
+          <li>Focus: 2px offset outline in accent color</li>
+          <li>Transition: 150ms ease — extremely snappy</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Navigation</h3>
+        <ul>
+          <li>Sticky nav with backdrop-blur + subtle border on scroll</li>
+          <li>Nav items: hover state fills with bg pill that slides in</li>
+          <li>Dropdown menus: scale(0.97) → scale(1), opacity 0→1, origin top</li>
+          <li>Active section indicator via scroll spy</li>
+          <li>Mobile: slide-in panel, no jarring transitions</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Feature Cards</h3>
+        <ul>
+          <li>Card hover: border opacity increases from 0.06 to 0.15</li>
+          <li>Inner glow on hover: box-shadow with accent color at low opacity</li>
+          <li>Icon/graphic animates on card hover</li>
+          <li>No dramatic scale — 1:1 with glow instead</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Scroll Animations</h3>
+        <ul>
+          <li>Sections fade + slide in from y:20 to y:0</li>
+          <li>IntersectionObserver-based — no GSAP dependency</li>
+          <li>Stagger: 0.1s between sibling elements</li>
+          <li>Product screenshots have parallax tilt effect</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Layout Patterns</div>
+    <div class="card">
+      <ul>
+        <li><strong>Max-width container:</strong> 1200px, centered, 40px horizontal padding</li>
+        <li><strong>Hero layout:</strong> text left, product screenshot/graphic right (60/40 split)</li>
+        <li><strong>Feature bento:</strong> asymmetric grid — 1 large card left, 2 stacked smaller right; or 3-col equal</li>
+        <li><strong>Testimonial row:</strong> horizontal scrolling marquee of logos; below, 3-col testimonial cards</li>
+        <li><strong>Pricing:</strong> 3-column with middle card elevated and highlighted (most popular)</li>
+        <li><strong>Footer:</strong> minimal — 4-col links + logo, border-top only, no heavy decorative elements</li>
+        <li><strong>Section rhythm:</strong> consistent 120px vertical spacing between sections</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Motion Design Principles</div>
+    <div class="card">
+      <ul>
+        <li><strong>Snappy, not dramatic:</strong> Linear's interactions are 100–200ms — not the 600ms theatrical animations of portfolio sites</li>
+        <li><strong>Ease curves:</strong> ease-out for entrances (content arrives naturally), ease-in for exits, ease-in-out for state changes</li>
+        <li><strong>Purpose-driven:</strong> every animation serves UX — confirms action, shows hierarchy, directs attention</li>
+        <li><strong>No scroll jank:</strong> will-change: transform on animated elements, GPU-composited properties only (transform, opacity)</li>
+        <li><strong>Gradient text animation:</strong> hero gradient text shifts angle/position with a subtle infinite animation (background-position loop)</li>
+        <li><strong>Product demo animations:</strong> keyboard shortcuts appear, tasks complete, sprints update — feels alive without being noisy</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">What to Steal from Linear</div>
+    <div class="card">
+      <ul>
+        <li><strong>Cool dark palette:</strong> The blue-tinted darks (#0f0f12, #1a1a24) feel more premium than neutral blacks — suggests precision</li>
+        <li><strong>Gradient headline text:</strong> purple → violet → pink gradient on hero H1 — instantly eye-catching, now industry-standard for SaaS</li>
+        <li><strong>Tight letter-spacing on headings:</strong> -0.03em on 60px+ text — looks professional, not cramped</li>
+        <li><strong>Backdrop-blur nav:</strong> sticky nav with backdrop-filter: blur(12px) + semi-transparent bg — looks glass-like without heavy glassmorphism</li>
+        <li><strong>150ms transitions:</strong> Their snappy timing feels native and fast — avoid the slow 400ms+ transitions that feel sluggish in product UI</li>
+        <li><strong>Active glow border:</strong> box-shadow: 0 0 0 1px rgba(94,106,210,0.4) on focused/active cards — subtle but clearly highlights selection</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Claude Prompts</div>
+    <div class="prompt-box">
+      <h4>Linear-Inspired SaaS Landing Page Hero</h4>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+      <p>Build a Linear-inspired SaaS landing page hero in Next.js with Tailwind. Design: bg #0f0f12, max-w-7xl centered container. Left column: eyebrow label (12px, uppercase, letter-spacing 0.1em, color #5e6ad2), H1 60px weight-600 tracking-[-0.03em] leading-[1.05] with last 2 words in a gradient (from #5e6ad2 via #a78bfa to #ec4899), subheadline 17px rgba(255,255,255,.55) max-w-md, two CTA buttons side by side (primary: bg #5e6ad2 hover:bg #4f5bc0, ghost: border rgba(255,255,255,.1)). Right column: product screenshot with subtle 3D tilt on mouse move (CSS perspective 1000px, rotate X/Y up to 5deg, spring transition). Animate hero content entrance: y:20→0 opacity:0→1 stagger 0.1s per element.</p>
+    </div>
+    <div class="prompt-box">
+      <h4>Animated Gradient Text Component</h4>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+      <p>Create a React AnimatedGradientText component that displays text with a moving gradient background-clip. The gradient should be: linear-gradient(90deg, #5e6ad2, #a78bfa, #ec4899, #5e6ad2) at background-size: 200%. Animate background-position from 0% to -200% using a CSS keyframe animation on a 4s infinite loop. Text should be clipped to the gradient via -webkit-background-clip: text. Make it a simple wrapper: &lt;GradientText className="text-6xl font-semibold"&gt;Your headline&lt;/GradientText&gt;.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Code Snippet — Linear-Style Feature Card</div>
+    <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-tsx">// Linear-style feature card with glow hover effect
+import { motion } from "framer-motion";
+
+interface FeatureCardProps {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  accentColor?: string;
+}
+
+export function FeatureCard({
+  icon,
+  title,
+  description,
+  accentColor = "#5e6ad2",
+}: FeatureCardProps) {
+  return (
+    &lt;motion.div
+      className="group relative rounded-xl p-6 cursor-default"
+      style={{
+        background: "#1a1a24",
+        border: "1px solid rgba(255,255,255,0.06)",
+      }}
+      whileHover={{
+        borderColor: "rgba(255,255,255,0.12)",
+        boxShadow: `0 0 0 1px ${accentColor}33, 0 8px 32px ${accentColor}15`,
+      }}
+      transition={{ duration: 0.15 }}
+    &gt;
+      {/* Icon */}
+      &lt;div
+        className="w-10 h-10 rounded-lg flex items-center justify-center mb-4 text-xl"
+        style={{ background: `${accentColor}1a`, color: accentColor }}
+      &gt;
+        {icon}
+      &lt;/div&gt;
+      {/* Content */}
+      &lt;h3 className="text-white font-semibold text-[17px] tracking-[-0.01em] mb-2"&gt;
+        {title}
+      &lt;/h3&gt;
+      &lt;p className="text-[rgba(255,255,255,0.5)] text-[14px] leading-[1.65]"&gt;
+        {description}
+      &lt;/p&gt;
+      {/* Subtle gradient shine on hover */}
+      &lt;div
+        className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+        style={{
+          background: `radial-gradient(400px at 50% 0%, ${accentColor}08, transparent)`,
+        }}
+      /&gt;
+    &lt;/motion.div&gt;
+  );
+}
+
+// Usage:
+// &lt;div className="grid grid-cols-3 gap-4"&gt;
+//   &lt;FeatureCard icon="⚡" title="Fast" description="Blazing fast..." accentColor="#5e6ad2" /&gt;
+//   &lt;FeatureCard icon="🔒" title="Secure" description="Enterprise grade..." accentColor="#a78bfa" /&gt;
+//   &lt;FeatureCard icon="📊" title="Analytics" description="Track everything..." accentColor="#ec4899" /&gt;
+// &lt;/div&gt;</code></pre>
+  </div>
+</main>
+</div>
+<script>
+hljs.highlightAll();
+function copyPrompt(btn){const text=btn.nextElementSibling.textContent;navigator.clipboard.writeText(text).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000)})}
+function copyCode(btn){const code=btn.parentElement.querySelector('code').textContent;navigator.clipboard.writeText(code).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000)})}
+</script>
+</body>
+</html>

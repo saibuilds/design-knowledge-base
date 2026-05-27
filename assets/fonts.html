@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fonts — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@400;500;700;800&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#e5e5e5;display:flex;min-height:100vh}
+.sidebar{width:240px;background:#111;border-right:1px solid #222;padding:24px 0;position:fixed;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid #222;margin-bottom:16px}
+.sidebar-logo a{text-decoration:none;color:#f59e0b;font-weight:700;font-size:16px}
+.sidebar-logo span{display:block;color:#666;font-size:11px;margin-top:2px}
+.nav-section{padding:0 12px;margin-bottom:8px}
+.nav-label{font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:1px;padding:0 8px;margin-bottom:6px}
+.nav-item{display:block;padding:7px 8px;border-radius:6px;color:#999;text-decoration:none;font-size:13px;transition:all 0.15s}
+.nav-item:hover,.nav-item.active{background:#1a1a1a;color:#f59e0b}
+.main{margin-left:240px;flex:1;padding:40px}
+.search-bar{width:100%;background:#111;border:1px solid #222;border-radius:8px;padding:12px 16px;color:#e5e5e5;font-size:14px;font-family:'Inter',sans-serif;margin-bottom:32px;outline:none;transition:border-color 0.2s}
+.search-bar:focus{border-color:#f59e0b}
+h1{font-size:28px;font-weight:700;margin-bottom:8px}
+.subtitle{color:#666;margin-bottom:32px;font-size:15px}
+h2{font-size:18px;font-weight:600;margin:32px 0 16px;color:#e5e5e5}
+.font-card{background:#111;border:1px solid #222;border-radius:12px;padding:24px;margin-bottom:20px}
+.font-meta{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.font-name{font-size:14px;font-weight:600;color:#f59e0b}
+.font-source{font-size:11px;color:#555;background:#1a1a1a;padding:2px 8px;border-radius:4px}
+.font-preview-xl{font-size:48px;font-weight:700;line-height:1.1;margin-bottom:8px;color:#e5e5e5}
+.font-preview-body{font-size:16px;line-height:1.6;color:#999;margin-bottom:16px}
+.font-weights{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.weight-sample{font-size:13px;color:#888}
+.weight-label{font-size:10px;color:#555;margin-top:2px}
+.pairing-card{background:#111;border:1px solid #222;border-radius:12px;padding:24px;margin-bottom:20px}
+.pairing-label{font-size:11px;color:#f59e0b;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}
+.pairing-heading{font-size:32px;font-weight:700;line-height:1.2;margin-bottom:8px}
+.pairing-body{font-size:15px;line-height:1.7;color:#999}
+.pairing-meta{margin-top:14px;display:flex;gap:12px;flex-wrap:wrap}
+.pairing-tag{background:#1a1a1a;border:1px solid #333;border-radius:4px;padding:3px 10px;font-size:11px;color:#888}
+.tag{display:inline-block;background:#1a1a1a;border:1px solid #333;border-radius:4px;padding:2px 8px;font-size:11px;color:#888;margin-right:6px}
+.import-code{background:#0a0a0a;border:1px solid #222;border-radius:6px;padding:12px 14px;font-family:'Courier New',monospace;font-size:12px;color:#a3e635;margin-top:12px;word-break:break-all}
+code{background:#1a1a1a;padding:1px 5px;border-radius:3px;font-size:12px;font-family:'Courier New',monospace;color:#a3e635}
+.usage-note{background:#1a1a1a;border-left:3px solid #f59e0b;padding:10px 14px;border-radius:0 6px 6px 0;font-size:12px;color:#999;margin-top:12px}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><a href="../index.html">Design KB</a><span>Knowledge Base</span></div>
+  <div class="nav-section"><div class="nav-label">Main</div>
+    <a class="nav-item" href="../index.html">Hub</a>
+  </div>
+  <div class="nav-section"><div class="nav-label">Reference</div>
+    <a class="nav-item" href="../reference-sites/index.html">Reference Sites</a>
+    <a class="nav-item" href="../reference-sites/djcustomreno.html">DJ Custom Reno</a>
+  </div>
+  <div class="nav-section"><div class="nav-label">Components</div>
+    <a class="nav-item" href="../components/index.html">Overview</a>
+    <a class="nav-item" href="../components/shadcn.html">shadcn/ui</a>
+    <a class="nav-item" href="../components/21st-dev.html">21st.dev</a>
+    <a class="nav-item" href="../components/magicui.html">Magic UI</a>
+  </div>
+  <div class="nav-section"><div class="nav-label">Animations</div>
+    <a class="nav-item" href="../animations/gsap.html">GSAP</a>
+    <a class="nav-item" href="../animations/framer-motion.html">Framer Motion</a>
+    <a class="nav-item" href="../animations/lenis.html">Lenis</a>
+    <a class="nav-item" href="../animations/three-js.html">Three.js</a>
+  </div>
+  <div class="nav-section"><div class="nav-label">Assets</div>
+    <a class="nav-item" href="index.html">Overview</a>
+    <a class="nav-item active" href="fonts.html">Fonts</a>
+    <a class="nav-item" href="colors.html">Colors</a>
+  </div>
+</nav>
+<main class="main">
+  <input class="search-bar" type="text" placeholder="Search fonts, pairings, use cases..." id="search">
+  <h1>Typography & Font Pairings</h1>
+  <p class="subtitle">Popular fonts for modern web design with live previews and pairing recommendations</p>
+
+  <h2>Top Fonts for Dark UI</h2>
+
+  <div class="font-card" data-searchable>
+    <div class="font-meta"><div class="font-name">Inter</div><span class="font-source">Google Fonts — Free</span></div>
+    <div class="font-preview-xl" style="font-family:'Inter'">The quick fox jumps.</div>
+    <div class="font-preview-body" style="font-family:'Inter'">Highly legible grotesque sans-serif. Designed for screens. The default choice for SaaS, dashboards, and developer tools.</div>
+    <div class="font-weights">
+      <div><div class="weight-sample" style="font-family:'Inter';font-weight:300">Light 300</div><div class="weight-label">300</div></div>
+      <div><div class="weight-sample" style="font-family:'Inter';font-weight:400">Regular 400</div><div class="weight-label">400</div></div>
+      <div><div class="weight-sample" style="font-family:'Inter';font-weight:500">Medium 500</div><div class="weight-label">500</div></div>
+      <div><div class="weight-sample" style="font-family:'Inter';font-weight:600">SemiBold 600</div><div class="weight-label">600</div></div>
+      <div><div class="weight-sample" style="font-family:'Inter';font-weight:700">Bold 700</div><div class="weight-label">700</div></div>
+    </div>
+    <div><span class="tag">UI</span><span class="tag">dashboard</span><span class="tag">SaaS</span><span class="tag">default</span></div>
+    <div class="import-code">@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');</div>
+  </div>
+
+  <div class="font-card" data-searchable>
+    <div class="font-meta"><div class="font-name">Space Grotesk</div><span class="font-source">Google Fonts — Free</span></div>
+    <div class="font-preview-xl" style="font-family:'Space Grotesk'">The quick fox jumps.</div>
+    <div class="font-preview-body" style="font-family:'Space Grotesk'">Geometric grotesque with quirky character. Great for headings, portfolio sites, creative agencies.</div>
+    <div class="font-weights">
+      <div><div class="weight-sample" style="font-family:'Space Grotesk';font-weight:300">Light 300</div></div>
+      <div><div class="weight-sample" style="font-family:'Space Grotesk';font-weight:400">Regular 400</div></div>
+      <div><div class="weight-sample" style="font-family:'Space Grotesk';font-weight:700">Bold 700</div></div>
+    </div>
+    <div><span class="tag">headings</span><span class="tag">portfolio</span><span class="tag">creative</span></div>
+    <div class="import-code">@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');</div>
+  </div>
+
+  <div class="font-card" data-searchable>
+    <div class="font-meta"><div class="font-name">Syne</div><span class="font-source">Google Fonts — Free</span></div>
+    <div class="font-preview-xl" style="font-family:'Syne';font-weight:800">The quick fox jumps.</div>
+    <div class="font-preview-body" style="font-family:'Syne'">Experimental display font. Unique letterforms, excellent for bold hero headings on dark backgrounds.</div>
+    <div><span class="tag">display</span><span class="tag">hero</span><span class="tag">experimental</span><span class="tag">agency</span></div>
+    <div class="import-code">@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap');</div>
+  </div>
+
+  <div class="font-card" data-searchable>
+    <div class="font-meta"><div class="font-name">DM Sans</div><span class="font-source">Google Fonts — Free</span></div>
+    <div class="font-preview-xl" style="font-family:'DM Sans';font-weight:700">The quick fox jumps.</div>
+    <div class="font-preview-body" style="font-family:'DM Sans'">Clean, modern, humanist grotesque. Slightly warmer than Inter. Perfect for product pages and marketing sites.</div>
+    <div><span class="tag">UI</span><span class="tag">marketing</span><span class="tag">humanist</span></div>
+    <div class="import-code">@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap');</div>
+  </div>
+
+  <div class="font-card" data-searchable>
+    <div class="font-meta"><div class="font-name">Playfair Display</div><span class="font-source">Google Fonts — Free</span></div>
+    <div class="font-preview-xl" style="font-family:'Playfair Display';font-weight:700">The quick fox jumps.</div>
+    <div class="font-preview-body" style="font-family:'Playfair Display'">Elegant serif. High contrast strokes. Luxury brands, editorial, restaurant/hospitality sites.</div>
+    <div><span class="tag">serif</span><span class="tag">luxury</span><span class="tag">editorial</span><span class="tag">contrast</span></div>
+    <div class="import-code">@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');</div>
+  </div>
+
+  <h2>Recommended Pairings</h2>
+
+  <div class="pairing-card" data-searchable>
+    <div class="pairing-label">Pairing 01 — Editorial Dark</div>
+    <div class="pairing-heading" style="font-family:'Syne';font-weight:800">Crafted With Precision.</div>
+    <div class="pairing-body" style="font-family:'Inter'">Every detail matters. We build digital experiences that combine aesthetic beauty with functional elegance — delivering results that move people.</div>
+    <div class="pairing-meta">
+      <span class="pairing-tag">Heading: Syne 800</span>
+      <span class="pairing-tag">Body: Inter 400</span>
+      <span class="pairing-tag">Use: Agency, Portfolio</span>
+    </div>
+  </div>
+
+  <div class="pairing-card" data-searchable>
+    <div class="pairing-label">Pairing 02 — Modern SaaS</div>
+    <div class="pairing-heading" style="font-family:'Space Grotesk';font-weight:700">Ship faster. Scale smarter.</div>
+    <div class="pairing-body" style="font-family:'DM Sans'">The platform built for teams who move fast. Automate workflows, track progress, and collaborate — all in one place.</div>
+    <div class="pairing-meta">
+      <span class="pairing-tag">Heading: Space Grotesk 700</span>
+      <span class="pairing-tag">Body: DM Sans 400</span>
+      <span class="pairing-tag">Use: SaaS, Startup</span>
+    </div>
+  </div>
+
+  <div class="pairing-card" data-searchable>
+    <div class="pairing-label">Pairing 03 — Luxury Service</div>
+    <div class="pairing-heading" style="font-family:'Playfair Display';font-weight:700">Exceptional. Always.</div>
+    <div class="pairing-body" style="font-family:'Inter'">Premium service designed around you. We handle the complexity — you enjoy the results. Available 24/7 for our select clientele.</div>
+    <div class="pairing-meta">
+      <span class="pairing-tag">Heading: Playfair Display 700</span>
+      <span class="pairing-tag">Body: Inter 400</span>
+      <span class="pairing-tag">Use: Luxury, Service, Reno</span>
+    </div>
+  </div>
+
+  <h2>Type Scale</h2>
+  <div class="font-card" data-searchable>
+    <div class="font-name" style="margin-bottom:16px">Recommended CSS Type Scale (Inter base)</div>
+    <div class="import-code">:root {
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  /* Type scale */
+  --text-xs:   0.75rem;   /* 12px */
+  --text-sm:   0.875rem;  /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg:   1.125rem;  /* 18px */
+  --text-xl:   1.25rem;   /* 20px */
+  --text-2xl:  1.5rem;    /* 24px */
+  --text-3xl:  1.875rem;  /* 30px */
+  --text-4xl:  2.25rem;   /* 36px */
+  --text-5xl:  3rem;      /* 48px */
+  --text-6xl:  3.75rem;   /* 60px */
+  --text-7xl:  4.5rem;    /* 72px */
+
+  /* Line heights */
+  --leading-tight:  1.25;
+  --leading-snug:   1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed:1.625;
+  --leading-loose:  2;
+}</div>
+  </div>
+</main>
+<script>
+document.getElementById('search').addEventListener('input', function() {
+  const q = this.value.toLowerCase();
+  document.querySelectorAll('[data-searchable]').forEach(card => {
+    card.style.display = card.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Lenis Smooth Scroll — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0a;--card:#111111;--border:#1f1f1f;--accent:#f59e0b;--text:#e5e5e5;--muted:#737373;--green:#22c55e}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif}
+a{color:inherit;text-decoration:none}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:240px;background:var(--card);border-right:1px solid var(--border);padding:24px 0;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.sidebar-logo a{font-size:13px;font-weight:600;color:var(--accent);letter-spacing:.05em;text-transform:uppercase}
+.sidebar-logo p{font-size:11px;color:var(--muted);margin-top:4px}
+.nav-section{padding:8px 20px;font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:8px}
+.nav-link{display:flex;align-items:center;gap:8px;padding:8px 20px;font-size:13px;color:var(--muted);transition:.15s;border-left:2px solid transparent}
+.nav-link:hover,.nav-link.active{color:var(--text);background:rgba(245,158,11,.06);border-left-color:var(--accent)}
+.main{margin-left:240px;flex:1;padding:40px;max-width:900px}
+.page-header{margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.badge{display:inline-block;font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(245,158,11,.15);color:var(--accent);border:1px solid rgba(245,158,11,.3);margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em}
+.page-header h1{font-size:28px;font-weight:700}
+.page-header p{color:var(--muted);font-size:14px;margin-top:8px;line-height:1.7;max-width:620px}
+.ext-links{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+.ext-links a{font-size:12px;color:var(--accent);border:1px solid rgba(245,158,11,.3);padding:5px 12px;border-radius:6px;transition:.15s}
+.ext-links a:hover{background:rgba(245,158,11,.1)}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:36px}
+.toc h3{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
+.toc ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.toc ul li a{font-size:13px;color:var(--muted);transition:.15s}
+.toc ul li a:hover{color:var(--accent)}
+.section{margin-bottom:48px}
+.section h2{font-size:18px;font-weight:600;margin-bottom:4px;padding-top:8px}
+.sub{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6}
+.code-block{position:relative;margin-bottom:20px;border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+.code-header{display:flex;justify-content:space-between;align-items:center;padding:8px 16px;background:#0d0d0d;border-bottom:1px solid var(--border)}
+.code-lang{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase}
+.copy-btn{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);color:var(--accent);font-size:11px;padding:4px 10px;border-radius:5px;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s}
+.copy-btn:hover{background:rgba(245,158,11,.2)}
+.copy-btn.copied{color:var(--green);border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.1)}
+.code-block pre{margin:0!important;border-radius:0!important}
+.code-block pre code{font-size:13px!important;line-height:1.6!important}
+.info-box{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:16px;margin-bottom:20px;font-size:13px;line-height:1.7}
+.info-box strong{color:var(--accent)}
+.props-table{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:13px}
+.props-table th{text-align:left;padding:10px 12px;border-bottom:1px solid var(--border);font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.props-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+.props-table td:first-child{color:var(--accent);font-family:monospace;font-size:12px}
+.props-table td:nth-child(2){color:#888;font-family:monospace;font-size:12px}
+.props-table td:last-child{color:#aaa;line-height:1.6}
+.props-table tr:last-child td{border-bottom:none}
+@media(max-width:768px){.sidebar{display:none}.main{margin-left:0}}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <div class="sidebar-logo"><a href="../index.html">Design KB</a><p>Web Design Knowledge Base</p></div>
+  <div class="nav-section">Hub</div>
+  <a class="nav-link" href="../index.html">&#8962; Dashboard</a>
+  <div class="nav-section">Animations</div>
+  <a class="nav-link" href="gsap.html">&#9889; GSAP</a>
+  <a class="nav-link" href="framer-motion.html">&#127902; Framer Motion</a>
+  <a class="nav-link active" href="lenis.html">~ Lenis</a>
+  <div class="nav-section">Components</div>
+  <a class="nav-link" href="../components/shadcn.html">&#9672; shadcn/ui</a>
+  <a class="nav-link" href="../components/21st-dev.html">&#10022; 21st.dev</a>
+  <a class="nav-link" href="../components/magicui.html">&#10022; Magic UI</a>
+  <a class="nav-link" href="../components/aceternity.html">&#9670; Aceternity UI</a>
+  <div class="nav-section">3D</div>
+  <a class="nav-link" href="../3d/r3f.html">&#9677; React Three Fiber</a>
+  <div class="nav-section">Reference Sites</div>
+  <a class="nav-link" href="../reference-sites/index.html">&#9678; Sites Index</a>
+  <a class="nav-link" href="../reference-sites/djcustomreno.html">&#8962; DJ Custom Reno</a>
+</nav>
+<main class="main">
+  <div class="page-header">
+    <div class="badge">Scroll Library</div>
+    <h1>Lenis Smooth Scroll</h1>
+    <p>Lenis is a lightweight smooth-scroll library by Darkroom Engineering. It provides buttery inertia-based scroll that feels native — not the janky CSS scroll-behavior: smooth. Integrates seamlessly with GSAP ScrollTrigger.</p>
+    <div class="ext-links">
+      <a href="https://lenis.darkroom.engineering/" target="_blank">Official Site</a>
+      <a href="https://github.com/darkroomengineering/lenis" target="_blank">GitHub</a>
+      <a href="https://lenis.darkroom.engineering/demos" target="_blank">Demos</a>
+    </div>
+  </div>
+
+  <div class="toc">
+    <h3>Contents</h3>
+    <ul>
+      <li><a href="#install">Installation</a></li>
+      <li><a href="#basic">Basic Setup</a></li>
+      <li><a href="#options">Options Reference</a></li>
+      <li><a href="#methods">Methods &amp; Events</a></li>
+      <li><a href="#gsap">GSAP ScrollTrigger Integration</a></li>
+      <li><a href="#react">React / Next.js Setup</a></li>
+      <li><a href="#react-lenis">react-lenis Package</a></li>
+      <li><a href="#tips">Tips &amp; Gotchas</a></li>
+    </ul>
+  </div>
+
+  <div class="section" id="install">
+    <h2>Installation</h2>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-bash">npm install lenis
+# For React-specific package:
+npm install lenis  # includes react-lenis sub-package</code></pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">html — CDN</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-html">&lt;script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"&gt;&lt;/script&gt;</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="basic">
+    <h2>Basic Setup</h2>
+    <p class="sub">Vanilla JS setup — create a Lenis instance and feed it to requestAnimationFrame.</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">javascript — vanilla</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-javascript">import Lenis from 'lenis';
+
+const lenis = new Lenis({
+  duration: 1.2,
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  smoothWheel: true,
+  wheelMultiplier: 1,
+  touchMultiplier: 2,
+  infinite: false,
+});
+
+// RAF loop — Lenis needs to be called every frame
+function raf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
+
+// Stop/start
+lenis.stop();
+lenis.start();
+
+// Destroy (remove all event listeners)
+lenis.destroy();</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="options">
+    <h2>Options Reference</h2>
+    <table class="props-table">
+      <tr><th>Option</th><th>Default</th><th>Description</th></tr>
+      <tr><td>wrapper</td><td>window</td><td>Scroll container element. window for full-page scroll.</td></tr>
+      <tr><td>content</td><td>document.body</td><td>The element that contains all scrollable content</td></tr>
+      <tr><td>duration</td><td>1.2</td><td>Scroll duration in seconds. Ignored if easing is set.</td></tr>
+      <tr><td>easing</td><td>exponential</td><td>Easing function (t: 0-1) =&gt; number. Overrides duration.</td></tr>
+      <tr><td>smoothWheel</td><td>true</td><td>Enable smooth scrolling for mouse wheel events</td></tr>
+      <tr><td>wheelMultiplier</td><td>1</td><td>Scroll speed multiplier for wheel events</td></tr>
+      <tr><td>touchMultiplier</td><td>2</td><td>Scroll speed multiplier for touch/trackpad</td></tr>
+      <tr><td>infinite</td><td>false</td><td>Enable infinite scroll (loops back to start)</td></tr>
+      <tr><td>orientation</td><td>'vertical'</td><td>'vertical' | 'horizontal'</td></tr>
+      <tr><td>gestureOrientation</td><td>'vertical'</td><td>Which direction gestures map to</td></tr>
+      <tr><td>autoResize</td><td>true</td><td>Auto-recalculate scroll limits on resize</td></tr>
+      <tr><td>prevent</td><td>undefined</td><td>Function (node) =&gt; bool to prevent smooth scroll on certain elements (e.g. embeds)</td></tr>
+    </table>
+  </div>
+
+  <div class="section" id="methods">
+    <h2>Methods &amp; Events</h2>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">javascript</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-javascript">// Scroll to target
+lenis.scrollTo('#target');                // CSS selector
+lenis.scrollTo(element);                  // DOM element
+lenis.scrollTo(500);                      // pixel value
+lenis.scrollTo('top');                    // 'top' | 'bottom' | 'left' | 'right'
+lenis.scrollTo(500, {
+  offset: -80,        // offset from target (e.g. fixed header height)
+  duration: 1.5,
+  easing: t => t,
+  immediate: false,   // skip animation
+  lock: true,         // lock scroll during animation
+  onComplete: () => console.log('arrived')
+});
+
+// Events
+lenis.on('scroll', ({ scroll, limit, velocity, direction, progress }) => {
+  console.log(scroll);     // current scroll position
+  console.log(limit);      // max scroll position
+  console.log(velocity);   // scroll speed
+  console.log(direction);  // 1 = down, -1 = up
+  console.log(progress);   // 0-1 progress through page
+});
+lenis.off('scroll', handler);  // remove listener
+
+// Properties
+lenis.scroll;       // current scroll value
+lenis.limit;        // max scroll value
+lenis.velocity;     // scroll velocity
+lenis.direction;    // 1 | -1
+lenis.progress;     // 0-1
+lenis.isScrolling;  // boolean
+lenis.isStopped;    // boolean</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="gsap">
+    <h2>GSAP ScrollTrigger Integration</h2>
+    <p class="sub">The most important integration — without this, ScrollTrigger won't respond correctly to Lenis scroll events.</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">javascript — vanilla GSAP + Lenis</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-javascript">import Lenis from 'lenis';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
+
+const lenis = new Lenis({
+  duration: 1.2,
+  easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+});
+
+// Method 1: Feed Lenis into GSAP ticker (recommended)
+gsap.ticker.add((time) => {
+  lenis.raf(time * 1000);  // GSAP time is in seconds, Lenis needs ms
+});
+gsap.ticker.lagSmoothing(0);  // prevent GSAP from skipping frames
+
+// Tell ScrollTrigger about Lenis scroll updates
+lenis.on('scroll', ScrollTrigger.update);
+
+// IMPORTANT: disable ScrollTrigger's normalizeScroll to avoid conflicts
+// ScrollTrigger.normalizeScroll(false); // usually not needed with this approach
+
+// Refresh ScrollTrigger after everything loads
+window.addEventListener('load', () => ScrollTrigger.refresh());</code></pre>
+    </div>
+    <div class="info-box">
+      <strong>Common issue:</strong> ScrollTrigger positions are calculated based on the native scroll position, but Lenis uses a virtual scroll. The <code>lenis.on('scroll', ScrollTrigger.update)</code> call keeps them in sync. Without it, triggers fire at wrong positions.
+    </div>
+  </div>
+
+  <div class="section" id="react">
+    <h2>React / Next.js Setup (Manual)</h2>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">jsx — Next.js App Router provider</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-jsx">'use client';
+// app/providers/smooth-scroll.jsx
+import { createContext, useContext, useEffect, useRef } from 'react';
+import Lenis from 'lenis';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
+
+const LenisContext = createContext(null);
+export const useLenis = () => useContext(LenisContext);
+
+export function SmoothScrollProvider({ children }) {
+  const lenisRef = useRef(null);
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+    lenisRef.current = lenis;
+
+    // GSAP ticker integration
+    function onRaf(time) { lenis.raf(time * 1000); }
+    gsap.ticker.add(onRaf);
+    gsap.ticker.lagSmoothing(0);
+    lenis.on('scroll', ScrollTrigger.update);
+
+    return () => {
+      gsap.ticker.remove(onRaf);
+      lenis.destroy();
+    };
+  }, []);
+
+  return (
+    &lt;LenisContext.Provider value={lenisRef}&gt;
+      {children}
+    &lt;/LenisContext.Provider&gt;
+  );
+}
+
+// Usage in app/layout.jsx:
+// &lt;SmoothScrollProvider&gt;{children}&lt;/SmoothScrollProvider&gt;
+
+// Usage in a component:
+// const lenisRef = useLenis();
+// lenisRef.current?.scrollTo('#section', { offset: -80 });</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="react-lenis">
+    <h2>react-lenis Package</h2>
+    <p class="sub">The official React wrapper — simplest way to add Lenis in a React/Next.js project.</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-bash">npm install lenis  # react-lenis is bundled in the lenis package</code></pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">jsx — react-lenis usage</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-jsx">import { ReactLenis, useLenis } from 'lenis/react';
+
+// Wrap your app (or layout)
+export default function Layout({ children }) {
+  return (
+    &lt;ReactLenis
+      root
+      options={{
+        duration: 1.2,
+        easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+      }}
+    &gt;
+      {children}
+    &lt;/ReactLenis&gt;
+  );
+}
+
+// Access lenis instance anywhere
+function ScrollToButton() {
+  const lenis = useLenis(({ scroll }) => {
+    // This callback fires on every scroll
+    // console.log(scroll);
+  });
+
+  return (
+    &lt;button onClick={() => lenis?.scrollTo('#contact', { offset: -80 })}&gt;
+      Scroll to Contact
+    &lt;/button&gt;
+  );
+}
+
+// Connect to GSAP ScrollTrigger when using react-lenis
+import { useEffect } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+function GSAPScrollTriggerSync() {
+  const lenis = useLenis();
+
+  useEffect(() => {
+    if (!lenis) return;
+    const rafFn = (time) => lenis.raf(time * 1000);
+    gsap.ticker.add(rafFn);
+    gsap.ticker.lagSmoothing(0);
+    lenis.on('scroll', ScrollTrigger.update);
+    return () => {
+      gsap.ticker.remove(rafFn);
+      lenis.off('scroll', ScrollTrigger.update);
+    };
+  }, [lenis]);
+
+  return null;
+}</code></pre>
+    </div>
+  </div>
+
+  <div class="section" id="tips">
+    <h2>Tips &amp; Gotchas</h2>
+    <div class="info-box">
+      <strong>iFrame / embeds:</strong> Use the <code>prevent</code> option to prevent Lenis from intercepting scroll in embedded content:
+      <br/><code>prevent: node => node.nodeName === 'IFRAME'</code>
+      <br/><br/>
+      <strong>Fixed elements:</strong> Elements with <code>position: fixed</code> work normally — Lenis only affects the scroll container, not fixed positioning.
+      <br/><br/>
+      <strong>Anchor links:</strong> Native anchor links (#id) still work, but scroll is animated by Lenis. For instant jump, use lenis.scrollTo('#id', { immediate: true }).
+      <br/><br/>
+      <strong>Overflow hidden containers:</strong> If a parent has overflow:hidden, Lenis won't scroll inside it by default. Create a separate Lenis instance for that container, or use the wrapper/content options.
+      <br/><br/>
+      <strong>Mobile:</strong> Lenis uses native scroll behavior on mobile by default for best performance. Only touch multiplier is applied.
+      <br/><br/>
+      <strong>Next.js SSR:</strong> Always check typeof window !== 'undefined' or use useEffect — Lenis requires browser APIs.
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">javascript — stop scroll during modal/overlay</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-javascript">// Lock scroll when modal opens
+function openModal() {
+  lenis.stop();
+  document.body.style.overflow = 'hidden'; // belt and suspenders
+}
+
+function closeModal() {
+  lenis.start();
+  document.body.style.overflow = '';
+}
+
+// Scroll to section with nav offset
+function scrollToSection(id) {
+  const navHeight = document.querySelector('nav').offsetHeight;
+  lenis.scrollTo(id, {
+    offset: -navHeight - 16,  // account for nav + extra gap
+    duration: 1.2,
+    easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+  });
+}</code></pre>
+    </div>
+  </div>
+</main>
+</div>
+<script>
+hljs.highlightAll();
+function copyCode(btn){
+  const code = btn.closest('.code-block').querySelector('code').textContent;
+  navigator.clipboard.writeText(code).then(()=>{
+    btn.textContent='Copied!';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000);
+  });
+}
+</script>
+</body>
+</html>

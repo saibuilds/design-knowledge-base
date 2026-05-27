@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#e5e5e5;display:flex;min-height:100vh}
+.sidebar{width:240px;background:#111;border-right:1px solid #222;padding:24px 0;position:fixed;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid #222;margin-bottom:16px}
+.sidebar-logo a{text-decoration:none;color:#f59e0b;font-weight:700;font-size:16px}
+.sidebar-logo span{display:block;color:#666;font-size:11px;margin-top:2px}
+.nav-section{padding:0 12px;margin-bottom:8px}
+.nav-label{font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:1px;padding:0 8px;margin-bottom:6px}
+.nav-item{display:block;padding:7px 8px;border-radius:6px;color:#999;text-decoration:none;font-size:13px;transition:all 0.15s}
+.nav-item:hover,.nav-item.active{background:#1a1a1a;color:#f59e0b}
+.main{margin-left:240px;flex:1;padding:40px}
+h1{font-size:28px;font-weight:700;margin-bottom:8px}
+.subtitle{color:#666;margin-bottom:32px;font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.card{background:#111;border:1px solid #222;border-radius:12px;padding:24px;text-decoration:none;color:inherit;transition:all 0.2s;display:block}
+.card:hover{border-color:#f59e0b;transform:translateY(-2px)}
+.card-title{font-size:16px;font-weight:600;margin-bottom:6px;color:#e5e5e5}
+.card-desc{font-size:13px;color:#666;line-height:1.5}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><a href="../index.html">Design KB</a><span>Knowledge Base</span></div>
+  <div class="nav-section"><div class="nav-label">3D</div>
+    <a class="nav-item active" href="index.html">Overview</a>
+    <a class="nav-item" href="r3f.html">R3F</a>
+    <a class="nav-item" href="shaders.html">Shaders</a>
+  </div>
+</nav>
+<main class="main">
+  <h1>3D Graphics</h1>
+  <p class="subtitle">Three.js, React Three Fiber, and GLSL shaders</p>
+  <div class="grid">
+    <a class="card" href="r3f.html"><div class="card-title">React Three Fiber</div><div class="card-desc">Declarative Three.js for React. Setup, Drei helpers, mouse interaction, Next.js integration.</div></a>
+    <a class="card" href="shaders.html"><div class="card-title">GLSL Shaders</div><div class="card-desc">Custom vertex/fragment shaders. Gradients, noise distortion, wave effects, R3F shader materials.</div></a>
+    <a class="card" href="../animations/three-js.html"><div class="card-title">Three.js Reference</div><div class="card-desc">Core Three.js without React — scene setup, geometries, materials, raycasting.</div></a>
+  </div>
+</main>
+</body>
+</html>

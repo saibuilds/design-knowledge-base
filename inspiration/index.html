@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inspiration — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#e5e5e5;display:flex;min-height:100vh}
+.sidebar{width:240px;background:#111;border-right:1px solid #222;padding:24px 0;position:fixed;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid #222;margin-bottom:16px}
+.sidebar-logo a{text-decoration:none;color:#f59e0b;font-weight:700;font-size:16px}
+.sidebar-logo span{display:block;color:#666;font-size:11px;margin-top:2px}
+.nav-section{padding:0 12px;margin-bottom:8px}
+.nav-label{font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:1px;padding:0 8px;margin-bottom:6px}
+.nav-item{display:block;padding:7px 8px;border-radius:6px;color:#999;text-decoration:none;font-size:13px;transition:all 0.15s}
+.nav-item:hover,.nav-item.active{background:#1a1a1a;color:#f59e0b}
+.main{margin-left:240px;flex:1;padding:40px}
+h1{font-size:28px;font-weight:700;margin-bottom:8px}
+.subtitle{color:#666;margin-bottom:32px;font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:40px}
+.card{background:#111;border:1px solid #222;border-radius:12px;padding:24px;text-decoration:none;color:inherit;transition:all 0.2s;display:block}
+.card:hover{border-color:#f59e0b;transform:translateY(-2px)}
+.card-title{font-size:16px;font-weight:600;margin-bottom:6px;color:#e5e5e5}
+.card-desc{font-size:13px;color:#666;line-height:1.5}
+h2{font-size:18px;font-weight:600;margin-bottom:16px;color:#f59e0b}
+.link-list{display:flex;flex-direction:column;gap:8px}
+.ext-link{display:flex;align-items:center;gap:10px;padding:12px 16px;background:#111;border:1px solid #222;border-radius:8px;text-decoration:none;color:#e5e5e5;font-size:13px;transition:all 0.15s}
+.ext-link:hover{border-color:#f59e0b;color:#f59e0b}
+.ext-link-url{color:#555;font-size:11px;margin-left:auto}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><a href="../index.html">Design KB</a><span>Knowledge Base</span></div>
+  <div class="nav-section"><div class="nav-label">Inspiration</div>
+    <a class="nav-item active" href="index.html">Overview</a>
+    <a class="nav-item" href="awwwards-patterns.html">Awwwards Patterns</a>
+    <a class="nav-item" href="../reference-sites/godly-patterns.html">Godly Patterns</a>
+  </div>
+  <div class="nav-section"><div class="nav-label">Reference Sites</div>
+    <a class="nav-item" href="../reference-sites/djcustomreno.html">DJ Custom Reno</a>
+    <a class="nav-item" href="../reference-sites/awwwards-patterns.html">Awwwards</a>
+    <a class="nav-item" href="../reference-sites/godly-patterns.html">Godly</a>
+  </div>
+</nav>
+<main class="main">
+  <h1>Inspiration</h1>
+  <p class="subtitle">Award-winning design patterns, curated galleries, and implementation references</p>
+
+  <div class="grid">
+    <a class="card" href="awwwards-patterns.html">
+      <div class="card-title">Awwwards Patterns</div>
+      <div class="card-desc">Navigation overlays, kinetic typography heroes, scroll-driven animations, custom cursors. Patterns extracted from SOTD winners.</div>
+    </a>
+    <a class="card" href="../reference-sites/godly-patterns.html">
+      <div class="card-title">Godly Patterns</div>
+      <div class="card-desc">Text reveal animations, image hover effects, bento grids, marquees. Curated from godly.website gallery.</div>
+    </a>
+    <a class="card" href="../reference-sites/djcustomreno.html">
+      <div class="card-title">DJ Custom Reno Analysis</div>
+      <div class="card-desc">Full site audit: tech stack, color palette, routes, improvement opportunities, and AI prompt templates.</div>
+    </a>
+  </div>
+
+  <h2>Live Galleries</h2>
+  <div class="link-list">
+    <a class="ext-link" href="https://www.awwwards.com/websites/" target="_blank">Awwwards <span class="ext-link-url">awwwards.com/websites</span></a>
+    <a class="ext-link" href="https://godly.website" target="_blank">Godly <span class="ext-link-url">godly.website</span></a>
+    <a class="ext-link" href="https://www.csswinner.com" target="_blank">CSS Winner <span class="ext-link-url">csswinner.com</span></a>
+    <a class="ext-link" href="https://www.siteinspire.com" target="_blank">Site Inspire <span class="ext-link-url">siteinspire.com</span></a>
+    <a class="ext-link" href="https://minimal.gallery" target="_blank">Minimal Gallery <span class="ext-link-url">minimal.gallery</span></a>
+    <a class="ext-link" href="https://land-book.com" target="_blank">Land Book <span class="ext-link-url">land-book.com</span></a>
+    <a class="ext-link" href="https://saas-landing-page.com" target="_blank">SaaS Landing Pages <span class="ext-link-url">saas-landing-page.com</span></a>
+    <a class="ext-link" href="https://lapa.ninja" target="_blank">Lapa Ninja <span class="ext-link-url">lapa.ninja</span></a>
+  </div>
+</main>
+</body>
+</html>

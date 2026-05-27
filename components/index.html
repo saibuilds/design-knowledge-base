@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Components — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#e5e5e5;display:flex;min-height:100vh}
+.sidebar{width:240px;background:#111;border-right:1px solid #222;padding:24px 0;position:fixed;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid #222;margin-bottom:16px}
+.sidebar-logo a{text-decoration:none;color:#f59e0b;font-weight:700;font-size:16px}
+.sidebar-logo span{display:block;color:#666;font-size:11px;margin-top:2px}
+.nav-section{padding:0 12px;margin-bottom:8px}
+.nav-label{font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:1px;padding:0 8px;margin-bottom:6px}
+.nav-item{display:block;padding:7px 8px;border-radius:6px;color:#999;text-decoration:none;font-size:13px;transition:all 0.15s}
+.nav-item:hover,.nav-item.active{background:#1a1a1a;color:#f59e0b}
+.main{margin-left:240px;flex:1;padding:40px}
+h1{font-size:28px;font-weight:700;margin-bottom:8px}
+.subtitle{color:#666;margin-bottom:32px;font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.card{background:#111;border:1px solid #222;border-radius:12px;padding:24px;text-decoration:none;color:inherit;transition:all 0.2s;display:block}
+.card:hover{border-color:#f59e0b;transform:translateY(-2px)}
+.card-title{font-size:16px;font-weight:600;margin-bottom:6px;color:#e5e5e5}
+.card-desc{font-size:13px;color:#666;line-height:1.5}
+.card-tag{display:inline-block;background:#1a1a1a;border:1px solid #333;border-radius:4px;padding:2px 7px;font-size:10px;color:#888;margin-top:10px;margin-right:4px}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><a href="../index.html">Design KB</a><span>Knowledge Base</span></div>
+  <div class="nav-section"><div class="nav-label">Components</div>
+    <a class="nav-item active" href="index.html">Overview</a>
+    <a class="nav-item" href="shadcn.html">shadcn/ui</a>
+    <a class="nav-item" href="21st-dev.html">21st.dev</a>
+    <a class="nav-item" href="magicui.html">Magic UI</a>
+    <a class="nav-item" href="aceternity.html">Aceternity</a>
+    <a class="nav-item" href="tailwind-blocks.html">Tailwind Blocks</a>
+  </div>
+</nav>
+<main class="main">
+  <h1>Components</h1>
+  <p class="subtitle">Component libraries, animation libraries, and block collections</p>
+  <div class="grid">
+    <a class="card" href="shadcn.html"><div class="card-title">shadcn/ui</div><div class="card-desc">All components list, dark theme CSS variables, form patterns, dialog usage.</div><span class="card-tag">Radix UI</span><span class="card-tag">Tailwind</span><span class="card-tag">Free</span></a>
+    <a class="card" href="21st-dev.html"><div class="card-title">21st.dev Magic MCP</div><div class="card-desc">Site clone feature, MCP setup, prompt templates for component generation.</div><span class="card-tag">MCP</span><span class="card-tag">AI</span></a>
+    <a class="card" href="magicui.html"><div class="card-title">Magic UI</div><div class="card-desc">50+ animated components — Border Beam, Marquee, Word Rotate, Particles.</div><span class="card-tag">Framer Motion</span><span class="card-tag">Free</span></a>
+    <a class="card" href="aceternity.html"><div class="card-title">Aceternity UI</div><div class="card-desc">Spotlight, Lamp, Floating Nav, 3D card and more premium animated patterns.</div><span class="card-tag">Framer Motion</span><span class="card-tag">Free</span></a>
+    <a class="card" href="tailwind-blocks.html"><div class="card-title">Tailwind Blocks</div><div class="card-desc">Block collections, hero patterns, service grids. Dark theme Tailwind templates.</div><span class="card-tag">Tailwind</span></a>
+  </div>
+</main>
+</body>
+</html>

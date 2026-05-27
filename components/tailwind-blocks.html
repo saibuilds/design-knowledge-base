@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tailwind Blocks — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#e5e5e5;display:flex;min-height:100vh}
+.sidebar{width:240px;background:#111;border-right:1px solid #222;padding:24px 0;position:fixed;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid #222;margin-bottom:16px}
+.sidebar-logo a{text-decoration:none;color:#f59e0b;font-weight:700;font-size:16px}
+.sidebar-logo span{display:block;color:#666;font-size:11px;margin-top:2px}
+.nav-section{padding:0 12px;margin-bottom:8px}
+.nav-label{font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:1px;padding:0 8px;margin-bottom:6px}
+.nav-item{display:block;padding:7px 8px;border-radius:6px;color:#999;text-decoration:none;font-size:13px;transition:all 0.15s}
+.nav-item:hover,.nav-item.active{background:#1a1a1a;color:#f59e0b}
+.main{margin-left:240px;flex:1;padding:40px;max-width:calc(100vw - 240px)}
+.search-bar{width:100%;background:#111;border:1px solid #222;border-radius:8px;padding:12px 16px;color:#e5e5e5;font-size:14px;font-family:'Inter',sans-serif;margin-bottom:32px;outline:none;transition:border-color 0.2s}
+.search-bar:focus{border-color:#f59e0b}
+h1{font-size:28px;font-weight:700;margin-bottom:8px}
+.subtitle{color:#666;margin-bottom:32px;font-size:15px}
+h2{font-size:20px;font-weight:600;margin:40px 0 16px;color:#f59e0b;border-bottom:1px solid #222;padding-bottom:10px}
+.recipe{background:#111;border:1px solid #222;border-radius:12px;padding:20px;margin-bottom:16px}
+.recipe-title{font-size:14px;font-weight:600;margin-bottom:4px}
+.recipe-desc{font-size:13px;color:#666;margin-bottom:14px}
+.code-wrap{position:relative}
+pre{border-radius:8px;overflow-x:auto;font-size:13px;line-height:1.6}
+.copy-btn{position:absolute;top:8px;right:8px;background:#222;border:1px solid #333;color:#999;padding:4px 10px;border-radius:5px;font-size:11px;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s;z-index:10}
+.copy-btn:hover{background:#333;color:#f59e0b}
+.copy-btn.copied{background:#f59e0b;color:#000;border-color:#f59e0b}
+.tip{background:#1a1a1a;border-left:3px solid #f59e0b;padding:10px 14px;border-radius:0 6px 6px 0;font-size:13px;color:#999;margin:12px 0}
+code{background:#1a1a1a;padding:1px 5px;border-radius:3px;font-size:12px;font-family:'Courier New',monospace;color:#a3e635}
+.source-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:24px}
+.source-card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:14px;text-decoration:none;color:inherit;transition:all 0.15s;display:block}
+.source-card:hover{border-color:#f59e0b}
+.source-name{font-size:14px;font-weight:600;margin-bottom:4px;color:#e5e5e5}
+.source-desc{font-size:12px;color:#555;line-height:1.5}
+.source-tag{font-size:10px;color:#f59e0b;margin-top:6px}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><a href="../index.html">Design KB</a><span>Knowledge Base</span></div>
+  <div class="nav-section"><div class="nav-label">Components</div>
+    <a class="nav-item" href="index.html">Overview</a>
+    <a class="nav-item" href="shadcn.html">shadcn/ui</a>
+    <a class="nav-item" href="21st-dev.html">21st.dev</a>
+    <a class="nav-item" href="magicui.html">Magic UI</a>
+    <a class="nav-item" href="aceternity.html">Aceternity</a>
+    <a class="nav-item active" href="tailwind-blocks.html">Tailwind Blocks</a>
+  </div>
+</nav>
+<main class="main">
+  <input class="search-bar" type="text" placeholder="Search Tailwind resources..." id="search">
+  <h1>Tailwind UI Blocks & Resources</h1>
+  <p class="subtitle">Component libraries, block collections, and patterns built on Tailwind CSS</p>
+
+  <h2>Free Resources</h2>
+  <div class="source-grid">
+    <a class="source-card" href="https://ui.shadcn.com/blocks" target="_blank" data-searchable>
+      <div class="source-name">shadcn/ui Blocks</div>
+      <div class="source-desc">Official page blocks: dashboard, auth, settings, marketing sections.</div>
+      <div class="source-tag">FREE — ui.shadcn.com/blocks</div>
+    </a>
+    <a class="source-card" href="https://tailwindui.com" target="_blank" data-searchable>
+      <div class="source-name">Tailwind UI</div>
+      <div class="source-desc">Official premium blocks by Tailwind team. Extremely high quality.</div>
+      <div class="source-tag">PAID — tailwindui.com</div>
+    </a>
+    <a class="source-card" href="https://flowbite.com/blocks/" target="_blank" data-searchable>
+      <div class="source-name">Flowbite Blocks</div>
+      <div class="source-desc">300+ free Tailwind blocks. Marketing, application, publisher layouts.</div>
+      <div class="source-tag">FREE — flowbite.com/blocks</div>
+    </a>
+    <a class="source-card" href="https://merakiui.com" target="_blank" data-searchable>
+      <div class="source-name">Meraki UI</div>
+      <div class="source-desc">Beautiful Tailwind CSS components with dark mode support.</div>
+      <div class="source-tag">FREE — merakiui.com</div>
+    </a>
+    <a class="source-card" href="https://daisyui.com" target="_blank" data-searchable>
+      <div class="source-name">daisyUI</div>
+      <div class="source-desc">Tailwind component library with 50+ themes. Class-based, no JS required.</div>
+      <div class="source-tag">FREE — daisyui.com</div>
+    </a>
+    <a class="source-card" href="https://preline.co" target="_blank" data-searchable>
+      <div class="source-name">Preline UI</div>
+      <div class="source-desc">250+ Tailwind components with JS interactions. Good for dashboards.</div>
+      <div class="source-tag">FREE — preline.co</div>
+    </a>
+  </div>
+
+  <h2>Dark Theme Tailwind Patterns</h2>
+
+  <div class="recipe" data-searchable>
+    <div class="recipe-title">Hero section — dark gradient + amber CTA</div>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code class="language-html">&lt;section class="relative min-h-screen flex items-center justify-center
+                bg-[#0a0a0a] overflow-hidden"&gt;
+  &lt;!-- Background grid --&gt;
+  &lt;div class="absolute inset-0 bg-[linear-gradient(to_right,#222_1px,transparent_1px),
+              linear-gradient(to_bottom,#222_1px,transparent_1px)]
+              bg-[size:64px_64px] opacity-30"&gt;&lt;/div&gt;
+
+  &lt;div class="relative z-10 text-center px-6 max-w-4xl mx-auto"&gt;
+    &lt;div class="inline-flex items-center gap-2 border border-amber-500/30
+                rounded-full px-4 py-1.5 text-sm text-amber-400 mb-8"&gt;
+      New — Custom renovations in your area
+    &lt;/div&gt;
+    &lt;h1 class="text-5xl md:text-7xl font-bold text-white leading-tight mb-6"&gt;
+      Transform your
+      &lt;span class="text-amber-500"&gt;space.&lt;/span&gt;
+    &lt;/h1&gt;
+    &lt;p class="text-neutral-400 text-lg md:text-xl mb-10 max-w-2xl mx-auto"&gt;
+      Premium renovation services delivered with craft and precision.
+    &lt;/p&gt;
+    &lt;div class="flex gap-4 justify-center flex-wrap"&gt;
+      &lt;a href="#contact" class="bg-amber-500 text-black font-semibold
+                                px-8 py-3.5 rounded-lg hover:bg-amber-400 transition"&gt;
+        Get a Free Quote
+      &lt;/a&gt;
+      &lt;a href="#portfolio" class="border border-white/20 text-white font-semibold
+                                  px-8 py-3.5 rounded-lg hover:bg-white/5 transition"&gt;
+        View Work
+      &lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+    </div>
+  </div>
+
+  <div class="recipe" data-searchable>
+    <div class="recipe-title">Services grid — dark cards with hover border</div>
+    <div class="code-wrap">
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<pre><code class="language-html">&lt;section class="bg-[#0a0a0a] py-24 px-6"&gt;
+  &lt;div class="max-w-6xl mx-auto"&gt;
+    &lt;h2 class="text-4xl font-bold text-white text-center mb-4"&gt;Our Services&lt;/h2&gt;
+    &lt;p class="text-neutral-500 text-center mb-16"&gt;Everything you need, nothing you don't.&lt;/p&gt;
+
+    &lt;div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"&gt;
+      &lt;!-- Service Card --&gt;
+      &lt;div class="group bg-[#111] border border-[#222] rounded-xl p-6
+                  hover:border-amber-500/50 transition-all duration-300"&gt;
+        &lt;div class="w-12 h-12 rounded-lg bg-amber-500/10 border border-amber-500/20
+                    flex items-center justify-center text-2xl mb-4"&gt;
+          🔨
+        &lt;/div&gt;
+        &lt;h3 class="text-white font-semibold text-lg mb-2"&gt;Kitchen Renovation&lt;/h3&gt;
+        &lt;p class="text-neutral-500 text-sm leading-relaxed"&gt;
+          Full kitchen remodels from concept to completion.
+          Cabinets, countertops, flooring, and more.
+        &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+    </div>
+  </div>
+
+  <div class="tip">For Tailwind v4 (2025+), import with <code>@import "tailwindcss"</code> in CSS instead of the config file approach. CSS variables are now the primary theming method.</div>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+hljs.highlightAll();
+function copyCode(btn) {
+  const code = btn.nextElementSibling.querySelector('code').innerText;
+  navigator.clipboard.writeText(code);
+  btn.textContent = 'Copied!';
+  btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+}
+document.getElementById('search').addEventListener('input', function() {
+  const q = this.value.toLowerCase();
+  document.querySelectorAll('[data-searchable]').forEach(el => {
+    el.style.display = el.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+});
+</script>
+</body>
+</html>

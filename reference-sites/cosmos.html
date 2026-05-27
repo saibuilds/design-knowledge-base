@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Cosmos.so Analysis — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0a;--card:#111111;--border:#1f1f1f;--accent:#f59e0b;--text:#e5e5e5;--muted:#737373;--green:#22c55e}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh}
+a{color:inherit;text-decoration:none}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:240px;background:var(--card);border-right:1px solid var(--border);padding:24px 0;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.sidebar-logo span{font-size:13px;font-weight:600;color:var(--accent);letter-spacing:.05em;text-transform:uppercase}
+.sidebar-logo p{font-size:11px;color:var(--muted);margin-top:4px}
+.nav-section{padding:8px 20px;font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:8px}
+.nav-link{display:flex;align-items:center;gap:8px;padding:8px 20px;font-size:13px;color:var(--muted);transition:.15s;border-left:2px solid transparent}
+.nav-link:hover,.nav-link.active{color:var(--text);background:rgba(245,158,11,.06);border-left-color:var(--accent)}
+.main{margin-left:240px;flex:1;padding:40px;max-width:1100px}
+h1{font-size:28px;font-weight:700;background:linear-gradient(135deg,#f59e0b,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.meta{display:flex;gap:12px;align-items:center;margin-bottom:32px;flex-wrap:wrap}
+.badge{font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(245,158,11,.1);color:var(--accent);border:1px solid rgba(245,158,11,.2);font-weight:500}
+.url-link{font-size:13px;color:var(--muted)}
+.url-link a{color:var(--accent)}
+.section{margin-bottom:40px}
+.section-title{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:12px}
+.card h3{font-size:14px;font-weight:600;margin-bottom:8px}
+.card p,.card li{font-size:13px;color:var(--muted);line-height:1.7}
+.card ul{padding-left:16px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.palette{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.swatch{display:flex;flex-direction:column;align-items:center;gap:6px}
+.swatch-color{width:52px;height:52px;border-radius:8px;border:1px solid rgba(255,255,255,.08)}
+.swatch-label{font-size:10px;color:var(--muted);font-family:monospace}
+pre{position:relative;border-radius:10px;overflow:hidden;margin-top:12px}
+.copy-btn{position:absolute;top:10px;right:10px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);color:var(--accent);font-size:11px;padding:4px 10px;border-radius:5px;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s;z-index:2}
+.copy-btn:hover{background:rgba(245,158,11,.2)}
+.copy-btn.copied{color:var(--green);border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.1)}
+.prompt-box{background:var(--card);border:1px solid rgba(245,158,11,.2);border-radius:12px;padding:20px;margin-bottom:12px;position:relative}
+.prompt-box h4{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:10px}
+.prompt-box p{font-size:13px;color:var(--muted);line-height:1.7;white-space:pre-wrap;word-break:break-word;font-family:'Inter',sans-serif}
+/* Cosmos-style masonry demo */
+.masonry-demo{columns:3;gap:8px;margin-top:16px}
+.masonry-item{background:#1a1a1a;border-radius:8px;margin-bottom:8px;break-inside:avoid;overflow:hidden;position:relative;cursor:pointer}
+.masonry-item:hover .masonry-overlay{opacity:1}
+.masonry-item img,.masonry-item .placeholder{width:100%;display:block}
+.masonry-item .placeholder{background:linear-gradient(135deg,#222,#333);aspect-ratio:var(--ar,4/3);display:flex;align-items:center;justify-content:center;color:#555;font-size:11px}
+.masonry-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);opacity:0;transition:.2s ease;display:flex;align-items:flex-end;padding:12px}
+.masonry-overlay span{color:#fff;font-size:12px;font-weight:500}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <div class="sidebar-logo"><span>Design KB</span><p>Web Design Knowledge Base</p></div>
+  <div class="nav-section">Hub</div>
+  <a class="nav-link" href="../index.html">⌂ Dashboard</a>
+  <div class="nav-section">Reference Sites</div>
+  <a class="nav-link" href="awwwards.html">◎ Awwwards</a>
+  <a class="nav-link" href="godly.html">◎ Godly</a>
+  <a class="nav-link" href="lusion.html">◎ Lusion</a>
+  <a class="nav-link" href="linear.html">◎ Linear</a>
+  <a class="nav-link" href="vercel.html">◎ Vercel</a>
+  <a class="nav-link" href="stripe.html">◎ Stripe</a>
+  <a class="nav-link active" href="cosmos.html">◎ Cosmos</a>
+  <a class="nav-link" href="mobbin.html">◎ Mobbin</a>
+</nav>
+<main class="main">
+  <h1>Cosmos.so — Gallery Layout & Card Design</h1>
+  <div class="meta">
+    <span class="badge">Inspiration Gallery</span>
+    <span class="badge">Masonry Layout</span>
+    <span class="badge">Card Design</span>
+    <span class="badge">Hover Effects</span>
+    <span class="url-link">→ <a href="https://cosmos.so" target="_blank">cosmos.so</a></span>
+  </div>
+
+  <div class="section">
+    <div class="section-title">What Cosmos Is</div>
+    <div class="card">
+      <p>Cosmos (formerly Savee.it) is a visual inspiration board and discovery platform for designers and creatives. It's Pinterest for the design community — but with far better curation and a more minimal, tasteful UI. Users save images, screenshots, videos, and links into "boards." The discover feed is a masonry-style image gallery. The design of the platform itself is exemplary: dark, minimal, fast, and the images always take center stage. Key interaction pattern: everything is about the image — UI chrome is nearly invisible until needed.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Masonry Layout Demo</div>
+    <div class="masonry-demo">
+      <div class="masonry-item"><div class="placeholder" style="--ar:4/3">Typography</div><div class="masonry-overlay"><span>Kinetic Type</span></div></div>
+      <div class="masonry-item"><div class="placeholder" style="--ar:9/16">Portrait</div><div class="masonry-overlay"><span>Editorial</span></div></div>
+      <div class="masonry-item"><div class="placeholder" style="--ar:1/1">Square</div><div class="masonry-overlay"><span>UI Design</span></div></div>
+      <div class="masonry-item"><div class="placeholder" style="--ar:16/9">Landscape</div><div class="masonry-overlay"><span>Brand Identity</span></div></div>
+      <div class="masonry-item"><div class="placeholder" style="--ar:3/4">Portrait</div><div class="masonry-overlay"><span>Photography</span></div></div>
+      <div class="masonry-item"><div class="placeholder" style="--ar:4/3">Illustration</div><div class="masonry-overlay"><span>3D Render</span></div></div>
+      <div class="masonry-item"><div class="placeholder" style="--ar:1/1">Animation</div><div class="masonry-overlay"><span>Motion</span></div></div>
+      <div class="masonry-item"><div class="placeholder" style="--ar:16/9">Web Design</div><div class="masonry-overlay"><span>Website</span></div></div>
+      <div class="masonry-item"><div class="placeholder" style="--ar:2/3">Poster</div><div class="masonry-overlay"><span>Print Design</span></div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Color Palette</div>
+    <div class="card">
+      <p>Cosmos uses near-black with no accent color — the imagery provides all the color:</p>
+      <div class="palette">
+        <div class="swatch"><div class="swatch-color" style="background:#111111"></div><span class="swatch-label">#111111</span></div>
+        <div class="swatch"><div class="swatch-color" style="background:#181818"></div><span class="swatch-label">#181818</span></div>
+        <div class="swatch"><div class="swatch-color" style="background:#222222"></div><span class="swatch-label">#222222</span></div>
+        <div class="swatch"><div class="swatch-color" style="background:#333333"></div><span class="swatch-label">#333333</span></div>
+        <div class="swatch"><div class="swatch-color" style="background:#666666"></div><span class="swatch-label">#666666</span></div>
+        <div class="swatch"><div class="swatch-color" style="background:#ffffff"></div><span class="swatch-label">#ffffff</span></div>
+      </div>
+      <p style="margin-top:12px">Zero colored accents in the chrome. User-saved imagery and color-extracted dominant tones are the only color. This is intentional — the platform serves the content, not itself.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Gallery Layout Patterns</div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Masonry Grid (Main Feed)</h3>
+        <ul>
+          <li>CSS columns: 3–5 depending on viewport width</li>
+          <li>gap: 6–8px — tight packing</li>
+          <li>Images maintain natural aspect ratio (no forced crop)</li>
+          <li>Infinite scroll with virtualization for performance</li>
+          <li>On hover: black overlay fades in (opacity 0 → 0.5)</li>
+          <li>No border-radius on images — maximizes image area</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Board Grid</h3>
+        <ul>
+          <li>Fixed-ratio grid for user boards (3-col, 1:1 forced)</li>
+          <li>First 3 images of a board shown as collage preview</li>
+          <li>Board title overlays bottom of the preview grid</li>
+          <li>Hover: slight scale(1.01) and border brightens</li>
+          <li>Count badge top-right on board cards</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Hover Effects</div>
+    <div class="card">
+      <ul>
+        <li><strong>Image overlay:</strong> Semi-transparent black (rgba(0,0,0,.5)) fades in on hover, revealing action buttons (save, share, open)</li>
+        <li><strong>Action buttons:</strong> Circle icon buttons appear at bottom of overlay — white bg, black icon, scale(0.8)→scale(1) on overlay appear</li>
+        <li><strong>Title reveal:</strong> Image title/source fades in at bottom of overlay if available</li>
+        <li><strong>Cursor change:</strong> crosshair or grab cursor on images</li>
+        <li><strong>No scale on images:</strong> Unlike many galleries, Cosmos does NOT scale images on hover — keeps layout stable, no gap-jumping</li>
+        <li><strong>Transition speed:</strong> 200ms ease — fast, not theatrical</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Card Design System</div>
+    <div class="card">
+      <ul>
+        <li><strong>Card as image:</strong> The card IS the image — no white padding, no text below by default</li>
+        <li><strong>Metadata on hover only:</strong> Source URL, tags, save count — all hidden until hover</li>
+        <li><strong>Progressive loading:</strong> Blurred thumbnail placeholder (blurhash) before full image loads</li>
+        <li><strong>Image format support:</strong> jpg, png, gif (plays on hover), mp4 (loops on hover), webp</li>
+        <li><strong>Right-click menu:</strong> Custom context menu with save/board actions instead of native browser menu</li>
+        <li><strong>Keyboard navigation:</strong> Arrow keys to navigate grid, Enter to open, Escape to close</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">What to Steal from Cosmos</div>
+    <div class="card">
+      <ul>
+        <li><strong>CSS columns masonry:</strong> The simplest masonry — no JS library needed. columns: 3, column-gap: 8px, break-inside: avoid on items</li>
+        <li><strong>Image-first card design:</strong> Let images fill 100% of the card — metadata in overlay, not below</li>
+        <li><strong>Blurhash placeholders:</strong> Generate 20-char blurhash strings server-side, render as colored div before img loads — eliminates layout shift</li>
+        <li><strong>No accent color in chrome:</strong> If your content is colorful, make the UI monochrome so it doesn't compete</li>
+        <li><strong>Scale-free hover:</strong> Not every image needs to scale on hover — overlay-only hover is often cleaner</li>
+        <li><strong>Tight gap:</strong> 6–8px between gallery items (not 16–24px) creates a denser, more immersive gallery feel</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Claude Prompts</div>
+    <div class="prompt-box">
+      <h4>Cosmos-Style Masonry Gallery</h4>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+      <p>Build a Cosmos-inspired masonry image gallery in React. Use CSS columns (not JS masonry) — 5 columns on xl, 4 on lg, 3 on md, 2 on sm, 1 on mobile. Column-gap and margin-bottom: 6px. Each card is an image with: (1) overflow-hidden, (2) break-inside: avoid, (3) position relative, (4) on hover: black overlay div (absolute inset-0 bg-black/50) fades in with opacity transition 200ms ease, (5) action buttons (save icon, open icon) appear in overlay bottom-right, (6) no scale animation. Images maintain natural aspect-ratio. Implement infinite scroll with an IntersectionObserver sentinel at the bottom. Background: #111111, no border-radius on images.</p>
+    </div>
+    <div class="prompt-box">
+      <h4>Board Preview Card Component</h4>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+      <p>Create a BoardCard component inspired by Cosmos.so boards. The card shows a 3-image collage preview: a 2/3 width image on the left, two 1/3 width images stacked on the right, all fitting in a fixed-height container (200px). Below the collage: board title (14px weight-500 text-white), item count (12px text-gray-500). On hover: border brightens from rgba(255,255,255,0.06) to rgba(255,255,255,0.15), transition 200ms. The board card is a dark card (#1a1a1a) with rounded-xl. Clicking navigates to the board page.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Code Snippet — CSS Masonry Gallery</div>
+    <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-tsx">// Cosmos-style CSS masonry gallery with hover overlay
+"use client";
+import { useState } from "react";
+import Image from "next/image";
+
+interface GalleryImage {
+  id: string;
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  title?: string;
+}
+
+function MasonryItem({ image }: { image: GalleryImage }) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    &lt;div
+      className="relative overflow-hidden cursor-pointer mb-[6px] break-inside-avoid"
+      onMouseEnter={() =&gt; setHovered(true)}
+      onMouseLeave={() =&gt; setHovered(false)}
+    &gt;
+      &lt;Image
+        src={image.src}
+        alt={image.alt}
+        width={image.width}
+        height={image.height}
+        className="w-full h-auto block"
+        style={{ display: "block" }}
+      /&gt;
+      {/* Hover overlay */}
+      &lt;div
+        className="absolute inset-0 transition-opacity duration-200 flex items-end justify-between p-3"
+        style={{
+          background: "rgba(0,0,0,0.5)",
+          opacity: hovered ? 1 : 0,
+        }}
+      &gt;
+        {image.title &amp;&amp; (
+          &lt;span className="text-white text-xs font-medium"&gt;{image.title}&lt;/span&gt;
+        )}
+        {/* Action buttons */}
+        &lt;div className="flex gap-2 ml-auto"&gt;
+          &lt;button
+            className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-black hover:scale-110 transition-transform"
+            onClick={(e) =&gt; { e.stopPropagation(); /* save action */ }}
+          &gt;
+            +
+          &lt;/button&gt;
+          &lt;button
+            className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-black hover:scale-110 transition-transform"
+            onClick={(e) =&gt; { e.stopPropagation(); /* open action */ }}
+          &gt;
+            ↗
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+
+export function MasonryGallery({ images }: { images: GalleryImage[] }) {
+  return (
+    &lt;div
+      className="bg-[#111]"
+      style={{
+        columns: "5 220px",
+        columnGap: "6px",
+        padding: "6px",
+      }}
+    &gt;
+      {images.map((img) =&gt; (
+        &lt;MasonryItem key={img.id} image={img} /&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}</code></pre>
+  </div>
+</main>
+</div>
+<script>
+hljs.highlightAll();
+function copyPrompt(btn){const text=btn.nextElementSibling.textContent;navigator.clipboard.writeText(text).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000)})}
+function copyCode(btn){const code=btn.parentElement.querySelector('code').textContent;navigator.clipboard.writeText(code).then(()=>{btn.textContent='Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000)})}
+</script>
+</body>
+</html>
