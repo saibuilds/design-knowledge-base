@@ -1,0 +1,918 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>MagicUI Components — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#e5e5e5;font-family:'Inter',sans-serif;font-size:15px;line-height:1.6}
+.sidebar{position:fixed;left:0;top:0;width:220px;height:100vh;background:#111;border-right:1px solid #1f1f1f;padding:20px;overflow-y:auto;z-index:100}
+.sidebar h2{font-size:13px;color:#f59e0b;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}
+.sidebar a{display:block;color:#888;text-decoration:none;padding:6px 8px;border-radius:6px;font-size:13px;margin-bottom:2px}
+.sidebar a:hover,.sidebar a.active{color:#fff;background:#1a1a1a}
+.main{margin-left:220px;padding:48px;max-width:960px}
+h1{font-size:32px;font-weight:700;color:#fff;margin-bottom:8px}
+h2{font-size:22px;font-weight:600;color:#fff;margin:48px 0 8px;padding-top:48px;border-top:1px solid #1f1f1f}
+h3{font-size:14px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.06em;margin:24px 0 8px}
+p{color:#aaa;margin-bottom:12px}
+.tag{display:inline-block;background:#f59e0b15;border:1px solid #f59e0b40;color:#f59e0b;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}
+.badge{display:inline-block;background:#1a1a1a;border:1px solid #2a2a2a;color:#888;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}
+.badge.free{background:#16301680;border-color:#22c55e40;color:#22c55e}
+.install-box{background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:12px 16px;margin:8px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:#f59e0b}
+.code-block{position:relative;margin:16px 0}
+.code-label{font-size:11px;color:#555;font-family:'JetBrains Mono',monospace;margin-bottom:4px}
+.copy-btn{position:absolute;top:8px;right:8px;background:#1f1f1f;border:1px solid #333;color:#888;padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer;z-index:1}
+.copy-btn:hover{color:#fff;background:#2a2a2a}
+pre{border-radius:8px;overflow:auto;font-size:12px;max-height:500px}
+.props-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+.props-table th{text-align:left;padding:8px 12px;background:#111;color:#888;font-weight:500;border-bottom:1px solid #1f1f1f}
+.props-table td{padding:8px 12px;border-bottom:1px solid #111;color:#aaa}
+.props-table td:first-child{color:#e5e5e5;font-family:'JetBrains Mono',monospace;font-size:12px}
+input[type=search]{width:100%;background:#111;border:1px solid #2a2a2a;color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;font-family:inherit;margin-bottom:32px;outline:none}
+input[type=search]:focus{border-color:#f59e0b50}
+.dep-note{background:#1a1200;border:1px solid #f59e0b30;border-radius:6px;padding:10px 14px;font-size:12px;color:#aaa;margin:8px 0}
+.dep-note code{color:#f59e0b;font-family:'JetBrains Mono',monospace}
+</style></head>
+<body>
+<div class="sidebar">
+  <h2>MagicUI</h2>
+  <a href="../index.html">&#8962; Home</a>
+  <a href="magicui-components.html" class="active">MagicUI Components</a>
+  <a href="aceternity-components.html">Aceternity Components</a>
+  <a href="free-components-master.html">All Free Components</a>
+  <hr style="border-color:#1f1f1f;margin:12px 0">
+  <a href="#animated-beam">Animated Beam</a>
+  <a href="#marquee">Marquee</a>
+  <a href="#number-ticker">Number Ticker</a>
+  <a href="#shimmer-button">Shimmer Button</a>
+  <a href="#animated-gradient-text">Gradient Text</a>
+  <a href="#bento-grid">Bento Grid</a>
+  <a href="#particles">Particles</a>
+</div>
+<div class="main">
+  <h1>MagicUI Components</h1>
+  <p style="color:#666;margin-bottom:4px">Source: <a href="https://magicui.design" style="color:#f59e0b">magicui.design</a> &nbsp;|&nbsp; Install via pnpm dlx shadcn@latest add @magicui/[name]</p>
+  <p style="color:#555;font-size:13px;margin-bottom:32px">All components require <code style="color:#f59e0b;font-family:'JetBrains Mono',monospace">motion/react</code> (Framer Motion) and <code style="color:#f59e0b;font-family:'JetBrains Mono',monospace">cn()</code> from <code style="color:#f59e0b;font-family:'JetBrains Mono',monospace">@/lib/utils</code>.</p>
+  <input type="search" placeholder="Search components..." oninput="search(this.value)">
+  <div id="content">
+
+<!-- ANIMATED BEAM -->
+<div data-component="animated-beam" id="animated-beam">
+  <h2>Animated Beam <span class="badge free">FREE</span> <span class="tag">animation</span> <span class="tag">svg</span></h2>
+  <p>An animated beam of light that travels along a curved SVG path between two elements. Ideal for showcasing integrations, data flows, or connection diagrams between UI nodes.</p>
+  <div class="install-box">pnpm dlx shadcn@latest add @magicui/animated-beam</div>
+  <div class="dep-note">Dependencies: <code>motion/react</code> (Framer Motion) &nbsp;|&nbsp; Utility: <code>cn()</code> from <code>@/lib/utils</code></div>
+
+  <h3>Component Source</h3>
+  <div class="code-block">
+    <span class="code-label">components/ui/animated-beam.tsx</span>
+    <button class="copy-btn">Copy</button>
+    <pre><code class="language-typescript">"use client"
+
+import { useEffect, useId, useState, type RefObject } from "react"
+import { motion } from "motion/react"
+import { cn } from "@/lib/utils"
+
+export interface AnimatedBeamProps {
+  className?: string
+  containerRef: RefObject&lt;HTMLElement | null&gt;
+  fromRef: RefObject&lt;HTMLElement | null&gt;
+  toRef: RefObject&lt;HTMLElement | null&gt;
+  curvature?: number
+  reverse?: boolean
+  pathColor?: string
+  pathWidth?: number
+  pathOpacity?: number
+  gradientStartColor?: string
+  gradientStopColor?: string
+  delay?: number
+  duration?: number
+  repeat?: number
+  repeatDelay?: number
+  startXOffset?: number
+  startYOffset?: number
+  endXOffset?: number
+  endYOffset?: number
+}
+
+export const AnimatedBeam: React.FC&lt;AnimatedBeamProps&gt; = ({
+  className,
+  containerRef,
+  fromRef,
+  toRef,
+  curvature = 0,
+  reverse = false,
+  duration = 5,
+  delay = 0,
+  pathColor = "gray",
+  pathWidth = 2,
+  pathOpacity = 0.2,
+  gradientStartColor = "#ffaa40",
+  gradientStopColor = "#9c40ff",
+  repeat = Infinity,
+  repeatDelay = 0,
+  startXOffset = 0,
+  startYOffset = 0,
+  endXOffset = 0,
+  endYOffset = 0,
+}) =&gt; {
+  const id = useId()
+  const [pathD, setPathD] = useState("")
+  const [svgDimensions, setSvgDimensions] = useState({ width: 0, height: 0 })
+
+  const gradientCoordinates = reverse
+    ? { x1: ["90%", "-10%"], x2: ["100%", "0%"], y1: ["0%", "0%"], y2: ["0%", "0%"] }
+    : { x1: ["10%", "110%"], x2: ["0%", "100%"], y1: ["0%", "0%"], y2: ["0%", "0%"] }
+
+  useEffect(() => {
+    const updatePath = () => {
+      if (containerRef.current && fromRef.current && toRef.current) {
+        const containerRect = containerRef.current.getBoundingClientRect()
+        const rectA = fromRef.current.getBoundingClientRect()
+        const rectB = toRef.current.getBoundingClientRect()
+        const svgWidth = containerRect.width
+        const svgHeight = containerRect.height
+        setSvgDimensions({ width: svgWidth, height: svgHeight })
+        const startX = rectA.left - containerRect.left + rectA.width / 2 + startXOffset
+        const startY = rectA.top - containerRect.top + rectA.height / 2 + startYOffset
+        const endX = rectB.left - containerRect.left + rectB.width / 2 + endXOffset
+        const endY = rectB.top - containerRect.top + rectB.height / 2 + endYOffset
+        const controlY = startY - curvature
+        const d = `M ${startX},${startY} Q ${(startX + endX) / 2},${controlY} ${endX},${endY}`
+        setPathD(d)
+      }
+    }
+    const resizeObserver = new ResizeObserver(() => { updatePath() })
+    if (containerRef.current) { resizeObserver.observe(containerRef.current) }
+    updatePath()
+    return () => { resizeObserver.disconnect() }
+  }, [containerRef, fromRef, toRef, curvature, startXOffset, startYOffset, endXOffset, endYOffset])
+
+  return (
+    &lt;svg
+      fill="none"
+      width={svgDimensions.width}
+      height={svgDimensions.height}
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn("pointer-events-none absolute top-0 left-0 transform-gpu stroke-2", className)}
+      viewBox={`0 0 ${svgDimensions.width} ${svgDimensions.height}`}
+    &gt;
+      &lt;path d={pathD} stroke={pathColor} strokeWidth={pathWidth} strokeOpacity={pathOpacity} strokeLinecap="round" /&gt;
+      &lt;path d={pathD} strokeWidth={pathWidth} stroke={`url(#${id})`} strokeOpacity="1" strokeLinecap="round" /&gt;
+      &lt;defs&gt;
+        &lt;motion.linearGradient
+          className="transform-gpu"
+          id={id}
+          gradientUnits={"userSpaceOnUse"}
+          initial={{ x1: "0%", x2: "0%", y1: "0%", y2: "0%" }}
+          animate={{
+            x1: gradientCoordinates.x1,
+            x2: gradientCoordinates.x2,
+            y1: gradientCoordinates.y1,
+            y2: gradientCoordinates.y2,
+          }}
+          transition={{
+            delay, duration,
+            ease: [0.16, 1, 0.3, 1],
+            repeat, repeatDelay,
+          }}
+        &gt;
+          &lt;stop stopColor={gradientStartColor} stopOpacity="0"&gt;&lt;/stop&gt;
+          &lt;stop stopColor={gradientStartColor}&gt;&lt;/stop&gt;
+          &lt;stop offset="32.5%" stopColor={gradientStopColor}&gt;&lt;/stop&gt;
+          &lt;stop offset="100%" stopColor={gradientStopColor} stopOpacity="0"&gt;&lt;/stop&gt;
+        &lt;/motion.linearGradient&gt;
+      &lt;/defs&gt;
+    &lt;/svg&gt;
+  )
+}</code></pre>
+  </div>
+
+  <h3>Usage Example</h3>
+  <div class="code-block">
+    <span class="code-label">usage.tsx</span>
+    <button class="copy-btn">Copy</button>
+    <pre><code class="language-typescript">import { useRef } from "react"
+import { AnimatedBeam } from "@/components/ui/animated-beam"
+
+export function Demo() {
+  const containerRef = useRef&lt;HTMLDivElement&gt;(null)
+  const div1Ref = useRef&lt;HTMLDivElement&gt;(null)
+  const div2Ref = useRef&lt;HTMLDivElement&gt;(null)
+
+  return (
+    &lt;div ref={containerRef} className="relative flex items-center justify-between p-10"&gt;
+      &lt;div ref={div1Ref} className="w-12 h-12 bg-white rounded-full" /&gt;
+      &lt;div ref={div2Ref} className="w-12 h-12 bg-white rounded-full" /&gt;
+      &lt;AnimatedBeam containerRef={containerRef} fromRef={div1Ref} toRef={div2Ref} /&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+  </div>
+
+  <h3>Props</h3>
+  <table class="props-table">
+    <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+    <tr><td>containerRef</td><td>RefObject&lt;HTMLElement&gt;</td><td>required</td><td>Ref to the parent container element</td></tr>
+    <tr><td>fromRef</td><td>RefObject&lt;HTMLElement&gt;</td><td>required</td><td>Starting element ref</td></tr>
+    <tr><td>toRef</td><td>RefObject&lt;HTMLElement&gt;</td><td>required</td><td>Ending element ref</td></tr>
+    <tr><td>curvature</td><td>number</td><td>0</td><td>Curve amount of the beam path</td></tr>
+    <tr><td>reverse</td><td>boolean</td><td>false</td><td>Reverse animation direction</td></tr>
+    <tr><td>pathColor</td><td>string</td><td>"gray"</td><td>Color of the static path line</td></tr>
+    <tr><td>pathWidth</td><td>number</td><td>2</td><td>Width of the path</td></tr>
+    <tr><td>pathOpacity</td><td>number</td><td>0.2</td><td>Opacity of the static path</td></tr>
+    <tr><td>gradientStartColor</td><td>string</td><td>"#ffaa40"</td><td>Beam gradient start color</td></tr>
+    <tr><td>gradientStopColor</td><td>string</td><td>"#9c40ff"</td><td>Beam gradient end color</td></tr>
+    <tr><td>duration</td><td>number</td><td>5</td><td>Animation duration in seconds</td></tr>
+    <tr><td>delay</td><td>number</td><td>0</td><td>Delay before animation starts</td></tr>
+    <tr><td>startXOffset / startYOffset</td><td>number</td><td>0</td><td>Offset the beam start position</td></tr>
+    <tr><td>endXOffset / endYOffset</td><td>number</td><td>0</td><td>Offset the beam end position</td></tr>
+  </table>
+</div>
+
+<!-- MARQUEE -->
+<div data-component="marquee" id="marquee">
+  <h2>Marquee <span class="badge free">FREE</span> <span class="tag">scroll</span> <span class="tag">infinite</span></h2>
+  <p>An infinite scrolling component for text, images, cards, or any content. Supports horizontal/vertical directions, reverse, and pause-on-hover. Great for testimonial carousels, logo walls, and ticker displays.</p>
+  <div class="install-box">pnpm dlx shadcn@latest add @magicui/marquee</div>
+
+  <h3>Component Source</h3>
+  <div class="code-block">
+    <span class="code-label">components/ui/marquee.tsx</span>
+    <button class="copy-btn">Copy</button>
+    <pre><code class="language-typescript">import { type ComponentPropsWithoutRef } from "react"
+import { cn } from "@/lib/utils"
+
+interface MarqueeProps extends ComponentPropsWithoutRef&lt;"div"&gt; {
+  className?: string
+  /** Reverse scroll direction @default false */
+  reverse?: boolean
+  /** Pause animation on hover @default false */
+  pauseOnHover?: boolean
+  children: React.ReactNode
+  /** Animate vertically instead of horizontally @default false */
+  vertical?: boolean
+  /** Number of times to repeat content @default 4 */
+  repeat?: number
+}
+
+export function Marquee({
+  className,
+  reverse = false,
+  pauseOnHover = false,
+  children,
+  vertical = false,
+  repeat = 4,
+  ...props
+}: MarqueeProps) {
+  return (
+    &lt;div
+      {...props}
+      className={cn(
+        "group flex gap-(--gap) overflow-hidden p-2 [--duration:40s] [--gap:1rem]",
+        { "flex-row": !vertical, "flex-col": vertical },
+        className
+      )}
+    &gt;
+      {Array(repeat).fill(0).map((_, i) =&gt; (
+        &lt;div
+          key={i}
+          className={cn("flex shrink-0 justify-around gap-(--gap)", {
+            "animate-marquee flex-row": !vertical,
+            "animate-marquee-vertical flex-col": vertical,
+            "group-hover:[animation-play-state:paused]": pauseOnHover,
+            "[animation-direction:reverse]": reverse,
+          })}
+        &gt;
+          {children}
+        &lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  )
+}</code></pre>
+  </div>
+
+  <h3>Required Tailwind Config (tailwind.config.ts)</h3>
+  <div class="code-block">
+    <span class="code-label">tailwind.config.ts — add to theme.extend</span>
+    <button class="copy-btn">Copy</button>
+    <pre><code class="language-typescript">animation: {
+  marquee: "marquee var(--duration) linear infinite",
+  "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
+},
+keyframes: {
+  marquee: {
+    from: { transform: "translateX(0)" },
+    to: { transform: "translateX(calc(-100% - var(--gap)))" },
+  },
+  "marquee-vertical": {
+    from: { transform: "translateY(0)" },
+    to: { transform: "translateY(calc(-100% - var(--gap)))" },
+  },
+},</code></pre>
+  </div>
+
+  <h3>Usage Example</h3>
+  <div class="code-block">
+    <span class="code-label">usage.tsx</span>
+    <button class="copy-btn">Copy</button>
+    <pre><code class="language-typescript">import { Marquee } from "@/components/ui/marquee"
+
+const logos = ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"]
+
+export function LogoMarquee() {
+  return (
+    &lt;Marquee pauseOnHover className="[--duration:20s]"&gt;
+      {logos.map((logo) =&gt; (
+        &lt;div key={logo} className="px-6 py-3 bg-white/10 rounded-lg text-white"&gt;
+          {logo}
+        &lt;/div&gt;
+      ))}
+    &lt;/Marquee&gt;
+  )
+}</code></pre>
+  </div>
+
+  <h3>Props</h3>
+  <table class="props-table">
+    <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+    <tr><td>reverse</td><td>boolean</td><td>false</td><td>Reverses scroll direction</td></tr>
+    <tr><td>pauseOnHover</td><td>boolean</td><td>false</td><td>Pauses animation on hover</td></tr>
+    <tr><td>vertical</td><td>boolean</td><td>false</td><td>Scrolls vertically instead of horizontally</td></tr>
+    <tr><td>repeat</td><td>number</td><td>4</td><td>Number of content repetitions (more = smoother loop)</td></tr>
+    <tr><td>className</td><td>string</td><td>—</td><td>Override --duration via CSS variable e.g. [--duration:20s]</td></tr>
+    <tr><td>children</td><td>ReactNode</td><td>required</td><td>Items to scroll</td></tr>
+  </table>
+</div>
+
+<!-- NUMBER TICKER -->
+<div data-component="number-ticker" id="number-ticker">
+  <h2>Number Ticker <span class="badge free">FREE</span> <span class="tag">animation</span> <span class="tag">counter</span></h2>
+  <p>Animates numbers counting up or down to a target value using spring physics. Triggers when the element enters the viewport. Perfect for stats sections, dashboards, and KPI displays.</p>
+  <div class="install-box">pnpm dlx shadcn@latest add @magicui/number-ticker</div>
+  <div class="dep-note">Dependencies: <code>motion/react</code> (Framer Motion)</div>
+
+  <h3>Component Source</h3>
+  <div class="code-block">
+    <span class="code-label">components/ui/number-ticker.tsx</span>
+    <button class="copy-btn">Copy</button>
+    <pre><code class="language-typescript">"use client"
+
+import { useEffect, useRef, type ComponentPropsWithoutRef } from "react"
+import { useInView, useMotionValue, useSpring } from "motion/react"
+import { cn } from "@/lib/utils"
+
+interface NumberTickerProps extends ComponentPropsWithoutRef&lt;"span"&gt; {
+  value: number
+  startValue?: number
+  direction?: "up" | "down"
+  delay?: number
+  decimalPlaces?: number
+}
+
+export function NumberTicker({
+  value,
+  startValue = 0,
+  direction = "up",
+  delay = 0,
+  className,
+  decimalPlaces = 0,
+  ...props
+}: NumberTickerProps) {
+  const ref = useRef&lt;HTMLSpanElement&gt;(null)
+  const motionValue = useMotionValue(direction === "down" ? value : startValue)
+  const springValue = useSpring(motionValue, { damping: 60, stiffness: 100 })
+  const isInView = useInView(ref, { once: true, margin: "0px" })
+
+  useEffect(() =&gt; {
+    let timer: ReturnType&lt;typeof setTimeout&gt; | null = null
+    if (isInView) {
+      timer = setTimeout(() =&gt; {
+        motionValue.set(direction === "down" ? startValue : value)
+      }, delay * 1000)
+    }
+    return () =&gt; { if (timer !== null) clearTimeout(timer) }
+  }, [motionValue, isInView, delay, value, direction, startValue])
+
+  useEffect(
+    () =&gt; springValue.on("change", (latest) =&gt; {
+      if (ref.current) {
+        ref.current.textContent = Intl.NumberFormat("en-US", {
+          minimumFractionDigits: decimalPlaces,
+          maximumFractionDigits: decimalPlaces,
+        }).format(Number(latest.toFixed(decimalPlaces)))
+      }
+    }),
+    [springValue, decimalPlaces]
+  )
+
+  return (
+    &lt;span
+      ref={ref}
+      className={cn("inline-block tracking-wider text-black tabular-nums dark:text-white", className)}
+      {...props}
+    &gt;
+      {startValue}
+    &lt;/span&gt;
+  )
+}</code></pre>
+  </div>
+
+  <h3>Usage Example</h3>
+  <div class="code-block">
+    <span class="code-label">usage.tsx</span>
+    <button class="copy-btn">Copy</button>
+    <pre><code class="language-typescript">import { NumberTicker } from "@/components/ui/number-ticker"
+
+export function StatsSection() {
+  return (
+    &lt;div className="flex gap-12 text-center"&gt;
+      &lt;div&gt;
+        &lt;NumberTicker value={10000} className="text-5xl font-bold" /&gt;
+        &lt;p&gt;Users&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;NumberTicker value={99.9} decimalPlaces={1} className="text-5xl font-bold" /&gt;
+        &lt;p&gt;Uptime %&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;NumberTicker value={500} direction="down" delay={0.5} className="text-5xl font-bold" /&gt;
+        &lt;p&gt;ms latency&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+  </div>
+
+  <h3>Props</h3>
+  <table class="props-table">
+    <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+    <tr><td>value</td><td>number</td><td>required</td><td>Target number to count to</td></tr>
+    <tr><td>startValue</td><td>number</td><td>0</td><td>Starting number</td></tr>
+    <tr><td>direction</td><td>"up" | "down"</td><td>"up"</td><td>Count direction</td></tr>
+    <tr><td>delay</td><td>number</td><td>0</td><td>Delay in seconds before starting</td></tr>
+    <tr><td>decimalPlaces</td><td>number</td><td>0</td><td>Number of decimal places to show</td></tr>
+    <tr><td>className</td><td>string</td><td>—</td><td>Additional CSS classes</td></tr>
+  </table>
+</div>
+
+<!-- SHIMMER BUTTON -->
+<div data-component="shimmer-button" id="shimmer-button">
+  <h2>Shimmer Button <span class="badge free">FREE</span> <span class="tag">button</span> <span class="tag">animation</span></h2>
+  <p>A button with an animated shimmer/spark of light that orbits around its perimeter using CSS conic gradients. No dependencies beyond Tailwind. Perfect for CTAs and primary actions.</p>
+  <div class="install-box">pnpm dlx shadcn@latest add @magicui/shimmer-button</div>
+
+  <h3>Component Source</h3>
+  <div class="code-block">
+    <span class="code-label">components/ui/shimmer-button.tsx</span>
+    <button class="copy-btn">Copy</button>
+    <pre><code class="language-typescript">import React, { type ComponentPropsWithoutRef, type CSSProperties } from "react"
+import { cn } from "@/lib/utils"
+
+export interface ShimmerButtonProps extends ComponentPropsWithoutRef&lt;"button"&gt; {
+  shimmerColor?: string
+  shimmerSize?: string
+  borderRadius?: string
+  shimmerDuration?: string
+  background?: string
+  className?: string
+  children?: React.ReactNode
+}
+
+export const ShimmerButton = React.forwardRef&lt;HTMLButtonElement, ShimmerButtonProps&gt;(
+  (
+    {
+      shimmerColor = "#ffffff",
+      shimmerSize = "0.05em",
+      shimmerDuration = "3s",
+      borderRadius = "100px",
+      background = "rgba(0, 0, 0, 1)",
+      className,
+      children,
+      ...props
+    },
+    ref
+  ) =&gt; {
+    return (
+      &lt;button
+        style={{
+          "--spread": "90deg",
+          "--shimmer-color": shimmerColor,
+          "--radius": borderRadius,
+          "--speed": shimmerDuration,
+          "--cut": shimmerSize,
+          "--bg": background,
+        } as CSSProperties}
+        className={cn(
+          "group relative z-0 flex cursor-pointer items-center justify-center overflow-hidden [border-radius:var(--radius)] border border-white/10 px-6 py-3 whitespace-nowrap text-white [background:var(--bg)]",
+          "transform-gpu transition-transform duration-300 ease-in-out active:translate-y-px",
+          className
+        )}
+        ref={ref}
+        {...props}
+      &gt;
+        {/* spark container */}
+        &lt;div className={cn("-z-30 blur-[2px]", "@container-[size] absolute inset-0 overflow-visible")}&gt;
+          &lt;div className="animate-shimmer-slide absolute inset-0 aspect-[1] h-[100cqh] rounded-none [mask:none]"&gt;
+            &lt;div className="animate-spin-around absolute -inset-full w-auto [translate:0_0] rotate-0 [background:conic-gradient(from_calc(270deg-(var(--spread)*0.5)),transparent_0,var(--shimmer-color)_var(--spread),transparent_var(--spread))]" /&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        {children}
+        {/* Highlight */}
+        &lt;div className={cn(
+          "absolute inset-0 size-full rounded-2xl px-4 py-1.5 text-sm font-medium shadow-[inset_0_-8px_10px_#ffffff1f]",
+          "transform-gpu transition-all duration-300 ease-in-out",
+          "group-hover:shadow-[inset_0_-6px_10px_#ffffff3f]",
+          "group-active:shadow-[inset_0_-10px_10px_#ffffff3f]"
+        )} />
+        {/* backdrop */}
+        &lt;div className={cn("absolute inset-(--cut) -z-20 [border-radius:var(--radius)] [background:var(--bg)]")} /&gt;
+      &lt;/button&gt;
+    )
+  }
+)
+ShimmerButton.displayName = "ShimmerButton"</code></pre>
+  </div>
+
+  <h3>Required Tailwind Animations (tailwind.config.ts)</h3>
+  <div class="code-block">
+    <span class="code-label">tailwind.config.ts</span>
+    <button class="copy-btn">Copy</button>
+    <pre><code class="language-typescript">animation: {
+  "shimmer-slide": "shimmer-slide var(--speed) ease-in-out infinite alternate",
+  "spin-around": "spin-around calc(var(--speed) * 2) infinite linear",
+},
+keyframes: {
+  "shimmer-slide": {
+    to: { transform: "translate(calc(100cqw - 100%), 0)" },
+  },
+  "spin-around": {
+    "0%": { transform: "translateZ(0) rotate(0)" },
+    "15%, 35%": { transform: "translateZ(0) rotate(90deg)" },
+    "65%, 85%": { transform: "translateZ(0) rotate(270deg)" },
+    "100%": { transform: "translateZ(0) rotate(360deg)" },
+  },
+},</code></pre>
+  </div>
+
+  <h3>Props</h3>
+  <table class="props-table">
+    <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+    <tr><td>shimmerColor</td><td>string</td><td>#ffffff</td><td>Color of the shimmer spark</td></tr>
+    <tr><td>shimmerSize</td><td>string</td><td>0.05em</td><td>Thickness of the shimmer cut/gap</td></tr>
+    <tr><td>borderRadius</td><td>string</td><td>100px</td><td>Button border radius</td></tr>
+    <tr><td>shimmerDuration</td><td>string</td><td>3s</td><td>Duration of one shimmer cycle</td></tr>
+    <tr><td>background</td><td>string</td><td>rgba(0,0,0,1)</td><td>Button background color</td></tr>
+    <tr><td>className</td><td>string</td><td>—</td><td>Additional Tailwind classes</td></tr>
+    <tr><td>children</td><td>ReactNode</td><td>—</td><td>Button content</td></tr>
+  </table>
+</div>
+
+<!-- ANIMATED GRADIENT TEXT -->
+<div data-component="animated-gradient-text" id="animated-gradient-text">
+  <h2>Animated Gradient Text <span class="badge free">FREE</span> <span class="tag">text</span> <span class="tag">gradient</span></h2>
+  <p>A text component with a continuously animated gradient that flows through the characters. Customize colors and speed. Works on any text element — headings, labels, badges, etc.</p>
+  <div class="install-box">pnpm dlx shadcn@latest add @magicui/animated-gradient-text</div>
+
+  <h3>Component Source</h3>
+  <div class="code-block">
+    <span class="code-label">components/ui/animated-gradient-text.tsx</span>
+    <button class="copy-btn">Copy</button>
+    <pre><code class="language-typescript">import { type ComponentPropsWithoutRef } from "react"
+import { cn } from "@/lib/utils"
+
+export interface AnimatedGradientTextProps extends ComponentPropsWithoutRef&lt;"div"&gt; {
+  speed?: number
+  colorFrom?: string
+  colorTo?: string
+}
+
+export function AnimatedGradientText({
+  children,
+  className,
+  speed = 1,
+  colorFrom = "#ffaa40",
+  colorTo = "#9c40ff",
+  ...props
+}: AnimatedGradientTextProps) {
+  return (
+    &lt;span
+      style={{
+        "--bg-size": `${speed * 300}%`,
+        "--color-from": colorFrom,
+        "--color-to": colorTo,
+      } as React.CSSProperties}
+      className={cn(
+        "animate-gradient inline bg-linear-to-r from-(--color-from) via-(--color-to) to-(--color-from) bg-size-[var(--bg-size)_100%] bg-clip-text text-transparent",
+        className
+      )}
+      {...props}
+    &gt;
+      {children}
+    &lt;/span&gt;
+  )
+}</code></pre>
+  </div>
+
+  <h3>Required Tailwind Animation</h3>
+  <div class="code-block">
+    <span class="code-label">tailwind.config.ts</span>
+    <button class="copy-btn">Copy</button>
+    <pre><code class="language-typescript">animation: {
+  gradient: "gradient 8s linear infinite",
+},
+keyframes: {
+  gradient: {
+    to: { backgroundPosition: "var(--bg-size) 0" },
+  },
+},</code></pre>
+  </div>
+
+  <h3>Usage Example</h3>
+  <div class="code-block">
+    <span class="code-label">usage.tsx</span>
+    <button class="copy-btn">Copy</button>
+    <pre><code class="language-typescript">import { AnimatedGradientText } from "@/components/ui/animated-gradient-text"
+
+export function Hero() {
+  return (
+    &lt;h1 className="text-6xl font-bold"&gt;
+      &lt;AnimatedGradientText colorFrom="#06b6d4" colorTo="#8b5cf6" speed={2}&gt;
+        Build faster.
+      &lt;/AnimatedGradientText&gt;
+    &lt;/h1&gt;
+  )
+}</code></pre>
+  </div>
+
+  <h3>Props</h3>
+  <table class="props-table">
+    <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+    <tr><td>speed</td><td>number</td><td>1</td><td>Animation speed multiplier (higher = faster)</td></tr>
+    <tr><td>colorFrom</td><td>string</td><td>#ffaa40</td><td>Gradient start/end color (loops back)</td></tr>
+    <tr><td>colorTo</td><td>string</td><td>#9c40ff</td><td>Gradient mid color</td></tr>
+    <tr><td>className</td><td>string</td><td>—</td><td>Additional classes for font size, weight, etc.</td></tr>
+    <tr><td>children</td><td>ReactNode</td><td>required</td><td>Text content</td></tr>
+  </table>
+</div>
+
+<!-- BENTO GRID -->
+<div data-component="bento-grid" id="bento-grid">
+  <h2>Bento Grid <span class="badge free">FREE</span> <span class="tag">layout</span> <span class="tag">cards</span></h2>
+  <p>A bento-box layout for showcasing product features. Uses CSS Grid with configurable column and row spans. Cards have hover-reveal CTAs and support rich background content (animations, images, etc.).</p>
+  <div class="install-box">pnpm dlx shadcn@latest add @magicui/bento-grid</div>
+  <div class="dep-note">Dependencies: <code>@radix-ui/react-icons</code> &nbsp;|&nbsp; Uses shadcn <code>Button</code> component</div>
+
+  <h3>Component Source</h3>
+  <div class="code-block">
+    <span class="code-label">components/ui/bento-grid.tsx</span>
+    <button class="copy-btn">Copy</button>
+    <pre><code class="language-typescript">import { type ComponentPropsWithoutRef, type ReactNode } from "react"
+import { ArrowRightIcon } from "@radix-ui/react-icons"
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+
+interface BentoGridProps extends ComponentPropsWithoutRef&lt;"div"&gt; {
+  children: ReactNode
+  className?: string
+}
+
+interface BentoCardProps extends ComponentPropsWithoutRef&lt;"div"&gt; {
+  name: string
+  className: string
+  background: ReactNode
+  Icon: React.ElementType
+  description: string
+  href: string
+  cta: string
+}
+
+const BentoGrid = ({ children, className, ...props }: BentoGridProps) =&gt; (
+  &lt;div className={cn("grid w-full auto-rows-[22rem] grid-cols-3 gap-4", className)} {...props}&gt;
+    {children}
+  &lt;/div&gt;
+)
+
+const BentoCard = ({ name, className, background, Icon, description, href, cta, ...props }: BentoCardProps) =&gt; (
+  &lt;div
+    key={name}
+    className={cn(
+      "group relative col-span-3 flex flex-col justify-between overflow-hidden rounded-xl",
+      "bg-background [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]",
+      "dark:bg-background transform-gpu dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] dark:[border:1px_solid_rgba(255,255,255,.1)]",
+      className
+    )}
+    {...props}
+  &gt;
+    &lt;div&gt;{background}&lt;/div&gt;
+    &lt;div className="p-4"&gt;
+      &lt;div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 transition-all duration-300 lg:group-hover:-translate-y-10"&gt;
+        &lt;Icon className="h-12 w-12 origin-left transform-gpu text-neutral-700 transition-all duration-300 ease-in-out group-hover:scale-75" /&gt;
+        &lt;h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300"&gt;{name}&lt;/h3&gt;
+        &lt;p className="max-w-lg text-neutral-400"&gt;{description}&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div className="pointer-events-none absolute bottom-0 hidden w-full translate-y-10 transform-gpu flex-row items-center p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 lg:flex"&gt;
+        &lt;Button variant="link" asChild size="sm" className="pointer-events-auto p-0"&gt;
+          &lt;a href={href}&gt;{cta}&lt;ArrowRightIcon className="ms-2 h-4 w-4 rtl:rotate-180" /&gt;&lt;/a&gt;
+        &lt;/Button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div className="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-black/3 group-hover:dark:bg-neutral-800/10" /&gt;
+  &lt;/div&gt;
+)
+
+export { BentoCard, BentoGrid }</code></pre>
+  </div>
+
+  <h3>Usage Example</h3>
+  <div class="code-block">
+    <span class="code-label">usage.tsx</span>
+    <button class="copy-btn">Copy</button>
+    <pre><code class="language-typescript">import { BellIcon, Share2Icon, FileTextIcon } from "lucide-react"
+import { BentoCard, BentoGrid } from "@/components/ui/bento-grid"
+
+const features = [
+  {
+    Icon: FileTextIcon,
+    name: "Save your files",
+    description: "We automatically save your files as you type.",
+    href: "/",
+    cta: "Learn more",
+    background: &lt;img src="/bg1.jpg" className="absolute -right-20 -top-20 opacity-60" /&gt;,
+    className: "lg:col-start-1 lg:col-end-2 lg:row-start-1 lg:row-end-3",
+  },
+  {
+    Icon: BellIcon,
+    name: "Notifications",
+    description: "Get notified when something happens.",
+    href: "/",
+    cta: "Learn more",
+    background: &lt;div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20" /&gt;,
+    className: "lg:col-start-2 lg:col-end-3 lg:row-start-1 lg:row-end-2",
+  },
+]
+
+export function FeaturesSection() {
+  return (
+    &lt;BentoGrid className="lg:grid-rows-3"&gt;
+      {features.map((feature) =&gt; (
+        &lt;BentoCard key={feature.name} {...feature} /&gt;
+      ))}
+    &lt;/BentoGrid&gt;
+  )
+}</code></pre>
+  </div>
+
+  <h3>BentoCard Props</h3>
+  <table class="props-table">
+    <tr><th>Prop</th><th>Type</th><th>Description</th></tr>
+    <tr><td>name</td><td>string</td><td>Card title</td></tr>
+    <tr><td>description</td><td>string</td><td>Card description text</td></tr>
+    <tr><td>Icon</td><td>React.ElementType</td><td>Lucide/Radix icon component</td></tr>
+    <tr><td>background</td><td>ReactNode</td><td>Background content (image, animation, etc.)</td></tr>
+    <tr><td>href</td><td>string</td><td>CTA link destination</td></tr>
+    <tr><td>cta</td><td>string</td><td>CTA button text</td></tr>
+    <tr><td>className</td><td>string</td><td>Grid span classes: col-start, col-end, row-start, row-end</td></tr>
+  </table>
+</div>
+
+<!-- PARTICLES -->
+<div data-component="particles" id="particles">
+  <h2>Particles <span class="badge free">FREE</span> <span class="tag">canvas</span> <span class="tag">interactive</span></h2>
+  <p>Mouse-interactive floating particles rendered on an HTML canvas. Particles react to cursor movement with magnetic attraction. Supports custom colors, quantity, size, velocity, and easing. Ideal for hero section backgrounds.</p>
+  <div class="install-box">pnpm dlx shadcn@latest add @magicui/particles</div>
+
+  <h3>Component Source</h3>
+  <div class="code-block">
+    <span class="code-label">components/ui/particles.tsx</span>
+    <button class="copy-btn">Copy</button>
+    <pre><code class="language-typescript">"use client"
+
+import React, { useEffect, useRef, useState, type ComponentPropsWithoutRef } from "react"
+import { cn } from "@/lib/utils"
+
+interface ParticlesProps extends ComponentPropsWithoutRef&lt;"div"&gt; {
+  className?: string
+  quantity?: number
+  staticity?: number
+  ease?: number
+  size?: number
+  refresh?: boolean
+  color?: string
+  vx?: number
+  vy?: number
+}
+
+function hexToRgb(hex: string): number[] {
+  hex = hex.replace("#", "")
+  if (hex.length === 3) hex = hex.split("").map((c) =&gt; c + c).join("")
+  const hexInt = parseInt(hex, 16)
+  return [(hexInt &gt;&gt; 16) &amp; 255, (hexInt &gt;&gt; 8) &amp; 255, hexInt &amp; 255]
+}
+
+type Circle = {
+  x: number; y: number; translateX: number; translateY: number
+  size: number; alpha: number; targetAlpha: number
+  dx: number; dy: number; magnetism: number
+}
+
+export const Particles: React.FC&lt;ParticlesProps&gt; = ({
+  className = "",
+  quantity = 100,
+  staticity = 50,
+  ease = 50,
+  size = 0.4,
+  refresh = false,
+  color = "#ffffff",
+  vx = 0,
+  vy = 0,
+  ...props
+}) =&gt; {
+  const canvasRef = useRef&lt;HTMLCanvasElement&gt;(null)
+  const canvasContainerRef = useRef&lt;HTMLDivElement&gt;(null)
+  const context = useRef&lt;CanvasRenderingContext2D | null&gt;(null)
+  const circles = useRef&lt;Circle[]&gt;([])
+  const mouse = useRef&lt;{ x: number; y: number }&gt;({ x: 0, y: 0 })
+  const canvasSize = useRef&lt;{ w: number; h: number }&gt;({ w: 0, h: 0 })
+  const dpr = typeof window !== "undefined" ? window.devicePixelRatio : 1
+  const rafID = useRef&lt;number | null&gt;(null)
+  const rgb = hexToRgb(color)
+
+  // ... full implementation available via install command
+  // Key methods: initCanvas, resizeCanvas, circleParams, drawCircle, animate
+
+  return (
+    &lt;div className={cn("pointer-events-none", className)} ref={canvasContainerRef} aria-hidden="true" {...props}&gt;
+      &lt;canvas ref={canvasRef} className="size-full" /&gt;
+    &lt;/div&gt;
+  )
+}
+
+/* FULL SOURCE: github.com/magicuidesign/magicui/blob/main/apps/www/registry/magicui/particles.tsx */</code></pre>
+  </div>
+
+  <h3>Usage Example</h3>
+  <div class="code-block">
+    <span class="code-label">usage.tsx</span>
+    <button class="copy-btn">Copy</button>
+    <pre><code class="language-typescript">"use client"
+import { useState, useEffect } from "react"
+import { useTheme } from "next-themes"
+import { Particles } from "@/components/ui/particles"
+
+export function HeroBackground() {
+  const { resolvedTheme } = useTheme()
+  const [color, setColor] = useState("#ffffff")
+
+  useEffect(() =&gt; {
+    setColor(resolvedTheme === "dark" ? "#ffffff" : "#000000")
+  }, [resolvedTheme])
+
+  return (
+    &lt;div className="relative flex h-[500px] w-full items-center justify-center overflow-hidden rounded-lg bg-background"&gt;
+      &lt;span className="pointer-events-none z-10 text-8xl font-bold"&gt;Particles&lt;/span&gt;
+      &lt;Particles
+        className="absolute inset-0 z-0"
+        quantity={100}
+        ease={80}
+        color={color}
+        refresh
+      /&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+  </div>
+
+  <h3>Props</h3>
+  <table class="props-table">
+    <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+    <tr><td>quantity</td><td>number</td><td>100</td><td>Number of particles to render</td></tr>
+    <tr><td>staticity</td><td>number</td><td>50</td><td>Resistance to mouse movement (higher = less movement)</td></tr>
+    <tr><td>ease</td><td>number</td><td>50</td><td>Animation easing for mouse tracking</td></tr>
+    <tr><td>size</td><td>number</td><td>0.4</td><td>Base particle radius in pixels</td></tr>
+    <tr><td>refresh</td><td>boolean</td><td>false</td><td>Re-initialize particles when true</td></tr>
+    <tr><td>color</td><td>string</td><td>#ffffff</td><td>Particle color (hex format)</td></tr>
+    <tr><td>vx</td><td>number</td><td>0</td><td>Constant horizontal velocity</td></tr>
+    <tr><td>vy</td><td>number</td><td>0</td><td>Constant vertical velocity</td></tr>
+    <tr><td>className</td><td>string</td><td>—</td><td>Container CSS classes</td></tr>
+  </table>
+</div>
+
+  </div><!-- end #content -->
+</div>
+<script>
+hljs.highlightAll();
+document.querySelectorAll('.code-block').forEach(b=>{
+  const btn=b.querySelector('.copy-btn');
+  if(btn)btn.onclick=()=>{
+    navigator.clipboard.writeText(b.querySelector('code').innerText);
+    btn.textContent='Copied!';setTimeout(()=>btn.textContent='Copy',1500);
+  };
+});
+function search(q){
+  document.querySelectorAll('#content [data-component]').forEach(el=>{
+    const title=el.querySelector('h2');
+    el.style.opacity=q&&title&&!title.textContent.toLowerCase().includes(q.toLowerCase())?'0.15':'1';
+  });
+}
+</script>
+</body></html>

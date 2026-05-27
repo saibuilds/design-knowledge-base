@@ -1,0 +1,396 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>All Free Components — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#e5e5e5;font-family:'Inter',sans-serif;font-size:15px;line-height:1.6}
+.sidebar{position:fixed;left:0;top:0;width:220px;height:100vh;background:#111;border-right:1px solid #1f1f1f;padding:20px;overflow-y:auto;z-index:100}
+.sidebar h2{font-size:13px;color:#f59e0b;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}
+.sidebar a{display:block;color:#888;text-decoration:none;padding:6px 8px;border-radius:6px;font-size:13px;margin-bottom:2px}
+.sidebar a:hover,.sidebar a.active{color:#fff;background:#1a1a1a}
+.main{margin-left:220px;padding:48px;max-width:1100px}
+h1{font-size:36px;font-weight:700;color:#fff;margin-bottom:8px}
+.subtitle{color:#666;margin-bottom:48px;font-size:15px}
+.section-label{font-size:12px;font-weight:600;color:#f59e0b;text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;margin-top:48px;padding-bottom:8px;border-bottom:1px solid #1f1f1f}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:48px}
+.card{background:#111;border:1px solid #1f1f1f;border-radius:12px;padding:20px;text-decoration:none;color:inherit;transition:border-color .15s,background .15s;display:block}
+.card:hover{border-color:#f59e0b40;background:#141414}
+.card-source{font-size:11px;color:#f59e0b;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.card-name{font-size:16px;font-weight:600;color:#fff;margin-bottom:4px}
+.card-desc{font-size:13px;color:#666;line-height:1.5;margin-bottom:12px}
+.card-tags{display:flex;flex-wrap:wrap;gap:4px}
+.tag{display:inline-block;background:#1a1a1a;border:1px solid #2a2a2a;color:#888;font-size:11px;padding:2px 8px;border-radius:4px}
+.tag.animation{border-color:#3b82f620;color:#60a5fa;background:#1e3a5f20}
+.tag.layout{border-color:#10b98120;color:#34d399;background:#0d2e2020}
+.tag.text{border-color:#8b5cf620;color:#a78bfa;background:#2e1b5020}
+.tag.background{border-color:#f59e0b20;color:#fbbf24;background:#2e200520}
+.tag.scroll{border-color:#ec489920;color:#f472b6;background:#2e0f1f20}
+.tag.button{border-color:#ef444420;color:#f87171;background:#2e0a0a20}
+.tag.hover{border-color:#06b6d420;color:#22d3ee;background:#0a1e2020}
+.install-snippet{font-family:'JetBrains Mono',monospace;font-size:11px;color:#555;margin-top:8px;background:#0d0d0d;border-radius:4px;padding:6px 8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:48px}
+.stat{background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:16px;text-align:center}
+.stat-num{font-size:28px;font-weight:700;color:#f59e0b}
+.stat-label{font-size:12px;color:#666;margin-top:4px}
+input[type=search]{width:100%;background:#111;border:1px solid #2a2a2a;color:#fff;padding:12px 16px;border-radius:8px;font-size:14px;font-family:inherit;margin-bottom:32px;outline:none}
+input[type=search]:focus{border-color:#f59e0b50}
+.dep-badge{display:inline-block;background:#1a1a1a;border:1px solid #2a2a2a;color:#555;font-size:10px;padding:1px 6px;border-radius:3px;font-family:'JetBrains Mono',monospace}
+.source-section{margin-bottom:6px}
+</style></head>
+<body>
+<div class="sidebar">
+  <h2>Design KB</h2>
+  <a href="../index.html">&#8962; Home</a>
+  <a href="magicui-components.html">MagicUI Components</a>
+  <a href="aceternity-components.html">Aceternity UI</a>
+  <a href="free-components-master.html" class="active">All Free Components</a>
+  <hr style="border-color:#1f1f1f;margin:12px 0">
+  <a href="#magicui">MagicUI (7)</a>
+  <a href="#aceternity">Aceternity UI (6)</a>
+  <a href="#quick-ref">Quick Reference</a>
+  <a href="#install-guide">Install Guide</a>
+</div>
+<div class="main">
+  <h1>All Free Components</h1>
+  <p class="subtitle">Master index of every free component across MagicUI and Aceternity UI. Click any card to see the full source code.</p>
+
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">13</div><div class="stat-label">Components</div></div>
+    <div class="stat"><div class="stat-num">2</div><div class="stat-label">Libraries</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Free</div></div>
+    <div class="stat"><div class="stat-num">0</div><div class="stat-label">Paywalled</div></div>
+  </div>
+
+  <input type="search" id="masterSearch" placeholder="Search all 13 components..." oninput="filterCards(this.value)">
+
+  <!-- MAGICUI -->
+  <div class="section-label" id="magicui">MagicUI — magicui.design</div>
+  <div class="grid" id="magicui-grid">
+
+    <a href="magicui-components.html#animated-beam" class="card" data-tags="animated-beam animation svg beam light">
+      <div class="card-source">MagicUI</div>
+      <div class="card-name">Animated Beam</div>
+      <div class="card-desc">Animated light beam that travels along an SVG path between two DOM elements. For integration diagrams and flow visuals.</div>
+      <div class="card-tags">
+        <span class="tag animation">animation</span>
+        <span class="tag">svg</span>
+        <span class="tag">motion</span>
+      </div>
+      <div class="install-snippet">pnpm dlx shadcn@latest add @magicui/animated-beam</div>
+    </a>
+
+    <a href="magicui-components.html#marquee" class="card" data-tags="marquee scroll infinite loop ticker">
+      <div class="card-source">MagicUI</div>
+      <div class="card-name">Marquee</div>
+      <div class="card-desc">Infinite scrolling content loop — horizontal or vertical. Supports pause-on-hover and reverse. For logo walls and testimonial carousels.</div>
+      <div class="card-tags">
+        <span class="tag scroll">scroll</span>
+        <span class="tag animation">animation</span>
+        <span class="tag">infinite</span>
+      </div>
+      <div class="install-snippet">pnpm dlx shadcn@latest add @magicui/marquee</div>
+    </a>
+
+    <a href="magicui-components.html#number-ticker" class="card" data-tags="number ticker counter stats count up down">
+      <div class="card-source">MagicUI</div>
+      <div class="card-name">Number Ticker</div>
+      <div class="card-desc">Spring-physics number counter that animates up or down to a target value when the element enters the viewport. For stats and KPIs.</div>
+      <div class="card-tags">
+        <span class="tag animation">animation</span>
+        <span class="tag text">counter</span>
+        <span class="tag">spring</span>
+      </div>
+      <div class="install-snippet">pnpm dlx shadcn@latest add @magicui/number-ticker</div>
+    </a>
+
+    <a href="magicui-components.html#shimmer-button" class="card" data-tags="shimmer button cta glow spark animation">
+      <div class="card-source">MagicUI</div>
+      <div class="card-name">Shimmer Button</div>
+      <div class="card-desc">Button with an animated conic gradient spark that orbits around its perimeter. Customizable color, speed, and background. Zero JS deps.</div>
+      <div class="card-tags">
+        <span class="tag button">button</span>
+        <span class="tag animation">animation</span>
+        <span class="tag">cta</span>
+      </div>
+      <div class="install-snippet">pnpm dlx shadcn@latest add @magicui/shimmer-button</div>
+    </a>
+
+    <a href="magicui-components.html#animated-gradient-text" class="card" data-tags="gradient text animated color flow heading">
+      <div class="card-source">MagicUI</div>
+      <div class="card-name">Animated Gradient Text</div>
+      <div class="card-desc">Text with a continuously flowing color gradient. Customizable start/end colors and animation speed. Wraps any text element.</div>
+      <div class="card-tags">
+        <span class="tag text">text</span>
+        <span class="tag animation">gradient</span>
+      </div>
+      <div class="install-snippet">pnpm dlx shadcn@latest add @magicui/animated-gradient-text</div>
+    </a>
+
+    <a href="magicui-components.html#bento-grid" class="card" data-tags="bento grid layout cards features product">
+      <div class="card-source">MagicUI</div>
+      <div class="card-name">Bento Grid</div>
+      <div class="card-desc">CSS Grid bento-box layout for feature showcases. Cards reveal CTA on hover with smooth translation. Supports arbitrary background content.</div>
+      <div class="card-tags">
+        <span class="tag layout">layout</span>
+        <span class="tag">grid</span>
+        <span class="tag hover">hover</span>
+      </div>
+      <div class="install-snippet">pnpm dlx shadcn@latest add @magicui/bento-grid</div>
+    </a>
+
+    <a href="magicui-components.html#particles" class="card" data-tags="particles canvas interactive mouse background dots">
+      <div class="card-source">MagicUI</div>
+      <div class="card-name">Particles</div>
+      <div class="card-desc">Canvas-based particles with mouse-tracking magnetic attraction. Configurable quantity, size, color, velocity. Perfect hero section background.</div>
+      <div class="card-tags">
+        <span class="tag background">background</span>
+        <span class="tag animation">canvas</span>
+        <span class="tag hover">interactive</span>
+      </div>
+      <div class="install-snippet">pnpm dlx shadcn@latest add @magicui/particles</div>
+    </a>
+
+  </div>
+
+  <!-- ACETERNITY -->
+  <div class="section-label" id="aceternity">Aceternity UI — ui.aceternity.com</div>
+  <div class="grid" id="aceternity-grid">
+
+    <a href="aceternity-components.html#3d-card" class="card" data-tags="3d card perspective hover tilt mouse effect">
+      <div class="card-source">Aceternity UI</div>
+      <div class="card-name">3D Card Effect</div>
+      <div class="card-desc">Mouse-tracked CSS perspective card with individual element Z-elevation via CardItem. Full prop control over translateX/Y/Z and rotateX/Y/Z.</div>
+      <div class="card-tags">
+        <span class="tag hover">3d</span>
+        <span class="tag hover">hover</span>
+        <span class="tag animation">perspective</span>
+      </div>
+      <div class="install-snippet">npx shadcn@latest add @aceternity/3d-card</div>
+    </a>
+
+    <a href="aceternity-components.html#spotlight" class="card" data-tags="spotlight glow hero background light cone svg">
+      <div class="card-source">Aceternity UI</div>
+      <div class="card-name">Spotlight</div>
+      <div class="card-desc">SVG ellipse spotlight that animates in on load with blur + scale. Positions via className. Draw focus to hero headlines. Pure CSS animation.</div>
+      <div class="card-tags">
+        <span class="tag background">background</span>
+        <span class="tag animation">glow</span>
+        <span class="tag">hero</span>
+      </div>
+      <div class="install-snippet">npx shadcn@latest add @aceternity/spotlight</div>
+    </a>
+
+    <a href="aceternity-components.html#text-generate" class="card" data-tags="text generate effect words blur fade animate">
+      <div class="card-source">Aceternity UI</div>
+      <div class="card-name">Text Generate Effect</div>
+      <div class="card-desc">Words appear one-by-one with blur-to-clear fade using framer-motion stagger. For cinematic hero headlines and onboarding screens.</div>
+      <div class="card-tags">
+        <span class="tag text">text</span>
+        <span class="tag animation">animation</span>
+        <span class="tag">blur</span>
+      </div>
+      <div class="install-snippet">npx shadcn@latest add @aceternity/text-generate-effect</div>
+    </a>
+
+    <a href="aceternity-components.html#background-beams" class="card" data-tags="background beams svg paths gradient animated hero dark">
+      <div class="card-source">Aceternity UI</div>
+      <div class="card-name">Background Beams</div>
+      <div class="card-desc">50 animated SVG curved paths with cyan/purple/magenta gradients flowing along them. Dramatic tech-aesthetic hero background. Memoized.</div>
+      <div class="card-tags">
+        <span class="tag background">background</span>
+        <span class="tag animation">animation</span>
+        <span class="tag">dark-mode</span>
+      </div>
+      <div class="install-snippet">npx shadcn@latest add @aceternity/background-beams</div>
+    </a>
+
+    <a href="aceternity-components.html#tracing-beam" class="card" data-tags="tracing beam scroll progress sidebar nav docs">
+      <div class="card-source">Aceternity UI</div>
+      <div class="card-name">Tracing Beam</div>
+      <div class="card-desc">Vertical gradient beam that traces scroll position along a page's SVG path. Length and gradient update with spring physics as user scrolls.</div>
+      <div class="card-tags">
+        <span class="tag scroll">scroll</span>
+        <span class="tag animation">animation</span>
+        <span class="tag">docs</span>
+      </div>
+      <div class="install-snippet">npx shadcn@latest add @aceternity/tracing-beam</div>
+    </a>
+
+    <a href="aceternity-components.html#text-hover" class="card" data-tags="text hover effect gradient cursor tracking svg reveal">
+      <div class="card-source">Aceternity UI / 21st.dev</div>
+      <div class="card-name">Text Hover Effect</div>
+      <div class="card-desc">SVG text with cursor-tracking radial gradient reveal. Multi-color gradient (yellow/red/blue/cyan/purple) follows mouse over outlined text. As seen on x.ai.</div>
+      <div class="card-tags">
+        <span class="tag text">text</span>
+        <span class="tag hover">hover</span>
+        <span class="tag animation">gradient</span>
+      </div>
+      <div class="install-snippet">npx shadcn@latest add https://21st.dev/r/aceternity/text-hover-effect</div>
+    </a>
+
+  </div>
+
+  <!-- QUICK REFERENCE TABLE -->
+  <div class="section-label" id="quick-ref">Quick Reference — All 13 Components</div>
+  <table style="width:100%;border-collapse:collapse;font-size:13px;margin-bottom:48px">
+    <thead>
+      <tr style="background:#111;border-bottom:1px solid #1f1f1f">
+        <th style="text-align:left;padding:10px 12px;color:#888;font-weight:500">Component</th>
+        <th style="text-align:left;padding:10px 12px;color:#888;font-weight:500">Library</th>
+        <th style="text-align:left;padding:10px 12px;color:#888;font-weight:500">Install Command</th>
+        <th style="text-align:left;padding:10px 12px;color:#888;font-weight:500">Dependencies</th>
+        <th style="text-align:left;padding:10px 12px;color:#888;font-weight:500">Use Case</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #0f0f0f">
+        <td style="padding:10px 12px;color:#e5e5e5"><a href="magicui-components.html#animated-beam" style="color:#f59e0b;text-decoration:none">Animated Beam</a></td>
+        <td style="padding:10px 12px;color:#666">MagicUI</td>
+        <td style="padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#555">pnpm dlx shadcn@latest add @magicui/animated-beam</td>
+        <td style="padding:10px 12px"><span class="dep-badge">motion/react</span></td>
+        <td style="padding:10px 12px;color:#666">Integration diagrams, flow visualizations</td>
+      </tr>
+      <tr style="border-bottom:1px solid #0f0f0f">
+        <td style="padding:10px 12px;color:#e5e5e5"><a href="magicui-components.html#marquee" style="color:#f59e0b;text-decoration:none">Marquee</a></td>
+        <td style="padding:10px 12px;color:#666">MagicUI</td>
+        <td style="padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#555">pnpm dlx shadcn@latest add @magicui/marquee</td>
+        <td style="padding:10px 12px"><span class="dep-badge">tailwind animations</span></td>
+        <td style="padding:10px 12px;color:#666">Logo walls, testimonials, ticker displays</td>
+      </tr>
+      <tr style="border-bottom:1px solid #0f0f0f">
+        <td style="padding:10px 12px;color:#e5e5e5"><a href="magicui-components.html#number-ticker" style="color:#f59e0b;text-decoration:none">Number Ticker</a></td>
+        <td style="padding:10px 12px;color:#666">MagicUI</td>
+        <td style="padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#555">pnpm dlx shadcn@latest add @magicui/number-ticker</td>
+        <td style="padding:10px 12px"><span class="dep-badge">motion/react</span></td>
+        <td style="padding:10px 12px;color:#666">Stats, KPIs, counters, dashboards</td>
+      </tr>
+      <tr style="border-bottom:1px solid #0f0f0f">
+        <td style="padding:10px 12px;color:#e5e5e5"><a href="magicui-components.html#shimmer-button" style="color:#f59e0b;text-decoration:none">Shimmer Button</a></td>
+        <td style="padding:10px 12px;color:#666">MagicUI</td>
+        <td style="padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#555">pnpm dlx shadcn@latest add @magicui/shimmer-button</td>
+        <td style="padding:10px 12px"><span class="dep-badge">tailwind only</span></td>
+        <td style="padding:10px 12px;color:#666">Primary CTAs, hero buttons</td>
+      </tr>
+      <tr style="border-bottom:1px solid #0f0f0f">
+        <td style="padding:10px 12px;color:#e5e5e5"><a href="magicui-components.html#animated-gradient-text" style="color:#f59e0b;text-decoration:none">Animated Gradient Text</a></td>
+        <td style="padding:10px 12px;color:#666">MagicUI</td>
+        <td style="padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#555">pnpm dlx shadcn@latest add @magicui/animated-gradient-text</td>
+        <td style="padding:10px 12px"><span class="dep-badge">tailwind only</span></td>
+        <td style="padding:10px 12px;color:#666">Headings, badges, labels with color flow</td>
+      </tr>
+      <tr style="border-bottom:1px solid #0f0f0f">
+        <td style="padding:10px 12px;color:#e5e5e5"><a href="magicui-components.html#bento-grid" style="color:#f59e0b;text-decoration:none">Bento Grid</a></td>
+        <td style="padding:10px 12px;color:#666">MagicUI</td>
+        <td style="padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#555">pnpm dlx shadcn@latest add @magicui/bento-grid</td>
+        <td style="padding:10px 12px"><span class="dep-badge">@radix-ui/icons</span></td>
+        <td style="padding:10px 12px;color:#666">Feature sections, product showcases</td>
+      </tr>
+      <tr style="border-bottom:1px solid #0f0f0f">
+        <td style="padding:10px 12px;color:#e5e5e5"><a href="magicui-components.html#particles" style="color:#f59e0b;text-decoration:none">Particles</a></td>
+        <td style="padding:10px 12px;color:#666">MagicUI</td>
+        <td style="padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#555">pnpm dlx shadcn@latest add @magicui/particles</td>
+        <td style="padding:10px 12px"><span class="dep-badge">canvas API</span></td>
+        <td style="padding:10px 12px;color:#666">Hero backgrounds, interactive sections</td>
+      </tr>
+      <tr style="border-bottom:1px solid #0f0f0f">
+        <td style="padding:10px 12px;color:#e5e5e5"><a href="aceternity-components.html#3d-card" style="color:#f59e0b;text-decoration:none">3D Card Effect</a></td>
+        <td style="padding:10px 12px;color:#666">Aceternity</td>
+        <td style="padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#555">npx shadcn@latest add @aceternity/3d-card</td>
+        <td style="padding:10px 12px"><span class="dep-badge">framer-motion</span></td>
+        <td style="padding:10px 12px;color:#666">Product cards, feature cards, profiles</td>
+      </tr>
+      <tr style="border-bottom:1px solid #0f0f0f">
+        <td style="padding:10px 12px;color:#e5e5e5"><a href="aceternity-components.html#spotlight" style="color:#f59e0b;text-decoration:none">Spotlight</a></td>
+        <td style="padding:10px 12px;color:#666">Aceternity</td>
+        <td style="padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#555">npx shadcn@latest add @aceternity/spotlight</td>
+        <td style="padding:10px 12px"><span class="dep-badge">CSS only</span></td>
+        <td style="padding:10px 12px;color:#666">Dark hero sections, focus areas</td>
+      </tr>
+      <tr style="border-bottom:1px solid #0f0f0f">
+        <td style="padding:10px 12px;color:#e5e5e5"><a href="aceternity-components.html#text-generate" style="color:#f59e0b;text-decoration:none">Text Generate Effect</a></td>
+        <td style="padding:10px 12px;color:#666">Aceternity</td>
+        <td style="padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#555">npx shadcn@latest add @aceternity/text-generate-effect</td>
+        <td style="padding:10px 12px"><span class="dep-badge">motion/react</span></td>
+        <td style="padding:10px 12px;color:#666">Hero headlines, onboarding, loading screens</td>
+      </tr>
+      <tr style="border-bottom:1px solid #0f0f0f">
+        <td style="padding:10px 12px;color:#e5e5e5"><a href="aceternity-components.html#background-beams" style="color:#f59e0b;text-decoration:none">Background Beams</a></td>
+        <td style="padding:10px 12px;color:#666">Aceternity</td>
+        <td style="padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#555">npx shadcn@latest add @aceternity/background-beams</td>
+        <td style="padding:10px 12px"><span class="dep-badge">motion/react</span></td>
+        <td style="padding:10px 12px;color:#666">Dark hero backgrounds, auth pages</td>
+      </tr>
+      <tr style="border-bottom:1px solid #0f0f0f">
+        <td style="padding:10px 12px;color:#e5e5e5"><a href="aceternity-components.html#tracing-beam" style="color:#f59e0b;text-decoration:none">Tracing Beam</a></td>
+        <td style="padding:10px 12px;color:#666">Aceternity</td>
+        <td style="padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#555">npx shadcn@latest add @aceternity/tracing-beam</td>
+        <td style="padding:10px 12px"><span class="dep-badge">motion/react</span></td>
+        <td style="padding:10px 12px;color:#666">Docs, blog posts, long-form content</td>
+      </tr>
+      <tr>
+        <td style="padding:10px 12px;color:#e5e5e5"><a href="aceternity-components.html#text-hover" style="color:#f59e0b;text-decoration:none">Text Hover Effect</a></td>
+        <td style="padding:10px 12px;color:#666">Aceternity/21st</td>
+        <td style="padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#555">npx shadcn@latest add https://21st.dev/r/aceternity/text-hover-effect</td>
+        <td style="padding:10px 12px"><span class="dep-badge">framer-motion</span></td>
+        <td style="padding:10px 12px;color:#666">Large display text, brand headers</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- INSTALL GUIDE -->
+  <div class="section-label" id="install-guide">Installation Guide</div>
+  <div style="background:#111;border:1px solid #1f1f1f;border-radius:12px;padding:28px;margin-bottom:48px">
+    <h3 style="font-size:16px;color:#fff;margin-bottom:16px">Prerequisites</h3>
+    <p style="color:#666;font-size:13px;margin-bottom:16px">Both libraries use the shadcn CLI which adds the component files directly into your project (no black-box node_modules).</p>
+
+    <h3 style="font-size:14px;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">1. Initialize shadcn (if not done)</h3>
+    <div style="background:#0d0d0d;border-radius:6px;padding:12px 16px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#f59e0b;margin-bottom:16px">npx shadcn@latest init</div>
+
+    <h3 style="font-size:14px;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">2. Install framer-motion (required by most components)</h3>
+    <div style="background:#0d0d0d;border-radius:6px;padding:12px 16px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#f59e0b;margin-bottom:16px">npm install motion</div>
+
+    <h3 style="font-size:14px;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">3. Add components as needed</h3>
+    <div style="background:#0d0d0d;border-radius:6px;padding:12px 16px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#f59e0b;margin-bottom:8px"># MagicUI
+pnpm dlx shadcn@latest add @magicui/animated-beam
+pnpm dlx shadcn@latest add @magicui/marquee
+pnpm dlx shadcn@latest add @magicui/number-ticker
+pnpm dlx shadcn@latest add @magicui/shimmer-button
+pnpm dlx shadcn@latest add @magicui/animated-gradient-text
+pnpm dlx shadcn@latest add @magicui/bento-grid
+pnpm dlx shadcn@latest add @magicui/particles
+
+# Aceternity UI
+npx shadcn@latest add @aceternity/3d-card
+npx shadcn@latest add @aceternity/spotlight
+npx shadcn@latest add @aceternity/text-generate-effect
+npx shadcn@latest add @aceternity/background-beams
+npx shadcn@latest add @aceternity/tracing-beam
+
+# 21st.dev
+npx shadcn@latest add https://21st.dev/r/aceternity/text-hover-effect</div>
+
+    <h3 style="font-size:14px;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;margin-top:20px">4. Required utility (cn)</h3>
+    <p style="color:#666;font-size:13px;margin-bottom:8px">All components import <code style="color:#f59e0b;font-family:'JetBrains Mono',monospace">cn()</code> from <code style="color:#f59e0b;font-family:'JetBrains Mono',monospace">@/lib/utils</code>. Create if missing:</p>
+    <div style="background:#0d0d0d;border-radius:6px;padding:12px 16px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#f59e0b">// lib/utils.ts
+import { type ClassValue, clsx } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+// npm install clsx tailwind-merge</div>
+  </div>
+
+</div>
+<script>
+function filterCards(q) {
+  document.querySelectorAll('.card').forEach(card => {
+    const tags = card.dataset.tags || ""
+    const name = card.querySelector('.card-name')?.textContent || ""
+    const match = !q || name.toLowerCase().includes(q.toLowerCase()) || tags.toLowerCase().includes(q.toLowerCase())
+    card.style.opacity = match ? '1' : '0.1'
+    card.style.pointerEvents = match ? '' : 'none'
+  })
+}
+</script>
+</body></html>
