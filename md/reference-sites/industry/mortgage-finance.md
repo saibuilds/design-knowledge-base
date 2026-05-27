@@ -1,193 +1,758 @@
-# Mortgage / Finance / Business Loans — Design Reference
+# Mortgage / Finance — Design Reference
 
-> Patterns from better.com, blend.com, sofi.com, and high-end fintech lenders.
+> Patterns from better.com, blend.com — digital mortgage and fintech lending
 
-## Hero (trust-forward)
-```tsx
-<section className="min-h-screen bg-white flex items-center">
-  <div className="max-w-7xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-    <div>
-      {/* Trust badge */}
-      <div className="flex items-center gap-2 mb-6">
-        <span className="text-green-600">🏆</span>
-        <span className="text-sm font-medium text-zinc-600">Rated #1 Mortgage Lender 2024</span>
-      </div>
-      <h1 className="text-5xl md:text-7xl font-black text-zinc-900 leading-tight mb-6">
-        Get your mortgage<br />
-        <span className="text-blue-600">approved today</span>
-      </h1>
-      <p className="text-xl text-zinc-500 mb-8 max-w-lg">
-        Pre-qualify in 3 minutes. No credit score impact. Rates from 5.2% APR.
-      </p>
-      {/* Rate teaser */}
-      <div className="flex gap-8 p-6 bg-zinc-50 rounded-2xl border border-zinc-200 mb-8">
-        {[
-          { label: '30-yr fixed', rate: '6.875%' },
-          { label: '15-yr fixed', rate: '6.125%' },
-          { label: '5/1 ARM', rate: '6.25%' },
-        ].map((r) => (
-          <div key={r.label}>
-            <div className="text-2xl font-black text-zinc-900">{r.rate}</div>
-            <div className="text-xs text-zinc-500 uppercase tracking-wide">{r.label}</div>
-          </div>
-        ))}
-      </div>
-      <button className="px-10 py-4 bg-blue-600 text-white rounded-xl font-bold text-lg hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30">
-        Get Pre-Approved
-      </button>
-    </div>
-    <div className="relative">
-      <img src="/mortgage-family.jpg" className="rounded-2xl w-full shadow-2xl" />
-      {/* Floating stat card */}
-      <div className="absolute -bottom-6 -left-6 bg-white rounded-xl p-4 shadow-xl border border-zinc-100">
-        <div className="text-3xl font-black text-zinc-900">$2.1B+</div>
-        <div className="text-sm text-zinc-500">Funded this year</div>
-      </div>
-    </div>
-  </div>
-</section>
+## Key Observations from Real Sites
+
+### Better.com
+- Categorical mega-menu: Buy, Refinance, Home Equity, Rates, Better+
+- Primary trust signal: phone number prominently displayed ("Call us anytime")
+- Friction reducer: "3 min | No credit impact" next to every CTA
+- Calculator-driven discovery: Mortgage, Affordability, HELOC calculators above the fold
+- Action verb CTAs: "Apply now", "Get started", "Calculate your Cash"
+- Innovation labeling: "New" badge on emerging product features
+- Clean whites, professional photography of diverse homeowners
+
+### Blend.com
+- Hero with customer logos (Wells Fargo, US Bank, Navy Federal) immediately below headline
+- Stats-forward: "50% boost deposit conversion", "16+ hours saved per loan", "33% grow loan volume"
+- Process messaging: "Go live in as fast as 4 weeks"
+- "Request a demo" as consistent primary CTA throughout
+- Color: navy blue + white + bright blue CTAs
+- Card-based features and testimonials with quantified outcomes
+- Alternating text-left/text-right content blocks
+
+---
+
+## Color Palette
+
+```
+Background:    #FFFFFF  (dominant, clean)
+Surface:       #F7F8FA  (section backgrounds)
+Border:        #E5E7EB  (card outlines, dividers)
+Primary Blue:  #1D4ED8  (CTAs, links, trust)
+Dark Blue:     #1E3A5F  (hero, headers, Blend navy)
+Accent Green:  #16A34A  (success, rates, positive metrics)
+Text Primary:  #111827
+Text Muted:    #6B7280
+White:         #FFFFFF
 ```
 
-## Mortgage Calculator Component
+## Typography
+- Headings: Inter, Manrope, or DM Sans — modern sans-serif (NOT serif)
+- Numbers/stats: Bold weight, large scale to communicate confidence
+- Body: Regular 16px, line-height 1.6
+- Labels/badges: 11-12px, semibold, uppercase with tracking
+
+---
+
+## Pattern 1 — Trust Signal Bar
+
 ```tsx
-import { useState, useMemo } from 'react'
+// TrustSignalBar.tsx
+import React from 'react'
 
-function MortgageCalculator() {
-  const [homePrice, setHomePrice] = useState(800000)
-  const [downPercent, setDownPercent] = useState(20)
-  const [rate, setRate] = useState(6.5)
-  const [years, setYears] = useState(30)
-
-  const monthly = useMemo(() => {
-    const principal = homePrice * (1 - downPercent / 100)
-    const r = rate / 100 / 12
-    const n = years * 12
-    if (r === 0) return principal / n
-    return (principal * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1)
-  }, [homePrice, downPercent, rate, years])
-
-  const fmt = (n: number) => new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD', maximumFractionDigits: 0 }).format(n)
-  const fmtMonthly = (n: number) => new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD', maximumFractionDigits: 0 }).format(n)
-
-  return (
-    <div className="bg-white rounded-2xl border border-zinc-200 p-8 max-w-xl">
-      <h3 className="text-2xl font-bold text-zinc-900 mb-6">Mortgage Calculator</h3>
-      
-      {[
-        { label: 'Home Price', value: homePrice, setValue: setHomePrice, min: 100000, max: 5000000, step: 10000, format: fmt },
-        { label: `Down Payment (${downPercent}%)`, value: downPercent, setValue: setDownPercent, min: 5, max: 50, step: 1, format: (v: number) => `${v}%` },
-        { label: 'Interest Rate', value: rate, setValue: setRate, min: 1, max: 15, step: 0.25, format: (v: number) => `${v}%` },
-      ].map((field) => (
-        <div key={field.label} className="mb-6">
-          <div className="flex justify-between mb-2">
-            <label className="text-sm font-medium text-zinc-700">{field.label}</label>
-            <span className="text-sm font-bold text-zinc-900">{field.format(field.value)}</span>
-          </div>
-          <input type="range" min={field.min} max={field.max} step={field.step} value={field.value}
-            onChange={(e) => field.setValue(Number(e.target.value))}
-            className="w-full h-2 bg-zinc-200 rounded-lg appearance-none cursor-pointer accent-blue-600" />
-        </div>
-      ))}
-
-      <div className="bg-blue-50 rounded-xl p-6 text-center border border-blue-100">
-        <div className="text-sm text-blue-600 font-medium mb-1">Estimated Monthly Payment</div>
-        <div className="text-5xl font-black text-blue-700">{fmtMonthly(monthly)}</div>
-        <div className="text-xs text-zinc-500 mt-2">Principal + interest only. Property taxes & insurance not included.</div>
-      </div>
-    </div>
-  )
+interface TrustItem {
+  icon: React.ReactNode
+  label: string
+  sublabel?: string
 }
-```
 
-## Trust Signals Section
-```tsx
-<section className="py-16 bg-zinc-50 border-t border-b border-zinc-200">
-  <div className="max-w-6xl mx-auto px-8">
-    <p className="text-center text-zinc-500 text-sm uppercase tracking-widest mb-10">Why Clients Trust Us</p>
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-      {[
-        { icon: '🔒', title: 'Bank-Level Security', desc: '256-bit SSL encryption' },
-        { icon: '⚡', title: 'Fast Decisions', desc: 'Pre-approval in 3 minutes' },
-        { icon: '🏆', title: 'Award Winning', desc: 'Rated #1 in Canada 2024' },
-        { icon: '📞', title: '24/7 Support', desc: 'Real humans, always available' },
-      ].map((t) => (
-        <div key={t.title} className="text-center">
-          <div className="text-4xl mb-3">{t.icon}</div>
-          <h4 className="font-bold text-zinc-900 mb-1">{t.title}</h4>
-          <p className="text-sm text-zinc-500">{t.desc}</p>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
-```
+interface TrustSignalBarProps {
+  items: TrustItem[]
+}
 
-## Multi-Step Application Form
-```tsx
-const STEPS = ['Your Info', 'Property', 'Finances', 'Review']
-
-function ApplicationForm() {
-  const [step, setStep] = useState(0)
-  const [data, setData] = useState({})
-
+export function TrustSignalBar({ items }: TrustSignalBarProps) {
   return (
-    <div className="max-w-2xl mx-auto">
-      {/* Progress */}
-      <div className="flex items-center mb-10">
-        {STEPS.map((s, i) => (
-          <div key={s} className="flex items-center flex-1">
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${i <= step ? 'bg-blue-600 text-white' : 'bg-zinc-200 text-zinc-400'}`}>
-              {i < step ? '✓' : i + 1}
+    <div className="border-b border-[#E5E7EB] bg-white py-4">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-10 gap-y-3 px-4 md:justify-between">
+        {items.map((item, i) => (
+          <div key={i} className="flex items-center gap-2.5">
+            <span className="text-[#1D4ED8]">{item.icon}</span>
+            <div>
+              <p className="text-sm font-semibold text-[#111827]">{item.label}</p>
+              {item.sublabel && (
+                <p className="text-xs text-[#6B7280]">{item.sublabel}</p>
+              )}
             </div>
-            <span className={`ml-2 text-sm font-medium ${i <= step ? 'text-zinc-900' : 'text-zinc-400'}`}>{s}</span>
-            {i < STEPS.length - 1 && <div className={`flex-1 h-0.5 mx-4 ${i < step ? 'bg-blue-600' : 'bg-zinc-200'}`} />}
           </div>
         ))}
       </div>
-      
-      {/* Step content here */}
-      {step === 0 && <PersonalInfoStep data={data} onChange={(d) => setData({ ...data, ...d })} />}
-      {step === 1 && <PropertyStep data={data} onChange={(d) => setData({ ...data, ...d })} />}
-      
-      {/* Navigation */}
-      <div className="flex gap-4 mt-8">
-        {step > 0 && (
-          <button onClick={() => setStep(s => s - 1)}
-            className="px-6 py-3 border border-zinc-300 rounded-xl font-medium hover:bg-zinc-50 transition-colors">
-            Back
-          </button>
-        )}
-        <button onClick={() => setStep(s => s + 1)}
-          className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-colors">
-          {step === STEPS.length - 1 ? 'Submit Application' : 'Continue'}
-        </button>
+    </div>
+  )
+}
+
+// Example usage:
+// <TrustSignalBar items={[
+//   { icon: <ShieldIcon />, label: "256-bit encryption", sublabel: "Bank-level security" },
+//   { icon: <CheckCircle />, label: "NMLS Licensed", sublabel: "All 50 states" },
+//   { icon: <StarIcon />, label: "4.8 / 5 rating", sublabel: "12,000+ reviews" },
+//   { icon: <PhoneIcon />, label: "Call us anytime", sublabel: "1-800-XXX-XXXX" },
+// ]} />
+```
+
+---
+
+## Pattern 2 — Mortgage Calculator
+
+```tsx
+// MortgageCalculator.tsx
+import React, { useState, useMemo } from 'react'
+
+interface MortgageCalculatorProps {
+  defaultHomePrice?: number
+  defaultDownPayment?: number
+  defaultInterestRate?: number
+  defaultTermYears?: number
+}
+
+function formatCurrency(n: number): string {
+  return new Intl.NumberFormat('en-CA', {
+    style: 'currency',
+    currency: 'CAD',
+    maximumFractionDigits: 0,
+  }).format(n)
+}
+
+export function MortgageCalculator({
+  defaultHomePrice = 850000,
+  defaultDownPayment = 170000,
+  defaultInterestRate = 5.25,
+  defaultTermYears = 25,
+}: MortgageCalculatorProps) {
+  const [homePrice, setHomePrice] = useState(defaultHomePrice)
+  const [downPayment, setDownPayment] = useState(defaultDownPayment)
+  const [interestRate, setInterestRate] = useState(defaultInterestRate)
+  const [termYears, setTermYears] = useState(defaultTermYears)
+
+  const { monthlyPayment, principal, totalInterest } = useMemo(() => {
+    const principal = homePrice - downPayment
+    const monthlyRate = interestRate / 100 / 12
+    const n = termYears * 12
+
+    if (monthlyRate === 0) {
+      return { monthlyPayment: principal / n, principal, totalInterest: 0 }
+    }
+
+    const mp =
+      (principal * (monthlyRate * Math.pow(1 + monthlyRate, n))) /
+      (Math.pow(1 + monthlyRate, n) - 1)
+
+    return {
+      monthlyPayment: mp,
+      principal,
+      totalInterest: mp * n - principal,
+    }
+  }, [homePrice, downPayment, interestRate, termYears])
+
+  const downPct = Math.round((downPayment / homePrice) * 100)
+
+  return (
+    <div className="overflow-hidden rounded-2xl border border-[#E5E7EB] bg-white shadow-sm">
+      {/* Header */}
+      <div className="border-b border-[#E5E7EB] px-6 py-5">
+        <h3 className="text-lg font-semibold text-[#111827]">
+          Mortgage Calculator
+        </h3>
+        <p className="mt-0.5 text-sm text-[#6B7280]">
+          Estimate your monthly payment
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2">
+        {/* Inputs */}
+        <div className="space-y-6 p-6">
+          {/* Home Price */}
+          <div>
+            <div className="mb-2 flex items-center justify-between">
+              <label className="text-sm font-medium text-[#111827]">
+                Home Price
+              </label>
+              <span className="text-sm font-semibold text-[#1D4ED8]">
+                {formatCurrency(homePrice)}
+              </span>
+            </div>
+            <input
+              type="range"
+              min={200000}
+              max={3000000}
+              step={10000}
+              value={homePrice}
+              onChange={(e) => setHomePrice(Number(e.target.value))}
+              className="h-2 w-full cursor-pointer appearance-none rounded-full bg-[#E5E7EB] accent-[#1D4ED8]"
+            />
+            <div className="mt-1 flex justify-between text-xs text-[#6B7280]">
+              <span>$200K</span><span>$3M</span>
+            </div>
+          </div>
+
+          {/* Down Payment */}
+          <div>
+            <div className="mb-2 flex items-center justify-between">
+              <label className="text-sm font-medium text-[#111827]">
+                Down Payment
+              </label>
+              <span className="text-sm font-semibold text-[#1D4ED8]">
+                {formatCurrency(downPayment)}{' '}
+                <span className="font-normal text-[#6B7280]">({downPct}%)</span>
+              </span>
+            </div>
+            <input
+              type="range"
+              min={homePrice * 0.05}
+              max={homePrice * 0.5}
+              step={5000}
+              value={downPayment}
+              onChange={(e) => setDownPayment(Number(e.target.value))}
+              className="h-2 w-full cursor-pointer appearance-none rounded-full bg-[#E5E7EB] accent-[#1D4ED8]"
+            />
+          </div>
+
+          {/* Interest Rate */}
+          <div>
+            <div className="mb-2 flex items-center justify-between">
+              <label className="text-sm font-medium text-[#111827]">
+                Interest Rate
+              </label>
+              <span className="text-sm font-semibold text-[#1D4ED8]">
+                {interestRate.toFixed(2)}%
+              </span>
+            </div>
+            <input
+              type="range"
+              min={1}
+              max={12}
+              step={0.05}
+              value={interestRate}
+              onChange={(e) => setInterestRate(Number(e.target.value))}
+              className="h-2 w-full cursor-pointer appearance-none rounded-full bg-[#E5E7EB] accent-[#1D4ED8]"
+            />
+          </div>
+
+          {/* Amortization */}
+          <div>
+            <label className="mb-2 block text-sm font-medium text-[#111827]">
+              Amortization Period
+            </label>
+            <div className="grid grid-cols-4 gap-2">
+              {[10, 15, 20, 25].map((yr) => (
+                <button
+                  key={yr}
+                  onClick={() => setTermYears(yr)}
+                  className={`rounded-lg py-2 text-sm font-medium transition-colors ${
+                    termYears === yr
+                      ? 'bg-[#1D4ED8] text-white'
+                      : 'bg-[#F7F8FA] text-[#6B7280] hover:bg-[#E5E7EB]'
+                  }`}
+                >
+                  {yr}yr
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Results */}
+        <div className="flex flex-col justify-center bg-[#1E3A5F] p-6 text-white">
+          <p className="mb-1 text-sm font-medium text-white/60">
+            Estimated Monthly Payment
+          </p>
+          <p className="mb-6 text-5xl font-bold tracking-tight">
+            {formatCurrency(monthlyPayment)}
+          </p>
+
+          <div className="space-y-3 border-t border-white/10 pt-5">
+            <div className="flex justify-between text-sm">
+              <span className="text-white/60">Loan amount</span>
+              <span className="font-medium">{formatCurrency(principal)}</span>
+            </div>
+            <div className="flex justify-between text-sm">
+              <span className="text-white/60">Total interest</span>
+              <span className="font-medium">{formatCurrency(totalInterest)}</span>
+            </div>
+            <div className="flex justify-between text-sm">
+              <span className="text-white/60">Total cost</span>
+              <span className="font-medium">
+                {formatCurrency(principal + totalInterest)}
+              </span>
+            </div>
+          </div>
+
+          <a
+            href="/apply"
+            className="mt-8 block rounded-lg bg-white py-3 text-center text-sm font-semibold text-[#1E3A5F] transition-colors hover:bg-white/90"
+          >
+            Apply Now — 3 min, no credit impact
+          </a>
+        </div>
       </div>
     </div>
   )
 }
 ```
 
-## Color Palette (Finance/Trust)
-```css
-/* Clean professional — better.com style */
---bg: #ffffff;
---bg-subtle: #f8fafc;
---accent: #2563eb;      /* blue-600 */
---accent-hover: #1d4ed8; /* blue-700 */
---success: #16a34a;     /* green-600 */
---text: #09090b;
---text-muted: #71717a;
+---
 
-/* Dark premium finance */
---bg: #0f172a;          /* slate-900 */
---accent: #3b82f6;      /* blue-500 */
---surface: #1e293b;     /* slate-800 */
+## Pattern 3 — Step-by-Step Process Timeline
+
+```tsx
+// ProcessTimeline.tsx
+import React from 'react'
+
+interface ProcessStep {
+  number: number
+  title: string
+  description: string
+  duration?: string
+  icon?: React.ReactNode
+}
+
+interface ProcessTimelineProps {
+  eyebrow?: string
+  title: string
+  subtitle?: string
+  steps: ProcessStep[]
+  orientation?: 'horizontal' | 'vertical'
+}
+
+export function ProcessTimeline({
+  eyebrow,
+  title,
+  subtitle,
+  steps,
+  orientation = 'horizontal',
+}: ProcessTimelineProps) {
+  if (orientation === 'vertical') {
+    return (
+      <section className="bg-[#F7F8FA] py-20 px-4 md:px-8">
+        <div className="mx-auto max-w-2xl">
+          {eyebrow && (
+            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#1D4ED8]">
+              {eyebrow}
+            </p>
+          )}
+          <h2 className="mb-3 text-3xl font-bold text-[#111827]">{title}</h2>
+          {subtitle && <p className="mb-12 text-[#6B7280]">{subtitle}</p>}
+
+          <div className="space-y-0">
+            {steps.map((step, i) => (
+              <div key={step.number} className="flex gap-5">
+                {/* Spine */}
+                <div className="flex flex-col items-center">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#1D4ED8] text-sm font-bold text-white">
+                    {step.number}
+                  </div>
+                  {i < steps.length - 1 && (
+                    <div className="mt-1 h-full w-px bg-[#1D4ED8]/20" />
+                  )}
+                </div>
+
+                {/* Content */}
+                <div className="pb-10">
+                  <div className="flex items-center gap-3">
+                    <h3 className="font-semibold text-[#111827]">{step.title}</h3>
+                    {step.duration && (
+                      <span className="rounded-full bg-[#DBEAFE] px-2.5 py-0.5 text-xs font-medium text-[#1D4ED8]">
+                        {step.duration}
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-1.5 text-sm leading-relaxed text-[#6B7280]">
+                    {step.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  return (
+    <section className="bg-white py-20 px-4 md:px-8">
+      <div className="mx-auto max-w-6xl">
+        {eyebrow && (
+          <p className="mb-2 text-center text-xs font-semibold uppercase tracking-widest text-[#1D4ED8]">
+            {eyebrow}
+          </p>
+        )}
+        <h2 className="mb-3 text-center text-3xl font-bold text-[#111827]">
+          {title}
+        </h2>
+        {subtitle && (
+          <p className="mx-auto mb-14 max-w-xl text-center text-[#6B7280]">
+            {subtitle}
+          </p>
+        )}
+
+        <div className="relative grid grid-cols-2 gap-8 md:grid-cols-4">
+          {/* Connecting line */}
+          <div className="absolute top-5 left-0 right-0 hidden h-px bg-[#E5E7EB] md:block" />
+
+          {steps.map((step) => (
+            <div key={step.number} className="relative flex flex-col items-center text-center">
+              <div className="relative z-10 mb-5 flex h-10 w-10 items-center justify-center rounded-full border-2 border-[#1D4ED8] bg-white text-sm font-bold text-[#1D4ED8]">
+                {step.number}
+              </div>
+              <h3 className="mb-2 font-semibold text-[#111827]">{step.title}</h3>
+              {step.duration && (
+                <span className="mb-2 text-xs font-medium text-[#1D4ED8]">
+                  {step.duration}
+                </span>
+              )}
+              <p className="text-sm leading-relaxed text-[#6B7280]">
+                {step.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
 ```
 
-## Reference Sites
-- https://www.better.com — best digital mortgage UX
-- https://www.blend.com — B2B fintech
-- https://www.rocketmortgage.com — high-volume, trust-heavy
-- https://www.sofi.com — full-service fintech
-- https://fig.ca — Canadian mortgage
-- https://nesto.ca — Canadian digital mortgage
+---
+
+## Pattern 4 — Stats / Numbers Section (Blend-style)
+
+```tsx
+// StatsSection.tsx
+import React from 'react'
+
+interface Stat {
+  value: string
+  label: string
+  description?: string
+  trend?: 'up' | 'down' | 'neutral'
+}
+
+interface StatsSectionProps {
+  eyebrow?: string
+  title?: string
+  stats: Stat[]
+  variant?: 'light' | 'dark'
+}
+
+export function StatsSection({
+  eyebrow,
+  title,
+  stats,
+  variant = 'dark',
+}: StatsSectionProps) {
+  const isDark = variant === 'dark'
+
+  return (
+    <section
+      className={`py-20 px-4 md:px-8 ${
+        isDark ? 'bg-[#1E3A5F]' : 'bg-[#F7F8FA]'
+      }`}
+    >
+      <div className="mx-auto max-w-6xl">
+        {(eyebrow || title) && (
+          <div className="mb-14 text-center">
+            {eyebrow && (
+              <p
+                className={`mb-2 text-xs font-semibold uppercase tracking-widest ${
+                  isDark ? 'text-[#60A5FA]' : 'text-[#1D4ED8]'
+                }`}
+              >
+                {eyebrow}
+              </p>
+            )}
+            {title && (
+              <h2
+                className={`text-3xl font-bold ${
+                  isDark ? 'text-white' : 'text-[#111827]'
+                }`}
+              >
+                {title}
+              </h2>
+            )}
+          </div>
+        )}
+
+        <div
+          className={`grid grid-cols-1 gap-px sm:grid-cols-2 lg:grid-cols-${Math.min(
+            stats.length,
+            4
+          )}`}
+        >
+          {stats.map((stat, i) => (
+            <div
+              key={i}
+              className={`p-8 text-center ${
+                isDark ? 'bg-white/5' : 'bg-white border border-[#E5E7EB]'
+              }`}
+            >
+              <p
+                className={`mb-2 text-5xl font-bold tracking-tight ${
+                  isDark ? 'text-white' : 'text-[#1D4ED8]'
+                }`}
+              >
+                {stat.value}
+              </p>
+              <p
+                className={`mb-1 font-semibold ${
+                  isDark ? 'text-white/90' : 'text-[#111827]'
+                }`}
+              >
+                {stat.label}
+              </p>
+              {stat.description && (
+                <p
+                  className={`text-sm ${
+                    isDark ? 'text-white/50' : 'text-[#6B7280]'
+                  }`}
+                >
+                  {stat.description}
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+```
+
+---
+
+## Pattern 5 — FAQ Accordion
+
+```tsx
+// FAQAccordion.tsx
+import React, { useState } from 'react'
+
+interface FAQItem {
+  question: string
+  answer: string
+}
+
+interface FAQAccordionProps {
+  eyebrow?: string
+  title: string
+  items: FAQItem[]
+}
+
+export function FAQAccordion({ eyebrow, title, items }: FAQAccordionProps) {
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
+
+  return (
+    <section className="bg-white py-20 px-4 md:px-8">
+      <div className="mx-auto max-w-3xl">
+        {eyebrow && (
+          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#1D4ED8]">
+            {eyebrow}
+          </p>
+        )}
+        <h2 className="mb-10 text-3xl font-bold text-[#111827]">{title}</h2>
+
+        <div className="divide-y divide-[#E5E7EB]">
+          {items.map((item, i) => (
+            <div key={i} className="py-5">
+              <button
+                onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                className="flex w-full items-start justify-between gap-4 text-left"
+              >
+                <span
+                  className={`font-medium ${
+                    openIndex === i ? 'text-[#1D4ED8]' : 'text-[#111827]'
+                  }`}
+                >
+                  {item.question}
+                </span>
+                <span
+                  className={`mt-0.5 shrink-0 text-lg font-light transition-transform duration-200 ${
+                    openIndex === i
+                      ? 'rotate-45 text-[#1D4ED8]'
+                      : 'text-[#6B7280]'
+                  }`}
+                >
+                  +
+                </span>
+              </button>
+
+              {openIndex === i && (
+                <p className="mt-3 pr-8 text-sm leading-relaxed text-[#6B7280]">
+                  {item.answer}
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+```
+
+---
+
+## Pattern 6 — Multi-Step Application Form
+
+```tsx
+// MultiStepForm.tsx
+import React, { useState } from 'react'
+
+interface FormStep {
+  id: string
+  title: string
+  fields: FormField[]
+}
+
+interface FormField {
+  name: string
+  label: string
+  type: 'text' | 'email' | 'tel' | 'number' | 'select' | 'radio'
+  placeholder?: string
+  options?: { value: string; label: string }[]
+  required?: boolean
+}
+
+interface MultiStepFormProps {
+  steps: FormStep[]
+  onSubmit: (data: Record<string, string>) => void
+}
+
+export function MultiStepForm({ steps, onSubmit }: MultiStepFormProps) {
+  const [currentStep, setCurrentStep] = useState(0)
+  const [formData, setFormData] = useState<Record<string, string>>({})
+
+  const step = steps[currentStep]
+  const isLast = currentStep === steps.length - 1
+  const progress = ((currentStep + 1) / steps.length) * 100
+
+  const handleNext = () => {
+    if (!isLast) setCurrentStep((s) => s + 1)
+    else onSubmit(formData)
+  }
+
+  const handleChange = (name: string, value: string) => {
+    setFormData((d) => ({ ...d, [name]: value }))
+  }
+
+  return (
+    <div className="mx-auto max-w-lg rounded-2xl border border-[#E5E7EB] bg-white shadow-lg">
+      {/* Progress bar */}
+      <div className="h-1.5 w-full rounded-t-2xl bg-[#E5E7EB]">
+        <div
+          className="h-full rounded-t-2xl bg-[#1D4ED8] transition-all duration-500"
+          style={{ width: `${progress}%` }}
+        />
+      </div>
+
+      <div className="p-8">
+        {/* Step indicator */}
+        <div className="mb-6 flex items-center justify-between">
+          <span className="text-xs font-semibold uppercase tracking-widest text-[#6B7280]">
+            Step {currentStep + 1} of {steps.length}
+          </span>
+          <div className="flex gap-1.5">
+            {steps.map((_, i) => (
+              <div
+                key={i}
+                className={`h-1.5 w-6 rounded-full transition-colors ${
+                  i <= currentStep ? 'bg-[#1D4ED8]' : 'bg-[#E5E7EB]'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+
+        <h2 className="mb-6 text-2xl font-bold text-[#111827]">{step.title}</h2>
+
+        {/* Fields */}
+        <div className="space-y-5">
+          {step.fields.map((field) => (
+            <div key={field.name}>
+              <label className="mb-1.5 block text-sm font-medium text-[#111827]">
+                {field.label}
+                {field.required && (
+                  <span className="ml-1 text-[#EF4444]">*</span>
+                )}
+              </label>
+
+              {field.type === 'select' ? (
+                <select
+                  className="w-full rounded-lg border border-[#E5E7EB] bg-white px-4 py-3 text-sm text-[#111827] focus:border-[#1D4ED8] focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]/20"
+                  value={formData[field.name] ?? ''}
+                  onChange={(e) => handleChange(field.name, e.target.value)}
+                >
+                  <option value="">Select…</option>
+                  {field.options?.map((o) => (
+                    <option key={o.value} value={o.value}>
+                      {o.label}
+                    </option>
+                  ))}
+                </select>
+              ) : field.type === 'radio' ? (
+                <div className="grid grid-cols-2 gap-3">
+                  {field.options?.map((o) => (
+                    <label
+                      key={o.value}
+                      className={`flex cursor-pointer items-center gap-3 rounded-lg border p-3.5 transition-colors ${
+                        formData[field.name] === o.value
+                          ? 'border-[#1D4ED8] bg-[#EFF6FF]'
+                          : 'border-[#E5E7EB] hover:border-[#93C5FD]'
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name={field.name}
+                        value={o.value}
+                        checked={formData[field.name] === o.value}
+                        onChange={() => handleChange(field.name, o.value)}
+                        className="accent-[#1D4ED8]"
+                      />
+                      <span className="text-sm font-medium text-[#111827]">
+                        {o.label}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              ) : (
+                <input
+                  type={field.type}
+                  placeholder={field.placeholder}
+                  value={formData[field.name] ?? ''}
+                  onChange={(e) => handleChange(field.name, e.target.value)}
+                  className="w-full rounded-lg border border-[#E5E7EB] px-4 py-3 text-sm text-[#111827] placeholder-[#9CA3AF] focus:border-[#1D4ED8] focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]/20"
+                />
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Navigation */}
+        <div className="mt-8 flex items-center justify-between">
+          {currentStep > 0 ? (
+            <button
+              onClick={() => setCurrentStep((s) => s - 1)}
+              className="text-sm font-medium text-[#6B7280] hover:text-[#111827]"
+            >
+              ← Back
+            </button>
+          ) : (
+            <div />
+          )}
+
+          <button
+            onClick={handleNext}
+            className="rounded-lg bg-[#1D4ED8] px-8 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#1E40AF]"
+          >
+            {isLast ? 'Submit Application' : 'Continue →'}
+          </button>
+        </div>
+
+        {/* Friction reducer — Better.com pattern */}
+        <p className="mt-4 text-center text-xs text-[#9CA3AF]">
+          3 minutes · No credit check · No commitment
+        </p>
+      </div>
+    </div>
+  )
+}
+```
