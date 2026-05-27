@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DJ Custom Reno — Toronto Renovation Contractor</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.0.42/dist/lenis.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0a0a;
+    --amber: #f59e0b;
+    --amber-dark: #d97706;
+    --text: #f5f5f5;
+    --muted: #888;
+    --border: rgba(245,158,11,0.2);
+    --card-bg: #111;
+  }
+  html { font-size: 16px; }
+  body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 4rem;
+    background: rgba(10,10,10,0.95); backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(245,158,11,0.1);
+  }
+  .nav-logo { font-size: 1.1rem; font-weight: 700; letter-spacing: 0.05em; }
+  .nav-logo span { color: var(--amber); }
+  .nav-links { display: flex; gap: 2.5rem; }
+  .nav-links a { font-size: 0.78rem; letter-spacing: 0.08em; color: var(--muted); transition: color 0.3s; }
+  .nav-links a:hover { color: var(--amber); }
+  .nav-cta {
+    padding: 0.65rem 1.5rem; background: var(--amber); color: var(--bg);
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; transition: all 0.3s; border: none; cursor: pointer;
+  }
+  .nav-cta:hover { background: var(--amber-dark); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: center; padding: 10rem 4rem 5rem; position: relative; overflow: hidden;
+  }
+  .hero-bg-lines {
+    position: absolute; inset: 0; z-index: 0; opacity: 0.04;
+    background-image: repeating-linear-gradient(90deg, var(--text) 0px, var(--text) 1px, transparent 1px, transparent 80px);
+  }
+  .hero-amber-glow {
+    position: absolute; bottom: -10%; left: -5%; width: 60%; height: 60%;
+    background: radial-gradient(ellipse, rgba(245,158,11,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 900px; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.4rem 1rem; border: 1px solid var(--border);
+    font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--amber); margin-bottom: 2rem;
+  }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--amber); border-radius: 50%; }
+  .hero h1 {
+    font-size: clamp(3rem, 6vw, 6rem); font-weight: 700; line-height: 1.0;
+    margin-bottom: 2rem; overflow: hidden;
+  }
+  .hero-line { display: block; overflow: hidden; }
+  .hero-line-inner { display: block; }
+  .hero h1 .highlight { color: var(--amber); }
+  .hero-sub { font-size: 1rem; color: var(--muted); line-height: 1.8; max-width: 520px; margin-bottom: 3rem; font-weight: 400; }
+  .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+  .btn-amber {
+    padding: 1rem 2.5rem; background: var(--amber); color: var(--bg);
+    font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    border: none; cursor: pointer; transition: all 0.3s;
+  }
+  .btn-amber:hover { background: var(--amber-dark); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(245,158,11,0.3); }
+  .btn-ghost {
+    padding: 1rem 2.5rem; background: transparent; color: var(--text);
+    font-size: 0.8rem; font-weight: 500; letter-spacing: 0.08em;
+    border: 1px solid rgba(245,245,245,0.2); cursor: pointer; transition: all 0.3s;
+  }
+  .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
+  .hero-trust { display: flex; gap: 2.5rem; margin-top: 3rem; padding-top: 3rem; border-top: 1px solid rgba(245,245,245,0.08); flex-wrap: wrap; }
+  .trust-item { font-size: 0.78rem; color: var(--muted); display: flex; align-items: center; gap: 0.5rem; }
+  .trust-item::before { content: '✓'; color: var(--amber); font-weight: 700; }
+
+  /* STATS */
+  .stats-section { background: #0d0d0d; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .stats-inner { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .stat-item { padding: 3rem; text-align: center; border-right: 1px solid var(--border); }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-size: clamp(2.5rem, 4vw, 3.5rem); font-weight: 700; color: var(--amber); line-height: 1; margin-bottom: 0.5rem; }
+  .stat-label { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+
+  /* PROJECTS */
+  .projects-section { padding: 6rem 4rem; }
+  .projects-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; }
+  .section-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.75rem; }
+  .section-title { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; line-height: 1.15; }
+  .section-title span { color: var(--amber); }
+  .filter-tabs { display: flex; gap: 0; flex-wrap: wrap; margin-bottom: 2.5rem; }
+  .filter-tab {
+    padding: 0.6rem 1.25rem; border: 1px solid rgba(245,245,245,0.1);
+    font-size: 0.72rem; letter-spacing: 0.08em; color: var(--muted);
+    cursor: pointer; background: transparent; font-family: 'Space Grotesk', sans-serif;
+    transition: all 0.25s; margin-right: -1px;
+  }
+  .filter-tab.active { background: var(--amber); color: var(--bg); border-color: var(--amber); font-weight: 700; z-index: 1; }
+  .filter-tab:hover:not(.active) { color: var(--text); border-color: rgba(245,245,245,0.3); }
+  .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .project-card {
+    border: 1px solid rgba(245,245,245,0.06); overflow: hidden; cursor: pointer;
+    transition: border-color 0.3s, transform 0.3s;
+    background: var(--card-bg);
+  }
+  .project-card:hover { border-color: var(--amber); transform: translateY(-4px); }
+  .project-image {
+    height: 220px; position: relative; overflow: hidden;
+    background: linear-gradient(135deg, #1a1a1a, #111);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .project-type-bg { position: absolute; inset: 0; opacity: 0.5; }
+  .project-type-bg.kitchen { background: linear-gradient(135deg, #2a1a00, #1a0e00); }
+  .project-type-bg.bathroom { background: linear-gradient(135deg, #001a2a, #000e1a); }
+  .project-type-bg.basement { background: linear-gradient(135deg, #1a001a, #0e000e); }
+  .project-type-bg.garden { background: linear-gradient(135deg, #001a0a, #000e05); }
+  .project-type-bg.full { background: linear-gradient(135deg, #1a0a00, #0e0500); }
+  .project-icon { font-size: 2.5rem; position: relative; z-index: 1; opacity: 0.6; }
+  .project-badge {
+    position: absolute; top: 1rem; right: 1rem; z-index: 2;
+    padding: 0.3rem 0.75rem; background: var(--amber); color: var(--bg);
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .project-body { padding: 1.5rem; }
+  .project-category { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.5rem; }
+  .project-title { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+  .project-location { font-size: 0.78rem; color: var(--muted); margin-bottom: 1rem; }
+  .project-meta { display: flex; gap: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(245,245,245,0.06); font-size: 0.72rem; color: var(--muted); }
+
+  /* PROCESS ACCORDION */
+  .process-section { background: #0d0d0d; padding: 6rem 4rem; }
+  .process-list { margin-top: 3rem; display: flex; flex-direction: column; }
+  .process-item {
+    border-top: 1px solid rgba(245,245,245,0.08); overflow: hidden;
+  }
+  .process-item:last-child { border-bottom: 1px solid rgba(245,245,245,0.08); }
+  .process-header {
+    display: flex; align-items: center; gap: 2rem; padding: 1.75rem 0;
+    cursor: pointer; user-select: none;
+  }
+  .process-num { font-size: 0.75rem; color: var(--amber); font-weight: 700; letter-spacing: 0.15em; min-width: 2rem; }
+  .process-title-text { font-size: 1.1rem; font-weight: 600; flex: 1; }
+  .process-toggle {
+    width: 32px; height: 32px; border: 1px solid rgba(245,245,245,0.15);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 1.2rem; transition: all 0.3s; flex-shrink: 0;
+  }
+  .process-item.open .process-toggle { background: var(--amber); color: var(--bg); border-color: var(--amber); transform: rotate(45deg); }
+  .process-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+  .process-body-inner {
+    padding: 0 0 2rem 4rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start;
+  }
+  .process-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.8; }
+  .process-details { display: flex; flex-direction: column; gap: 0.5rem; }
+  .process-detail-item { display: flex; align-items: center; gap: 0.75rem; font-size: 0.8rem; color: var(--muted); }
+  .process-detail-item::before { content: '→'; color: var(--amber); flex-shrink: 0; }
+
+  /* TESTIMONIALS */
+  .testimonials-section { padding: 6rem 4rem; }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+  .testi-card { padding: 2.5rem; border: 1px solid rgba(245,245,245,0.08); position: relative; background: var(--card-bg); }
+  .testi-stars { color: var(--amber); font-size: 0.85rem; letter-spacing: 0.1em; margin-bottom: 1.5rem; }
+  .testi-text { font-size: 0.88rem; color: var(--muted); line-height: 1.8; margin-bottom: 2rem; font-style: italic; position: relative; }
+  .testi-text::before { content: '\201C'; font-size: 4rem; color: var(--amber); opacity: 0.2; position: absolute; top: -0.5rem; left: -0.5rem; font-style: normal; line-height: 1; }
+  .testi-author { display: flex; align-items: center; gap: 1rem; }
+  .testi-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--amber); display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--bg); font-size: 0.9rem; flex-shrink: 0; }
+  .testi-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.2rem; }
+  .testi-project { font-size: 0.72rem; color: var(--amber); }
+
+  /* LEAD FORM */
+  .form-section { background: #0d0d0d; padding: 6rem 4rem; }
+  .form-container { max-width: 760px; margin: 0 auto; }
+  .form-steps { display: flex; gap: 0; margin-bottom: 3rem; }
+  .form-step-indicator {
+    flex: 1; padding: 1rem; text-align: center; border: 1px solid rgba(245,245,245,0.08);
+    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+    transition: all 0.3s; cursor: pointer; margin-right: -1px;
+  }
+  .form-step-indicator.active { background: var(--amber); color: var(--bg); border-color: var(--amber); font-weight: 700; z-index: 1; }
+  .form-step-indicator.done { border-color: rgba(245,158,11,0.5); color: var(--amber); }
+  .multi-form-step { display: none; }
+  .multi-form-step.active { display: block; }
+  .form-step-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .form-step-sub { color: var(--muted); font-size: 0.88rem; margin-bottom: 2rem; }
+  .option-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+  .option-card {
+    padding: 1.5rem; border: 2px solid rgba(245,245,245,0.08); cursor: pointer;
+    transition: all 0.25s; text-align: center;
+  }
+  .option-card:hover { border-color: rgba(245,158,11,0.4); }
+  .option-card.selected { border-color: var(--amber); background: rgba(245,158,11,0.08); }
+  .option-card .oc-icon { font-size: 1.8rem; margin-bottom: 0.75rem; }
+  .option-card .oc-label { font-size: 0.8rem; font-weight: 600; margin-bottom: 0.25rem; }
+  .option-card .oc-sub { font-size: 0.68rem; color: var(--muted); }
+  .form-nav { display: flex; gap: 1rem; margin-top: 1.5rem; }
+  .form-next { padding: 0.9rem 2rem; background: var(--amber); color: var(--bg); border: none; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; cursor: pointer; font-family: 'Space Grotesk', sans-serif; transition: all 0.3s; }
+  .form-next:hover { background: var(--amber-dark); }
+  .form-back { padding: 0.9rem 2rem; background: transparent; color: var(--muted); border: 1px solid rgba(245,245,245,0.1); font-size: 0.8rem; cursor: pointer; font-family: 'Space Grotesk', sans-serif; transition: all 0.3s; }
+  .form-back:hover { color: var(--text); border-color: rgba(245,245,245,0.3); }
+  .f-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+  .f-group label { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .f-group input, .f-group select {
+    background: #111; border: 1px solid rgba(245,245,245,0.1); color: var(--text);
+    padding: 0.9rem 1rem; font-family: 'Space Grotesk', sans-serif; font-size: 0.875rem;
+    outline: none; transition: border-color 0.3s;
+  }
+  .f-group input:focus, .f-group select:focus { border-color: var(--amber); }
+  .f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .timeline-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 1.5rem; }
+  .budget-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 1.5rem; }
+  .option-pill {
+    padding: 0.9rem; border: 2px solid rgba(245,245,245,0.08); cursor: pointer;
+    text-align: center; font-size: 0.78rem; font-weight: 500; transition: all 0.25s;
+  }
+  .option-pill:hover { border-color: rgba(245,158,11,0.4); }
+  .option-pill.selected { border-color: var(--amber); color: var(--amber); font-weight: 700; }
+
+  /* WHATSAPP */
+  .wa-float {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+    width: 58px; height: 58px; border-radius: 50%; background: #25d366;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.4); cursor: pointer;
+    transition: all 0.3s; text-decoration: none;
+  }
+  .wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 30px rgba(37,211,102,0.5); }
+  .wa-float svg { width: 28px; height: 28px; fill: #fff; }
+
+  /* FOOTER */
+  footer { padding: 4rem; border-top: 1px solid rgba(245,245,245,0.06); }
+  .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+  .footer-logo { font-size: 1.1rem; font-weight: 700; }
+  .footer-logo span { color: var(--amber); }
+  .footer-copy { font-size: 0.72rem; color: var(--muted); }
+  .footer-links { display: flex; gap: 2rem; flex-wrap: wrap; }
+  .footer-links a { font-size: 0.72rem; color: var(--muted); transition: color 0.3s; }
+  .footer-links a:hover { color: var(--amber); }
+
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(30px); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1.25rem 1.5rem; }
+    .nav-links { display: none; }
+    section, .projects-section, .process-section, .testimonials-section, .form-section { padding: 4rem 1.5rem; }
+    .hero { padding: 8rem 1.5rem 4rem; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); }
+    .stat-item:nth-child(2) { border-right: none; }
+    .stat-item:nth-child(3), .stat-item:nth-child(4) { border-top: 1px solid var(--border); }
+    .projects-grid { grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .option-cards { grid-template-columns: repeat(2, 1fr); }
+    .timeline-options, .budget-options { grid-template-columns: 1fr 1fr; }
+    .f-row { grid-template-columns: 1fr; }
+    .process-body-inner { grid-template-columns: 1fr; padding-left: 2rem; }
+    footer { padding: 2.5rem 1.5rem; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">DJ<span>Custom</span>Reno</div>
+  <div class="nav-links">
+    <a href="#projects">Projects</a>
+    <a href="#process">Process</a>
+    <a href="#testimonials">Reviews</a>
+    <a href="#get-quote">Get Quote</a>
+  </div>
+  <a href="#get-quote" class="nav-cta">Free Estimate</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg-lines"></div>
+  <div class="hero-amber-glow"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Toronto's Trusted Renovation Team</div>
+    <h1>
+      <span class="hero-line"><span class="hero-line-inner">We Don't Just</span></span>
+      <span class="hero-line"><span class="hero-line-inner highlight">Renovate.</span></span>
+      <span class="hero-line"><span class="hero-line-inner">We <span class="highlight">Transform.</span></span></span>
+    </h1>
+    <p class="hero-sub">From permits to paint, kitchen to garden suite — DJ Custom Reno delivers full-scope renovations that increase your home's value and your quality of life.</p>
+    <div class="hero-actions">
+      <a href="#get-quote" class="btn-amber">Get Free Estimate</a>
+      <a href="#projects" class="btn-ghost">View Our Work</a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-item">Licensed & Insured</div>
+      <div class="trust-item">100% Permit Success</div>
+      <div class="trust-item">No Hidden Costs</div>
+      <div class="trust-item">Serving Toronto GTA</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section" id="stats">
+  <div class="stats-inner">
+    <div class="stat-item reveal">
+      <div class="stat-num"><span class="counter" data-target="200">0</span>+</div>
+      <div class="stat-label">Projects<br>Completed</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-num"><span class="counter" data-target="12">0</span></div>
+      <div class="stat-label">Years in<br>Business</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-num"><span class="counter" data-target="98">0</span>%</div>
+      <div class="stat-label">Client<br>Satisfaction</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-num"><span class="counter" data-target="100">0</span>%</div>
+      <div class="stat-label">Permit<br>Success Rate</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects-section" id="projects">
+  <div class="projects-header reveal">
+    <div>
+      <div class="section-label">Our Work</div>
+      <h2 class="section-title">Recent <span>Transformations</span></h2>
+    </div>
+  </div>
+  <div class="filter-tabs">
+    <button class="filter-tab active" onclick="filterProjects('all', this)">All</button>
+    <button class="filter-tab" onclick="filterProjects('kitchen', this)">Kitchen</button>
+    <button class="filter-tab" onclick="filterProjects('bathroom', this)">Bathroom</button>
+    <button class="filter-tab" onclick="filterProjects('basement', this)">Basement</button>
+    <button class="filter-tab" onclick="filterProjects('garden', this)">Garden Suite</button>
+    <button class="filter-tab" onclick="filterProjects('full', this)">Full Home</button>
+  </div>
+  <div class="projects-grid" id="projectsGrid">
+    <div class="project-card reveal" data-type="kitchen">
+      <div class="project-image"><div class="project-type-bg kitchen"></div><div class="project-icon">🍳</div></div>
+      <div class="project-badge">Sold $90K Over Ask</div>
+      <div class="project-body">
+        <div class="project-category">Kitchen Renovation</div>
+        <div class="project-title">Scarborough Modern Kitchen</div>
+        <div class="project-location">📍 Scarborough, ON</div>
+        <div class="project-meta">
+          <span>⏱ 3 Weeks</span>
+          <span>💰 $42,000</span>
+          <span>⭐ 5.0</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card reveal" data-type="bathroom">
+      <div class="project-image"><div class="project-type-bg bathroom"></div><div class="project-icon">🚿</div></div>
+      <div class="project-badge">Client Favourite</div>
+      <div class="project-body">
+        <div class="project-category">Bathroom Renovation</div>
+        <div class="project-title">North York Spa Bathroom</div>
+        <div class="project-location">📍 North York, ON</div>
+        <div class="project-meta">
+          <span>⏱ 2 Weeks</span>
+          <span>💰 $28,000</span>
+          <span>⭐ 5.0</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card reveal" data-type="basement">
+      <div class="project-image"><div class="project-type-bg basement"></div><div class="project-icon">🏠</div></div>
+      <div class="project-badge">Legal Permit</div>
+      <div class="project-body">
+        <div class="project-category">Basement Finishing</div>
+        <div class="project-title">Mississauga Legal Basement</div>
+        <div class="project-location">📍 Mississauga, ON</div>
+        <div class="project-meta">
+          <span>⏱ 6 Weeks</span>
+          <span>💰 $65,000</span>
+          <span>⭐ 5.0</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card reveal" data-type="garden">
+      <div class="project-image"><div class="project-type-bg garden"></div><div class="project-icon">🌿</div></div>
+      <div class="project-badge">$2,800/mo Rental</div>
+      <div class="project-body">
+        <div class="project-category">Garden Suite</div>
+        <div class="project-title">East York Garden Suite</div>
+        <div class="project-location">📍 East York, ON</div>
+        <div class="project-meta">
+          <span>⏱ 14 Weeks</span>
+          <span>💰 $185,000</span>
+          <span>⭐ 5.0</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card reveal" data-type="kitchen">
+      <div class="project-image"><div class="project-type-bg kitchen"></div><div class="project-icon">🍳</div></div>
+      <div class="project-badge">Award Nominated</div>
+      <div class="project-body">
+        <div class="project-category">Kitchen Renovation</div>
+        <div class="project-title">Etobicoke Open Concept</div>
+        <div class="project-location">📍 Etobicoke, ON</div>
+        <div class="project-meta">
+          <span>⏱ 4 Weeks</span>
+          <span>💰 $55,000</span>
+          <span>⭐ 5.0</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card reveal" data-type="full">
+      <div class="project-image"><div class="project-type-bg full"></div><div class="project-icon">🏡</div></div>
+      <div class="project-badge">Full Home Reno</div>
+      <div class="project-body">
+        <div class="project-category">Full Home Renovation</div>
+        <div class="project-title">Thornhill Complete Transformation</div>
+        <div class="project-location">📍 Thornhill, ON</div>
+        <div class="project-meta">
+          <span>⏱ 16 Weeks</span>
+          <span>💰 $280,000</span>
+          <span>⭐ 5.0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section" id="process">
+  <div class="reveal">
+    <div class="section-label">How We Work</div>
+    <h2 class="section-title">Our <span>6-Step</span> Process</h2>
+    <p style="color:var(--muted);margin-top:0.75rem;max-width:500px;font-size:0.88rem;line-height:1.7;">Every project follows the same proven framework — no surprises, no overruns, no excuses.</p>
+  </div>
+  <div class="process-list" id="processList">
+    <div class="process-item open" onclick="toggleProcess(this)">
+      <div class="process-header">
+        <div class="process-num">01</div>
+        <div class="process-title-text">Planning & Scope</div>
+        <div class="process-toggle">+</div>
+      </div>
+      <div class="process-body">
+        <div class="process-body-inner">
+          <p class="process-desc">We start with a free in-home consultation to understand your vision, timeline, and budget. Our project manager prepares a full scope of work with itemized pricing — no vague estimates.</p>
+          <div class="process-details">
+            <div class="process-detail-item">Free in-home consultation</div>
+            <div class="process-detail-item">Detailed written scope</div>
+            <div class="process-detail-item">Fixed-price contract (no surprises)</div>
+            <div class="process-detail-item">Timeline with milestones</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="process-item" onclick="toggleProcess(this)">
+      <div class="process-header">
+        <div class="process-num">02</div>
+        <div class="process-title-text">Permit & Design</div>
+        <div class="process-toggle">+</div>
+      </div>
+      <div class="process-body">
+        <div class="process-body-inner">
+          <p class="process-desc">We handle every permit application with the City of Toronto. Our in-house designer produces 3D renders so you can visualise the finished space before any tools come out.</p>
+          <div class="process-details">
+            <div class="process-detail-item">100% permit success rate</div>
+            <div class="process-detail-item">3D renders included</div>
+            <div class="process-detail-item">Material & finish selection</div>
+            <div class="process-detail-item">Engineering drawings if required</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="process-item" onclick="toggleProcess(this)">
+      <div class="process-header">
+        <div class="process-num">03</div>
+        <div class="process-title-text">Demolition & Prep</div>
+        <div class="process-toggle">+</div>
+      </div>
+      <div class="process-body">
+        <div class="process-body-inner">
+          <p class="process-desc">Clean, careful demolition with full protection of existing finishes and daily debris removal. We leave your home as clean as we found it — every single day.</p>
+          <div class="process-details">
+            <div class="process-detail-item">Daily clean-up protocol</div>
+            <div class="process-detail-item">Dust barriers and floor protection</div>
+            <div class="process-detail-item">Responsible waste disposal</div>
+            <div class="process-detail-item">Structural assessments</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="process-item" onclick="toggleProcess(this)">
+      <div class="process-header">
+        <div class="process-num">04</div>
+        <div class="process-title-text">Build Phase</div>
+        <div class="process-toggle">+</div>
+      </div>
+      <div class="process-body">
+        <div class="process-body-inner">
+          <p class="process-desc">Framing, rough-ins, insulation, drywall, tile, cabinetry, flooring — executed by our own certified tradespeople. No sub-contracting. One team, one standard.</p>
+          <div class="process-details">
+            <div class="process-detail-item">Own tradespeople (no sub-contracting)</div>
+            <div class="process-detail-item">Weekly progress photos</div>
+            <div class="process-detail-item">Dedicated site supervisor</div>
+            <div class="process-detail-item">Daily client updates via app</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="process-item" onclick="toggleProcess(this)">
+      <div class="process-header">
+        <div class="process-num">05</div>
+        <div class="process-title-text">Finishing & Detailing</div>
+        <div class="process-toggle">+</div>
+      </div>
+      <div class="process-body">
+        <div class="process-body-inner">
+          <p class="process-desc">Trim, paint, fixtures, hardware — the details that separate good from great. Our finish team has an obsessive eye for quality. Punch list completed in full before handover.</p>
+          <div class="process-details">
+            <div class="process-detail-item">100-point finishing checklist</div>
+            <div class="process-detail-item">Client walkthrough before sign-off</div>
+            <div class="process-detail-item">Professional cleaning included</div>
+            <div class="process-detail-item">Touch-up kit provided</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="process-item" onclick="toggleProcess(this)">
+      <div class="process-header">
+        <div class="process-num">06</div>
+        <div class="process-title-text">Handover & Warranty</div>
+        <div class="process-toggle">+</div>
+      </div>
+      <div class="process-body">
+        <div class="process-body-inner">
+          <p class="process-desc">Final inspection, permit sign-off, keys in hand. We provide a 2-year workmanship warranty and 1-year follow-up support. Your satisfaction is our reputation.</p>
+          <div class="process-details">
+            <div class="process-detail-item">City inspection & permit close-out</div>
+            <div class="process-detail-item">2-year workmanship warranty</div>
+            <div class="process-detail-item">Maintenance guide included</div>
+            <div class="process-detail-item">12-month check-in call</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section" id="testimonials">
+  <div class="reveal">
+    <div class="section-label">Client Reviews</div>
+    <h2 class="section-title">What Our <span>Clients</span> Say</h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">DJ Custom Reno turned our dated Scarborough kitchen into something out of a magazine. They stuck to budget, hit every deadline, and cleaned up every day. Abed the PM was on every single call — a real professional.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">AM</div>
+        <div>
+          <div class="testi-name">Abed M.</div>
+          <div class="testi-project">Kitchen Reno — Scarborough, 2024</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">We did a full home renovation — kitchen, two bathrooms, and basement. The team was respectful, clean, and skilled. Permit was approved first try and the finished result increased our home's appraisal by $180,000. Remarkable.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">TF</div>
+        <div>
+          <div class="testi-name">The Thornton Family</div>
+          <div class="testi-project">Full Home Reno — Thornhill, 2023</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">I was nervous about the garden suite permit process but DJ Custom Reno handled everything. Now I collect $2,800/month from the suite. Best financial decision we've made. 100% recommend and I already have referred two neighbours.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">ST</div>
+        <div>
+          <div class="testi-name">S. Trinco</div>
+          <div class="testi-project">Garden Suite — East York, 2024</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MULTI-STEP FORM -->
+<section class="form-section" id="get-quote">
+  <div class="form-container">
+    <div class="reveal">
+      <div class="section-label">Free Estimate</div>
+      <h2 class="section-title">Start Your <span>Project</span></h2>
+      <p style="color:var(--muted);margin-top:0.5rem;margin-bottom:2rem;font-size:0.88rem;">4 quick steps. Get a detailed estimate within 24 hours.</p>
+    </div>
+    <div class="form-steps">
+      <div class="form-step-indicator active" id="stepInd0">What</div>
+      <div class="form-step-indicator" id="stepInd1">Timeline</div>
+      <div class="form-step-indicator" id="stepInd2">Budget</div>
+      <div class="form-step-indicator" id="stepInd3">Contact</div>
+    </div>
+
+    <!-- STEP 1: TYPE -->
+    <div class="multi-form-step active" id="formStep0">
+      <div class="form-step-title">What are you renovating?</div>
+      <p class="form-step-sub">Select all that apply to your project.</p>
+      <div class="option-cards">
+        <div class="option-card" onclick="toggleCard(this)"><div class="oc-icon">🍳</div><div class="oc-label">Kitchen</div><div class="oc-sub">Full remodel</div></div>
+        <div class="option-card" onclick="toggleCard(this)"><div class="oc-icon">🚿</div><div class="oc-label">Bathroom</div><div class="oc-sub">Single or double</div></div>
+        <div class="option-card" onclick="toggleCard(this)"><div class="oc-icon">🏠</div><div class="oc-label">Basement</div><div class="oc-sub">Finish or legal suite</div></div>
+        <div class="option-card" onclick="toggleCard(this)"><div class="oc-icon">🌿</div><div class="oc-label">Garden Suite</div><div class="oc-sub">New build</div></div>
+        <div class="option-card" onclick="toggleCard(this)"><div class="oc-icon">🏡</div><div class="oc-label">Full Home</div><div class="oc-sub">Multiple areas</div></div>
+        <div class="option-card" onclick="toggleCard(this)"><div class="oc-icon">✨</div><div class="oc-label">Other</div><div class="oc-sub">Tell us more</div></div>
+      </div>
+      <div class="form-nav">
+        <button class="form-next" onclick="goStep(1)">Next: Timeline →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: TIMELINE -->
+    <div class="multi-form-step" id="formStep1">
+      <div class="form-step-title">What's your timeline?</div>
+      <p class="form-step-sub">When are you hoping to start?</p>
+      <div class="timeline-options">
+        <div class="option-pill" onclick="selectPill(this, 'timeline')">ASAP</div>
+        <div class="option-pill" onclick="selectPill(this, 'timeline')">1–3 Months</div>
+        <div class="option-pill" onclick="selectPill(this, 'timeline')">3–6 Months</div>
+        <div class="option-pill" onclick="selectPill(this, 'timeline')">6–12 Months</div>
+        <div class="option-pill" onclick="selectPill(this, 'timeline')">Just Exploring</div>
+        <div class="option-pill" onclick="selectPill(this, 'timeline')">Flexible</div>
+      </div>
+      <div class="form-nav">
+        <button class="form-back" onclick="goStep(0)">← Back</button>
+        <button class="form-next" onclick="goStep(2)">Next: Budget →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: BUDGET -->
+    <div class="multi-form-step" id="formStep2">
+      <div class="form-step-title">What's your budget range?</div>
+      <p class="form-step-sub">Helps us recommend the right scope and materials.</p>
+      <div class="budget-options">
+        <div class="option-pill" onclick="selectPill(this, 'budget')">Under $20K</div>
+        <div class="option-pill" onclick="selectPill(this, 'budget')">$20K – $50K</div>
+        <div class="option-pill" onclick="selectPill(this, 'budget')">$50K – $100K</div>
+        <div class="option-pill" onclick="selectPill(this, 'budget')">$100K – $200K</div>
+        <div class="option-pill" onclick="selectPill(this, 'budget')">$200K – $400K</div>
+        <div class="option-pill" onclick="selectPill(this, 'budget')">$400K+</div>
+      </div>
+      <div class="form-nav">
+        <button class="form-back" onclick="goStep(1)">← Back</button>
+        <button class="form-next" onclick="goStep(3)">Next: Contact Info →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: CONTACT -->
+    <div class="multi-form-step" id="formStep3">
+      <div class="form-step-title">Almost there!</div>
+      <p class="form-step-sub">Where should we send your free estimate?</p>
+      <div class="f-row">
+        <div class="f-group"><label>First Name</label><input type="text" placeholder="David"></div>
+        <div class="f-group"><label>Last Name</label><input type="text" placeholder="Johnson"></div>
+      </div>
+      <div class="f-group"><label>Email Address</label><input type="email" placeholder="david@email.com"></div>
+      <div class="f-group"><label>Phone Number</label><input type="tel" placeholder="+1 (416) 000-0000"></div>
+      <div class="f-group"><label>Property Address</label><input type="text" placeholder="123 Main St, Toronto, ON"></div>
+      <div class="form-nav">
+        <button class="form-back" onclick="goStep(2)">← Back</button>
+        <button class="form-next" onclick="submitForm()">Get My Free Estimate ✓</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">DJ<span>Custom</span>Reno</div>
+    <div class="footer-copy">© 2024 DJ Custom Renovations Inc. Toronto, ON. Licensed & Insured. TARION Registered.</div>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">WSIB Certificate</a>
+      <a href="#">Instagram</a>
+      <a href="#">Houzz</a>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp -->
+<a href="https://wa.me/14165550100" class="wa-float" title="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+// Lenis
+const lenis = new Lenis({ lerp: 0.08 });
+function raf(t) { lenis.raf(t); requestAnimationFrame(raf); }
+requestAnimationFrame(raf);
+
+// GSAP
+gsap.registerPlugin(ScrollTrigger);
+
+// Hero word reveal
+gsap.from('.hero-tag', { opacity: 0, y: 20, duration: 0.8, delay: 0.3 });
+gsap.utils.toArray('.hero-line-inner').forEach((el, i) => {
+  gsap.from(el, { y: '110%', duration: 1, delay: 0.5 + i * 0.15, ease: 'power3.out' });
+});
+gsap.from('.hero-sub', { opacity: 0, y: 20, duration: 0.9, delay: 1.1 });
+gsap.from('.hero-actions', { opacity: 0, y: 20, duration: 0.8, delay: 1.3 });
+gsap.from('.hero-trust', { opacity: 0, y: 20, duration: 0.8, delay: 1.5 });
+
+// Reveals
+gsap.utils.toArray('.reveal').forEach(el => {
+  gsap.to(el, {
+    opacity: 1, y: 0, duration: 0.85, ease: 'power2.out',
+    scrollTrigger: { trigger: el, start: 'top 87%', toggleActions: 'play none none none' }
+  });
+});
+
+// Counters
+gsap.utils.toArray('.counter').forEach(c => {
+  const target = +c.getAttribute('data-target');
+  ScrollTrigger.create({
+    trigger: c, start: 'top 80%', once: true,
+    onEnter: () => gsap.to({ v: 0 }, {
+      v: target, duration: 2, ease: 'power2.out',
+      onUpdate: function() { c.textContent = Math.floor(this.targets()[0].v); }
+    })
+  });
+});
+
+// Project filter
+function filterProjects(type, btn) {
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.project-card').forEach(card => {
+    const show = type === 'all' || card.dataset.type === type;
+    gsap.to(card, { opacity: show ? 1 : 0.2, scale: show ? 1 : 0.95, duration: 0.3 });
+  });
+}
+
+// Process accordion
+function toggleProcess(item) {
+  const isOpen = item.classList.contains('open');
+  const body = item.querySelector('.process-body');
+  if (isOpen) {
+    item.classList.remove('open');
+    gsap.to(body, { maxHeight: 0, duration: 0.35, ease: 'power2.inOut' });
+  } else {
+    item.classList.add('open');
+    gsap.to(body, { maxHeight: 500, duration: 0.4, ease: 'power2.out' });
+  }
+}
+// Init first item open
+gsap.set(document.querySelector('.process-item.open .process-body'), { maxHeight: 500 });
+
+// Multi-step form
+let currentStep = 0;
+function goStep(n) {
+  document.getElementById('formStep' + currentStep).classList.remove('active');
+  document.getElementById('stepInd' + currentStep).classList.remove('active');
+  document.getElementById('stepInd' + currentStep).classList.add('done');
+  currentStep = n;
+  document.getElementById('formStep' + n).classList.add('active');
+  document.getElementById('stepInd' + n).classList.add('active');
+  document.getElementById('stepInd' + n).classList.remove('done');
+  gsap.from('#formStep' + n, { opacity: 0, x: 30, duration: 0.4, ease: 'power2.out' });
+}
+function toggleCard(card) { card.classList.toggle('selected'); }
+function selectPill(pill, group) {
+  pill.closest('.' + group + '-options, .timeline-options, .budget-options').querySelectorAll('.option-pill').forEach(p => p.classList.remove('selected'));
+  pill.classList.add('selected');
+}
+function submitForm() {
+  document.getElementById('formStep3').innerHTML = `
+    <div style="text-align:center;padding:3rem 0;">
+      <div style="font-size:3rem;margin-bottom:1rem;">✓</div>
+      <h3 style="font-size:1.5rem;font-weight:700;margin-bottom:0.75rem;color:var(--amber)">Request Received!</h3>
+      <p style="color:var(--muted);line-height:1.8;">Our team will review your project and send a detailed estimate within 24 hours. We'll also send a WhatsApp confirmation.</p>
+    </div>
+  `;
+  document.querySelectorAll('.form-step-indicator').forEach(i => { i.classList.remove('active'); i.classList.add('done'); });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Garden Suites 4 You — Add a Legal Suite. Double Your Income.</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.0.42/dist/lenis.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0c0a09;
+    --bg2: #111009;
+    --amber: #f59e0b;
+    --amber-dark: #d97706;
+    --green: #22c55e;
+    --green-dark: #16a34a;
+    --text: #f5f5f0;
+    --muted: #888;
+    --border: rgba(245,158,11,0.18);
+    --border-g: rgba(34,197,94,0.2);
+  }
+  html { font-size: 16px; }
+  body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 4rem;
+    background: rgba(12,10,9,0.95); backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(245,158,11,0.08);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 0.75rem; }
+  .nav-logo-icon { width: 32px; height: 32px; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+  .nav-logo-text { font-size: 1rem; font-weight: 700; letter-spacing: -0.02em; }
+  .nav-logo-text span { color: var(--green); }
+  .nav-links { display: flex; gap: 2.5rem; }
+  .nav-links a { font-size: 0.78rem; letter-spacing: 0.06em; color: var(--muted); transition: color 0.3s; }
+  .nav-links a:hover { color: var(--amber); }
+  .nav-cta { padding: 0.65rem 1.5rem; background: var(--green); color: #000; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; cursor: pointer; transition: all 0.3s; border: none; }
+  .nav-cta:hover { background: var(--green-dark); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: center; padding: 10rem 4rem 5rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-grid-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(245,158,11,0.03) 0px, rgba(245,158,11,0.03) 1px, transparent 1px, transparent 70px),
+      repeating-linear-gradient(90deg, rgba(245,158,11,0.03) 0px, rgba(245,158,11,0.03) 1px, transparent 1px, transparent 70px);
+  }
+  .hero-glow { position: absolute; top: -20%; right: -10%; width: 70%; height: 80%; background: radial-gradient(ellipse, rgba(34,197,94,0.05) 0%, transparent 60%); pointer-events: none; }
+  .hero-glow-2 { position: absolute; bottom: -10%; left: -5%; width: 50%; height: 60%; background: radial-gradient(ellipse, rgba(245,158,11,0.05) 0%, transparent 60%); pointer-events: none; }
+  .hero-content { position: relative; z-index: 1; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    padding: 0.45rem 1rem; background: rgba(34,197,94,0.12); border: 1px solid var(--border-g);
+    color: var(--green); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; margin-bottom: 2rem;
+  }
+  .hero-badge-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.6; } }
+  .hero h1 {
+    font-size: clamp(2.5rem, 5.5vw, 5.5rem); font-weight: 700; line-height: 1.05;
+    max-width: 900px; margin-bottom: 2rem;
+  }
+  .hero h1 .a { color: var(--amber); }
+  .hero h1 .g { color: var(--green); }
+  .hero-sub { font-size: 1rem; color: var(--muted); line-height: 1.8; max-width: 560px; margin-bottom: 3rem; }
+  .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+  .btn-green { padding: 1rem 2.5rem; background: var(--green); color: #000; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; border: none; cursor: pointer; transition: all 0.3s; }
+  .btn-green:hover { background: var(--green-dark); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(34,197,94,0.3); }
+  .btn-amber-outline { padding: 1rem 2.5rem; background: transparent; color: var(--amber); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; border: 1px solid var(--border); cursor: pointer; transition: all 0.3s; }
+  .btn-amber-outline:hover { background: rgba(245,158,11,0.08); }
+  .hero-proof { display: flex; gap: 3rem; margin-top: 4rem; padding-top: 3rem; border-top: 1px solid rgba(245,245,240,0.06); flex-wrap: wrap; }
+  .proof-item { text-align: center; }
+  .proof-num { font-size: 2rem; font-weight: 700; color: var(--amber); line-height: 1; }
+  .proof-num.green { color: var(--green); }
+  .proof-label { font-size: 0.72rem; color: var(--muted); margin-top: 0.3rem; }
+
+  /* STATS */
+  .stats-section { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .stat-item { padding: 3rem; text-align: center; border-right: 1px solid var(--border); position: relative; overflow: hidden; }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-size: clamp(2.5rem, 4vw, 3.5rem); font-weight: 700; line-height: 1; margin-bottom: 0.5rem; }
+  .stat-num.amber { color: var(--amber); }
+  .stat-num.green { color: var(--green); }
+  .stat-label { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+
+  /* SECTION SHARED */
+  .section-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.75rem; }
+  .section-label.amber { color: var(--amber); }
+  .section-label.green { color: var(--green); }
+  .section-title { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; line-height: 1.15; }
+  .section-title .a { color: var(--amber); }
+  .section-title .g { color: var(--green); }
+
+  /* ROI CALCULATOR */
+  .calc-section { padding: 6rem 4rem; }
+  .calc-container { max-width: 900px; margin: 0 auto; }
+  .calc-box {
+    background: var(--bg2); border: 1px solid var(--border); padding: 3rem; margin-top: 3rem;
+    position: relative; overflow: hidden;
+  }
+  .calc-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(to right, var(--amber), var(--green)); }
+  .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .calc-inputs { display: flex; flex-direction: column; gap: 2.5rem; }
+  .slider-group { display: flex; flex-direction: column; gap: 0.75rem; }
+  .slider-label-row { display: flex; justify-content: space-between; align-items: center; }
+  .slider-label-row label { font-size: 0.78rem; font-weight: 600; }
+  .slider-value { font-size: 1rem; font-weight: 700; color: var(--amber); }
+  .slider-value.green { color: var(--green); }
+  input[type="range"] {
+    width: 100%; height: 4px; background: rgba(245,245,240,0.1);
+    border-radius: 2px; outline: none; cursor: pointer;
+    -webkit-appearance: none; appearance: none;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--amber); cursor: pointer;
+    box-shadow: 0 2px 10px rgba(245,158,11,0.4);
+  }
+  input[type="range"].green-track::-webkit-slider-thumb { background: var(--green); box-shadow: 0 2px 10px rgba(34,197,94,0.4); }
+  .slider-range { display: flex; justify-content: space-between; font-size: 0.65rem; color: var(--muted); margin-top: 0.25rem; }
+  .calc-results { display: flex; flex-direction: column; gap: 1.5rem; }
+  .result-item { padding: 1.5rem; border: 1px solid rgba(245,245,240,0.06); position: relative; }
+  .result-item.primary { border-color: var(--border); background: rgba(245,158,11,0.05); }
+  .result-item.success { border-color: var(--border-g); background: rgba(34,197,94,0.05); }
+  .result-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
+  .result-value { font-size: 2rem; font-weight: 700; line-height: 1; }
+  .result-value.amber { color: var(--amber); }
+  .result-value.green { color: var(--green); }
+  .result-sub { font-size: 0.72rem; color: var(--muted); margin-top: 0.4rem; }
+  .calc-disclaimer { font-size: 0.68rem; color: var(--muted); margin-top: 1.5rem; line-height: 1.6; }
+
+  /* SUITE TYPES */
+  .suites-section { background: var(--bg2); padding: 6rem 4rem; }
+  .suites-tabs { display: flex; gap: 0; margin: 2.5rem 0; border: 1px solid rgba(245,245,240,0.08); overflow: hidden; width: fit-content; }
+  .suite-tab {
+    padding: 0.8rem 2rem; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.05em;
+    cursor: pointer; background: transparent; border: none; color: var(--muted);
+    font-family: 'Space Grotesk', sans-serif; transition: all 0.3s;
+    border-right: 1px solid rgba(245,245,240,0.08);
+  }
+  .suite-tab:last-child { border-right: none; }
+  .suite-tab.active { background: var(--amber); color: var(--bg); }
+  .suite-panel { display: none; }
+  .suite-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .suite-image {
+    height: 380px; background: linear-gradient(135deg, #1a1400, #0d0b00);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 5rem; position: relative; overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .suite-image.basement { background: linear-gradient(135deg, #001a0a, #000d05); }
+  .suite-image.laneway { background: linear-gradient(135deg, #1a0a00, #0d0500); }
+  .suite-image-label {
+    position: absolute; bottom: 1.5rem; left: 1.5rem;
+    background: rgba(12,10,9,0.9); border: 1px solid var(--border);
+    padding: 0.75rem 1.25rem; font-size: 0.72rem; color: var(--amber); font-weight: 600; letter-spacing: 0.08em;
+  }
+  .suite-info h3 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.75rem; }
+  .suite-info p { color: var(--muted); font-size: 0.88rem; line-height: 1.8; margin-bottom: 2rem; }
+  .suite-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+  .suite-spec { padding: 1.25rem; border: 1px solid rgba(245,245,240,0.06); }
+  .suite-spec-label { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
+  .suite-spec-value { font-size: 1rem; font-weight: 700; }
+  .suite-spec-value.amber { color: var(--amber); }
+  .suite-spec-value.green { color: var(--green); }
+
+  /* TIMELINE */
+  .timeline-section { padding: 6rem 4rem; }
+  .timeline { display: flex; flex-direction: column; margin-top: 3rem; position: relative; }
+  .timeline::before { content: ''; position: absolute; left: 1.25rem; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--amber), var(--green)); }
+  .timeline-item { display: flex; gap: 3rem; padding-bottom: 3rem; position: relative; }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-dot {
+    width: 2.5rem; height: 2.5rem; border-radius: 50%;
+    background: var(--amber); display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 700; color: var(--bg); flex-shrink: 0; position: relative; z-index: 1;
+  }
+  .timeline-dot.green { background: var(--green); }
+  .timeline-body { padding-top: 0.35rem; }
+  .timeline-step { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.4rem; }
+  .timeline-step.green { color: var(--green); }
+  .timeline-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .timeline-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.7; max-width: 500px; }
+  .timeline-duration { display: inline-block; margin-top: 0.75rem; padding: 0.3rem 0.75rem; background: rgba(245,158,11,0.1); border: 1px solid var(--border); font-size: 0.68rem; color: var(--amber); font-weight: 600; }
+  .timeline-duration.green { background: rgba(34,197,94,0.1); border-color: var(--border-g); color: var(--green); }
+
+  /* BEFORE/AFTER */
+  .slider-section { background: var(--bg2); padding: 6rem 4rem; }
+  .slider-wrap { position: relative; width: 100%; max-width: 900px; margin: 3rem auto 0; height: 480px; overflow: hidden; cursor: ew-resize; user-select: none; border: 1px solid var(--border); }
+  .s-before { position: absolute; inset: 0; background: linear-gradient(135deg, #1a1000, #0f0900); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.75rem; }
+  .s-after { position: absolute; inset: 0; clip-path: inset(0 50% 0 0); background: linear-gradient(135deg, #001a0a, #000d05); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.75rem; }
+  .s-tag { font-size: 4rem; }
+  .s-label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; }
+  .s-before .s-label { color: rgba(245,158,11,0.4); }
+  .s-after .s-label { color: rgba(34,197,94,0.4); }
+  .s-desc { font-size: 0.75rem; color: var(--muted); }
+  .s-badge { padding: 0.35rem 1rem; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+  .s-before .s-badge { background: rgba(245,158,11,0.15); color: var(--amber); border: 1px solid var(--border); }
+  .s-after .s-badge { background: rgba(34,197,94,0.15); color: var(--green); border: 1px solid var(--border-g); }
+  .s-label-tag { position: absolute; top: 1.5rem; z-index: 5; padding: 0.35rem 1rem; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+  .s-label-before { left: 1.5rem; background: rgba(12,10,9,0.9); color: var(--amber); border: 1px solid var(--border); }
+  .s-label-after { right: 1.5rem; background: var(--green); color: #000; }
+  .s-handle { position: absolute; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); width: 3px; background: #fff; z-index: 4; display: flex; align-items: center; justify-content: center; }
+  .s-handle-circle { width: 44px; height: 44px; border-radius: 50%; background: #fff; box-shadow: 0 2px 20px rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; color: var(--bg); flex-shrink: 0; }
+
+  /* MULTI-STEP FORM */
+  .form-section { padding: 6rem 4rem; }
+  .form-container { max-width: 760px; margin: 0 auto; }
+  .form-step-bar { display: flex; gap: 0; margin-bottom: 3rem; }
+  .fsb-item { flex: 1; padding: 0.85rem; text-align: center; border: 1px solid rgba(245,245,240,0.08); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); transition: all 0.3s; margin-right: -1px; }
+  .fsb-item.active { background: var(--amber); color: var(--bg); border-color: var(--amber); font-weight: 700; z-index: 1; }
+  .fsb-item.done { color: var(--green); border-color: rgba(34,197,94,0.3); }
+  .mfs { display: none; }
+  .mfs.active { display: block; }
+  .mfs-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .mfs-sub { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; line-height: 1.6; }
+  .opt-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+  .opt-card { padding: 1.5rem 1rem; border: 2px solid rgba(245,245,240,0.08); cursor: pointer; text-align: center; transition: all 0.25s; }
+  .opt-card:hover { border-color: rgba(245,158,11,0.3); }
+  .opt-card.selected { border-color: var(--amber); background: rgba(245,158,11,0.07); }
+  .opt-card .oic { font-size: 1.6rem; margin-bottom: 0.6rem; }
+  .opt-card .otitle { font-size: 0.82rem; font-weight: 700; margin-bottom: 0.2rem; }
+  .opt-card .osub { font-size: 0.68rem; color: var(--muted); }
+  .opt-pills { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 2rem; }
+  .opt-pill { padding: 0.85rem; border: 2px solid rgba(245,245,240,0.08); cursor: pointer; text-align: center; font-size: 0.78rem; font-weight: 500; transition: all 0.25s; }
+  .opt-pill:hover { border-color: rgba(245,158,11,0.3); }
+  .opt-pill.selected { border-color: var(--amber); color: var(--amber); font-weight: 700; }
+  .fnav { display: flex; gap: 1rem; margin-top: 1.5rem; }
+  .fnext { padding: 0.9rem 2rem; background: var(--amber); color: var(--bg); border: none; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; cursor: pointer; font-family: 'Space Grotesk', sans-serif; transition: all 0.3s; }
+  .fnext:hover { background: var(--amber-dark); }
+  .fback { padding: 0.9rem 2rem; background: transparent; color: var(--muted); border: 1px solid rgba(245,245,240,0.1); font-size: 0.8rem; cursor: pointer; font-family: 'Space Grotesk', sans-serif; transition: all 0.3s; }
+  .fback:hover { color: var(--text); }
+  .fg { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+  .fg label { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .fg input, .fg select { background: rgba(245,245,240,0.04); border: 1px solid rgba(245,245,240,0.1); color: var(--text); padding: 0.9rem 1rem; font-family: 'Space Grotesk', sans-serif; font-size: 0.875rem; outline: none; transition: border-color 0.3s; }
+  .fg input:focus, .fg select:focus { border-color: var(--amber); }
+  .fg select option { background: var(--bg); }
+  .frow { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  /* MOBILE STICKY CTA */
+  .sticky-cta {
+    display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+    background: rgba(12,10,9,0.97); border-top: 1px solid var(--border);
+    padding: 1rem 1.5rem; backdrop-filter: blur(20px);
+    flex-direction: column; gap: 0.75rem;
+  }
+  .sticky-cta-text { font-size: 0.8rem; color: var(--muted); }
+  .sticky-cta-text strong { color: var(--green); }
+  .sticky-cta-btns { display: flex; gap: 0.75rem; }
+  .sticky-cta-btns button { flex: 1; padding: 0.75rem; font-size: 0.78rem; font-weight: 700; border: none; cursor: pointer; font-family: 'Space Grotesk', sans-serif; }
+  .sticky-cta-btns .s-btn-g { background: var(--green); color: #000; }
+  .sticky-cta-btns .s-btn-a { background: transparent; color: var(--amber); border: 1px solid var(--border); }
+
+  /* FOOTER */
+  footer { padding: 4rem; border-top: 1px solid rgba(245,245,240,0.06); background: var(--bg2); }
+  .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+  .footer-logo { font-size: 1rem; font-weight: 700; }
+  .footer-logo span { color: var(--green); }
+  .footer-copy { font-size: 0.72rem; color: var(--muted); }
+  .footer-links { display: flex; gap: 2rem; flex-wrap: wrap; }
+  .footer-links a { font-size: 0.72rem; color: var(--muted); transition: color 0.3s; }
+  .footer-links a:hover { color: var(--amber); }
+
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(30px); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1.25rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero, .calc-section, .suites-section, .timeline-section, .slider-section, .form-section { padding: 4rem 1.5rem; }
+    .hero { padding-top: 7rem; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+    .stat-item:last-child { border-bottom: none; }
+    .calc-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .suite-panel.active { grid-template-columns: 1fr; gap: 2rem; }
+    .suite-image { height: 250px; }
+    .suite-specs { grid-template-columns: 1fr 1fr; }
+    .opt-cards { grid-template-columns: 1fr 1fr; }
+    .opt-pills { grid-template-columns: 1fr 1fr; }
+    .frow { grid-template-columns: 1fr; }
+    .sticky-cta { display: flex; }
+    footer { padding: 2.5rem 1.5rem; padding-bottom: 120px; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+    .hero-proof { gap: 1.5rem; }
+    .suites-tabs { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-icon">🌿</div>
+    <div class="nav-logo-text">Garden<span>Suites</span>4You</div>
+  </div>
+  <div class="nav-links">
+    <a href="#calculator">ROI Calculator</a>
+    <a href="#suite-types">Suite Types</a>
+    <a href="#process">Process</a>
+    <a href="#get-started">Get Started</a>
+  </div>
+  <a href="#get-started" class="nav-cta">Free Consultation</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow-2"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      Toronto-Compliant Garden Suites — 100% Permit Success
+    </div>
+    <h1>
+      Add a <span class="g">Legal Suite.</span><br>
+      Double Your Property's<br>
+      <span class="a">Income.</span>
+    </h1>
+    <p class="hero-sub">We design, permit, and build government-approved garden suites, legal basement apartments, and laneway housing across Toronto — from $80,000. Fully turnkey.</p>
+    <div class="hero-actions">
+      <a href="#get-started" class="btn-green">Get Free Consultation</a>
+      <a href="#calculator" class="btn-amber-outline">Calculate My ROI</a>
+    </div>
+    <div class="hero-proof">
+      <div class="proof-item">
+        <div class="proof-num">200+</div>
+        <div class="proof-label">Suites Built</div>
+      </div>
+      <div class="proof-item">
+        <div class="proof-num green">100%</div>
+        <div class="proof-label">Permit Success</div>
+      </div>
+      <div class="proof-item">
+        <div class="proof-num">$2,500</div>
+        <div class="proof-label">Avg Monthly Rent</div>
+      </div>
+      <div class="proof-item">
+        <div class="proof-num green">8–12 yr</div>
+        <div class="proof-label">Avg Payback Period</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section" id="stats">
+  <div class="stats-grid">
+    <div class="stat-item reveal">
+      <div class="stat-num amber"><span class="counter" data-target="200">0</span>+</div>
+      <div class="stat-label">Legal Suites<br>Completed in Toronto GTA</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-num green"><span class="counter" data-target="100">0</span>%</div>
+      <div class="stat-label">Permit Approval<br>Rate — First Submission</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-num amber">$<span class="counter" data-target="2500">0</span></div>
+      <div class="stat-label">Average Monthly<br>Rental Income</div>
+    </div>
+  </div>
+</section>
+
+<!-- ROI CALCULATOR -->
+<section class="calc-section" id="calculator">
+  <div class="calc-container">
+    <div class="reveal">
+      <div class="section-label amber">Financial Planning</div>
+      <h2 class="section-title">Live <span class="a">ROI</span> Calculator</h2>
+      <p style="color:var(--muted);margin-top:0.75rem;font-size:0.88rem;line-height:1.7;max-width:560px;">Adjust the sliders to model your specific property. All figures are estimates based on current Toronto market data.</p>
+    </div>
+    <div class="calc-box reveal">
+      <div class="calc-grid">
+        <div class="calc-inputs">
+          <div class="slider-group">
+            <div class="slider-label-row">
+              <label>Build Cost</label>
+              <div class="slider-value" id="buildVal">$180,000</div>
+            </div>
+            <input type="range" min="80000" max="400000" step="5000" value="180000" id="buildCost" oninput="calcROI()">
+            <div class="slider-range"><span>$80K</span><span>$400K</span></div>
+          </div>
+          <div class="slider-group">
+            <div class="slider-label-row">
+              <label>Monthly Rental Income</label>
+              <div class="slider-value green" id="rentVal">$2,500</div>
+            </div>
+            <input type="range" min="800" max="4000" step="50" value="2500" id="monthlyRent" class="green-track" oninput="calcROI()">
+            <div class="slider-range"><span>$800</span><span>$4,000</span></div>
+          </div>
+          <div style="padding:1.25rem;background:rgba(245,245,240,0.03);border:1px solid rgba(245,245,240,0.06);">
+            <div style="font-size:0.7rem;color:var(--muted);line-height:1.7;">
+              These calculations include a 5% vacancy rate allowance and exclude property tax adjustments. For a personalised analysis, book your free consultation.
+            </div>
+          </div>
+        </div>
+        <div class="calc-results">
+          <div class="result-item primary">
+            <div class="result-label">Annual Rental Income</div>
+            <div class="result-value amber" id="annualIncome">$28,500</div>
+            <div class="result-sub">After 5% vacancy allowance</div>
+          </div>
+          <div class="result-item success">
+            <div class="result-label">Annual Return on Investment</div>
+            <div class="result-value green" id="roiPct">15.8%</div>
+            <div class="result-sub">Net yield on total build cost</div>
+          </div>
+          <div class="result-item">
+            <div class="result-label">Estimated Payback Period</div>
+            <div class="result-value amber" id="payback">6.3 years</div>
+            <div class="result-sub">To recover full construction cost</div>
+          </div>
+          <div class="result-item">
+            <div class="result-label">10-Year Total Income</div>
+            <div class="result-value green" id="tenYear">$285,000</div>
+            <div class="result-sub">Plus property value increase</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUITE TYPES -->
+<section class="suites-section" id="suite-types">
+  <div class="reveal">
+    <div class="section-label green">What We Build</div>
+    <h2 class="section-title">Choose Your <span class="g">Suite Type</span></h2>
+  </div>
+  <div class="suites-tabs">
+    <button class="suite-tab active" onclick="switchSuite('garden', this)">Garden Suite</button>
+    <button class="suite-tab" onclick="switchSuite('basement', this)">Legal Basement</button>
+    <button class="suite-tab" onclick="switchSuite('laneway', this)">Laneway Suite</button>
+  </div>
+
+  <div class="suite-panel active" id="suite-garden">
+    <div class="suite-image">
+      🌿
+      <div class="suite-image-label">Garden Suite — From $130,000</div>
+    </div>
+    <div class="suite-info reveal">
+      <h3>Garden Suite</h3>
+      <p>A detached, purpose-built dwelling in your backyard. Maximum privacy for both you and your tenant. The highest rental income of the three options and significant property value uplift.</p>
+      <div class="suite-specs">
+        <div class="suite-spec"><div class="suite-spec-label">Build Cost</div><div class="suite-spec-value amber">$130K – $280K</div></div>
+        <div class="suite-spec"><div class="suite-spec-label">Avg Rental</div><div class="suite-spec-value green">$2,500 – $3,200/mo</div></div>
+        <div class="suite-spec"><div class="suite-spec-label">Permit Type</div><div class="suite-spec-value">Garden Suite Permit</div></div>
+        <div class="suite-spec"><div class="suite-spec-label">Timeframe</div><div class="suite-spec-value">12–20 Weeks</div></div>
+      </div>
+      <a href="#get-started" class="btn-green">Build My Garden Suite →</a>
+    </div>
+  </div>
+
+  <div class="suite-panel" id="suite-basement">
+    <div class="suite-image basement">
+      🏠
+      <div class="suite-image-label">Legal Basement — From $80,000</div>
+    </div>
+    <div class="suite-info reveal">
+      <h3>Legal Basement Apartment</h3>
+      <p>Convert your existing basement into a fully permitted, income-generating apartment. The most cost-effective entry point with strong rental demand across the GTA.</p>
+      <div class="suite-specs">
+        <div class="suite-spec"><div class="suite-spec-label">Build Cost</div><div class="suite-spec-value amber">$80K – $160K</div></div>
+        <div class="suite-spec"><div class="suite-spec-label">Avg Rental</div><div class="suite-spec-value green">$1,800 – $2,400/mo</div></div>
+        <div class="suite-spec"><div class="suite-spec-label">Permit Type</div><div class="suite-spec-value">Second Unit Permit</div></div>
+        <div class="suite-spec"><div class="suite-spec-label">Timeframe</div><div class="suite-spec-value">8–14 Weeks</div></div>
+      </div>
+      <a href="#get-started" class="btn-green">Build My Basement →</a>
+    </div>
+  </div>
+
+  <div class="suite-panel" id="suite-laneway">
+    <div class="suite-image laneway">
+      🏗
+      <div class="suite-image-label">Laneway Suite — From $150,000</div>
+    </div>
+    <div class="suite-info reveal">
+      <h3>Laneway Suite</h3>
+      <p>Toronto's urban infill solution. Purpose-built over or beside your garage fronting a laneway. Ideal for properties in Leslieville, the Annex, Trinity-Bellwoods and more.</p>
+      <div class="suite-specs">
+        <div class="suite-spec"><div class="suite-spec-label">Build Cost</div><div class="suite-spec-value amber">$150K – $320K</div></div>
+        <div class="suite-spec"><div class="suite-spec-label">Avg Rental</div><div class="suite-spec-value green">$2,200 – $3,500/mo</div></div>
+        <div class="suite-spec"><div class="suite-spec-label">Permit Type</div><div class="suite-spec-value">Laneway Suite Permit</div></div>
+        <div class="suite-spec"><div class="suite-spec-label">Timeframe</div><div class="suite-spec-value">16–24 Weeks</div></div>
+      </div>
+      <a href="#get-started" class="btn-green">Build My Laneway →</a>
+    </div>
+  </div>
+</section>
+
+<!-- PERMIT TIMELINE -->
+<section class="timeline-section" id="process">
+  <div class="reveal">
+    <div class="section-label amber">How It Works</div>
+    <h2 class="section-title">The 5-Step <span class="a">Permit Process</span></h2>
+    <p style="color:var(--muted);margin-top:0.75rem;font-size:0.88rem;line-height:1.7;max-width:560px;">We handle every stage — from the initial feasibility check to the final occupancy permit. You provide the property, we handle the rest.</p>
+  </div>
+  <div class="timeline">
+    <div class="timeline-item reveal">
+      <div class="timeline-dot">01</div>
+      <div class="timeline-body">
+        <div class="timeline-step">Step One</div>
+        <div class="timeline-title">Free Consultation & Feasibility</div>
+        <p class="timeline-desc">We assess your property's zoning, lot coverage, setbacks, and servicing to confirm it qualifies for a suite. Most Toronto properties do — we'll tell you in 48 hours.</p>
+        <div class="timeline-duration">Free — 48 Hours</div>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-dot">02</div>
+      <div class="timeline-body">
+        <div class="timeline-step">Step Two</div>
+        <div class="timeline-title">Design & Engineering</div>
+        <p class="timeline-desc">Our architects and engineers produce full architectural drawings, structural calculations, and 3D renders. You'll know exactly what you're getting before permits are submitted.</p>
+        <div class="timeline-duration">3–4 Weeks</div>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-dot green">03</div>
+      <div class="timeline-body">
+        <div class="timeline-step green">Step Three</div>
+        <div class="timeline-title">City Permit Submission</div>
+        <p class="timeline-desc">We prepare and submit the complete permit package to the City of Toronto. Our 100% permit approval rate is the result of meticulous preparation — no re-submissions, no delays.</p>
+        <div class="timeline-duration green">4–8 Weeks (City Processing)</div>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-dot">04</div>
+      <div class="timeline-body">
+        <div class="timeline-step">Step Four</div>
+        <div class="timeline-title">Build Phase</div>
+        <p class="timeline-desc">Site preparation, foundation, framing, rough-ins, insulation, exterior, and interior finishes — all completed by our in-house teams. Weekly progress updates with photos.</p>
+        <div class="timeline-duration">8–16 Weeks</div>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-dot green">05</div>
+      <div class="timeline-body">
+        <div class="timeline-step green">Step Five</div>
+        <div class="timeline-title">Final Inspection & Occupancy Permit</div>
+        <p class="timeline-desc">City inspection, occupancy permit issued, keys in hand. You're ready to rent. We also provide a full tenant-ready checklist and optional property management referral.</p>
+        <div class="timeline-duration green">Ready to Rent — Day 1</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="slider-section">
+  <div class="reveal" style="text-align:center;">
+    <div class="section-label amber" style="justify-content:center;display:flex;">Transformations</div>
+    <h2 class="section-title">Before & <span class="g">After</span></h2>
+    <p style="color:var(--muted);margin-top:0.5rem;font-size:0.88rem;">Drag to reveal the finished suite</p>
+  </div>
+  <div class="slider-wrap" id="baSlider2">
+    <div class="s-before">
+      <div class="s-tag">🏚</div>
+      <div class="s-label">Unused Backyard</div>
+      <div class="s-desc" style="font-size:0.72rem;color:var(--muted)">Before Construction</div>
+      <div class="s-badge">$0 / month income</div>
+    </div>
+    <div class="s-after" id="sAfter2">
+      <div class="s-tag">🌿</div>
+      <div class="s-label" style="color:rgba(34,197,94,0.5)">Garden Suite Complete</div>
+      <div class="s-desc" style="font-size:0.72rem;color:rgba(34,197,94,0.4)">After — 18 Weeks</div>
+      <div class="s-badge">$2,800 / month income</div>
+    </div>
+    <span class="s-label-tag s-label-before">Before</span>
+    <span class="s-label-tag s-label-after">After</span>
+    <div class="s-handle" id="sHandle2"><div class="s-handle-circle">⟺</div></div>
+  </div>
+</section>
+
+<!-- MULTI-STEP FORM -->
+<section class="form-section" id="get-started">
+  <div class="form-container">
+    <div class="reveal">
+      <div class="section-label green">Start Now</div>
+      <h2 class="section-title">Get Your <span class="g">Free Consultation</span></h2>
+      <p style="color:var(--muted);margin-top:0.5rem;margin-bottom:2rem;font-size:0.88rem;line-height:1.7;">4 quick questions. A specialist calls you within 2 hours.</p>
+    </div>
+    <div class="form-step-bar">
+      <div class="fsb-item active" id="fi0">Suite Type</div>
+      <div class="fsb-item" id="fi1">Timeline</div>
+      <div class="fsb-item" id="fi2">Address</div>
+      <div class="fsb-item" id="fi3">Contact</div>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="mfs active" id="mfs0">
+      <div class="mfs-title">What type of suite?</div>
+      <p class="mfs-sub">Select what you're most interested in building. We can discuss all options on the call.</p>
+      <div class="opt-cards">
+        <div class="opt-card" onclick="selectOpt(this)"><div class="oic">🌿</div><div class="otitle">Garden Suite</div><div class="osub">Backyard detached</div></div>
+        <div class="opt-card" onclick="selectOpt(this)"><div class="oic">🏠</div><div class="otitle">Legal Basement</div><div class="osub">Convert existing space</div></div>
+        <div class="opt-card" onclick="selectOpt(this)"><div class="oic">🏗</div><div class="otitle">Laneway Suite</div><div class="osub">Garage / lane build</div></div>
+      </div>
+      <div class="fnav">
+        <button class="fnext" onclick="gofs(1)">Next: Timeline →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="mfs" id="mfs1">
+      <div class="mfs-title">When do you want to start?</div>
+      <p class="mfs-sub">This helps us plan permit timelines and construction scheduling.</p>
+      <div class="opt-pills">
+        <div class="opt-pill" onclick="selectP(this)">ASAP</div>
+        <div class="opt-pill" onclick="selectP(this)">1–3 Months</div>
+        <div class="opt-pill" onclick="selectP(this)">3–6 Months</div>
+        <div class="opt-pill" onclick="selectP(this)">6–12 Months</div>
+        <div class="opt-pill" onclick="selectP(this)">Just Researching</div>
+        <div class="opt-pill" onclick="selectP(this)">Flexible</div>
+      </div>
+      <div class="fnav">
+        <button class="fback" onclick="gofs(0)">← Back</button>
+        <button class="fnext" onclick="gofs(2)">Next: Property →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="mfs" id="mfs2">
+      <div class="mfs-title">Your property address</div>
+      <p class="mfs-sub">We'll run a quick feasibility check before your call so we arrive fully prepared.</p>
+      <div class="fg"><label>Property Address</label><input type="text" placeholder="123 Main St, Toronto, ON M4B 2G3"></div>
+      <div class="fg">
+        <label>Property Type</label>
+        <select>
+          <option value="">Select</option>
+          <option>Detached House</option>
+          <option>Semi-Detached</option>
+          <option>Townhouse</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>Do you currently have a garage or laneway access?</label>
+        <select>
+          <option value="">Select</option>
+          <option>Yes — Detached Garage</option>
+          <option>Yes — Attached Garage</option>
+          <option>Yes — Laneway Access Only</option>
+          <option>No Garage</option>
+        </select>
+      </div>
+      <div class="fnav">
+        <button class="fback" onclick="gofs(1)">← Back</button>
+        <button class="fnext" onclick="gofs(3)">Next: Contact →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="mfs" id="mfs3">
+      <div class="mfs-title">How do we reach you?</div>
+      <p class="mfs-sub">A licensed specialist will call you within 2 hours during business hours.</p>
+      <div class="frow">
+        <div class="fg"><label>First Name</label><input type="text" placeholder="Sarah"></div>
+        <div class="fg"><label>Last Name</label><input type="text" placeholder="Chen"></div>
+      </div>
+      <div class="fg"><label>Email Address</label><input type="email" placeholder="sarah@email.com"></div>
+      <div class="fg"><label>Best Phone Number</label><input type="tel" placeholder="+1 (416) 000-0000"></div>
+      <div class="fnav">
+        <button class="fback" onclick="gofs(2)">← Back</button>
+        <button class="fnext" onclick="submitGs()">Book My Free Consultation ✓</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">GardenSuites<span>4You</span>.ca</div>
+    <div class="footer-copy">© 2024 Garden Suites 4 You Inc. Toronto, ON. TARION Registered Builder.</div>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">CMHC Resources</a>
+      <a href="#">Zoning Info</a>
+      <a href="#">Instagram</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Mobile Sticky CTA -->
+<div class="sticky-cta" id="stickyCta">
+  <div class="sticky-cta-text">🌿 Start earning <strong>$2,500+/month</strong> from your property</div>
+  <div class="sticky-cta-btns">
+    <button class="s-btn-g" onclick="document.getElementById('get-started').scrollIntoView({behavior:'smooth'})">Free Consultation</button>
+    <button class="s-btn-a" onclick="document.getElementById('calculator').scrollIntoView({behavior:'smooth'})">ROI Calculator</button>
+  </div>
+</div>
+
+<script>
+// Lenis
+const lenis = new Lenis({ lerp: 0.08 });
+function raf(t) { lenis.raf(t); requestAnimationFrame(raf); }
+requestAnimationFrame(raf);
+
+// GSAP
+gsap.registerPlugin(ScrollTrigger);
+
+gsap.from('.hero-badge', { opacity: 0, y: 20, duration: 0.8, delay: 0.3 });
+gsap.from('.hero h1', { opacity: 0, y: 50, duration: 1.2, delay: 0.5, ease: 'power3.out' });
+gsap.from('.hero-sub', { opacity: 0, y: 30, duration: 0.9, delay: 0.9 });
+gsap.from('.hero-actions', { opacity: 0, y: 20, duration: 0.8, delay: 1.1 });
+gsap.from('.hero-proof .proof-item', { opacity: 0, y: 20, duration: 0.6, delay: 1.3, stagger: 0.1 });
+
+gsap.utils.toArray('.reveal').forEach(el => {
+  gsap.to(el, {
+    opacity: 1, y: 0, duration: 0.85, ease: 'power2.out',
+    scrollTrigger: { trigger: el, start: 'top 87%', toggleActions: 'play none none none' }
+  });
+});
+
+// Counters
+gsap.utils.toArray('.counter').forEach(c => {
+  const target = +c.getAttribute('data-target');
+  ScrollTrigger.create({
+    trigger: c, start: 'top 80%', once: true,
+    onEnter: () => gsap.to({ v: 0 }, {
+      v: target, duration: 2, ease: 'power2.out',
+      onUpdate: function() { c.textContent = Math.floor(this.targets()[0].v).toLocaleString(); }
+    })
+  });
+});
+
+// ROI Calculator
+function calcROI() {
+  const build = +document.getElementById('buildCost').value;
+  const rent = +document.getElementById('monthlyRent').value;
+  const annual = rent * 12 * 0.95;
+  const roi = (annual / build * 100);
+  const payback = build / annual;
+  const ten = annual * 10;
+  document.getElementById('buildVal').textContent = '$' + build.toLocaleString();
+  document.getElementById('rentVal').textContent = '$' + rent.toLocaleString();
+  document.getElementById('annualIncome').textContent = '$' + Math.round(annual).toLocaleString();
+  document.getElementById('roiPct').textContent = roi.toFixed(1) + '%';
+  document.getElementById('payback').textContent = payback.toFixed(1) + ' years';
+  document.getElementById('tenYear').textContent = '$' + Math.round(ten).toLocaleString();
+}
+
+// Suite tabs
+function switchSuite(type, btn) {
+  document.querySelectorAll('.suite-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.suite-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('suite-' + type).classList.add('active');
+}
+
+// Before/After slider
+const slider2 = document.getElementById('baSlider2');
+const handle2 = document.getElementById('sHandle2');
+const after2 = document.getElementById('sAfter2');
+let drag2 = false;
+
+function setSlider2(x) {
+  const rect = slider2.getBoundingClientRect();
+  let pct = Math.max(0, Math.min(100, (x - rect.left) / rect.width * 100));
+  handle2.style.left = pct + '%';
+  after2.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+}
+
+slider2.addEventListener('mousedown', e => { drag2 = true; setSlider2(e.clientX); });
+window.addEventListener('mousemove', e => { if (drag2) setSlider2(e.clientX); });
+window.addEventListener('mouseup', () => drag2 = false);
+slider2.addEventListener('touchstart', e => { drag2 = true; setSlider2(e.touches[0].clientX); }, { passive: true });
+window.addEventListener('touchmove', e => { if (drag2) setSlider2(e.touches[0].clientX); }, { passive: true });
+window.addEventListener('touchend', () => drag2 = false);
+setSlider2(slider2.getBoundingClientRect().left + slider2.offsetWidth / 2);
+
+// Form
+let cs = 0;
+function gofs(n) {
+  document.getElementById('mfs' + cs).classList.remove('active');
+  document.getElementById('fi' + cs).classList.remove('active');
+  document.getElementById('fi' + cs).classList.add('done');
+  cs = n;
+  document.getElementById('mfs' + n).classList.add('active');
+  document.getElementById('fi' + n).classList.add('active');
+  document.getElementById('fi' + n).classList.remove('done');
+  gsap.from('#mfs' + n, { opacity: 0, x: 30, duration: 0.4, ease: 'power2.out' });
+  document.getElementById('get-started').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function selectOpt(el) { el.closest('.opt-cards').querySelectorAll('.opt-card').forEach(c => c.classList.remove('selected')); el.classList.add('selected'); }
+function selectP(el) { el.closest('.opt-pills').querySelectorAll('.opt-pill').forEach(p => p.classList.remove('selected')); el.classList.add('selected'); }
+function submitGs() {
+  document.getElementById('mfs3').innerHTML = `
+    <div style="text-align:center;padding:3rem 0;">
+      <div style="font-size:3rem;margin-bottom:1rem;color:var(--green)">✓</div>
+      <h3 style="font-size:1.5rem;font-weight:700;margin-bottom:0.75rem;color:var(--green)">Consultation Booked!</h3>
+      <p style="color:var(--muted);line-height:1.8;max-width:400px;margin:0 auto;">A Garden Suites specialist will call you within 2 hours. Check your email for a confirmation and pre-consultation checklist.</p>
+      <div style="margin-top:2rem;padding:1.25rem;background:rgba(34,197,94,0.08);border:1px solid var(--border-g);display:inline-block;">
+        <div style="font-size:0.72rem;color:var(--green);font-weight:600;letter-spacing:0.08em">WHAT HAPPENS NEXT</div>
+        <div style="font-size:0.82rem;color:var(--muted);margin-top:0.5rem;line-height:1.7;">We'll run a property feasibility check → Book a site visit → Deliver your free custom ROI report</div>
+      </div>
+    </div>
+  `;
+  document.querySelectorAll('.fsb-item').forEach(i => { i.classList.remove('active'); i.classList.add('done'); });
+}
+
+// Sticky CTA hide/show
+ScrollTrigger.create({
+  trigger: '#hero', start: 'bottom 30%',
+  onEnter: () => { document.getElementById('stickyCta').style.display = 'flex'; },
+  onLeaveBack: () => { document.getElementById('stickyCta').style.display = 'none'; }
+});
+</script>
+</body>
+</html>

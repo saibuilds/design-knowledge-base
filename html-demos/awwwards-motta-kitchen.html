@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Motta Kitchen — Where Function Meets Obsession</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.0.42/dist/lenis.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #fafaf8;
+    --bg2: #f4f3f0;
+    --text: #1a1a1a;
+    --brass: #8b6914;
+    --brass-light: #b8922a;
+    --muted: #888;
+    --border: rgba(139,105,20,0.18);
+    --border-dark: rgba(26,26,26,0.12);
+  }
+  html { font-size: 16px; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.75rem 4rem;
+    background: rgba(250,250,248,0.92); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-dark);
+  }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; letter-spacing: 0.08em; color: var(--text); }
+  .nav-logo span { color: var(--brass); }
+  .nav-links { display: flex; gap: 2.5rem; }
+  .nav-links a { font-size: 0.78rem; letter-spacing: 0.1em; color: var(--muted); transition: color 0.3s; }
+  .nav-links a:hover { color: var(--brass); }
+  .nav-book {
+    padding: 0.65rem 1.6rem; background: var(--text); color: var(--bg);
+    font-size: 0.75rem; letter-spacing: 0.08em; cursor: pointer;
+    transition: all 0.3s;
+  }
+  .nav-book:hover { background: var(--brass); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: flex-end; padding: 0 4rem 5rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background: linear-gradient(135deg, #f0ede6 0%, #e8e4db 30%, #f5f4f0 70%, #ece9e0 100%);
+  }
+  .hero-bg-accent {
+    position: absolute; top: 0; right: 0; width: 55%; height: 100%;
+    background: linear-gradient(135deg, #e8e1d0, #ddd4be);
+    clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%);
+  }
+  .hero-bg-grid {
+    position: absolute; inset: 0; opacity: 0.03;
+    background-image: repeating-linear-gradient(0deg, var(--text) 0px, var(--text) 1px, transparent 1px, transparent 60px),
+                      repeating-linear-gradient(90deg, var(--text) 0px, var(--text) 1px, transparent 1px, transparent 60px);
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 800px; }
+  .hero-eyebrow {
+    font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--brass); margin-bottom: 2rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .hero-eyebrow::before { content: ''; width: 3rem; height: 1px; background: var(--brass); }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 7vw, 7rem);
+    font-weight: 300; line-height: 1.05;
+    color: var(--text); margin-bottom: 2rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--brass); }
+  .hero-meta { display: flex; gap: 4rem; align-items: center; }
+  .hero-sub { font-size: 0.95rem; color: var(--muted); line-height: 1.8; max-width: 440px; }
+  .hero-ctas { display: flex; gap: 1rem; flex-shrink: 0; flex-direction: column; align-items: flex-start; }
+  .btn-dark {
+    padding: 1rem 2.5rem; background: var(--text); color: var(--bg);
+    font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+    border: none; cursor: pointer; transition: all 0.3s;
+  }
+  .btn-dark:hover { background: var(--brass); }
+  .btn-ghost {
+    padding: 1rem 2.5rem; background: transparent; color: var(--text);
+    font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+    border: 1px solid rgba(26,26,26,0.25); cursor: pointer; transition: all 0.3s;
+  }
+  .btn-ghost:hover { border-color: var(--brass); color: var(--brass); }
+  .hero-floater {
+    position: absolute; right: 4rem; top: 50%; transform: translateY(-50%);
+    z-index: 2; display: flex; flex-direction: column; gap: 1rem;
+  }
+  .floater-badge {
+    background: var(--bg); padding: 1.5rem; border-left: 3px solid var(--brass);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+  }
+  .floater-badge strong { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--brass); display: block; }
+  .floater-badge span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; }
+
+  /* SECTION SHARED */
+  section { padding: 6rem 4rem; }
+  .section-label {
+    font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--brass); margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .section-label::after { content: ''; flex: 1; max-width: 3rem; height: 1px; background: var(--brass); }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 400; line-height: 1.15;
+    margin-bottom: 1.5rem;
+  }
+  .section-title em { font-style: italic; color: var(--brass); }
+
+  /* COLLECTIONS */
+  .collections-section { background: var(--bg2); }
+  .collections-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 3rem; }
+  .collection-card { position: relative; overflow: hidden; cursor: pointer; }
+  .collection-image {
+    height: 380px; position: relative; overflow: hidden;
+    background: linear-gradient(135deg, #e8e1d0, #d4c9a8);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .collection-image .img-pattern {
+    position: absolute; inset: 0; opacity: 0.6;
+    background-image: repeating-linear-gradient(45deg, rgba(139,105,20,0.05) 0px, rgba(139,105,20,0.05) 1px, transparent 1px, transparent 20px);
+  }
+  .collection-image .img-label {
+    position: relative; z-index: 1; font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem; font-weight: 300; color: rgba(139,105,20,0.3); letter-spacing: 0.1em;
+  }
+  .collection-overlay {
+    position: absolute; inset: 0; background: rgba(26,26,26,0.85);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.4s; gap: 0.75rem; color: var(--bg);
+    padding: 2rem; text-align: center;
+  }
+  .collection-card:hover .collection-overlay { opacity: 1; }
+  .collection-overlay h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 400; color: #e8c98a; }
+  .collection-overlay p { font-size: 0.8rem; color: rgba(250,250,248,0.7); line-height: 1.6; }
+  .collection-overlay .explore-btn { margin-top: 1rem; padding: 0.6rem 1.5rem; border: 1px solid var(--bg); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bg); transition: all 0.3s; }
+  .collection-overlay .explore-btn:hover { background: var(--bg); color: var(--text); }
+  .collection-body { padding: 1.5rem 0; }
+  .collection-name { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; margin-bottom: 0.4rem; }
+  .collection-range { font-size: 0.78rem; color: var(--brass); }
+
+  /* MATERIALS */
+  .materials-section { background: var(--bg); }
+  .materials-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
+  .materials-tabs { display: flex; gap: 0; border: 1px solid var(--border-dark); overflow: hidden; }
+  .material-tab {
+    padding: 0.75rem 1.5rem; font-size: 0.75rem; letter-spacing: 0.1em;
+    text-transform: uppercase; cursor: pointer; border: none; background: transparent;
+    transition: all 0.3s; font-family: 'DM Sans', sans-serif; color: var(--muted);
+    border-right: 1px solid var(--border-dark);
+  }
+  .material-tab:last-child { border-right: none; }
+  .material-tab.active { background: var(--text); color: var(--bg); }
+  .material-tab:hover:not(.active) { background: var(--bg2); color: var(--text); }
+  .material-panels { position: relative; }
+  .material-panel { display: none; }
+  .material-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .material-swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  .swatch {
+    aspect-ratio: 1; cursor: pointer; position: relative;
+    border: 2px solid transparent; transition: border-color 0.3s;
+  }
+  .swatch.selected { border-color: var(--brass); }
+  .swatch label { position: absolute; bottom: -1.6rem; left: 0; right: 0; text-align: center; font-size: 0.65rem; color: var(--muted); letter-spacing: 0.05em; white-space: nowrap; }
+  .swatch-wood-1 { background: linear-gradient(135deg, #c4a882, #a8855a); }
+  .swatch-wood-2 { background: linear-gradient(135deg, #8b6340, #6b4423); }
+  .swatch-wood-3 { background: linear-gradient(135deg, #d4b896, #b8956a); }
+  .swatch-wood-4 { background: linear-gradient(135deg, #e8d5be, #c4a882); }
+  .swatch-stone-1 { background: linear-gradient(135deg, #e8e8e8, #c0c0c0); }
+  .swatch-stone-2 { background: linear-gradient(135deg, #2a2a2a, #1a1a1a); }
+  .swatch-stone-3 { background: linear-gradient(135deg, #f5e6d0, #e0c8a0); }
+  .swatch-stone-4 { background: linear-gradient(135deg, #d0c4b0, #b8a880); }
+  .swatch-metal-1 { background: linear-gradient(135deg, #c0c0c0, #909090); }
+  .swatch-metal-2 { background: linear-gradient(135deg, #8b6914, #c9a96e); }
+  .swatch-metal-3 { background: linear-gradient(135deg, #1a1a1a, #383838); }
+  .swatch-metal-4 { background: linear-gradient(135deg, #b87333, #8b4513); }
+  .swatch-lac-1 { background: #1a1a1a; }
+  .swatch-lac-2 { background: #fafaf8; border: 1px solid #ddd; }
+  .swatch-lac-3 { background: #2c5530; }
+  .swatch-lac-4 { background: #1a3a5c; }
+  .material-info h3 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin-bottom: 1rem; }
+  .material-info p { font-size: 0.88rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; }
+  .material-specs { display: flex; flex-direction: column; gap: 0.6rem; }
+  .material-spec { display: flex; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px solid var(--border-dark); font-size: 0.8rem; }
+  .material-spec strong { color: var(--brass); }
+
+  /* PROCESS */
+  .process-section { background: var(--text); color: var(--bg); }
+  .process-section .section-label { color: var(--brass); }
+  .process-section .section-title { color: var(--bg); }
+  .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 3rem; }
+  .process-step { padding: 3rem 2.5rem; border-right: 1px solid rgba(250,250,248,0.1); position: relative; }
+  .process-step:last-child { border-right: none; }
+  .step-number { font-family: 'Cormorant Garamond', serif; font-size: 4rem; color: rgba(201,169,110,0.15); font-weight: 600; line-height: 1; margin-bottom: 1.5rem; }
+  .step-icon { width: 48px; height: 48px; border: 1px solid rgba(201,169,110,0.3); display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; color: var(--brass); font-size: 1.2rem; }
+  .step-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; margin-bottom: 0.75rem; color: #e8c98a; }
+  .step-desc { font-size: 0.82rem; color: rgba(250,250,248,0.6); line-height: 1.8; }
+  .process-connector {
+    position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+    width: 0; height: 0;
+    border-left: 8px solid rgba(201,169,110,0.3);
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+  }
+  .process-step:last-child .process-connector { display: none; }
+
+  /* BEFORE AFTER SLIDER */
+  .slider-section { background: var(--bg2); }
+  .slider-container { position: relative; width: 100%; max-width: 900px; margin: 3rem auto 0; height: 500px; overflow: hidden; cursor: ew-resize; user-select: none; }
+  .slider-before, .slider-after { position: absolute; inset: 0; }
+  .slider-before { background: linear-gradient(135deg, #e0d8c8, #c8bfa8); }
+  .slider-after { background: linear-gradient(135deg, #2a2620, #1a1610); clip-path: inset(0 50% 0 0); transition: clip-path 0s; }
+  .slider-label {
+    position: absolute; top: 1.5rem; padding: 0.4rem 1rem; z-index: 3;
+    font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 600;
+  }
+  .label-before { left: 1.5rem; background: rgba(26,26,26,0.7); color: var(--bg); }
+  .label-after { right: 1.5rem; background: var(--brass); color: var(--bg); }
+  .slider-handle {
+    position: absolute; top: 0; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 3px; background: #fff; z-index: 4;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .handle-circle {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: #fff; box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; color: var(--text); flex-shrink: 0;
+  }
+  .slider-before-content, .slider-after-content {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;
+  }
+  .slider-before-content { background: linear-gradient(135deg, #d4cbb8, #bfb398); }
+  .slider-after-content { background: linear-gradient(135deg, #1a1610, #2a2620); }
+  .content-room-label { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; }
+  .slider-before-content .content-room-label { color: rgba(139,105,20,0.4); }
+  .slider-after-content .content-room-label { color: rgba(201,169,110,0.4); }
+  .content-room-sub { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; }
+  .slider-before-content .content-room-sub { color: rgba(26,26,26,0.4); }
+  .slider-after-content .content-room-sub { color: rgba(250,250,248,0.3); }
+
+  /* GALLERY */
+  .gallery-section { background: var(--bg); }
+  .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-top: 3rem; }
+  .gallery-item {
+    aspect-ratio: 1; overflow: hidden; cursor: pointer; position: relative;
+    background: linear-gradient(135deg, #e8e1d0, #d4c9a8);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .gallery-item:nth-child(3n+2) { background: linear-gradient(135deg, #d0c8b4, #bfb398); }
+  .gallery-item:nth-child(3n+3) { background: linear-gradient(135deg, #c8bfa8, #b8a880); }
+  .gallery-pattern {
+    position: absolute; inset: 0; opacity: 0.08;
+    background-image: repeating-linear-gradient(45deg, var(--brass) 0px, var(--brass) 1px, transparent 1px, transparent 15px);
+  }
+  .gallery-num { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: rgba(139,105,20,0.25); position: relative; z-index: 1; }
+  .gallery-overlay {
+    position: absolute; inset: 0; background: rgba(26,26,26,0.8);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.3s;
+    font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: rgba(232,201,138,0.9);
+    letter-spacing: 0.08em;
+  }
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+  /* BOOKING */
+  .booking-section { background: var(--bg2); }
+  .booking-inner {
+    max-width: 700px; margin: 0 auto; text-align: center;
+    padding: 5rem; background: var(--bg); border: 1px solid var(--border-dark);
+    position: relative; overflow: hidden;
+  }
+  .booking-inner::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(to right, var(--brass), var(--brass-light), var(--brass));
+  }
+  .booking-inner h2 { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 300; margin-bottom: 1rem; }
+  .booking-inner p { color: var(--muted); line-height: 1.8; margin-bottom: 2.5rem; }
+  .booking-form { display: flex; flex-direction: column; gap: 1rem; text-align: left; }
+  .b-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .b-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .b-group label { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .b-group input, .b-group select {
+    background: var(--bg2); border: 1px solid var(--border-dark); color: var(--text);
+    padding: 0.9rem 1rem; font-family: 'DM Sans', sans-serif; font-size: 0.875rem;
+    outline: none; transition: border-color 0.3s;
+  }
+  .b-group input:focus, .b-group select:focus { border-color: var(--brass); }
+  .b-group select option { background: var(--bg); }
+  .book-submit {
+    padding: 1.1rem; background: var(--text); color: var(--bg);
+    border: none; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.3s; font-family: 'DM Sans', sans-serif;
+  }
+  .book-submit:hover { background: var(--brass); }
+
+  /* FOOTER */
+  footer { padding: 4rem; border-top: 1px solid var(--border-dark); background: var(--text); color: var(--bg); }
+  .footer-inner { display: flex; align-items: center; justify-content: space-between; }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--bg); }
+  .footer-logo span { color: var(--brass); }
+  .footer-copy { font-size: 0.72rem; color: rgba(250,250,248,0.4); }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a { font-size: 0.72rem; color: rgba(250,250,248,0.5); transition: color 0.3s; }
+  .footer-links a:hover { color: var(--brass); }
+
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(40px); }
+  .reveal-left { opacity: 0; transform: translateX(-40px); }
+
+  @media (max-width: 900px) {
+    nav { padding: 1.25rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 0 1.5rem 4rem; }
+    .hero-meta { flex-direction: column; align-items: flex-start; gap: 2rem; }
+    .hero-floater { display: none; }
+    .collections-grid { grid-template-columns: 1fr 1fr; }
+    .process-steps { grid-template-columns: 1fr 1fr; }
+    .process-step { border-right: none; border-bottom: 1px solid rgba(250,250,248,0.1); }
+    .material-panel.active { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+    .booking-inner { padding: 2.5rem 1.5rem; }
+    .b-row { grid-template-columns: 1fr; }
+    footer { padding: 2.5rem 1.5rem; }
+    .footer-inner { flex-direction: column; gap: 1.5rem; text-align: center; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Motta<span>.</span></div>
+  <div class="nav-links">
+    <a href="#collections">Collections</a>
+    <a href="#materials">Materials</a>
+    <a href="#process">Process</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#booking">Book</a>
+  </div>
+  <a href="#booking" class="nav-book">Book Consultation</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-bg-accent"></div>
+  <div class="hero-bg-grid"></div>
+  <div class="hero-floater">
+    <div class="floater-badge">
+      <strong>12+</strong>
+      <span>Years of Craft</span>
+    </div>
+    <div class="floater-badge">
+      <strong>340+</strong>
+      <span>Kitchens Designed</span>
+    </div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Toronto's Premier Kitchen Design Studio</div>
+    <h1>Where Function<br>Meets <em>Obsession</em></h1>
+    <div class="hero-meta">
+      <p class="hero-sub">We don't simply design kitchens. We craft spaces that become the living heart of your home — where materials are chosen with precision, and every millimetre is intentional.</p>
+      <div class="hero-ctas">
+        <a href="#collections" class="btn-dark">Explore Collections</a>
+        <a href="#booking" class="btn-ghost">Book Consultation</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COLLECTIONS -->
+<section class="collections-section" id="collections">
+  <div class="reveal">
+    <div class="section-label">Our Collections</div>
+    <h2 class="section-title">Four Visions,<br>One <em>Standard of Excellence</em></h2>
+  </div>
+  <div class="collections-grid">
+    <div class="collection-card reveal">
+      <div class="collection-image">
+        <div class="img-pattern"></div>
+        <div class="img-label">M</div>
+        <div class="collection-overlay">
+          <h4>Modern</h4>
+          <p>Clean lines, handleless cabinetry, and integrated appliances that disappear into the design.</p>
+          <div class="explore-btn">Explore →</div>
+        </div>
+      </div>
+      <div class="collection-body">
+        <div class="collection-name">Modern</div>
+        <div class="collection-range">From $28,000</div>
+      </div>
+    </div>
+    <div class="collection-card reveal">
+      <div class="collection-image" style="background:linear-gradient(135deg,#d4c9a8,#c0af88);">
+        <div class="img-pattern"></div>
+        <div class="img-label" style="color:rgba(139,105,20,0.25);">T</div>
+        <div class="collection-overlay">
+          <h4>Traditional</h4>
+          <p>Raised panel doors, ornate mouldings, and a warmth that honours the craft of generations past.</p>
+          <div class="explore-btn">Explore →</div>
+        </div>
+      </div>
+      <div class="collection-body">
+        <div class="collection-name">Traditional</div>
+        <div class="collection-range">From $32,000</div>
+      </div>
+    </div>
+    <div class="collection-card reveal">
+      <div class="collection-image" style="background:linear-gradient(135deg,#2a2620,#1a1610);">
+        <div class="img-pattern" style="background-image:repeating-linear-gradient(45deg,rgba(201,169,110,0.05) 0px,rgba(201,169,110,0.05) 1px,transparent 1px,transparent 20px)"></div>
+        <div class="img-label" style="color:rgba(201,169,110,0.2);">I</div>
+        <div class="collection-overlay" style="background:rgba(10,10,10,0.9);">
+          <h4>Industrial</h4>
+          <p>Raw steel, concrete textures, and exposed hardware — a bold vocabulary for those who refuse the ordinary.</p>
+          <div class="explore-btn">Explore →</div>
+        </div>
+      </div>
+      <div class="collection-body">
+        <div class="collection-name">Industrial</div>
+        <div class="collection-range">From $35,000</div>
+      </div>
+    </div>
+    <div class="collection-card reveal">
+      <div class="collection-image" style="background:linear-gradient(135deg,#ddd8cc,#ccc5b0);">
+        <div class="img-pattern"></div>
+        <div class="img-label" style="color:rgba(139,105,20,0.22);">Tr</div>
+        <div class="collection-overlay">
+          <h4>Transitional</h4>
+          <p>The elegant balance between classic and contemporary. Our most requested style.</p>
+          <div class="explore-btn">Explore →</div>
+        </div>
+      </div>
+      <div class="collection-body">
+        <div class="collection-name">Transitional</div>
+        <div class="collection-range">From $30,000</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MATERIALS -->
+<section class="materials-section" id="materials">
+  <div class="materials-header reveal">
+    <div>
+      <div class="section-label">Materials & Finishes</div>
+      <h2 class="section-title">What You Touch,<br><em>Matters</em></h2>
+    </div>
+    <div class="materials-tabs">
+      <button class="material-tab active" onclick="switchMaterial('wood', this)">Wood</button>
+      <button class="material-tab" onclick="switchMaterial('stone', this)">Stone</button>
+      <button class="material-tab" onclick="switchMaterial('metal', this)">Metal</button>
+      <button class="material-tab" onclick="switchMaterial('lacquer', this)">Lacquer</button>
+    </div>
+  </div>
+  <div class="material-panels">
+    <div class="material-panel active" id="panel-wood">
+      <div>
+        <div class="material-swatches">
+          <div class="swatch swatch-wood-1 selected"><label>White Oak</label></div>
+          <div class="swatch swatch-wood-2"><label>Walnut</label></div>
+          <div class="swatch swatch-wood-3"><label>Ash</label></div>
+          <div class="swatch swatch-wood-4"><label>Maple</label></div>
+        </div>
+      </div>
+      <div class="material-info reveal-left">
+        <h3>White Oak — Natural</h3>
+        <p>Sustainably sourced European White Oak, kiln-dried to 8% moisture and finished with Rubio Monocoat hardwax oil. Each grain tells the tree's story — no two panels identical.</p>
+        <div class="material-specs">
+          <div class="material-spec"><span>Origin</span><strong>Northern Europe</strong></div>
+          <div class="material-spec"><span>Finish</span><strong>Natural Hardwax Oil</strong></div>
+          <div class="material-spec"><span>Durability</span><strong>25+ Years</strong></div>
+          <div class="material-spec"><span>Lead Time</span><strong>8–10 Weeks</strong></div>
+        </div>
+      </div>
+    </div>
+    <div class="material-panel" id="panel-stone">
+      <div>
+        <div class="material-swatches">
+          <div class="swatch swatch-stone-1 selected"><label>Carrara</label></div>
+          <div class="swatch swatch-stone-2"><label>Black Nero</label></div>
+          <div class="swatch swatch-stone-3"><label>Calacatta</label></div>
+          <div class="swatch swatch-stone-4"><label>Travertine</label></div>
+        </div>
+      </div>
+      <div class="material-info reveal-left">
+        <h3>Carrara White Marble</h3>
+        <p>Hand-selected slabs from the Apuan Alps in Tuscany. Bookmatched for symmetry, sealed with invisible nano-protection. A kitchen centrepiece for generations.</p>
+        <div class="material-specs">
+          <div class="material-spec"><span>Origin</span><strong>Carrara, Italy</strong></div>
+          <div class="material-spec"><span>Thickness</span><strong>30mm</strong></div>
+          <div class="material-spec"><span>Sealing</span><strong>Nano-Impregnator</strong></div>
+          <div class="material-spec"><span>Lead Time</span><strong>12–16 Weeks</strong></div>
+        </div>
+      </div>
+    </div>
+    <div class="material-panel" id="panel-metal">
+      <div>
+        <div class="material-swatches">
+          <div class="swatch swatch-metal-1 selected"><label>Brushed SS</label></div>
+          <div class="swatch swatch-metal-2"><label>Aged Brass</label></div>
+          <div class="swatch swatch-metal-3"><label>Gunmetal</label></div>
+          <div class="swatch swatch-metal-4"><label>Copper</label></div>
+        </div>
+      </div>
+      <div class="material-info reveal-left">
+        <h3>Brushed Stainless Steel</h3>
+        <p>Grade 304 brushed stainless, hand-finished to a uniform satin sheen. Hygienic, hard-wearing, and ageless. The professional kitchen's material of choice.</p>
+        <div class="material-specs">
+          <div class="material-spec"><span>Grade</span><strong>304 Stainless</strong></div>
+          <div class="material-spec"><span>Finish</span><strong>Directional Brush</strong></div>
+          <div class="material-spec"><span>Application</span><strong>Splashback, Hardware</strong></div>
+          <div class="material-spec"><span>Lead Time</span><strong>4–6 Weeks</strong></div>
+        </div>
+      </div>
+    </div>
+    <div class="material-panel" id="panel-lacquer">
+      <div>
+        <div class="material-swatches">
+          <div class="swatch swatch-lac-1 selected"><label>Midnight</label></div>
+          <div class="swatch swatch-lac-2"><label>Porcelain</label></div>
+          <div class="swatch swatch-lac-3"><label>Forest</label></div>
+          <div class="swatch swatch-lac-4"><label>Navy</label></div>
+        </div>
+      </div>
+      <div class="material-info reveal-left">
+        <h3>Midnight Black — Matt</h3>
+        <p>24-layer high-pressure lacquer applied in climate-controlled conditions, sanded between each coat. A depth and richness that paint simply cannot achieve.</p>
+        <div class="material-specs">
+          <div class="material-spec"><span>Layers</span><strong>24 Coats</strong></div>
+          <div class="material-spec"><span>Sheen</span><strong>4% Matt</strong></div>
+          <div class="material-spec"><span>Standard</span><strong>EN 15846</strong></div>
+          <div class="material-spec"><span>Lead Time</span><strong>10–14 Weeks</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section" id="process">
+  <div class="reveal">
+    <div class="section-label">How We Work</div>
+    <h2 class="section-title">From Idea to <em>Finished Kitchen</em></h2>
+  </div>
+  <div class="process-steps">
+    <div class="process-step reveal">
+      <div class="step-number">01</div>
+      <div class="step-icon">✏</div>
+      <div class="step-title">Design</div>
+      <p class="step-desc">3D renders, material boards, and detailed drawings created with you across 2–3 sessions. Zero compromise until you love it.</p>
+      <div class="process-connector"></div>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-number">02</div>
+      <div class="step-icon">🔧</div>
+      <div class="step-title">Fabrication</div>
+      <p class="step-desc">Built in our Toronto workshop by master cabinetmakers. CNC precision paired with hand-finishing for parts machines can't reach.</p>
+      <div class="process-connector"></div>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-number">03</div>
+      <div class="step-icon">🏠</div>
+      <div class="step-title">Installation</div>
+      <p class="step-desc">Our dedicated installation crew — never subcontracted. Typically completed in 3–5 days with daily client updates.</p>
+      <div class="process-connector"></div>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-number">04</div>
+      <div class="step-icon">✓</div>
+      <div class="step-title">Handover</div>
+      <p class="step-desc">A 90-point quality check before sign-off. 5-year craftsmanship warranty included. Your kitchen for life.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER SLIDER -->
+<section class="slider-section" id="transformations">
+  <div class="reveal" style="text-align:center; margin-bottom:0;">
+    <div class="section-label" style="justify-content:center;">Transformations</div>
+    <h2 class="section-title">The <em>Before & After</em></h2>
+    <p style="color:var(--muted); margin-top:0.5rem; font-size:0.88rem;">Drag the slider to reveal the transformation</p>
+  </div>
+  <div class="slider-container" id="baSlider">
+    <div class="slider-before slider-before-content">
+      <div class="content-room-label">Before</div>
+      <div class="content-room-sub">Original Kitchen — 2020</div>
+    </div>
+    <div class="slider-after slider-after-content">
+      <div class="content-room-label" style="color:rgba(201,169,110,0.5)">After</div>
+      <div class="content-room-sub">Motta Transitional — 2024</div>
+    </div>
+    <span class="slider-label label-before">Before</span>
+    <span class="slider-label label-after">After</span>
+    <div class="slider-handle" id="sliderHandle">
+      <div class="handle-circle">⟺</div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section" id="gallery">
+  <div class="reveal">
+    <div class="section-label">Portfolio</div>
+    <h2 class="section-title">Recent <em>Work</em></h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item reveal"><div class="gallery-pattern"></div><div class="gallery-num">01</div><div class="gallery-overlay">Modern Oak</div></div>
+    <div class="gallery-item reveal"><div class="gallery-pattern"></div><div class="gallery-num">02</div><div class="gallery-overlay">Marble Island</div></div>
+    <div class="gallery-item reveal"><div class="gallery-pattern"></div><div class="gallery-num">03</div><div class="gallery-overlay">Industrial Loft</div></div>
+    <div class="gallery-item reveal"><div class="gallery-pattern"></div><div class="gallery-num">04</div><div class="gallery-overlay">Walnut Shaker</div></div>
+    <div class="gallery-item reveal"><div class="gallery-pattern"></div><div class="gallery-num">05</div><div class="gallery-overlay">Navy Lacquer</div></div>
+    <div class="gallery-item reveal"><div class="gallery-pattern"></div><div class="gallery-num">06</div><div class="gallery-overlay">White Gloss</div></div>
+    <div class="gallery-item reveal"><div class="gallery-pattern"></div><div class="gallery-num">07</div><div class="gallery-overlay">Travertine Top</div></div>
+    <div class="gallery-item reveal"><div class="gallery-pattern"></div><div class="gallery-num">08</div><div class="gallery-overlay">Brass Hardware</div></div>
+    <div class="gallery-item reveal"><div class="gallery-pattern"></div><div class="gallery-num">09</div><div class="gallery-overlay">Gunmetal Pantry</div></div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="booking-section" id="booking">
+  <div class="booking-inner reveal">
+    <div class="section-label" style="justify-content:center;">Start Your Project</div>
+    <h2>Book a Design<br><em>Consultation</em></h2>
+    <p>Every Motta kitchen begins with a 90-minute discovery session. We'll tour your space, understand your lifestyle, and present initial concepts within 7 days. No obligation.</p>
+    <form class="booking-form" onsubmit="return false;">
+      <div class="b-row">
+        <div class="b-group"><label>First Name</label><input type="text" placeholder="Alexandra"></div>
+        <div class="b-group"><label>Last Name</label><input type="text" placeholder="Chen"></div>
+      </div>
+      <div class="b-row">
+        <div class="b-group"><label>Email</label><input type="email" placeholder="alex@email.com"></div>
+        <div class="b-group"><label>Phone</label><input type="tel" placeholder="+1 (416) 000-0000"></div>
+      </div>
+      <div class="b-row">
+        <div class="b-group">
+          <label>Collection Interest</label>
+          <select>
+            <option value="">Select a collection</option>
+            <option>Modern</option>
+            <option>Traditional</option>
+            <option>Industrial</option>
+            <option>Transitional</option>
+            <option>Not Sure Yet</option>
+          </select>
+        </div>
+        <div class="b-group">
+          <label>Estimated Budget</label>
+          <select>
+            <option value="">Select range</option>
+            <option>$20K – $35K</option>
+            <option>$35K – $60K</option>
+            <option>$60K – $100K</option>
+            <option>$100K+</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="book-submit">Request Consultation</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Motta<span>.</span></div>
+    <div class="footer-copy">© 2024 Motta Kitchen Design Inc. Toronto, ON. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Instagram</a>
+      <a href="#">Houzz</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Lenis
+const lenis = new Lenis({ lerp: 0.1 });
+function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+requestAnimationFrame(raf);
+
+// GSAP
+gsap.registerPlugin(ScrollTrigger);
+
+gsap.from('.hero-eyebrow', { opacity: 0, y: 30, duration: 1, delay: 0.3 });
+gsap.from('.hero h1', { opacity: 0, y: 60, duration: 1.4, delay: 0.5, ease: 'power3.out' });
+gsap.from('.hero-sub', { opacity: 0, y: 30, duration: 1, delay: 0.9 });
+gsap.from('.hero-ctas', { opacity: 0, y: 20, duration: 0.8, delay: 1.1 });
+gsap.from('.floater-badge', { opacity: 0, x: 40, duration: 1, delay: 1.2, stagger: 0.2 });
+
+gsap.utils.toArray('.reveal').forEach(el => {
+  gsap.to(el, {
+    opacity: 1, y: 0, duration: 0.9, ease: 'power2.out',
+    scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+  });
+});
+gsap.utils.toArray('.reveal-left').forEach(el => {
+  gsap.to(el, {
+    opacity: 1, x: 0, duration: 0.9, ease: 'power2.out',
+    scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+  });
+});
+
+// Material tabs
+function switchMaterial(type, btn) {
+  document.querySelectorAll('.material-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.material-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-' + type).classList.add('active');
+}
+
+// Before/After slider
+const slider = document.getElementById('baSlider');
+const handle = document.getElementById('sliderHandle');
+const afterEl = slider.querySelector('.slider-after');
+let dragging = false;
+
+function setSlider(x) {
+  const rect = slider.getBoundingClientRect();
+  let pct = Math.max(0, Math.min(100, (x - rect.left) / rect.width * 100));
+  handle.style.left = pct + '%';
+  afterEl.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+}
+
+slider.addEventListener('mousedown', e => { dragging = true; setSlider(e.clientX); });
+window.addEventListener('mousemove', e => { if (dragging) setSlider(e.clientX); });
+window.addEventListener('mouseup', () => dragging = false);
+slider.addEventListener('touchstart', e => { dragging = true; setSlider(e.touches[0].clientX); }, { passive: true });
+window.addEventListener('touchmove', e => { if (dragging) setSlider(e.touches[0].clientX); }, { passive: true });
+window.addEventListener('touchend', () => dragging = false);
+
+// Init slider at 50%
+setSlider(slider.getBoundingClientRect().left + slider.offsetWidth / 2);
+</script>
+</body>
+</html>

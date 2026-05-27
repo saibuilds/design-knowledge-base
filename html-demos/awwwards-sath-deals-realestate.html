@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SathiDeals — Toronto's Most Trusted Real Estate Team</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.0.42/dist/lenis.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0a0a;
+    --gold: #c9a96e;
+    --gold-light: #e8c98a;
+    --text: #f5f5f5;
+    --text-muted: #888;
+    --border: rgba(201,169,110,0.2);
+  }
+  html { font-size: 16px; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 4rem;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+    backdrop-filter: blur(10px);
+  }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--gold); letter-spacing: 0.05em; }
+  .nav-links { display: flex; gap: 2.5rem; }
+  .nav-links a { font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); transition: color 0.3s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    padding: 0.65rem 1.5rem; border: 1px solid var(--gold); color: var(--gold);
+    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    transition: all 0.3s; cursor: pointer;
+  }
+  .nav-cta:hover { background: var(--gold); color: var(--bg); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; padding: 0 4rem; gap: 4rem; position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(201,169,110,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 3rem; height: 1px; background: var(--gold); }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.8rem);
+    line-height: 1.1; font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero-sub { font-size: 1rem; color: var(--text-muted); line-height: 1.7; max-width: 480px; margin-bottom: 2.5rem; }
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    padding: 1rem 2.5rem; background: var(--gold); color: var(--bg);
+    font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    border: none; cursor: pointer; transition: all 0.3s;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(201,169,110,0.3); }
+  .btn-outline {
+    padding: 1rem 2.5rem; background: transparent; color: var(--text);
+    font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    border: 1px solid rgba(245,245,245,0.2); cursor: pointer; transition: all 0.3s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .hero-image {
+    position: relative; height: 70vh;
+    display: flex; align-items: flex-end; justify-content: center;
+  }
+  .agent-photo-placeholder {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #1a1a1a 0%, #111 50%, #1e1a14 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    border: 1px solid var(--border); position: relative; overflow: hidden;
+  }
+  .agent-photo-placeholder::before {
+    content: ''; position: absolute;
+    width: 120px; height: 120px; border-radius: 50%;
+    background: rgba(201,169,110,0.1); border: 2px solid var(--border);
+    top: 30%; left: 50%; transform: translate(-50%, -50%);
+  }
+  .agent-photo-placeholder::after {
+    content: ''; position: absolute;
+    width: 200px; height: 180px;
+    background: rgba(201,169,110,0.06); border-radius: 0 0 100px 100px;
+    bottom: 25%; left: 50%; transform: translateX(-50%);
+  }
+  .agent-badge {
+    position: absolute; bottom: 2rem; left: 2rem; right: 2rem;
+    background: rgba(10,10,10,0.9); border: 1px solid var(--border);
+    padding: 1.5rem; backdrop-filter: blur(10px);
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .badge-icon { width: 40px; height: 40px; background: var(--gold); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .badge-icon svg { width: 20px; height: 20px; fill: var(--bg); }
+  .badge-text { font-size: 0.75rem; }
+  .badge-text strong { display: block; color: var(--gold); margin-bottom: 0.2rem; }
+  .badge-text span { color: var(--text-muted); }
+  .hero-scroll {
+    position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted);
+  }
+  .scroll-line { width: 1px; height: 60px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollLine 1.5s ease-in-out infinite; }
+  @keyframes scrollLine { 0%,100% { opacity: 1; transform: scaleY(1); } 50% { opacity: 0.3; transform: scaleY(0.5); } }
+
+  /* SECTION SHARED */
+  section { padding: 6rem 4rem; }
+  .section-label {
+    font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .section-label::after { content: ''; flex: 1; max-width: 3rem; height: 1px; background: var(--gold); }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.15; margin-bottom: 1.5rem; }
+  .section-title em { font-style: italic; color: var(--gold); }
+  .divider { width: 100%; height: 1px; background: var(--border); }
+
+  /* STATS */
+  .stats-section { background: #0d0d0d; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+  .stat-item {
+    padding: 3.5rem 3rem; border-right: 1px solid var(--border); text-align: center;
+    position: relative;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-number {
+    font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 4vw, 4rem);
+    color: var(--gold); line-height: 1; font-weight: 600; margin-bottom: 0.75rem;
+  }
+  .stat-number span { font-family: 'Playfair Display', serif; }
+  .stat-label { font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.05em; line-height: 1.5; }
+
+  /* LISTINGS */
+  .listings-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
+  .listings-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .listing-card {
+    position: relative; overflow: hidden; cursor: pointer;
+    border: 1px solid var(--border); transition: border-color 0.3s;
+  }
+  .listing-card:hover { border-color: var(--gold); }
+  .listing-image {
+    height: 220px;
+    background: linear-gradient(135deg, #1a1a1a, #0f0f0f);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted);
+  }
+  .listing-image .img-grid {
+    position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
+    gap: 2px; opacity: 0.15;
+  }
+  .img-grid div { background: linear-gradient(135deg, #c9a96e22, #1a1a1a); }
+  .listing-overlay {
+    position: absolute; inset: 0; background: rgba(201,169,110,0.92);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.4s; gap: 1rem;
+    color: var(--bg); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .listing-card:hover .listing-overlay { opacity: 1; }
+  .listing-overlay .view-btn {
+    padding: 0.6rem 1.5rem; border: 2px solid var(--bg); font-weight: 600;
+  }
+  .listing-body { padding: 1.5rem; }
+  .listing-price { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--gold); margin-bottom: 0.5rem; }
+  .listing-address { font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem; }
+  .listing-neighbourhood { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+  .listing-details { display: flex; gap: 1.5rem; font-size: 0.75rem; color: var(--text-muted); padding-top: 1rem; border-top: 1px solid var(--border); }
+  .listing-detail { display: flex; align-items: center; gap: 0.4rem; }
+  .listing-status {
+    position: absolute; top: 1rem; left: 1rem; z-index: 2;
+    padding: 0.3rem 0.75rem; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+    font-weight: 600;
+  }
+  .status-sold { background: var(--gold); color: var(--bg); }
+  .status-active { background: #22c55e; color: #000; }
+  .status-pending { background: #f59e0b; color: #000; }
+
+  /* NEIGHBOURHOODS */
+  .neighbourhoods-section { background: #0d0d0d; }
+  .nbhd-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); margin-top: 3rem; }
+  .nbhd-card {
+    background: #0d0d0d; padding: 2.5rem; position: relative; overflow: hidden;
+    transition: background 0.3s; cursor: pointer;
+  }
+  .nbhd-card:hover { background: #111; }
+  .nbhd-card::before {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+    background: var(--gold); transform: scaleX(0); transition: transform 0.4s;
+    transform-origin: left;
+  }
+  .nbhd-card:hover::before { transform: scaleX(1); }
+  .nbhd-number { font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--border); font-weight: 700; margin-bottom: 1rem; line-height: 1; }
+  .nbhd-name { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 0.75rem; }
+  .nbhd-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1rem; }
+  .nbhd-avg { font-size: 0.7rem; color: var(--gold); letter-spacing: 0.1em; }
+
+  /* TESTIMONIALS */
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; }
+  .testimonial-card { padding: 2.5rem; border: 1px solid var(--border); position: relative; }
+  .testimonial-card::before {
+    content: '\201C'; font-family: 'Playfair Display', serif; font-size: 5rem;
+    color: var(--gold); opacity: 0.3; position: absolute; top: 1rem; right: 1.5rem; line-height: 1;
+  }
+  .testimonial-text { font-size: 0.9rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 2rem; font-style: italic; }
+  .testimonial-author { display: flex; align-items: center; gap: 1rem; }
+  .author-avatar {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), #8b6914);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--bg); font-weight: 600;
+  }
+  .author-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.2rem; }
+  .author-detail { font-size: 0.75rem; color: var(--gold); }
+  .stars { color: var(--gold); font-size: 0.8rem; margin-bottom: 1.5rem; letter-spacing: 0.1em; }
+
+  /* CONTACT */
+  .contact-section { background: #0d0d0d; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; margin-top: 3rem; }
+  .contact-info h3 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 1.5rem; }
+  .contact-info p { color: var(--text-muted); line-height: 1.8; margin-bottom: 2rem; }
+  .contact-details { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2.5rem; }
+  .contact-detail { display: flex; gap: 1rem; align-items: flex-start; }
+  .contact-detail-icon { width: 40px; height: 40px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--gold); font-size: 1rem; }
+  .contact-detail-text strong { display: block; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.25rem; }
+  .contact-detail-text span { font-size: 0.85rem; color: var(--text-muted); }
+  .whatsapp-btn {
+    display: inline-flex; align-items: center; gap: 0.75rem;
+    padding: 1rem 2rem; background: #25d366; color: #fff;
+    font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em;
+    transition: all 0.3s; border: none; cursor: pointer;
+  }
+  .whatsapp-btn:hover { background: #1ebe5d; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(37,211,102,0.3); }
+  .contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+  .form-group label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
+  .form-group input, .form-group select, .form-group textarea {
+    background: #111; border: 1px solid var(--border); color: var(--text);
+    padding: 0.9rem 1rem; font-family: 'Inter', sans-serif; font-size: 0.875rem;
+    transition: border-color 0.3s; outline: none;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--gold); }
+  .form-group select option { background: #111; }
+  .form-group textarea { resize: vertical; min-height: 120px; }
+  .form-submit { padding: 1.1rem 2.5rem; background: var(--gold); color: var(--bg); border: none; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: all 0.3s; align-self: flex-start; }
+  .form-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  /* FOOTER */
+  footer { padding: 4rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--gold); }
+  .footer-copy { font-size: 0.75rem; color: var(--text-muted); }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.08em; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--gold); }
+
+  /* ANIMATIONS */
+  .reveal { opacity: 0; transform: translateY(40px); }
+  .reveal-left { opacity: 0; transform: translateX(-40px); }
+  .reveal-right { opacity: 0; transform: translateX(40px); }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 1.25rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; gap: 2rem; }
+    .hero-image { height: 50vw; max-height: 300px; }
+    section { padding: 4rem 1.5rem; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .stat-item:nth-child(2) { border-right: none; }
+    .stat-item:nth-child(3), .stat-item:nth-child(4) { border-top: 1px solid var(--border); }
+    .listings-grid { grid-template-columns: 1fr; }
+    .nbhd-grid { grid-template-columns: 1fr 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .form-row { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2.5rem 1.5rem; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">SathiDeals</div>
+  <div class="nav-links">
+    <a href="#listings">Listings</a>
+    <a href="#neighbourhoods">Neighbourhoods</a>
+    <a href="#about">About</a>
+    <a href="#testimonials">Reviews</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#contact" class="nav-cta">Book a Call</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Toronto GTA Real Estate Specialists</div>
+    <h1>Toronto's Most <em>Trusted</em> Real Estate Team</h1>
+    <p class="hero-sub">From Mississauga to Markham, Brampton to North York — we negotiate harder, market smarter, and close faster. Your property deserves more than average.</p>
+    <div class="hero-ctas">
+      <a href="#listings" class="btn-primary">View Listings</a>
+      <a href="#contact" class="btn-outline">Free Home Valuation</a>
+    </div>
+  </div>
+  <div class="hero-image">
+    <div class="agent-photo-placeholder">
+      <div class="img-grid">
+        <div></div><div></div><div></div><div></div>
+      </div>
+      <span style="position:relative;z-index:1;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted)">Agent Photo</span>
+    </div>
+    <div class="agent-badge">
+      <div class="badge-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <div class="badge-text">
+        <strong>Top 1% Toronto Agent</strong>
+        <span>Royal LePage — Platinum Award 2024</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section" id="stats">
+  <div class="stats-grid">
+    <div class="stat-item reveal">
+      <div class="stat-number"><span class="counter" data-target="500">0</span>+</div>
+      <div class="stat-label">Successful<br>Transactions</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-number">$<span class="counter" data-target="400">0</span>M+</div>
+      <div class="stat-label">Total Volume<br>Sold</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-number"><span class="counter" data-target="15">0</span></div>
+      <div class="stat-label">Years of<br>Excellence</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-number"><span class="counter" data-target="98">0</span>%</div>
+      <div class="stat-label">Client<br>Satisfaction Rate</div>
+    </div>
+  </div>
+</section>
+
+<!-- LISTINGS -->
+<section id="listings">
+  <div class="listings-header reveal">
+    <div>
+      <div class="section-label">Current Portfolio</div>
+      <h2 class="section-title">Featured <em>Properties</em></h2>
+    </div>
+    <a href="#contact" class="btn-outline" style="white-space:nowrap">View All Listings →</a>
+  </div>
+  <div class="listings-grid">
+    <div class="listing-card reveal">
+      <span class="listing-status status-active">Active</span>
+      <div class="listing-image">
+        <div class="img-grid"><div></div><div></div><div></div><div></div></div>
+        <div class="listing-overlay">
+          <div>3D Tour Available</div>
+          <div class="view-btn">View Details</div>
+        </div>
+      </div>
+      <div class="listing-body">
+        <div class="listing-price">$1,895,000</div>
+        <div class="listing-address">42 Roseberry Lane</div>
+        <div class="listing-neighbourhood">Rosedale</div>
+        <div class="listing-details">
+          <div class="listing-detail">🛏 4 Beds</div>
+          <div class="listing-detail">🚿 3 Baths</div>
+          <div class="listing-detail">📐 2,850 sqft</div>
+        </div>
+      </div>
+    </div>
+    <div class="listing-card reveal">
+      <span class="listing-status status-sold">Sold</span>
+      <div class="listing-image">
+        <div class="img-grid"><div></div><div></div><div></div><div></div></div>
+        <div class="listing-overlay">
+          <div>Sold in 7 Days</div>
+          <div class="view-btn">View Case Study</div>
+        </div>
+      </div>
+      <div class="listing-body">
+        <div class="listing-price">$2,240,000</div>
+        <div class="listing-address">118 Summerhill Ave</div>
+        <div class="listing-neighbourhood">Summerhill</div>
+        <div class="listing-details">
+          <div class="listing-detail">🛏 5 Beds</div>
+          <div class="listing-detail">🚿 4 Baths</div>
+          <div class="listing-detail">📐 3,400 sqft</div>
+        </div>
+      </div>
+    </div>
+    <div class="listing-card reveal">
+      <span class="listing-status status-pending">Pending</span>
+      <div class="listing-image">
+        <div class="img-grid"><div></div><div></div><div></div><div></div></div>
+        <div class="listing-overlay">
+          <div>Multiple Offers</div>
+          <div class="view-btn">Request Info</div>
+        </div>
+      </div>
+      <div class="listing-body">
+        <div class="listing-price">$1,150,000</div>
+        <div class="listing-address">67 Bloor West Blvd</div>
+        <div class="listing-neighbourhood">Annex</div>
+        <div class="listing-details">
+          <div class="listing-detail">🛏 3 Beds</div>
+          <div class="listing-detail">🚿 2 Baths</div>
+          <div class="listing-detail">📐 1,750 sqft</div>
+        </div>
+      </div>
+    </div>
+    <div class="listing-card reveal">
+      <span class="listing-status status-sold">Sold</span>
+      <div class="listing-image">
+        <div class="img-grid"><div></div><div></div><div></div><div></div></div>
+        <div class="listing-overlay">
+          <div>Sold Over Asking</div>
+          <div class="view-btn">View Case Study</div>
+        </div>
+      </div>
+      <div class="listing-body">
+        <div class="listing-price">$3,100,000</div>
+        <div class="listing-address">9 Dunvegan Rd</div>
+        <div class="listing-neighbourhood">Forest Hill</div>
+        <div class="listing-details">
+          <div class="listing-detail">🛏 6 Beds</div>
+          <div class="listing-detail">🚿 5 Baths</div>
+          <div class="listing-detail">📐 5,200 sqft</div>
+        </div>
+      </div>
+    </div>
+    <div class="listing-card reveal">
+      <span class="listing-status status-active">Active</span>
+      <div class="listing-image">
+        <div class="img-grid"><div></div><div></div><div></div><div></div></div>
+        <div class="listing-overlay">
+          <div>New Listing</div>
+          <div class="view-btn">View Details</div>
+        </div>
+      </div>
+      <div class="listing-body">
+        <div class="listing-price">$879,000</div>
+        <div class="listing-address">204-88 Scollard St</div>
+        <div class="listing-neighbourhood">Yorkville</div>
+        <div class="listing-details">
+          <div class="listing-detail">🛏 2 Beds</div>
+          <div class="listing-detail">🚿 2 Baths</div>
+          <div class="listing-detail">📐 1,100 sqft</div>
+        </div>
+      </div>
+    </div>
+    <div class="listing-card reveal">
+      <span class="listing-status status-sold">Sold</span>
+      <div class="listing-image">
+        <div class="img-grid"><div></div><div></div><div></div><div></div></div>
+        <div class="listing-overlay">
+          <div>Sold $82K Over Ask</div>
+          <div class="view-btn">View Case Study</div>
+        </div>
+      </div>
+      <div class="listing-body">
+        <div class="listing-price">$1,480,000</div>
+        <div class="listing-address">31 Kingsway Cres</div>
+        <div class="listing-neighbourhood">The Kingsway</div>
+        <div class="listing-details">
+          <div class="listing-detail">🛏 4 Beds</div>
+          <div class="listing-detail">🚿 3 Baths</div>
+          <div class="listing-detail">📐 2,200 sqft</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEIGHBOURHOODS -->
+<section class="neighbourhoods-section" id="neighbourhoods">
+  <div class="reveal">
+    <div class="section-label">Where We Work</div>
+    <h2 class="section-title">Toronto's <em>Finest</em> Neighbourhoods</h2>
+    <p style="color:var(--text-muted);max-width:560px;line-height:1.8;margin-top:0.5rem;">Deep local knowledge across the GTA's most sought-after communities — from historic Victorian streets to modern lakeside developments.</p>
+  </div>
+  <div class="nbhd-grid">
+    <div class="nbhd-card reveal">
+      <div class="nbhd-number">01</div>
+      <div class="nbhd-name">Rosedale</div>
+      <p class="nbhd-desc">Toronto's most prestigious address. Stately homes, ravine lots, and an unmatched sense of historic elegance. Walking distance to Yonge & Bloor.</p>
+      <div class="nbhd-avg">Avg. Home Price: $3.2M+</div>
+    </div>
+    <div class="nbhd-card reveal">
+      <div class="nbhd-number">02</div>
+      <div class="nbhd-name">Forest Hill</div>
+      <p class="nbhd-desc">Grand estates and lush canopy streets define this enclave. Home to UCC and BSS, with quiet cul-de-sacs and generous lot sizes.</p>
+      <div class="nbhd-avg">Avg. Home Price: $2.8M+</div>
+    </div>
+    <div class="nbhd-card reveal">
+      <div class="nbhd-number">03</div>
+      <div class="nbhd-name">The Annex</div>
+      <p class="nbhd-desc">Vibrant and walkable. Victorian semis, indie cafés, and proximity to U of T make this a perennial favourite for families and investors.</p>
+      <div class="nbhd-avg">Avg. Home Price: $1.4M+</div>
+    </div>
+    <div class="nbhd-card reveal">
+      <div class="nbhd-number">04</div>
+      <div class="nbhd-name">Yorkville</div>
+      <p class="nbhd-desc">Toronto's answer to the Upper East Side. Luxury condos, world-class dining, Hermès, Chanel, and Holt Renfrew at your doorstep.</p>
+      <div class="nbhd-avg">Avg. Condo: $1.1M+</div>
+    </div>
+    <div class="nbhd-card reveal">
+      <div class="nbhd-number">05</div>
+      <div class="nbhd-name">Leaside</div>
+      <p class="nbhd-desc">Family-first community with top-ranked schools, Sunnybrook Park, and a charming village atmosphere. Among the fastest-appreciating markets in the GTA.</p>
+      <div class="nbhd-avg">Avg. Home Price: $2.1M+</div>
+    </div>
+    <div class="nbhd-card reveal">
+      <div class="nbhd-number">06</div>
+      <div class="nbhd-name">Mississauga</div>
+      <p class="nbhd-desc">The GTA's second city. Waterfront communities, Port Credit, and Square One District offer exceptional value with transit access to downtown.</p>
+      <div class="nbhd-avg">Avg. Home Price: $1.1M+</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="reveal">
+    <div class="section-label">Client Stories</div>
+    <h2 class="section-title">Words from Our <em>Clients</em></h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"We sold our Leaside home in 4 days — $140,000 over asking. SathiDeals' strategic pricing and flawless staging made all the difference. We've recommended them to every family member since."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">PR</div>
+        <div>
+          <div class="author-name">Priya & Raj Sharma</div>
+          <div class="author-detail">Sold in Leaside — April 2024</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"First-time buyers navigating a crazy market. Our agent held our hand through every step — pre-approval, offer strategy, inspection, closing. We got into Annex for under $1.1M. Absolutely incredible."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">MK</div>
+        <div>
+          <div class="author-name">Michael & Karen Tong</div>
+          <div class="author-detail">Purchased in The Annex — Jan 2024</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"Sold our Mississauga detached and bought in Forest Hill — all within 60 days. The coordination was seamless. I've worked with 4 agents over 20 years. This team is in a different league entirely."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">SN</div>
+        <div>
+          <div class="author-name">Sunita Nair</div>
+          <div class="author-detail">Buy & Sell Client — Nov 2023</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="reveal">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="section-title">Let's Talk About <em>Your</em> Property</h2>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info reveal-left">
+      <h3>Ready to make your move?</h3>
+      <p>Whether you're buying, selling, or simply want a free home valuation — our team responds within 2 hours and is available 7 days a week.</p>
+      <div class="contact-details">
+        <div class="contact-detail">
+          <div class="contact-detail-icon">📞</div>
+          <div class="contact-detail-text">
+            <strong>Phone</strong>
+            <span>+1 (416) 555-0188</span>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">✉</div>
+          <div class="contact-detail-text">
+            <strong>Email</strong>
+            <span>hello@sathideals.ca</span>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">📍</div>
+          <div class="contact-detail-text">
+            <strong>Office</strong>
+            <span>2900 Yonge St, Suite 400<br>Toronto, ON M4N 3N5</span>
+          </div>
+        </div>
+      </div>
+      <a href="https://wa.me/14165550188" class="whatsapp-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Chat on WhatsApp
+      </a>
+    </div>
+    <div class="reveal-right">
+      <form class="contact-form" onsubmit="return false;">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" placeholder="John">
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" placeholder="Smith">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="john@example.com">
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="+1 (416) 000-0000">
+        </div>
+        <div class="form-group">
+          <label>I'm looking to...</label>
+          <select>
+            <option value="">Select an option</option>
+            <option>Buy a Property</option>
+            <option>Sell My Home</option>
+            <option>Get a Free Valuation</option>
+            <option>Invest in Real Estate</option>
+            <option>Lease a Property</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message (Optional)</label>
+          <textarea placeholder="Tell us about your ideal property or any questions..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">SathiDeals</div>
+  <div class="footer-copy">© 2024 SathiDeals Realty Inc. | Brokerage. All rights reserved.</div>
+  <div class="footer-links">
+    <a href="#">Privacy Policy</a>
+    <a href="#">RECO Disclosure</a>
+    <a href="#">Accessibility</a>
+    <a href="#">Sitemap</a>
+  </div>
+</footer>
+
+<script>
+// Lenis smooth scroll
+const lenis = new Lenis({ lerp: 0.08, smooth: true });
+function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+requestAnimationFrame(raf);
+
+// GSAP + ScrollTrigger
+gsap.registerPlugin(ScrollTrigger);
+
+// Hero animation
+gsap.from('.hero-eyebrow', { opacity: 0, y: 30, duration: 1, delay: 0.3 });
+gsap.from('.hero h1', { opacity: 0, y: 50, duration: 1.2, delay: 0.5 });
+gsap.from('.hero-sub', { opacity: 0, y: 30, duration: 1, delay: 0.8 });
+gsap.from('.hero-ctas', { opacity: 0, y: 20, duration: 0.8, delay: 1.1 });
+gsap.from('.hero-image', { opacity: 0, x: 60, duration: 1.4, delay: 0.6, ease: 'power3.out' });
+
+// Reveal animations
+gsap.utils.toArray('.reveal').forEach(el => {
+  gsap.to(el, {
+    opacity: 1, y: 0, duration: 0.9, ease: 'power2.out',
+    scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+  });
+});
+gsap.utils.toArray('.reveal-left').forEach(el => {
+  gsap.to(el, {
+    opacity: 1, x: 0, duration: 0.9, ease: 'power2.out',
+    scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+  });
+});
+gsap.utils.toArray('.reveal-right').forEach(el => {
+  gsap.to(el, {
+    opacity: 1, x: 0, duration: 0.9, ease: 'power2.out',
+    scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+  });
+});
+
+// Stagger listings
+gsap.utils.toArray('.listing-card').forEach((card, i) => {
+  gsap.from(card, {
+    opacity: 0, y: 50, duration: 0.7, delay: i * 0.1, ease: 'power2.out',
+    scrollTrigger: { trigger: '#listings', start: 'top 70%', toggleActions: 'play none none none' }
+  });
+});
+
+// Counter animation
+gsap.utils.toArray('.counter').forEach(counter => {
+  const target = +counter.getAttribute('data-target');
+  ScrollTrigger.create({
+    trigger: counter, start: 'top 80%',
+    onEnter: () => {
+      gsap.to({ val: 0 }, {
+        val: target, duration: 2.5, ease: 'power2.out',
+        onUpdate: function() { counter.textContent = Math.floor(this.targets()[0].val); }
+      });
+    }, once: true
+  });
+});
+</script>
+</body>
+</html>
