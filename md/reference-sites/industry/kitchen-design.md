@@ -28,6 +28,60 @@
 
 ---
 
+## Cabinet Types Reference
+
+### Door Styles
+| Style | Description | Best For |
+|-------|-------------|----------|
+| Shaker | Recessed center panel, clean rails | Transitional, modern farmhouse |
+| Slab/Flat | No frame, single flat panel | Modern, minimalist |
+| Raised Panel | Panel raised above frame | Traditional, ornate |
+| Glass Front | Partial/full glass insert | Display, upper cabinets |
+| Beadboard | Vertical grooves in panel | Cottage, farmhouse |
+| Louvered | Horizontal slats | Ventilation, coastal style |
+| Arch Top | Curved top rail | Tuscan, traditional |
+| Inset | Door sits flush inside frame | Craftsman, high-end custom |
+
+### Cabinet Box Materials
+| Material | Pros | Cons | Price Range |
+|----------|------|------|-------------|
+| **Plywood** (birch/maple) | Strong, resists moisture/warping, holds screws well | Heavier, pricier | $$–$$$ |
+| **MDF** (medium-density fiberboard) | Smooth surface, paints perfectly, no grain | Heavy, swells with water, poor screw holding | $–$$ |
+| **Melamine** (particleboard core) | Low cost, easy to clean, white/woodgrain finishes | Chips at edges, poor moisture resistance | $ |
+| **Thermally Fused Laminate (TFL)** | Durable surface, many finishes | Not solid wood look | $–$$ |
+| **Solid Wood** | Premium look, repairable, heirloom | Expands/contracts, expensive | $$$$ |
+
+### Door Material Finishes
+- **Painted MDF** — most popular for shaker; crisp edges, no grain showing
+- **Painted solid wood** — premium painted look, shows wood grain slightly
+- **Thermofoil** — vinyl-wrapped MDF; seamless, budget-friendly; peels over time near heat
+- **Wood veneer** — real wood slice bonded to substrate; natural grain, consistent color
+- **Acrylic high-gloss** — ultra reflective, fingerprint-prone, very modern
+- **Lacquer** — hand-sprayed, professional finish; luxury tier
+- **Laminate (HPL)** — Formica-style; durable, matte or gloss options
+
+### Cabinet Construction Grades
+- **Stock cabinets** — pre-built sizes (3" increments), ships in days, lowest cost
+- **Semi-custom** — limited size modifications, more finish/style options, 4–8 weeks
+- **Custom** — any dimension, any material, built to order, 8–16 weeks
+
+### Hardware Finish Pairings
+```
+Shaker white + brass hardware = timeless transitional
+Flat slab + matte black = modern industrial
+Wood veneer + brushed nickel = Scandinavian warm
+Painted navy + unlacquered brass = Smallbone-style luxury
+Natural oak + oil-rubbed bronze = craftsman organic
+```
+
+### Motta Kitchen Specifics (our client)
+- Offers: custom painted, wood veneer, lacquer finishes
+- Signature: flat-front + integrated handles (J-pull or push-to-open)
+- Material callout: "European-style frameless box construction" — full overlay doors
+- Key differentiator: full-height slab doors floor to ceiling, no toe kick reveal
+
+---
+
 ## Color Palettes
 
 ### Luxury Neutral
