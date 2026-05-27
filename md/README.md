@@ -28,6 +28,13 @@ Build a real estate hero for MottaKitchen. Reference:
 ## 3d
 - [spline](./3d/spline.md) — Spline — 3D Hero Scenes (Free)
 - [r3f](./3d/r3f.md) — React Three Fiber — 3D Patterns
+- [shaders](./3d/shaders.md) — GLSL Shaders — Vertex/Fragment, Noise, Distortion, Particles, Post-FX
+- [theatre-js](./3d/theatre-js.md) — Theatre.js — Keyframe Animation Sequencer for R3F (MIT)
+- [three-js-vanilla](./3d/three-js-vanilla.md) — Pure Three.js — Scene/Camera/Renderer, GLTF, Raycasting, Post-Processing
+- [rive](./3d/rive.md) — Rive — Interactive Animations (Free Tier, rive.app)
+- [ogl-webgl](./3d/ogl-webgl.md) — OGL — Lightweight WebGL Library (29KB, MIT, github.com/oframe/ogl)
+- [pixijs](./3d/pixijs.md) — PixiJS — 2D WebGL Renderer (Displacement, Filters, Sprites, MIT)
+- [scroll-3d-patterns](./3d/scroll-3d-patterns.md) — Scroll-Linked 3D Patterns (Lusion/Active Theory style)
 
 ## reference sites › agencies
 - [lusion](./reference-sites/agencies/lusion.md) — Lusion.co — Agency Reference

@@ -3,6 +3,7 @@ _Updated: 2026-05-27 | License: MIT | Size: ~20KB gzipped_
 _URL: github.com/oframe/ogl_
 
 > OGL is a minimal WebGL framework. No magic, no abstractions — just thin wrappers around WebGL. Used by agency sites for maximum performance where Three.js (600KB) is too heavy.
+> Bundle: Core 8KB + Math 6KB + Extras 15KB = **29KB total** (minzipped, tree-shakeable)
 
 ## Install
 
