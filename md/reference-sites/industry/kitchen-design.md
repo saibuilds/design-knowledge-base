@@ -65,6 +65,78 @@
 - **Semi-custom** — limited size modifications, more finish/style options, 4–8 weeks
 - **Custom** — any dimension, any material, built to order, 8–16 weeks
 
+---
+
+## Motta Kitchen — Spray Finishing Services
+
+### What We Do
+- **Cabinet door spraying** — new doors sprayed to order (any colour, any finish)
+- **Refinishing / repainting** — existing cabinets stripped, prepped, resprayed in place or off-site
+- **B2B spraying for cabinet door shops** — other shops send raw or primed doors, we spray and return
+- **Solid wood staining + finishing** — stain + topcoat on real wood doors, face frames, trim
+
+### Finish Types We Offer
+
+#### Lacquer (Nitrocellulose / Catalyzed / CV)
+- Sprayed in booth; fast dry, very hard film
+- **Conversion Varnish (CV)** — most durable for kitchens; resists yellowing, heat, moisture
+- **Pre-cat lacquer** — faster turnaround, good for doors not near heat/steam
+- Sheen levels: flat, satin, semi-gloss, high-gloss
+- Best on: MDF, solid wood, wood veneer doors
+- Touch-up: difficult — full panel respray usually needed
+
+#### Water-Based Paint (Waterborne Acrylic / Alkyd-Acrylic)
+- Low VOC, fast dry, sprays beautifully in HVLP
+- Colours: fan-deck match (Benjamin Moore, Sherwin-Williams, RAL, NCS)
+- Less yellowing than oil over white
+- Sheen: matte, eggshell, satin, semi-gloss
+- Popular for: white shaker doors, painted MDF
+- Dry time: 30–60 min recoat; full cure 7–14 days
+
+#### Oil-Based / Alkyd Paint
+- Self-leveling — fewer brush/roll marks even sprayed
+- Yellows over white over time (warm tone some clients want)
+- Harder final film than most waterborne
+- Longer dry: 4–6 hrs recoat, 30-day full cure
+- Use case: clients who want old-school hard finish
+
+#### Solid Wood Stain + Topcoat
+- Stain options: wiping stain, gel stain, water-based stain
+- Colours: from natural honey oak to ebony — custom tones mixed
+- Topcoat over stain: CV lacquer or waterborne poly
+- Sheen: typically satin or semi-gloss on stained wood
+- Process: sand → seal coat → stain → scuff sand → 2× topcoat
+- Works on: oak, maple, cherry, walnut, pine cabinet doors
+
+#### Two-Tone Finishes
+- Upper cabinets one colour, lowers another (very popular 2024–2026)
+- Island accent colour different from perimeter
+- We match existing lowers to new uppers for kitchen additions/renovations
+
+### Spray Process (Standard Door Refinishing)
+1. **Intake** — client drops off doors or we pick up
+2. **Strip / Clean** — degrease, sand or chemically strip old finish
+3. **Repair** — fill chips, dents, grain raise on MDF edges
+4. **Prime** — high-build primer, sand 220 grit
+5. **Colour coat** — 2 finish coats, HVLP spray booth
+6. **Quality check** — inspect for runs, sags, fish-eye before packaging
+7. **Delivery / Reinstall** — doors returned or we reinstall
+
+### B2B Shop Services (For Other Cabinet Door Companies)
+- Accept raw MDF, primed MDF, solid wood doors in any profile
+- Spray to their spec: colour code, sheen level, finish type
+- Turnaround: 3–5 business days standard, rush available
+- Volume pricing available for shops sending 50+ doors/week
+- We can match any RAL, Benjamin Moore, Sherwin-Williams, or custom fan-deck colour
+
+### Pricing Signals (for website copy)
+- Door refinishing: priced per door (varies by size/condition)
+- New door spraying: priced per sq ft or per door
+- B2B wholesale: volume tiers
+- CTAs: "Get a Quote", "Send Your Doors to Us", "Book a Spray Day"
+
+---
+
 ### Hardware Finish Pairings
 ```
 Shaker white + brass hardware = timeless transitional
