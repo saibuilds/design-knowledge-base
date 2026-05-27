@@ -1,62 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Reference Sites — Design KB</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#e5e5e5;display:flex;min-height:100vh}
-.sidebar{width:240px;background:#111;border-right:1px solid #222;padding:24px 0;position:fixed;height:100vh;overflow-y:auto;z-index:100}
-.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid #222;margin-bottom:16px}
-.sidebar-logo a{text-decoration:none;color:#f59e0b;font-weight:700;font-size:16px}
-.sidebar-logo span{display:block;color:#666;font-size:11px;margin-top:2px}
-.nav-section{padding:0 12px;margin-bottom:8px}
-.nav-label{font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:1px;padding:0 8px;margin-bottom:6px}
-.nav-item{display:block;padding:7px 8px;border-radius:6px;color:#999;text-decoration:none;font-size:13px;transition:all 0.15s}
-.nav-item:hover,.nav-item.active{background:#1a1a1a;color:#f59e0b}
-.main{margin-left:240px;flex:1;padding:40px}
-h1{font-size:28px;font-weight:700;margin-bottom:8px}
-.subtitle{color:#666;margin-bottom:32px;font-size:15px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-.card{background:#111;border:1px solid #222;border-radius:12px;padding:24px;text-decoration:none;color:inherit;transition:all 0.2s;display:block}
-.card:hover{border-color:#f59e0b;transform:translateY(-2px)}
-.card-title{font-size:16px;font-weight:600;margin-bottom:6px;color:#e5e5e5}
-.card-url{font-size:11px;color:#f59e0b;margin-bottom:8px}
-.card-desc{font-size:13px;color:#666;line-height:1.5}
+:root{--bg:#0a0a0a;--card:#111111;--border:#1f1f1f;--accent:#f59e0b;--text:#e5e5e5;--muted:#737373;--green:#22c55e}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif}
+a{color:inherit;text-decoration:none}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:240px;background:var(--card);border-right:1px solid var(--border);padding:24px 0;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.sidebar-logo a{font-size:13px;font-weight:600;color:var(--accent);letter-spacing:.05em;text-transform:uppercase}
+.sidebar-logo p{font-size:11px;color:var(--muted);margin-top:4px}
+.nav-section{padding:8px 20px;font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:8px}
+.nav-link{display:flex;align-items:center;gap:8px;padding:8px 20px;font-size:13px;color:var(--muted);transition:.15s;border-left:2px solid transparent}
+.nav-link:hover,.nav-link.active{color:var(--text);background:rgba(245,158,11,.06);border-left-color:var(--accent)}
+.main{margin-left:240px;flex:1;padding:40px;max-width:900px}
+.page-header{margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.badge{display:inline-block;font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(245,158,11,.15);color:var(--accent);border:1px solid rgba(245,158,11,.3);margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em}
+.page-header h1{font-size:28px;font-weight:700}
+.page-header p{color:var(--muted);font-size:14px;margin-top:8px;line-height:1.7;max-width:620px}
+.site-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:40px}
+.site-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;transition:.2s;position:relative;overflow:hidden;display:block}
+.site-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);opacity:0;transition:.2s}
+.site-card:hover{border-color:rgba(245,158,11,.3);transform:translateY(-2px)}
+.site-card:hover::before{opacity:1}
+.site-card-icon{font-size:24px;margin-bottom:12px}
+.site-card h3{font-size:15px;font-weight:600;margin-bottom:6px}
+.site-card p{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:14px}
+.site-card-meta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tag{display:inline-block;font-size:10px;padding:2px 7px;border-radius:4px;background:rgba(245,158,11,.1);color:var(--accent);border:1px solid rgba(245,158,11,.2)}
+.view-btn{display:inline-block;font-size:11px;padding:4px 10px;border-radius:5px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);color:var(--accent)}
+.section-title{font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.info-box{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:16px;margin-bottom:24px;font-size:13px;line-height:1.7}
+.info-box strong{color:var(--accent)}
+.scraper-note{background:#0d0d0d;border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:32px}
+.scraper-note h3{font-size:14px;font-weight:600;margin-bottom:8px}
+.scraper-note p{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:10px}
+.scraper-note code{font-size:12px;background:rgba(255,255,255,.05);padding:2px 6px;border-radius:4px;color:var(--accent)}
+@media(max-width:768px){.sidebar{display:none}.main{margin-left:0}}
 </style>
 </head>
 <body>
+<div class="layout">
 <nav class="sidebar">
-  <div class="sidebar-logo"><a href="../index.html">Design KB</a><span>Knowledge Base</span></div>
-  <div class="nav-section"><div class="nav-label">Reference Sites</div>
-    <a class="nav-item active" href="index.html">Overview</a>
-    <a class="nav-item" href="djcustomreno.html">DJ Custom Reno</a>
-    <a class="nav-item" href="awwwards.html">Awwwards</a>
-    <a class="nav-item" href="godly.html">Godly</a>
-    <a class="nav-item" href="lusion.html">Lusion</a>
-    <a class="nav-item" href="linear.html">Linear</a>
-    <a class="nav-item" href="vercel.html">Vercel</a>
-    <a class="nav-item" href="stripe.html">Stripe</a>
-    <a class="nav-item" href="cosmos.html">Cosmos</a>
-    <a class="nav-item" href="mobbin.html">Mobbin</a>
-  </div>
+  <div class="sidebar-logo"><a href="../index.html">Design KB</a><p>Web Design Knowledge Base</p></div>
+  <div class="nav-section">Hub</div>
+  <a class="nav-link" href="../index.html">&#8962; Dashboard</a>
+  <div class="nav-section">Animations</div>
+  <a class="nav-link" href="../animations/gsap.html">&#9889; GSAP</a>
+  <a class="nav-link" href="../animations/framer-motion.html">&#127902; Framer Motion</a>
+  <a class="nav-link" href="../animations/lenis.html">~ Lenis</a>
+  <div class="nav-section">Components</div>
+  <a class="nav-link" href="../components/shadcn.html">&#9672; shadcn/ui</a>
+  <a class="nav-link" href="../components/21st-dev.html">&#10022; 21st.dev</a>
+  <a class="nav-link" href="../components/magicui.html">&#10022; Magic UI</a>
+  <a class="nav-link" href="../components/aceternity.html">&#9670; Aceternity UI</a>
+  <div class="nav-section">3D</div>
+  <a class="nav-link" href="../3d/r3f.html">&#9677; React Three Fiber</a>
+  <div class="nav-section">Reference Sites</div>
+  <a class="nav-link active" href="index.html">&#9678; Sites Index</a>
+  <a class="nav-link" href="djcustomreno.html">&#8962; DJ Custom Reno</a>
 </nav>
 <main class="main">
-  <h1>Reference Sites</h1>
-  <p class="subtitle">Site analyses, design patterns, and inspiration sources — 9 sites analyzed</p>
-  <div class="grid">
-    <a class="card" href="djcustomreno.html"><div class="card-url">djcustomreno.ca</div><div class="card-title">DJ Custom Reno Analysis</div><div class="card-desc">Full analysis: tech stack, color palette, routes, services, improvement notes, and prompt templates for rebuilding.</div></a>
-    <a class="card" href="awwwards.html"><div class="card-url">awwwards.com/websites/</div><div class="card-title">Awwwards — Award Winners</div><div class="card-desc">Design patterns, color trends, typography, interaction techniques, and what makes sites win SOTD. Split text, magnetic cursor, horizontal scroll.</div></a>
-    <a class="card" href="godly.html"><div class="card-url">godly.website</div><div class="card-title">Godly — Curated Gallery</div><div class="card-desc">Gallery layout patterns, video-on-hover preview, category filters, card design, infinite scroll implementation.</div></a>
-    <a class="card" href="lusion.html"><div class="card-url">lusion.co</div><div class="card-title">Lusion — WebGL Studio</div><div class="card-desc">WebGL rendering stack, lerp mouse tracking, film grain overlay, warm color palette, scroll behavior, Three.js techniques.</div></a>
-    <a class="card" href="linear.html"><div class="card-url">linear.app</div><div class="card-title">Linear — SaaS Dark Theme</div><div class="card-desc">Cool dark palette, gradient headlines, micro-interactions (150ms snappy), feature card glow effects, typography scale.</div></a>
-    <a class="card" href="vercel.html"><div class="card-url">vercel.com</div><div class="card-title">Vercel — Mesh Gradients</div><div class="card-desc">Radial gradient mesh technique, glassmorphism patterns, grid texture background, glass navbar, dark theme system.</div></a>
-    <a class="card" href="stripe.html"><div class="card-url">stripe.com</div><div class="card-title">Stripe — Gradient Mastery</div><div class="card-desc">Diagonal multi-stop gradients, SVG wave dividers, section color progressions, typography (Sohne), animated gradient bg.</div></a>
-    <a class="card" href="cosmos.html"><div class="card-url">cosmos.so</div><div class="card-title">Cosmos — Masonry Gallery</div><div class="card-desc">CSS columns masonry, image-first cards, hover overlay patterns, board preview collage, color-neutral chrome.</div></a>
-    <a class="card" href="mobbin.html"><div class="card-url">mobbin.com</div><div class="card-title">Mobbin — Mobile UI Patterns</div><div class="card-desc">300k+ mobile screens catalogued. Filter sidebar, phone frame mockups, multi-step forms, onboarding flows, mobile design patterns.</div></a>
+  <div class="page-header">
+    <div class="badge">Reference Library</div>
+    <h1>Reference Sites</h1>
+    <p>Analyzed websites with documented architecture, design tokens, typography, copy patterns, and code replication guides. Use the scraper tool to add new sites.</p>
+  </div>
+
+  <div class="scraper-note">
+    <h3>Adding New Sites</h3>
+    <p>Run the scraper to analyze any URL and generate a new reference page:</p>
+    <p><code>cd scraper && node scraper.js https://example.com</code></p>
+    <p>Output is saved to <code>reference-sites/[domain].html</code> with extracted fonts, colors, meta, and structure.</p>
+  </div>
+
+  <div class="section-title">Analyzed Sites (1)</div>
+  <div class="site-grid">
+    <a href="djcustomreno.html" class="site-card">
+      <div class="site-card-icon">&#8962;</div>
+      <h3>DJ Custom Reno</h3>
+      <p>Canadian kitchen renovation business. React SPA (CRA), Roboto + Caveat fonts, dream-oriented copy, 5-star credibility messaging.</p>
+      <div class="site-card-meta">
+        <span class="tag">React</span>
+        <span class="tag">CRA</span>
+        <span class="tag">Renovation</span>
+        <span class="tag">Canadian</span>
+        <span class="tag">Roboto</span>
+        <span class="tag">Caveat</span>
+      </div>
+      <span class="view-btn">View Analysis</span>
+    </a>
+  </div>
+
+  <div class="info-box">
+    <strong>Tip:</strong> Run the overnight Awwwards + Godly scraper to automatically populate this index with award-winning design reference sites. Each analyzed site gets its own page documenting fonts, colors, animations, and replication patterns.
   </div>
 </main>
+</div>
 </body>
 </html>
