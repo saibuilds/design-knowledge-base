@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Awwwards Image Effects</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --bg: #0a0a0a; --white: #f5f5f5; --amber: #f59e0b; --zinc: #18181b; }
+  body { background: var(--bg); color: var(--white); font-family: 'Helvetica Neue', Arial, sans-serif; overflow-x: hidden; }
+  .section { padding: 120px 60px; }
+  .section-label { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--amber); margin-bottom: 16px; display: block; }
+  .section-title { font-size: clamp(2rem, 5vw, 4rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 48px; line-height: 1; }
+
+  /* ─── 1. HOVER ZOOM ─── */
+  .zoom-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+  .zoom-item {
+    aspect-ratio: 3/4; overflow: hidden; position: relative;
+    background: var(--zinc); cursor: none;
+  }
+  .zoom-item .zoom-bg {
+    width: 100%; height: 100%;
+    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform-origin: center;
+  }
+  .zoom-item:hover .zoom-bg { transform: scale(1.12); }
+  .zoom-item:nth-child(1) .zoom-bg { background: linear-gradient(160deg,#1a1a2e,#16213e,#0f3460); }
+  .zoom-item:nth-child(2) .zoom-bg { background: linear-gradient(160deg,#1c1917,#292524,#57534e); }
+  .zoom-item:nth-child(3) .zoom-bg { background: linear-gradient(160deg,#14532d,#15803d,#166534); }
+  .zoom-item .zoom-label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 48px 20px 20px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    font-size: 0.85rem; font-weight: 600; letter-spacing: -0.01em;
+    transform: translateY(8px); opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+  }
+  .zoom-item:hover .zoom-label { transform: translateY(0); opacity: 1; }
+
+  /* ─── 2. CANVAS DISTORTION ─── */
+  .distort-section { background: #080808; }
+  .distort-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+  .distort-wrap {
+    aspect-ratio: 4/3; position: relative; overflow: hidden; cursor: none;
+  }
+  .distort-wrap canvas { display: block; width: 100%; height: 100%; }
+
+  /* ─── 3. BEFORE/AFTER SLIDER ─── */
+  .ba-section {}
+  .ba-container {
+    position: relative; width: 100%; max-width: 900px;
+    aspect-ratio: 16/9; overflow: hidden; cursor: ew-resize;
+    user-select: none;
+  }
+  .ba-before, .ba-after {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem; font-weight: 900; letter-spacing: -0.04em;
+  }
+  .ba-before { background: linear-gradient(135deg, #1e293b, #334155); }
+  .ba-after  { background: linear-gradient(135deg, #78350f, #f59e0b); clip-path: inset(0 50% 0 0); }
+  .ba-before .text, .ba-after .text { pointer-events: none; color: rgba(255,255,255,0.25); }
+  .ba-handle {
+    position: absolute; top: 0; bottom: 0;
+    width: 3px; background: white; left: 50%;
+    cursor: ew-resize; z-index: 10;
+  }
+  .ba-handle::before, .ba-handle::after {
+    content: '';
+    position: absolute; left: 50%; transform: translateX(-50%);
+    width: 44px; height: 44px;
+    border-radius: 50%; background: white;
+    top: 50%; margin-top: -22px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.4);
+  }
+  .ba-handle::before { content: '⇔'; display: flex; align-items: center; justify-content: center; color: #0a0a0a; font-size: 1rem; font-weight: 700; }
+  .ba-handle::after { display: none; }
+  .ba-label-before, .ba-label-after {
+    position: absolute; bottom: 20px;
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 6px 12px; background: rgba(0,0,0,0.5);
+    pointer-events: none;
+  }
+  .ba-label-before { left: 16px; }
+  .ba-label-after  { right: 16px; }
+
+  /* ─── 4. FILTER GALLERY ─── */
+  .filter-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+  .filter-btn {
+    padding: 8px 20px;
+    font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+    border: 1px solid #333; color: #888; background: transparent;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .filter-btn.active, .filter-btn:hover { border-color: var(--amber); color: var(--amber); }
+  .filter-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+  .filter-item {
+    aspect-ratio: 4/3; overflow: hidden; position: relative;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .filter-item.hidden { opacity: 0; transform: scale(0.9); pointer-events: none; }
+  .filter-item .fi-bg { width:100%;height:100%; }
+  .filter-item[data-cat="kitchen"] .fi-bg { background: linear-gradient(135deg,#1c1917,#78350f); }
+  .filter-item[data-cat="bathroom"] .fi-bg { background: linear-gradient(135deg,#0c4a6e,#0369a1); }
+  .filter-item[data-cat="living"] .fi-bg { background: linear-gradient(135deg,#14532d,#15803d); }
+  .filter-item[data-cat="bedroom"] .fi-bg { background: linear-gradient(135deg,#2d1a3b,#6d28d9); }
+  .filter-item .fi-label {
+    position: absolute; bottom: 12px; left: 12px;
+    font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+  }
+
+  /* ─── 5. MASONRY ─── */
+  .masonry { columns: 3; column-gap: 20px; }
+  .masonry-item {
+    break-inside: avoid; margin-bottom: 20px;
+    overflow: hidden; position: relative;
+    clip-path: inset(0 100% 0 0);
+  }
+  .masonry-item .m-bg { width: 100%; display: block; }
+  .masonry-item:nth-child(1) .m-bg { height: 280px; background: linear-gradient(160deg,#1e3a5f,#0f3460); }
+  .masonry-item:nth-child(2) .m-bg { height: 200px; background: linear-gradient(160deg,#78350f,#f59e0b33); }
+  .masonry-item:nth-child(3) .m-bg { height: 320px; background: linear-gradient(160deg,#14532d,#166534); }
+  .masonry-item:nth-child(4) .m-bg { height: 240px; background: linear-gradient(160deg,#2d1a3b,#6d28d9); }
+  .masonry-item:nth-child(5) .m-bg { height: 180px; background: linear-gradient(160deg,#1c1917,#57534e); }
+  .masonry-item:nth-child(6) .m-bg { height: 300px; background: linear-gradient(160deg,#0c4a6e,#0369a1); }
+  .masonry-item .m-label {
+    position: absolute; bottom: 12px; left: 12px;
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.5);
+  }
+
+  /* ─── 6. LIGHTBOX ─── */
+  .lightbox-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+  .lb-thumb {
+    aspect-ratio: 1; overflow: hidden; position: relative;
+    cursor: zoom-in; background: var(--zinc);
+  }
+  .lb-thumb .lb-bg { width:100%;height:100%; transition: transform 0.5s ease; }
+  .lb-thumb:hover .lb-bg { transform: scale(1.1); }
+  .lb-thumb:nth-child(1) .lb-bg { background: linear-gradient(135deg,#1a1a2e,#16213e); }
+  .lb-thumb:nth-child(2) .lb-bg { background: linear-gradient(135deg,#1c1917,#292524); }
+  .lb-thumb:nth-child(3) .lb-bg { background: linear-gradient(135deg,#14532d,#15803d); }
+  .lb-thumb:nth-child(4) .lb-bg { background: linear-gradient(135deg,#2d1a3b,#6d28d9); }
+  .lb-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 9999; opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .lb-overlay.open { opacity: 1; pointer-events: all; }
+  .lb-modal {
+    width: min(800px, 90vw); aspect-ratio: 16/9;
+    background: var(--zinc);
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+  }
+  .lb-overlay.open .lb-modal { transform: scale(1); }
+  .lb-modal .lb-modal-bg { width:100%;height:100%; }
+  .lb-close {
+    position: absolute; top: -40px; right: 0;
+    font-size: 1.5rem; color: white; cursor: pointer;
+    background: none; border: none; line-height: 1;
+  }
+</style>
+</head>
+<body>
+
+<!-- 1. Hover Zoom -->
+<section class="section">
+  <span class="section-label">Technique 01</span>
+  <h2 class="section-title">Image Hover Zoom</h2>
+  <div class="zoom-grid">
+    <div class="zoom-item"><div class="zoom-bg"></div><div class="zoom-label">Dark Interior</div></div>
+    <div class="zoom-item"><div class="zoom-bg"></div><div class="zoom-label">Warm Stone</div></div>
+    <div class="zoom-item"><div class="zoom-bg"></div><div class="zoom-label">Forest</div></div>
+  </div>
+</section>
+
+<!-- 2. Canvas Distortion -->
+<section class="section distort-section">
+  <span class="section-label">Technique 02</span>
+  <h2 class="section-title">Canvas Distortion on Hover</h2>
+  <div class="distort-grid">
+    <div class="distort-wrap"><canvas id="distort-0"></canvas></div>
+    <div class="distort-wrap"><canvas id="distort-1"></canvas></div>
+    <div class="distort-wrap"><canvas id="distort-2"></canvas></div>
+  </div>
+</section>
+
+<!-- 3. Before/After Slider -->
+<section class="section ba-section">
+  <span class="section-label">Technique 03</span>
+  <h2 class="section-title">Before / After Slider</h2>
+  <div class="ba-container" id="ba-container">
+    <div class="ba-before"><div class="text">BEFORE</div></div>
+    <div class="ba-after" id="ba-after"><div class="text">AFTER</div></div>
+    <div class="ba-handle" id="ba-handle">⇔</div>
+    <div class="ba-label-before">Before</div>
+    <div class="ba-label-after">After</div>
+  </div>
+</section>
+
+<!-- 4. Filter Gallery -->
+<section class="section">
+  <span class="section-label">Technique 04</span>
+  <h2 class="section-title">Filter Gallery</h2>
+  <div class="filter-btns">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="kitchen">Kitchen</button>
+    <button class="filter-btn" data-filter="bathroom">Bathroom</button>
+    <button class="filter-btn" data-filter="living">Living</button>
+    <button class="filter-btn" data-filter="bedroom">Bedroom</button>
+  </div>
+  <div class="filter-grid">
+    <div class="filter-item" data-cat="kitchen"><div class="fi-bg"></div><div class="fi-label">Kitchen</div></div>
+    <div class="filter-item" data-cat="bathroom"><div class="fi-bg"></div><div class="fi-label">Bathroom</div></div>
+    <div class="filter-item" data-cat="living"><div class="fi-bg"></div><div class="fi-label">Living</div></div>
+    <div class="filter-item" data-cat="bedroom"><div class="fi-bg"></div><div class="fi-label">Bedroom</div></div>
+    <div class="filter-item" data-cat="kitchen"><div class="fi-bg"></div><div class="fi-label">Kitchen</div></div>
+    <div class="filter-item" data-cat="bathroom"><div class="fi-bg"></div><div class="fi-label">Bathroom</div></div>
+    <div class="filter-item" data-cat="living"><div class="fi-bg"></div><div class="fi-label">Living</div></div>
+    <div class="filter-item" data-cat="bedroom"><div class="fi-bg"></div><div class="fi-label">Bedroom</div></div>
+  </div>
+</section>
+
+<!-- 5. Masonry -->
+<section class="section">
+  <span class="section-label">Technique 05</span>
+  <h2 class="section-title">Masonry Gallery</h2>
+  <div class="masonry" id="masonry">
+    <div class="masonry-item"><div class="m-bg"></div><div class="m-label">Editorial</div></div>
+    <div class="masonry-item"><div class="m-bg"></div><div class="m-label">Product</div></div>
+    <div class="masonry-item"><div class="m-bg"></div><div class="m-label">Architecture</div></div>
+    <div class="masonry-item"><div class="m-bg"></div><div class="m-label">Interior</div></div>
+    <div class="masonry-item"><div class="m-bg"></div><div class="m-label">Portrait</div></div>
+    <div class="masonry-item"><div class="m-bg"></div><div class="m-label">Landscape</div></div>
+  </div>
+</section>
+
+<!-- 6. Lightbox -->
+<section class="section">
+  <span class="section-label">Technique 06</span>
+  <h2 class="section-title">Lightbox Popup</h2>
+  <div class="lightbox-grid">
+    <div class="lb-thumb" data-index="0"><div class="lb-bg"></div></div>
+    <div class="lb-thumb" data-index="1"><div class="lb-bg"></div></div>
+    <div class="lb-thumb" data-index="2"><div class="lb-bg"></div></div>
+    <div class="lb-thumb" data-index="3"><div class="lb-bg"></div></div>
+  </div>
+</section>
+
+<!-- Lightbox Modal -->
+<div class="lb-overlay" id="lb-overlay">
+  <div class="lb-modal">
+    <button class="lb-close" id="lb-close">✕</button>
+    <div class="lb-modal-bg" id="lb-modal-bg"></div>
+  </div>
+</div>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// ─── CANVAS DISTORTION ───
+const GRADIENTS = [
+  ['#1a1a2e','#0f3460'],
+  ['#1c1917','#78350f'],
+  ['#14532d','#166534']
+];
+
+GRADIENTS.forEach((colors, idx) => {
+  const canvas  = document.getElementById(`distort-${idx}`);
+  const wrap    = canvas.parentElement;
+  const W = wrap.offsetWidth;
+  const H = wrap.offsetHeight;
+  canvas.width = W; canvas.height = H;
+
+  const ctx = canvas.getContext('2d');
+  let isHovered = false;
+  let t = 0;
+  let intensity = 0;
+
+  // Draw base gradient
+  function draw() {
+    const grad = ctx.createLinearGradient(0, 0, W, H);
+    grad.addColorStop(0, colors[0]);
+    grad.addColorStop(1, colors[1]);
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    if (intensity > 0.01) {
+      // Displacement effect: redraw with wavy offset
+      const imgData = ctx.getImageData(0, 0, W, H);
+      const src = new Uint8ClampedArray(imgData.data);
+      const data = imgData.data;
+
+      for (let y = 0; y < H; y++) {
+        for (let x = 0; x < W; x++) {
+          const dx = Math.sin(y * 0.05 + t) * 20 * intensity;
+          const dy = Math.cos(x * 0.05 + t) * 15 * intensity;
+          const sx = Math.round(x + dx);
+          const sy = Math.round(y + dy);
+          if (sx >= 0 && sx < W && sy >= 0 && sy < H) {
+            const si = (sy * W + sx) * 4;
+            const di = (y  * W + x)  * 4;
+            data[di]   = src[si];
+            data[di+1] = src[si+1];
+            data[di+2] = src[si+2];
+          }
+        }
+      }
+      ctx.putImageData(imgData, 0, 0);
+    }
+    t += 0.03;
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  wrap.addEventListener('mouseenter', () => {
+    isHovered = true;
+    gsap.to({ val: intensity }, { val: 1, duration: 0.5, onUpdate(){ intensity = this.targets()[0].val; } });
+  });
+  wrap.addEventListener('mouseleave', () => {
+    isHovered = false;
+    gsap.to({ val: intensity }, { val: 0, duration: 0.8, onUpdate(){ intensity = this.targets()[0].val; } });
+  });
+});
+
+// ─── BEFORE/AFTER SLIDER ───
+const baContainer = document.getElementById('ba-container');
+const baAfter     = document.getElementById('ba-after');
+const baHandle    = document.getElementById('ba-handle');
+let isDragging    = false;
+let baPercent     = 50;
+
+function setBA(pct) {
+  baPercent = Math.max(0, Math.min(100, pct));
+  baAfter.style.clipPath  = `inset(0 ${100 - baPercent}% 0 0)`;
+  baHandle.style.left     = baPercent + '%';
+}
+
+baContainer.addEventListener('mousedown', e => { isDragging = true; updateBA(e); });
+window.addEventListener('mousemove',  e => { if (isDragging) updateBA(e); });
+window.addEventListener('mouseup',    ()  => { isDragging = false; });
+baContainer.addEventListener('touchstart', e => { isDragging = true; updateBA(e.touches[0]); });
+window.addEventListener('touchmove',  e => { if (isDragging) updateBA(e.touches[0]); });
+window.addEventListener('touchend',   ()  => { isDragging = false; });
+
+function updateBA(e) {
+  const rect = baContainer.getBoundingClientRect();
+  const pct  = ((e.clientX - rect.left) / rect.width) * 100;
+  setBA(pct);
+}
+setBA(50);
+
+// ─── FILTER GALLERY ───
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    document.querySelectorAll('.filter-item').forEach(item => {
+      const match = filter === 'all' || item.dataset.cat === filter;
+      item.classList.toggle('hidden', !match);
+    });
+  });
+});
+
+// ─── MASONRY REVEAL ───
+document.querySelectorAll('.masonry-item').forEach((el, i) => {
+  gsap.to(el, {
+    clipPath: 'inset(0 0% 0 0)',
+    duration: 1,
+    ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 90%', once: true },
+    delay: (i % 3) * 0.15
+  });
+});
+
+// ─── LIGHTBOX ───
+const lbOverlay = document.getElementById('lb-overlay');
+const lbModalBg = document.getElementById('lb-modal-bg');
+const lbBgs = [
+  'linear-gradient(135deg,#1a1a2e,#16213e)',
+  'linear-gradient(135deg,#1c1917,#292524)',
+  'linear-gradient(135deg,#14532d,#15803d)',
+  'linear-gradient(135deg,#2d1a3b,#6d28d9)'
+];
+
+document.querySelectorAll('.lb-thumb').forEach(thumb => {
+  thumb.addEventListener('click', () => {
+    const idx = parseInt(thumb.dataset.index);
+    lbModalBg.style.background = lbBgs[idx];
+    lbOverlay.classList.add('open');
+  });
+});
+
+document.getElementById('lb-close').addEventListener('click', () => lbOverlay.classList.remove('open'));
+lbOverlay.addEventListener('click', e => { if (e.target === lbOverlay) lbOverlay.classList.remove('open'); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') lbOverlay.classList.remove('open'); });
+</script>
+</body>
+</html>

@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apex Renovation Co. — We Build What Others Dream</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0a0a;
+  --fg: #f5f5f5;
+  --amber: #f59e0b;
+  --amber-dark: #d97706;
+  --muted: #6b7280;
+  --border: #1f1f1f;
+  --card: #111111;
+}
+
+html { scroll-behavior: auto; }
+body { background: var(--bg); color: var(--fg); font-family: 'Space Grotesk', sans-serif; overflow-x: hidden; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.5rem 4rem;
+  background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+  backdrop-filter: blur(8px);
+}
+.nav-logo { font-size: 1.2rem; font-weight: 700; letter-spacing: 0.05em; color: var(--amber); }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a { color: var(--fg); text-decoration: none; font-size: 0.875rem; font-weight: 500; letter-spacing: 0.03em; opacity: 0.8; transition: opacity 0.2s, color 0.2s; }
+.nav-links a:hover { opacity: 1; color: var(--amber); }
+.nav-cta { background: var(--amber); color: #000; padding: 0.6rem 1.5rem; border-radius: 2px; font-size: 0.875rem; font-weight: 600; text-decoration: none; transition: background 0.2s; }
+.nav-cta:hover { background: var(--amber-dark); }
+
+/* HERO */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 4rem 6rem;
+  position: relative; overflow: hidden;
+  background: var(--bg);
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1008 40%, #0a0a0a 100%);
+  z-index: 0;
+}
+.hero-accent {
+  position: absolute; top: 20%; right: 5%;
+  width: 40vw; height: 40vw; max-width: 600px;
+  background: radial-gradient(circle, rgba(245,158,11,0.08) 0%, transparent 70%);
+  border-radius: 50%; z-index: 0;
+}
+.hero-content { position: relative; z-index: 2; max-width: 900px; }
+.hero-eyebrow { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.25em; color: var(--amber); text-transform: uppercase; margin-bottom: 2rem; }
+.hero-title { font-size: clamp(3rem, 8vw, 7rem); font-weight: 700; line-height: 1.0; letter-spacing: -0.03em; margin-bottom: 2rem; }
+.hero-title .line { display: block; overflow: hidden; }
+.hero-title .word { display: inline-block; }
+.hero-sub { font-size: 1.1rem; color: rgba(245,245,245,0.6); max-width: 480px; line-height: 1.7; margin-bottom: 3rem; }
+.hero-actions { display: flex; gap: 1.5rem; align-items: center; }
+.btn-primary { background: var(--amber); color: #000; padding: 1rem 2.5rem; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none; border-radius: 2px; transition: all 0.2s; }
+.btn-primary:hover { background: var(--amber-dark); transform: translateY(-1px); }
+.btn-ghost { color: var(--fg); font-size: 0.9rem; font-weight: 500; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; opacity: 0.7; transition: opacity 0.2s; }
+.btn-ghost:hover { opacity: 1; }
+.hero-scroll { position: absolute; bottom: 3rem; right: 4rem; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
+.scroll-line { width: 1px; height: 60px; background: linear-gradient(to bottom, var(--amber), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+@keyframes scrollPulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+.scroll-text { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); writing-mode: vertical-rl; }
+
+/* STATS */
+.stats { padding: 5rem 4rem; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); display: grid; grid-template-columns: repeat(3, 1fr); }
+.stat-item { text-align: center; padding: 2rem; border-right: 1px solid var(--border); }
+.stat-item:last-child { border-right: none; }
+.stat-number { font-size: clamp(3rem, 6vw, 5rem); font-weight: 700; color: var(--amber); line-height: 1; display: block; }
+.stat-suffix { font-size: clamp(1.5rem, 3vw, 2.5rem); color: var(--amber); }
+.stat-label { font-size: 0.875rem; color: var(--muted); margin-top: 0.75rem; letter-spacing: 0.05em; }
+
+/* PROJECTS */
+.projects { padding: 7rem 4rem; }
+.section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
+.section-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.25em; color: var(--amber); text-transform: uppercase; margin-bottom: 0.75rem; }
+.section-title { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+.filter-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.filter-tab { padding: 0.5rem 1.25rem; border: 1px solid var(--border); border-radius: 2px; font-size: 0.8rem; font-weight: 500; color: var(--muted); cursor: pointer; transition: all 0.2s; background: none; }
+
+/* CSS-only filter using :has or target trick — using data attributes with JS-free approach via labels */
+.filter-tab[data-active="true"],
+.filter-tab:hover { border-color: var(--amber); color: var(--amber); }
+
+.projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.project-card { position: relative; aspect-ratio: 4/3; overflow: hidden; border-radius: 2px; cursor: pointer; background: var(--card); }
+.project-card-bg {
+  position: absolute; inset: 0; transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.project-card:hover .project-card-bg { transform: scale(1.05); }
+.project-card:nth-child(1) .project-card-bg { background: linear-gradient(135deg, #1a1208 0%, #2d1f0a 100%); }
+.project-card:nth-child(2) .project-card-bg { background: linear-gradient(135deg, #0f1a1a 0%, #1a2d2d 100%); }
+.project-card:nth-child(3) .project-card-bg { background: linear-gradient(135deg, #1a0f0f 0%, #2d1a1a 100%); }
+.project-card:nth-child(4) .project-card-bg { background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2d 100%); }
+.project-card:nth-child(5) .project-card-bg { background: linear-gradient(135deg, #0f1a0f 0%, #1a2d1a 100%); }
+.project-card:nth-child(6) .project-card-bg { background: linear-gradient(135deg, #1a1a0f 0%, #2d2d1a 100%); }
+.project-card-pattern {
+  position: absolute; inset: 0; opacity: 0.15;
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(245,158,11,0.3) 20px, rgba(245,158,11,0.3) 21px);
+}
+.project-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.2) 60%, transparent 100%);
+  display: flex; flex-direction: column; justify-content: flex-end; padding: 1.75rem;
+  transition: opacity 0.3s;
+}
+.project-hover-overlay {
+  position: absolute; inset: 0;
+  background: rgba(10,10,10,0.85);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.3s;
+}
+.project-card:hover .project-hover-overlay { opacity: 1; }
+.project-hover-btn { border: 1px solid var(--amber); color: var(--amber); padding: 0.75rem 1.75rem; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+.project-category { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em; color: var(--amber); text-transform: uppercase; margin-bottom: 0.5rem; }
+.project-name { font-size: 1.1rem; font-weight: 600; }
+.project-location { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; }
+.project-card-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 4rem; opacity: 0.15; }
+
+/* PROCESS */
+.process { padding: 7rem 4rem; background: #0d0d0d; }
+.process-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; margin-top: 4rem; }
+.process-steps { display: flex; flex-direction: column; gap: 0; }
+.process-step { display: flex; gap: 2rem; padding: 2.5rem 0; border-bottom: 1px solid var(--border); position: relative; }
+.process-step:first-child { padding-top: 0; }
+.step-number { font-size: 0.75rem; font-weight: 700; color: var(--amber); letter-spacing: 0.1em; min-width: 2rem; padding-top: 0.2rem; }
+.step-content .step-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; }
+.step-content .step-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+.process-line { position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--border); }
+.process-line-fill { width: 1px; background: var(--amber); height: 0%; transition: height 1s ease; }
+.process-visual { position: sticky; top: 8rem; }
+.process-visual-inner { aspect-ratio: 3/4; background: linear-gradient(135deg, #1a1208, #2d2010); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 6rem; opacity: 0.3; position: relative; overflow: hidden; }
+.process-visual-inner::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(245,158,11,0.05) 40px, rgba(245,158,11,0.05) 41px); }
+
+/* TESTIMONIALS */
+.testimonials { padding: 7rem 4rem; }
+.testimonials-scroll { display: flex; gap: 2rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 1rem; margin-top: 3rem; }
+.testimonials-scroll::-webkit-scrollbar { display: none; }
+.testimonial-card { min-width: 420px; background: var(--card); border: 1px solid var(--border); border-radius: 2px; padding: 3rem; scroll-snap-align: start; flex-shrink: 0; }
+.testimonial-stars { color: var(--amber); font-size: 0.9rem; letter-spacing: 0.1em; margin-bottom: 1.5rem; }
+.testimonial-text { font-size: 1.05rem; line-height: 1.7; color: rgba(245,245,245,0.85); margin-bottom: 2rem; font-style: italic; }
+.testimonial-author { display: flex; align-items: center; gap: 1rem; }
+.testimonial-avatar { width: 48px; height: 48px; background: linear-gradient(135deg, #2d1f0a, #1a1208); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+.testimonial-name { font-size: 0.9rem; font-weight: 600; }
+.testimonial-project { font-size: 0.8rem; color: var(--muted); }
+
+/* CONTACT */
+.contact { padding: 7rem 4rem; background: #0d0d0d; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+.contact-info { }
+.contact-info p { color: var(--muted); line-height: 1.7; margin-bottom: 3rem; font-size: 1rem; }
+.contact-detail { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+.contact-icon { width: 44px; height: 44px; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.2); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+.contact-detail-text span { display: block; font-size: 0.75rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.25rem; }
+.contact-detail-text strong { font-size: 1rem; }
+.contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+.form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+.form-group label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.form-group input, .form-group select, .form-group textarea {
+  background: var(--bg); border: 1px solid var(--border); color: var(--fg);
+  padding: 0.875rem 1rem; font-family: 'Space Grotesk', sans-serif; font-size: 0.9rem;
+  border-radius: 2px; outline: none; transition: border-color 0.2s;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--amber); }
+.form-group select option { background: var(--bg); }
+.form-group textarea { resize: vertical; min-height: 120px; }
+.form-submit { background: var(--amber); color: #000; border: none; padding: 1rem 2.5rem; font-family: 'Space Grotesk', sans-serif; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: all 0.2s; align-self: flex-start; }
+.form-submit:hover { background: var(--amber-dark); transform: translateY(-1px); }
+
+/* FOOTER */
+footer { padding: 4rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.footer-logo { font-size: 1.2rem; font-weight: 700; color: var(--amber); }
+.footer-copy { font-size: 0.8rem; color: var(--muted); }
+.footer-links { display: flex; gap: 2rem; }
+.footer-links a { color: var(--muted); text-decoration: none; font-size: 0.8rem; transition: color 0.2s; }
+.footer-links a:hover { color: var(--fg); }
+
+/* WHATSAPP */
+.whatsapp-fab {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+  width: 60px; height: 60px; background: #25d366; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.4); cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s; text-decoration: none;
+  font-size: 1.75rem; animation: fabPulse 3s ease-in-out infinite;
+}
+.whatsapp-fab:hover { transform: scale(1.1); box-shadow: 0 6px 30px rgba(37,211,102,0.6); }
+@keyframes fabPulse { 0%,100%{box-shadow:0 4px 20px rgba(37,211,102,0.4)} 50%{box-shadow:0 4px 35px rgba(37,211,102,0.7)} }
+
+/* REVEAL CLASSES */
+.reveal { opacity: 0; transform: translateY(40px); }
+.reveal-left { opacity: 0; transform: translateX(-40px); }
+.reveal-right { opacity: 0; transform: translateX(40px); }
+
+@media (max-width: 900px) {
+  nav { padding: 1.25rem 1.5rem; }
+  .nav-links { display: none; }
+  .hero { padding: 0 1.5rem 4rem; }
+  .stats { grid-template-columns: 1fr; }
+  .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+  .projects { padding: 4rem 1.5rem; }
+  .section-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .process { padding: 4rem 1.5rem; }
+  .process-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .process-visual { display: none; }
+  .testimonials { padding: 4rem 1.5rem; }
+  .testimonial-card { min-width: 320px; }
+  .contact { padding: 4rem 1.5rem; grid-template-columns: 1fr; gap: 3rem; }
+  .form-row { grid-template-columns: 1fr; }
+  footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1.5rem; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">APEX</div>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Free Consultation</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-accent"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Premium Renovation &amp; Construction</div>
+    <h1 class="hero-title">
+      <span class="line"><span class="word">We Build</span></span>
+      <span class="line"><span class="word">What Others</span></span>
+      <span class="line"><span class="word" style="color:var(--amber)">Dream.</span></span>
+    </h1>
+    <p class="hero-sub">Toronto's most awarded luxury renovation firm. Kitchens, additions, full-home transformations — delivered with precision and artistry.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Start Your Project</a>
+      <a href="#projects" class="btn-ghost">View Our Work →</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span class="scroll-text">Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="stat-item reveal">
+    <span class="stat-number" data-target="200">0</span><span class="stat-suffix">+</span>
+    <div class="stat-label">Projects Completed</div>
+  </div>
+  <div class="stat-item reveal">
+    <span class="stat-number" data-target="12">0</span>
+    <div class="stat-label">Years of Excellence</div>
+  </div>
+  <div class="stat-item reveal">
+    <span class="stat-number" data-target="98">0</span><span class="stat-suffix">%</span>
+    <div class="stat-label">Client Satisfaction</div>
+  </div>
+</section>
+
+<section class="projects" id="projects">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-label">Portfolio</div>
+      <h2 class="section-title">Selected Works</h2>
+    </div>
+    <div class="filter-tabs">
+      <button class="filter-tab" data-active="true" onclick="filterProjects('all', this)">All</button>
+      <button class="filter-tab" onclick="filterProjects('kitchen', this)">Kitchen</button>
+      <button class="filter-tab" onclick="filterProjects('bathroom', this)">Bathroom</button>
+      <button class="filter-tab" onclick="filterProjects('addition', this)">Addition</button>
+      <button class="filter-tab" onclick="filterProjects('fullhome', this)">Full Home</button>
+    </div>
+  </div>
+  <div class="projects-grid" id="projectsGrid">
+    <div class="project-card reveal" data-category="kitchen">
+      <div class="project-card-bg"></div>
+      <div class="project-card-pattern"></div>
+      <div class="project-card-icon">🍳</div>
+      <div class="project-overlay">
+        <div class="project-category">Kitchen</div>
+        <div class="project-name">The Rosedale Residence</div>
+        <div class="project-location">Toronto, ON — $285,000</div>
+      </div>
+      <div class="project-hover-overlay"><div class="project-hover-btn">View Project</div></div>
+    </div>
+    <div class="project-card reveal" data-category="addition">
+      <div class="project-card-bg"></div>
+      <div class="project-card-pattern"></div>
+      <div class="project-card-icon">🏗️</div>
+      <div class="project-overlay">
+        <div class="project-category">Addition</div>
+        <div class="project-name">Forest Hill Expansion</div>
+        <div class="project-location">Toronto, ON — $520,000</div>
+      </div>
+      <div class="project-hover-overlay"><div class="project-hover-btn">View Project</div></div>
+    </div>
+    <div class="project-card reveal" data-category="bathroom">
+      <div class="project-card-bg"></div>
+      <div class="project-card-pattern"></div>
+      <div class="project-card-icon">🛁</div>
+      <div class="project-overlay">
+        <div class="project-category">Bathroom</div>
+        <div class="project-name">Yorkville Master Suite</div>
+        <div class="project-location">Toronto, ON — $95,000</div>
+      </div>
+      <div class="project-hover-overlay"><div class="project-hover-btn">View Project</div></div>
+    </div>
+    <div class="project-card reveal" data-category="fullhome">
+      <div class="project-card-bg"></div>
+      <div class="project-card-pattern"></div>
+      <div class="project-card-icon">🏠</div>
+      <div class="project-overlay">
+        <div class="project-category">Full Home</div>
+        <div class="project-name">The Bridle Path Estate</div>
+        <div class="project-location">Toronto, ON — $1.2M</div>
+      </div>
+      <div class="project-hover-overlay"><div class="project-hover-btn">View Project</div></div>
+    </div>
+    <div class="project-card reveal" data-category="kitchen">
+      <div class="project-card-bg"></div>
+      <div class="project-card-pattern"></div>
+      <div class="project-card-icon">✨</div>
+      <div class="project-overlay">
+        <div class="project-category">Kitchen</div>
+        <div class="project-name">Leaside Contemporary</div>
+        <div class="project-location">Toronto, ON — $195,000</div>
+      </div>
+      <div class="project-hover-overlay"><div class="project-hover-btn">View Project</div></div>
+    </div>
+    <div class="project-card reveal" data-category="addition">
+      <div class="project-card-bg"></div>
+      <div class="project-card-pattern"></div>
+      <div class="project-card-icon">🏘️</div>
+      <div class="project-overlay">
+        <div class="project-category">Addition</div>
+        <div class="project-name">Moore Park Rear Addition</div>
+        <div class="project-location">Toronto, ON — $380,000</div>
+      </div>
+      <div class="project-hover-overlay"><div class="project-hover-btn">View Project</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="reveal">
+    <div class="section-label">How We Work</div>
+    <h2 class="section-title">Our Process</h2>
+  </div>
+  <div class="process-grid">
+    <div class="process-steps">
+      <div class="process-step reveal">
+        <div class="step-number">01</div>
+        <div class="step-content">
+          <div class="step-title">Discovery &amp; Vision</div>
+          <div class="step-desc">We begin with an in-depth consultation to understand your goals, lifestyle, and aesthetic vision. No detail is too small.</div>
+        </div>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-number">02</div>
+        <div class="step-content">
+          <div class="step-title">Design &amp; Planning</div>
+          <div class="step-desc">Our design team creates detailed 3D renderings and full material specifications. You'll see your renovation before a single wall comes down.</div>
+        </div>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-number">03</div>
+        <div class="step-content">
+          <div class="step-title">Permits &amp; Approvals</div>
+          <div class="step-desc">We handle all city permits, structural engineering sign-offs, and HOA approvals. Zero headache for you.</div>
+        </div>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-number">04</div>
+        <div class="step-content">
+          <div class="step-title">Expert Construction</div>
+          <div class="step-desc">Our dedicated trades team — carpenters, tilers, electricians, plumbers — execute with surgical precision on your timeline.</div>
+        </div>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-number">05</div>
+        <div class="step-content">
+          <div class="step-title">Final Reveal</div>
+          <div class="step-desc">A full walk-through with your project manager. We don't consider a job done until every last detail is perfect.</div>
+        </div>
+      </div>
+    </div>
+    <div class="process-visual reveal-right">
+      <div class="process-visual-inner">🏛️</div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials" id="testimonials">
+  <div class="reveal">
+    <div class="section-label">Client Voices</div>
+    <h2 class="section-title">What Our Clients Say</h2>
+  </div>
+  <div class="testimonials-scroll">
+    <div class="testimonial-card reveal">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"Apex transformed our 1950s Leaside bungalow into a modern masterpiece. The kitchen alone increased our home value by over $200K. Every single trade was professional, clean, and on time."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">👤</div>
+        <div>
+          <div class="testimonial-name">Sarah &amp; Michael Chen</div>
+          <div class="testimonial-project">Full Kitchen Reno — Leaside, Toronto</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"We've used three renovation companies over the years. Apex is in a different league entirely. The communication, craftsmanship, and the final result were beyond anything we imagined possible."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">👤</div>
+        <div>
+          <div class="testimonial-name">James Worthington</div>
+          <div class="testimonial-project">Rear Addition — Forest Hill, Toronto</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"Our master bathroom renovation was completed 4 days ahead of schedule and $3,000 under budget. The team treated our home like their own. Absolutely outstanding."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">👤</div>
+        <div>
+          <div class="testimonial-name">Patricia Nakamura</div>
+          <div class="testimonial-project">Master Bath Reno — Yorkville, Toronto</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"Apex managed our full home renovation flawlessly. 8 months of work, 47 sub-trades coordinated — and they delivered every milestone on the dot. Exceptional project management."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">👤</div>
+        <div>
+          <div class="testimonial-name">David &amp; Emma Rossi</div>
+          <div class="testimonial-project">Full Home Reno — Rosedale, Toronto</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-info">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="section-title reveal">Start Your Dream Renovation</h2>
+    <p class="reveal">Tell us about your project. We'll schedule a free, no-obligation consultation within 24 hours. Our process starts with listening — because great renovations begin long before construction does.</p>
+    <div class="contact-detail reveal">
+      <div class="contact-icon">📞</div>
+      <div class="contact-detail-text">
+        <span>Call Us</span>
+        <strong>(416) 555-2849</strong>
+      </div>
+    </div>
+    <div class="contact-detail reveal">
+      <div class="contact-icon">✉️</div>
+      <div class="contact-detail-text">
+        <span>Email</span>
+        <strong>hello@apexrenovation.ca</strong>
+      </div>
+    </div>
+    <div class="contact-detail reveal">
+      <div class="contact-icon">📍</div>
+      <div class="contact-detail-text">
+        <span>Location</span>
+        <strong>Serving Greater Toronto Area</strong>
+      </div>
+    </div>
+  </div>
+  <form class="contact-form reveal-right" onsubmit="handleSubmit(event)">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" placeholder="John Smith" required>
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" placeholder="(416) 555-0000" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Service</label>
+      <select required>
+        <option value="">Select a service...</option>
+        <option>Kitchen Renovation</option>
+        <option>Bathroom Renovation</option>
+        <option>Home Addition</option>
+        <option>Full Home Renovation</option>
+        <option>Basement Finishing</option>
+        <option>Exterior &amp; Curb Appeal</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Tell Us About Your Project</label>
+      <textarea placeholder="Describe your renovation goals, timeline, and any specific requirements..."></textarea>
+    </div>
+    <button type="submit" class="form-submit">Send Message →</button>
+  </form>
+</section>
+
+<footer>
+  <div class="footer-logo">APEX RENOVATION CO.</div>
+  <div class="footer-copy">© 2026 Apex Renovation Co. All rights reserved.</div>
+  <div class="footer-links">
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Instagram</a>
+    <a href="#">Houzz</a>
+  </div>
+</footer>
+
+<a href="https://wa.me/14165552849" class="whatsapp-fab" target="_blank" title="Chat on WhatsApp">💬</a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script>
+// Lenis smooth scroll
+const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+requestAnimationFrame(raf);
+
+// GSAP + ScrollTrigger
+gsap.registerPlugin(ScrollTrigger);
+
+// Hero title animation
+const words = document.querySelectorAll('.hero-title .word');
+gsap.from(words, {
+  y: 120, opacity: 0, duration: 1.2, stagger: 0.15,
+  ease: 'power4.out', delay: 0.3
+});
+gsap.from('.hero-eyebrow', { opacity: 0, y: 20, duration: 0.8, delay: 0.2 });
+gsap.from('.hero-sub', { opacity: 0, y: 20, duration: 0.8, delay: 0.8 });
+gsap.from('.hero-actions', { opacity: 0, y: 20, duration: 0.8, delay: 1.1 });
+gsap.from('.hero-scroll', { opacity: 0, duration: 0.8, delay: 1.5 });
+
+// Scroll reveals
+document.querySelectorAll('.reveal').forEach(el => {
+  gsap.to(el, {
+    opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+  });
+});
+document.querySelectorAll('.reveal-left').forEach(el => {
+  gsap.to(el, {
+    opacity: 1, x: 0, duration: 0.9, ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+  });
+});
+document.querySelectorAll('.reveal-right').forEach(el => {
+  gsap.to(el, {
+    opacity: 1, x: 0, duration: 0.9, ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+  });
+});
+
+// Counter animation
+document.querySelectorAll('.stat-number[data-target]').forEach(el => {
+  const target = parseInt(el.dataset.target);
+  ScrollTrigger.create({
+    trigger: el, start: 'top 85%', once: true,
+    onEnter: () => {
+      gsap.to({ val: 0 }, {
+        val: target, duration: 2, ease: 'power2.out',
+        onUpdate: function() { el.textContent = Math.round(this.targets()[0].val); }
+      });
+    }
+  });
+});
+
+// Filter logic
+function filterProjects(category, btn) {
+  document.querySelectorAll('.filter-tab').forEach(t => t.dataset.active = 'false');
+  btn.dataset.active = 'true';
+  document.querySelectorAll('.project-card').forEach(card => {
+    if (category === 'all' || card.dataset.category === category) {
+      card.style.display = 'block';
+      gsap.fromTo(card, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'power2.out' });
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('.form-submit');
+  btn.textContent = '✓ Message Sent!';
+  btn.style.background = '#10b981';
+  setTimeout(() => { btn.textContent = 'Send Message →'; btn.style.background = ''; }, 3000);
+}
+</script>
+</body>
+</html>

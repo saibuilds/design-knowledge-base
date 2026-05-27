@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Motta Kitchen & Renovation — Award-Winning Design Demo</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --border: #1f1f1f;
+      --accent: #f59e0b;
+      --accent-hover: #fbbf24;
+      --text: #ffffff;
+      --muted: #71717a;
+    }
+    html { scroll-behavior: auto; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; overflow-x: hidden; }
+
+    /* ── SCROLL PROGRESS ── */
+    .progress-bar { position:fixed; top:0; left:0; width:100%; height:3px; background:var(--accent); transform-origin:left; transform:scaleX(0); z-index:999; }
+
+    /* ── NAVBAR ── */
+    nav.main-nav {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70%;
+      z-index: 500;
+      transition: width 0.4s;
+    }
+    nav.main-nav.scrolled { width: 56%; }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10,10,10,0.9);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 100px;
+      padding: 10px 20px;
+      backdrop-filter: blur(20px);
+    }
+    .nav-logo { font-size: 13px; font-weight: 900; letter-spacing: 0.1em; color: #fff; text-decoration: none; }
+    .nav-links-list { display: flex; gap: 4px; list-style: none; }
+    .nav-links-list a { padding: 6px 14px; border-radius: 100px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
+    .nav-links-list a:hover { color: #fff; }
+    .nav-btn { background: var(--accent); color: #000; font-size: 12px; font-weight: 700; padding: 8px 18px; border-radius: 100px; border: none; cursor: pointer; transition: background 0.2s; text-decoration: none; }
+    .nav-btn:hover { background: var(--accent-hover); }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      background: var(--bg);
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 80px;
+      overflow: hidden;
+    }
+    .hero-texture {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 70% 30%, rgba(245,158,11,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 20% 80%, rgba(245,158,11,0.04) 0%, transparent 40%);
+    }
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      opacity: 0.03;
+      background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+    /* Floating project image */
+    .hero-float-img {
+      position: absolute;
+      top: 120px;
+      right: 80px;
+      width: 360px;
+      height: 280px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    .hero-float-img .img-inner {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #1a1200 0%, #3d2800 40%, #1a0a00 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 80px;
+    }
+    /* Stats float card */
+    .hero-stats-card {
+      position: absolute;
+      top: 340px;
+      right: 40px;
+      background: rgba(17,17,17,0.95);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 24px;
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .hero-stats-card-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 4px; }
+    .hero-stats-card-num { font-size: 32px; font-weight: 900; color: var(--accent); line-height: 1; }
+    .hero-stats-card-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .hero-content { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 0 60px; width: 100%; }
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      opacity: 0;
+      transform: translateX(-20px);
+      margin-bottom: 20px;
+      display: block;
+    }
+    .hero-h1 {
+      font-size: clamp(60px, 10vw, 130px);
+      font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      color: #fff;
+      opacity: 0;
+      transform: translateY(40px);
+      margin-bottom: 40px;
+    }
+    .hero-bottom { display: flex; align-items: center; gap: 48px; }
+    .hero-cta-group { display: flex; gap: 16px; }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 32px;
+      background: var(--accent);
+      color: #000;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+      opacity: 0;
+    }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 32px;
+      background: transparent;
+      color: rgba(255,255,255,0.6);
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.15);
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+      opacity: 0;
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.4); color: #fff; }
+    .hero-stats-row { display: flex; gap: 40px; opacity: 0; }
+    .hero-stat .num { font-size: 24px; font-weight: 900; color: #fff; }
+    .hero-stat .label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2px; }
+
+    /* ── PROJECTS SECTION ── */
+    #projects { padding: 120px 60px; background: var(--surface); }
+    .section-header { margin-bottom: 48px; }
+    .section-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; display: block; }
+    .section-title { font-size: clamp(36px,5vw,60px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; }
+    .filter-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
+    .filter-tab {
+      padding: 10px 22px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .filter-tab:hover { border-color: rgba(255,255,255,0.2); color: #fff; }
+    .filter-tab.active { background: var(--accent); color: #000; border-color: var(--accent); }
+    .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .project-card {
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 4/3;
+      cursor: pointer;
+      display: none;
+    }
+    .project-card.show { display: block; }
+    .project-card-bg {
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s cubic-bezier(0.25,0.1,0.25,1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 60px;
+    }
+    .project-card:hover .project-card-bg { transform: scale(1.05); }
+    .project-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 50%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 24px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .project-card:hover .project-card-overlay { opacity: 1; }
+    .project-card-type { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+    .project-card-name { font-size: 20px; font-weight: 700; color: #fff; }
+    /* Always visible bottom label */
+    .project-card-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+      padding: 32px 20px 16px;
+    }
+    .project-card-label .type { font-size: 10px; color: var(--accent); font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; }
+    .project-card-label .name { font-size: 16px; font-weight: 700; margin-top: 2px; }
+
+    /* ── PROCESS ── */
+    #process { padding: 120px 60px; background: var(--bg); }
+    .process-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .process-steps { display: flex; flex-direction: column; gap: 0; }
+    .process-step {
+      display: flex;
+      gap: 24px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    .process-step:last-child { border-bottom: none; }
+    .step-num {
+      width: 48px;
+      height: 48px;
+      border-radius: 100px;
+      background: var(--accent);
+      color: #000;
+      font-size: 14px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-body h3 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+    .step-body p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+    .process-visual {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      aspect-ratio: 3/4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 100px;
+    }
+
+    /* ── TESTIMONIALS ── */
+    #testimonials { padding: 120px 60px; background: var(--surface); }
+    .testimonials-inner { max-width: 760px; margin: 0 auto; text-align: center; }
+    .quote-mark { font-size: 80px; line-height: 0.5; color: var(--accent); display: block; margin-bottom: 32px; }
+    .testimonial-quote { font-size: clamp(20px,3vw,32px); font-weight: 300; line-height: 1.5; color: #fff; margin-bottom: 40px; font-style: italic; }
+    .testimonial-author { display: flex; align-items: center; justify-content: center; gap: 16px; }
+    .author-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 100px;
+      border: 2px solid var(--accent);
+      background: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    .author-name { font-size: 16px; font-weight: 700; text-align: left; }
+    .author-location { font-size: 13px; color: var(--muted); }
+    .author-stars { color: var(--accent); font-size: 14px; margin-left: 16px; letter-spacing: 2px; }
+    .testimonial-nav { display: flex; gap: 12px; justify-content: center; margin-top: 40px; }
+    .t-dot {
+      width: 8px; height: 8px; border-radius: 100px;
+      background: var(--border);
+      border: none; cursor: pointer;
+      transition: background 0.2s, width 0.3s;
+    }
+    .t-dot.active { background: var(--accent); width: 24px; }
+
+    /* ── CONTACT ── */
+    #contact { display: grid; grid-template-columns: 1fr 1fr; min-height: 80vh; }
+    .contact-form-side { background: var(--bg); padding: 80px 60px; display: flex; flex-direction: column; justify-content: center; }
+    .contact-map-side {
+      background: #0f0d0a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-map-side::before {
+      content: '📍';
+      font-size: 80px;
+      opacity: 0.3;
+    }
+    .contact-map-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(245,158,11,0.05) 40px),
+        repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(245,158,11,0.05) 40px);
+    }
+    .contact-map-text {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 40px;
+    }
+    .contact-map-text h3 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+    .contact-map-text p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+    .contact-map-addr { color: var(--accent); font-weight: 600; margin-top: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .form-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+    .form-input, .form-select, .form-textarea {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      color: #fff;
+      font-size: 14px;
+      font-family: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(245,158,11,0.1);
+    }
+    .form-select { color: rgba(255,255,255,0.6); appearance: none; }
+    .form-select option { background: #111; }
+    .form-textarea { resize: none; }
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--accent);
+      color: #000;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      border-radius: 10px;
+      margin-top: 8px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .submit-btn:hover { background: var(--accent-hover); }
+    .submit-btn:active { transform: scale(0.98); }
+
+    /* ── FOOTER ── */
+    footer { background: #050505; padding: 60px; border-top: 1px solid var(--border); }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .footer-logo { font-size: 20px; font-weight: 900; letter-spacing: 0.05em; color: #fff; }
+    .footer-copy { color: var(--muted); font-size: 13px; }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { color: var(--muted); font-size: 13px; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: #fff; }
+
+    @media (max-width: 900px) {
+      .projects-grid { grid-template-columns: 1fr 1fr; }
+      .process-grid { grid-template-columns: 1fr; }
+      .process-visual { display: none; }
+      #contact { grid-template-columns: 1fr; }
+      .contact-map-side { min-height: 300px; }
+      .form-row { grid-template-columns: 1fr; }
+      .hero-float-img, .hero-stats-card { display: none; }
+      #hero, #projects, #process, #testimonials { padding-left: 24px; padding-right: 24px; }
+      .hero-content { padding: 0 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- NAVBAR -->
+<nav class="main-nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">MOTTA</a>
+    <ul class="nav-links-list">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#testimonials">Reviews</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-btn">Get Quote</a>
+  </div>
+</nav>
+
+<!-- ══════════════════════════
+     HERO: Dark luxury hero
+     GSAP timeline orchestrated entrance
+════════════════════════════ -->
+<section id="hero">
+  <div class="hero-texture"></div>
+  <div class="hero-grid"></div>
+
+  <!-- Floating project image -->
+  <div class="hero-float-img" id="heroFloatImg">
+    <div class="img-inner">🍳</div>
+  </div>
+
+  <!-- Stats card -->
+  <div class="hero-stats-card" id="heroStatsCard">
+    <div class="hero-stats-card-label">This Month's Projects</div>
+    <div class="hero-stats-card-num" id="liveCounter">0</div>
+    <div class="hero-stats-card-sub">Active renovations</div>
+  </div>
+
+  <div class="hero-content">
+    <span class="hero-eyebrow" id="heroEyebrow">Toronto's Premier Kitchen Specialists</span>
+    <h1 class="hero-h1" id="heroH1">MOTTA<br>KITCHEN</h1>
+    <div class="hero-bottom">
+      <div class="hero-cta-group">
+        <a href="#projects" class="btn-primary" id="heroCta1">View Portfolio</a>
+        <a href="#contact"  class="btn-ghost"   id="heroCta2">Get Free Quote</a>
+      </div>
+      <div class="hero-stats-row" id="heroStats">
+        <div class="hero-stat"><div class="num">500+</div><div class="label">Projects</div></div>
+        <div class="hero-stat"><div class="num">15yr</div><div class="label">Experience</div></div>
+        <div class="hero-stat"><div class="num">4.9★</div><div class="label">Rating</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     PROJECTS: Grid with filter tabs
+     Filter JS + scroll reveal
+════════════════════════════ -->
+<section id="projects">
+  <div class="section-header">
+    <span class="section-eyebrow">Our Work</span>
+    <h2 class="section-title">Projects That Speak<br>For Themselves</h2>
+  </div>
+
+  <div class="filter-tabs" id="filterTabs">
+    <button class="filter-tab active" data-filter="all">All Projects</button>
+    <button class="filter-tab" data-filter="kitchen">Kitchen</button>
+    <button class="filter-tab" data-filter="bathroom">Bathroom</button>
+    <button class="filter-tab" data-filter="basement">Full Reno</button>
+    <button class="filter-tab" data-filter="garden">Garden Suite</button>
+  </div>
+
+  <div class="projects-grid" id="projectsGrid">
+    <div class="project-card show" data-cat="kitchen" style="background:linear-gradient(135deg,#1a0f00,#3d2500);">
+      <div class="project-card-bg">🍳</div>
+      <div class="project-card-label"><div class="type">Kitchen</div><div class="name">Rosedale Modern</div></div>
+    </div>
+    <div class="project-card show" data-cat="bathroom" style="background:linear-gradient(135deg,#0a0d1a,#1a2040);">
+      <div class="project-card-bg">🛁</div>
+      <div class="project-card-label"><div class="type">Bathroom</div><div class="name">Forest Hill Spa</div></div>
+    </div>
+    <div class="project-card show" data-cat="garden" style="background:linear-gradient(135deg,#0a1a0a,#1a3d1a);">
+      <div class="project-card-bg">🌿</div>
+      <div class="project-card-label"><div class="type">Garden Suite</div><div class="name">Annex Laneway</div></div>
+    </div>
+    <div class="project-card show" data-cat="basement" style="background:linear-gradient(135deg,#1a0a0a,#3d1010);">
+      <div class="project-card-bg">🏗️</div>
+      <div class="project-card-label"><div class="type">Full Reno</div><div class="name">Leslieville Complete</div></div>
+    </div>
+    <div class="project-card show" data-cat="kitchen" style="background:linear-gradient(135deg,#1a1200,#3d2800);">
+      <div class="project-card-bg">🔪</div>
+      <div class="project-card-label"><div class="type">Kitchen</div><div class="name">Cabbagetown Classic</div></div>
+    </div>
+    <div class="project-card show" data-cat="bathroom" style="background:linear-gradient(135deg,#0d1a0d,#1a400a);">
+      <div class="project-card-bg">🪴</div>
+      <div class="project-card-label"><div class="type">Bathroom</div><div class="name">Bloor West Retreat</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     PROCESS TIMELINE
+     Scroll reveal, numbered steps
+════════════════════════════ -->
+<section id="process">
+  <div class="process-grid">
+    <div>
+      <span class="section-eyebrow">How It Works</span>
+      <h2 class="section-title" style="margin-bottom:48px;">From Vision to<br>Reality in 5 Steps</h2>
+      <div class="process-steps" id="processSteps">
+        <div class="process-step">
+          <div class="step-num">01</div>
+          <div class="step-body">
+            <h3>Free Consultation</h3>
+            <p>We visit your home, assess the space, and understand your vision. No obligation, no pressure.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">02</div>
+          <div class="step-body">
+            <h3>Design & Concept</h3>
+            <p>Our in-house designers create 3D renderings and material selections tailored to your style.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">03</div>
+          <div class="step-body">
+            <h3>Detailed Quote</h3>
+            <p>Transparent, itemized pricing. No hidden costs. Fixed-price contracts so you know exactly what you'll pay.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">04</div>
+          <div class="step-body">
+            <h3>Construction</h3>
+            <p>Certified tradespeople. Daily progress updates. Site clean every evening. Minimal disruption.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">05</div>
+          <div class="step-body">
+            <h3>Final Walkthrough</h3>
+            <p>We walk every inch with you. Nothing closes until you're completely satisfied. 2-year warranty included.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="process-visual">🏗️</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     TESTIMONIALS
+     Auto-rotating with dots
+════════════════════════════ -->
+<section id="testimonials">
+  <div class="testimonials-inner">
+    <span class="section-eyebrow" style="display:inline-block;margin-bottom:32px;">Client Reviews</span>
+    <span class="quote-mark">"</span>
+
+    <div id="testimonialContent">
+      <p class="testimonial-quote" id="testimonialQuote">
+        Motta transformed our 1960s kitchen into something out of Architectural Digest. The craftsmanship is flawless — we've had contractors and neighbours come by just to look at the cabinetry. Worth every penny.
+      </p>
+    </div>
+
+    <div class="testimonial-author">
+      <div class="author-avatar">👩</div>
+      <div>
+        <div class="author-name" id="authorName">Sarah & Marcus Chen</div>
+        <div class="author-location" id="authorLocation">Rosedale, Toronto</div>
+      </div>
+      <div class="author-stars">★★★★★</div>
+    </div>
+
+    <div class="testimonial-nav" id="testimonialNav">
+      <button class="t-dot active"></button>
+      <button class="t-dot"></button>
+      <button class="t-dot"></button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     CONTACT FORM
+     Two-column: form + map placeholder
+════════════════════════════ -->
+<section id="contact">
+  <div class="contact-form-side">
+    <span class="section-eyebrow">Get In Touch</span>
+    <h2 class="section-title" style="margin-bottom:32px;">Start Your<br>Project Today</h2>
+    <form id="contactForm" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-field">
+          <label class="form-label">First Name</label>
+          <input class="form-input" type="text" placeholder="John" required />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Last Name</label>
+          <input class="form-input" type="text" placeholder="Smith" required />
+        </div>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" placeholder="john@example.com" required />
+      </div>
+      <div class="form-field">
+        <label class="form-label">Phone</label>
+        <input class="form-input" type="tel" placeholder="(416) 555-0100" />
+      </div>
+      <div class="form-field">
+        <label class="form-label">Project Type</label>
+        <select class="form-select">
+          <option value="">Select project type</option>
+          <option>Kitchen Renovation</option>
+          <option>Bathroom Renovation</option>
+          <option>Basement Finishing</option>
+          <option>Full Home Renovation</option>
+          <option>Garden Suite</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Tell Us About Your Project</label>
+        <textarea class="form-textarea" rows="4" placeholder="Describe your vision, timeline, and budget range..."></textarea>
+      </div>
+      <button type="submit" class="submit-btn" id="submitBtn">Send Message</button>
+    </form>
+  </div>
+  <div class="contact-map-side">
+    <div class="contact-map-bg"></div>
+    <div class="contact-map-text">
+      <h3>Visit Our Showroom</h3>
+      <p>See material samples, finished installations,<br>and meet our design team in person.</p>
+      <p class="contact-map-addr">📍 200 Davenport Rd, Toronto, ON</p>
+      <p style="color:var(--muted);font-size:13px;margin-top:16px;">Mon–Fri 9am–6pm · Sat 10am–4pm</p>
+      <p style="margin-top:16px;"><a href="tel:4165550100" style="color:var(--accent);text-decoration:none;font-weight:700;font-size:18px;">(416) 555-0100</a></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">MOTTA</span>
+    <span class="footer-copy">© 2025 Motta Kitchen & Renovation. All rights reserved.</span>
+    <div class="footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Instagram</a>
+      <a href="#">Houzz</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ── LENIS ──────────────────────────────
+  const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10*t)) });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(t => lenis.raf(t * 1000));
+  gsap.ticker.lagSmoothing(0);
+
+  // ── SCROLL PROGRESS ──────────────────
+  gsap.to('#progressBar', {
+    scaleX: 1, ease: 'none', transformOrigin: 'left',
+    scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 0.3 }
+  });
+
+  // ── NAV SHRINK ───────────────────────
+  ScrollTrigger.create({
+    start: 100,
+    onEnter: () => document.getElementById('mainNav').classList.add('scrolled'),
+    onLeaveBack: () => document.getElementById('mainNav').classList.remove('scrolled'),
+  });
+
+  // ── HERO ENTRANCE (GSAP Timeline) ────
+  // Technique: orchestrated entrance with overlapping tweens
+  const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+  heroTl
+    .to('#heroEyebrow', { opacity: 1, x: 0, duration: 0.5 }, 0.3)
+    .to('#heroH1',      { opacity: 1, y: 0, duration: 0.7 }, 0.5)
+    .to(['#heroCta1','#heroCta2'], { opacity: 1, stagger: 0.1, duration: 0.5 }, 0.9)
+    .to('#heroStats',   { opacity: 1, duration: 0.5 }, 1.0)
+    .to('#heroFloatImg',{ opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.8)
+    .to('#heroStatsCard',{ opacity: 1, y: 0, duration: 0.5 }, 1.1);
+
+  // Live counter in stats card
+  const counterObj = { val: 0 };
+  gsap.to(counterObj, {
+    val: 14,
+    duration: 2,
+    delay: 1.2,
+    ease: 'power1.out',
+    onUpdate: () => document.getElementById('liveCounter').textContent = Math.round(counterObj.val)
+  });
+
+  // ── PROJECTS FILTER ──────────────────
+  const filterTabs = document.querySelectorAll('.filter-tab');
+  const projectCards = document.querySelectorAll('.project-card');
+
+  filterTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      filterTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const filter = tab.dataset.filter;
+
+      projectCards.forEach(card => {
+        const show = filter === 'all' || card.dataset.cat === filter;
+        // Animate out then in
+        if (show) {
+          card.classList.add('show');
+          gsap.fromTo(card, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'power2.out' });
+        } else {
+          gsap.to(card, {
+            opacity: 0, scale: 0.95, duration: 0.3,
+            onComplete: () => card.classList.remove('show')
+          });
+        }
+      });
+    });
+  });
+
+  // ── PROCESS STEPS REVEAL ─────────────
+  // Technique: stagger scroll reveal with x offset
+  gsap.to('#processSteps .process-step', {
+    opacity: 1,
+    x: 0,
+    stagger: 0.12,
+    duration: 0.6,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: '#processSteps',
+      start: 'top 75%'
+    }
+  });
+
+  // ── TESTIMONIAL ROTATOR ──────────────
+  const testimonials = [
+    {
+      quote: "Motta transformed our 1960s kitchen into something out of Architectural Digest. The craftsmanship is flawless — we've had contractors and neighbours come by just to look at the cabinetry. Worth every penny.",
+      name: "Sarah & Marcus Chen",
+      location: "Rosedale, Toronto",
+      avatar: "👩"
+    },
+    {
+      quote: "We interviewed six renovation companies. Motta was the only team that came in with drawings on day one. The basement suite they built is now generating $2,400/month in rent. Best investment we've ever made.",
+      name: "David Kamara",
+      location: "East York, Toronto",
+      avatar: "👨"
+    },
+    {
+      quote: "On time, on budget, and the crew left the house cleaner than they found it each day. The master bathroom is incredible. I feel like I'm in a hotel every morning.",
+      name: "Jennifer & Tom Okafor",
+      location: "Forest Hill, Toronto",
+      avatar: "👩"
+    }
+  ];
+
+  let activeT = 0;
+  const tDots = document.querySelectorAll('.t-dot');
+
+  function showTestimonial(idx) {
+    const t = testimonials[idx];
+    gsap.to('#testimonialContent', {
+      opacity: 0, y: -10, duration: 0.25,
+      onComplete: () => {
+        document.getElementById('testimonialQuote').textContent = t.quote;
+        document.getElementById('authorName').textContent = t.name;
+        document.getElementById('authorLocation').textContent = t.location;
+        gsap.to('#testimonialContent', { opacity: 1, y: 0, duration: 0.35 });
+      }
+    });
+    tDots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    activeT = idx;
+  }
+
+  tDots.forEach((dot, i) => dot.addEventListener('click', () => showTestimonial(i)));
+  setInterval(() => showTestimonial((activeT + 1) % testimonials.length), 5000);
+
+  // ── CONTACT FORM SUBMIT ──────────────
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = 'Sending...';
+    btn.style.background = '#888';
+    setTimeout(() => {
+      btn.textContent = '✓ Message Sent!';
+      btn.style.background = '#16a34a';
+      setTimeout(() => {
+        btn.textContent = 'Send Message';
+        btn.style.background = '';
+      }, 3000);
+    }, 1200);
+  }
+
+  // ── GENERAL SCROLL REVEALS ───────────
+  gsap.utils.toArray('.section-eyebrow, .section-title').forEach(el => {
+    gsap.from(el, {
+      opacity: 0, y: 30, duration: 0.7, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 85%' }
+    });
+  });
+</script>
+</body>
+</html>

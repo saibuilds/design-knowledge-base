@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luxe Properties Toronto — Award-Style Real Estate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0f0f0f;
+    --surface: #181818;
+    --gold: #c9a96e;
+    --gold-light: #e2c98a;
+    --cream: #f5f0e8;
+    --muted: #888;
+    --border: #2a2a2a;
+  }
+  html { scroll-behavior: auto; }
+  body { background: var(--bg); color: var(--cream); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.5rem 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background 0.4s, backdrop-filter 0.4s;
+  }
+  nav.scrolled { background: rgba(15,15,15,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--cream); letter-spacing: 0.1em; text-decoration: none; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { color: var(--cream); opacity: 0.7; text-decoration: none; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; transition: opacity 0.3s; }
+  .nav-links a:hover { opacity: 1; }
+  .nav-cta { padding: 0.65rem 1.5rem; border: 1px solid var(--gold); color: var(--gold); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: all 0.3s; }
+  .nav-cta:hover { background: var(--gold); color: var(--bg); }
+
+  /* HERO */
+  .hero {
+    height: 100vh; position: relative; overflow: hidden;
+    display: flex; align-items: flex-end; padding: 0 4rem 6rem;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #1a1408 0%, #0f0f0f 40%, #0a0f1a 100%);
+  }
+  /* Ken Burns effect */
+  .hero-img {
+    position: absolute; inset: -10%;
+    background: linear-gradient(to bottom right, #1e1a14, #0d1117);
+    animation: kenburns 20s ease-in-out infinite alternate;
+  }
+  .hero-img::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 40%, rgba(201,169,110,0.08) 0%, transparent 60%),
+                linear-gradient(to bottom, rgba(15,15,15,0.3) 0%, rgba(15,15,15,0.8) 100%);
+  }
+  @keyframes kenburns { from { transform: scale(1) translate(0,0); } to { transform: scale(1.08) translate(-1%, -1%); } }
+  .hero-content { position: relative; z-index: 2; max-width: 800px; }
+  .hero-eyebrow { font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; opacity: 0; }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 7vw, 6.5rem); font-weight: 900; line-height: 1.05; margin-bottom: 2rem; opacity: 0; }
+  .hero-title span { color: var(--gold); }
+  .hero-subtitle { font-size: 1.1rem; color: var(--cream); opacity: 0; line-height: 1.7; max-width: 500px; margin-bottom: 3rem; }
+  .hero-actions { display: flex; gap: 1.5rem; opacity: 0; }
+  .btn-primary { padding: 1rem 2.5rem; background: var(--gold); color: var(--bg); font-weight: 600; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: background 0.3s; }
+  .btn-primary:hover { background: var(--gold-light); }
+  .btn-ghost { padding: 1rem 2.5rem; border: 1px solid rgba(245,240,232,0.3); color: var(--cream); font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: all 0.3s; }
+  .btn-ghost:hover { border-color: var(--cream); }
+  .hero-scroll { position: absolute; bottom: 3rem; right: 4rem; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
+  .hero-scroll span { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); writing-mode: vertical-rl; }
+  .scroll-line { width: 1px; height: 60px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+  @keyframes scrollPulse { 0%,100% { transform: scaleY(1); opacity: 1; } 50% { transform: scaleY(0.5); opacity: 0.5; } }
+
+  /* STATS */
+  .stats { padding: 5rem 4rem; border-bottom: 1px solid var(--border); display: flex; gap: 0; }
+  .stat { flex: 1; padding: 2rem; border-right: 1px solid var(--border); text-align: center; }
+  .stat:last-child { border-right: none; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 700; color: var(--gold); display: block; }
+  .stat-label { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 0.5rem; }
+
+  /* FEATURED LISTINGS */
+  .section { padding: 7rem 4rem; }
+  .section-label { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 700; line-height: 1.15; margin-bottom: 1rem; }
+  .section-sub { color: var(--muted); font-size: 1rem; line-height: 1.7; max-width: 500px; margin-bottom: 4rem; }
+  .listings-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; background: var(--border); }
+  .listing-card {
+    background: var(--bg); overflow: hidden; cursor: pointer;
+    position: relative; aspect-ratio: 3/4;
+  }
+  .listing-img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.25,0.1,0.25,1);
+  }
+  /* Gradient placeholder instead of real image */
+  .listing-img-placeholder {
+    width: 100%; height: 100%;
+    transition: transform 0.7s cubic-bezier(0.25,0.1,0.25,1);
+  }
+  .listing-card:nth-child(1) .listing-img-placeholder { background: linear-gradient(135deg, #1e2a1e, #0d1a2a); }
+  .listing-card:nth-child(2) .listing-img-placeholder { background: linear-gradient(135deg, #2a1e1e, #1a0d2a); }
+  .listing-card:nth-child(3) .listing-img-placeholder { background: linear-gradient(135deg, #1e1e2a, #2a1e0d); }
+  .listing-card:nth-child(4) .listing-img-placeholder { background: linear-gradient(135deg, #2a2a1e, #0d2a1a); }
+  .listing-card:nth-child(5) .listing-img-placeholder { background: linear-gradient(135deg, #1a2a2a, #2a0d1e); }
+  .listing-card:nth-child(6) .listing-img-placeholder { background: linear-gradient(135deg, #2a1a2a, #1a2a0d); }
+  .listing-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(15,15,15,0.95) 0%, rgba(15,15,15,0.2) 60%, transparent 100%);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 2rem;
+  }
+  .listing-hover-overlay {
+    position: absolute; inset: 0; background: rgba(201,169,110,0.12);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.4s;
+  }
+  .listing-hover-overlay span { border: 1px solid var(--gold); color: var(--gold); padding: 0.75rem 2rem; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; }
+  .listing-card:hover .listing-hover-overlay { opacity: 1; }
+  .listing-card:hover .listing-img-placeholder { transform: scale(1.05); }
+  .listing-tag { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+  .listing-address { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .listing-price { font-size: 1.4rem; font-weight: 600; color: var(--gold); margin-bottom: 0.75rem; }
+  .listing-meta { display: flex; gap: 1.5rem; font-size: 0.75rem; color: var(--muted); }
+
+  /* EDITORIAL SECTION */
+  .editorial { padding: 7rem 4rem; display: grid; grid-template-columns: 1fr 1fr; gap: 8rem; align-items: center; border-top: 1px solid var(--border); }
+  .editorial-visual { aspect-ratio: 4/5; background: linear-gradient(135deg, #1a2a1a, #0d1a2a); position: relative; overflow: hidden; }
+  .editorial-visual::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 60%, rgba(201,169,110,0.1), transparent 70%); }
+  .editorial-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border: 1px solid var(--border); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 2rem; }
+  .editorial-title { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 700; line-height: 1.2; margin-bottom: 1.5rem; }
+  .editorial-body { color: var(--muted); line-height: 1.8; margin-bottom: 2.5rem; }
+  .editorial-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2.5rem; padding: 2rem; border: 1px solid var(--border); }
+  .e-stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold); font-weight: 700; }
+  .e-stat-label { font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; }
+
+  /* AGENT */
+  .agents { padding: 7rem 4rem; border-top: 1px solid var(--border); }
+  .agents-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 4rem; }
+  .agent-card { padding: 2.5rem; border: 1px solid var(--border); transition: border-color 0.3s; }
+  .agent-card:hover { border-color: var(--gold); }
+  .agent-avatar { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #2a2a1e, #1e1e2a); margin-bottom: 1.5rem; border: 2px solid var(--border); }
+  .agent-name { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .agent-title { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+  .agent-bio { font-size: 0.875rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.5rem; }
+  .agent-contact { font-size: 0.8rem; color: var(--cream); opacity: 0.7; }
+
+  /* TESTIMONIAL */
+  .testimonial { padding: 7rem 4rem; border-top: 1px solid var(--border); text-align: center; }
+  .testimonial blockquote { font-family: 'Playfair Display', serif; font-size: clamp(1.4rem, 3vw, 2.2rem); font-weight: 400; font-style: italic; line-height: 1.5; max-width: 800px; margin: 2rem auto; color: var(--cream); }
+  .testimonial cite { font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); }
+
+  /* FOOTER */
+  footer { padding: 4rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--cream); }
+  .footer-links { display: flex; gap: 2rem; list-style: none; }
+  .footer-links a { font-size: 0.75rem; color: var(--muted); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { font-size: 0.75rem; color: var(--muted); }
+
+  /* SCROLL PROGRESS */
+  .progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: var(--gold); z-index: 200; transform-origin: left; transform: scaleX(0); }
+
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(40px); }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<nav id="nav">
+  <a href="#" class="nav-logo">LUXE</a>
+  <ul class="nav-links">
+    <li><a href="#listings">Properties</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#agents">Our Team</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Book Viewing</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-img"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Toronto's Premier Luxury Brokerage</p>
+    <h1 class="hero-title">Extraordinary Properties.<br><span>Exceptional Living.</span></h1>
+    <p class="hero-subtitle">We represent the city's most coveted addresses — from Forest Hill estates to Yorkville penthouses. Every transaction handled with white-glove discretion.</p>
+    <div class="hero-actions">
+      <a href="#listings" class="btn-primary">View Properties</a>
+      <a href="#contact" class="btn-ghost">Private Consultation</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat"><span class="stat-num" data-target="420">0</span><p class="stat-label">Properties Sold</p></div>
+  <div class="stat"><span class="stat-num" data-target="1.8" data-suffix="B+">$0</span><p class="stat-label">Total Sales Volume</p></div>
+  <div class="stat"><span class="stat-num" data-target="18">0</span><p class="stat-label">Years of Excellence</p></div>
+  <div class="stat"><span class="stat-num" data-target="98" data-suffix="%">0</span><p class="stat-label">Client Satisfaction</p></div>
+</div>
+
+<section class="section" id="listings">
+  <p class="section-label reveal">Featured Listings</p>
+  <h2 class="section-title reveal">Curated Properties<br>for Discerning Buyers</h2>
+  <p class="section-sub reveal">Each property is selected for its architectural merit, location, and investment potential.</p>
+  <div class="listings-grid">
+    <div class="listing-card reveal">
+      <div class="listing-img-placeholder"></div>
+      <div class="listing-overlay">
+        <span class="listing-tag">Forest Hill</span>
+        <p class="listing-address">12 Old Forest Hill Rd</p>
+        <p class="listing-price">$8,450,000</p>
+        <div class="listing-meta"><span>6 Bed</span><span>7 Bath</span><span>6,200 sqft</span></div>
+      </div>
+      <div class="listing-hover-overlay"><span>View Property</span></div>
+    </div>
+    <div class="listing-card reveal">
+      <div class="listing-img-placeholder"></div>
+      <div class="listing-overlay">
+        <span class="listing-tag">Yorkville</span>
+        <p class="listing-address">1 Bloor St W, PH4</p>
+        <p class="listing-price">$5,200,000</p>
+        <div class="listing-meta"><span>3 Bed</span><span>3 Bath</span><span>3,100 sqft</span></div>
+      </div>
+      <div class="listing-hover-overlay"><span>View Property</span></div>
+    </div>
+    <div class="listing-card reveal">
+      <div class="listing-img-placeholder"></div>
+      <div class="listing-overlay">
+        <span class="listing-tag">Rosedale</span>
+        <p class="listing-address">45 Crescent Rd</p>
+        <p class="listing-price">$11,800,000</p>
+        <div class="listing-meta"><span>7 Bed</span><span>9 Bath</span><span>8,400 sqft</span></div>
+      </div>
+      <div class="listing-hover-overlay"><span>View Property</span></div>
+    </div>
+    <div class="listing-card reveal">
+      <div class="listing-img-placeholder"></div>
+      <div class="listing-overlay">
+        <span class="listing-tag">The Annex</span>
+        <p class="listing-address">88 Walmer Rd</p>
+        <p class="listing-price">$3,750,000</p>
+        <div class="listing-meta"><span>5 Bed</span><span>5 Bath</span><span>4,100 sqft</span></div>
+      </div>
+      <div class="listing-hover-overlay"><span>View Property</span></div>
+    </div>
+    <div class="listing-card reveal">
+      <div class="listing-img-placeholder"></div>
+      <div class="listing-overlay">
+        <span class="listing-tag">Lawrence Park</span>
+        <p class="listing-address">220 Lawrence Ave W</p>
+        <p class="listing-price">$6,900,000</p>
+        <div class="listing-meta"><span>6 Bed</span><span>6 Bath</span><span>5,800 sqft</span></div>
+      </div>
+      <div class="listing-hover-overlay"><span>View Property</span></div>
+    </div>
+    <div class="listing-card reveal">
+      <div class="listing-img-placeholder"></div>
+      <div class="listing-overlay">
+        <span class="listing-tag">Bridle Path</span>
+        <p class="listing-address">14 Bridle Path</p>
+        <p class="listing-price">$22,500,000</p>
+        <div class="listing-meta"><span>9 Bed</span><span>12 Bath</span><span>14,000 sqft</span></div>
+      </div>
+      <div class="listing-hover-overlay"><span>View Property</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="editorial">
+  <div class="editorial-visual reveal"></div>
+  <div>
+    <div class="editorial-badge reveal">✦ Our Approach</div>
+    <h2 class="editorial-title reveal">Where Architecture<br>Meets Investment</h2>
+    <p class="editorial-body reveal">For over 18 years, LUXE Properties has represented Toronto's most significant real estate transactions. We don't just sell homes — we match extraordinary properties with extraordinary people. Our bespoke service ensures complete discretion and unparalleled market knowledge.</p>
+    <div class="editorial-stats reveal">
+      <div><div class="e-stat-num">$1.8B+</div><div class="e-stat-label">Sales volume (2024)</div></div>
+      <div><div class="e-stat-num">3 days</div><div class="e-stat-label">Avg. days to offer</div></div>
+      <div><div class="e-stat-num">108%</div><div class="e-stat-label">Avg. sale vs ask price</div></div>
+      <div><div class="e-stat-num">97%</div><div class="e-stat-label">Referral business</div></div>
+    </div>
+    <a href="#contact" class="btn-primary reveal">Arrange a Private Viewing</a>
+  </div>
+</div>
+
+<section class="agents" id="agents">
+  <p class="section-label reveal">Our Team</p>
+  <h2 class="section-title reveal">The People Behind<br>Every Transaction</h2>
+  <div class="agents-grid">
+    <div class="agent-card reveal">
+      <div class="agent-avatar"></div>
+      <p class="agent-name">Victoria Ashworth</p>
+      <p class="agent-title">Principal Broker</p>
+      <p class="agent-bio">With $800M+ in career sales, Victoria is consistently ranked among Canada's top 1% of realtors. Specializing in Forest Hill and Rosedale estates.</p>
+      <p class="agent-contact">victoria@luxeproperties.ca · 416-555-0101</p>
+    </div>
+    <div class="agent-card reveal">
+      <div class="agent-avatar"></div>
+      <p class="agent-name">James Whitmore</p>
+      <p class="agent-title">Senior Associate</p>
+      <p class="agent-bio">A former architect turned realtor, James brings unmatched eye for design and structural quality. Expert in Yorkville condominiums and new developments.</p>
+      <p class="agent-contact">james@luxeproperties.ca · 416-555-0102</p>
+    </div>
+    <div class="agent-card reveal">
+      <div class="agent-avatar"></div>
+      <p class="agent-name">Sophia Chen</p>
+      <p class="agent-title">Luxury Specialist</p>
+      <p class="agent-bio">Fluent in Mandarin and Cantonese, Sophia bridges international buyers with Toronto's finest properties. Specializing in the $5M+ segment.</p>
+      <p class="agent-contact">sophia@luxeproperties.ca · 416-555-0103</p>
+    </div>
+  </div>
+</section>
+
+<div class="testimonial">
+  <p class="section-label reveal">Client Stories</p>
+  <blockquote class="reveal">"Victoria found us the Rosedale estate we'd been dreaming of for a decade. The entire process was handled with a level of care and professionalism that simply doesn't exist anywhere else in this city."</blockquote>
+  <cite class="reveal">— The Harrington Family, Purchased 2024 · Rosedale</cite>
+</div>
+
+<footer>
+  <span class="footer-logo">LUXE</span>
+  <ul class="footer-links">
+    <li><a href="#">Properties</a></li>
+    <li><a href="#">Sell</a></li>
+    <li><a href="#">Market Reports</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <p class="footer-copy">© 2024 Luxe Properties. All rights reserved.</p>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// Lenis smooth scroll
+const lenis = new Lenis({ lerp: 0.08, smooth: true });
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add((time) => lenis.raf(time * 1000));
+gsap.ticker.lagSmoothing(0);
+
+// Scroll progress bar
+gsap.to('#progress', {
+  scaleX: 1,
+  ease: 'none',
+  scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 0.3 }
+});
+
+// Nav scroll state
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 80);
+});
+
+// Hero entrance
+const tl = gsap.timeline({ delay: 0.3 });
+tl.to('.hero-eyebrow', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' })
+  .to('.hero-title', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.4')
+  .to('.hero-subtitle', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.5')
+  .to('.hero-actions', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, '-=0.4');
+
+// Scroll reveals
+gsap.utils.toArray('.reveal').forEach((el, i) => {
+  gsap.to(el, {
+    opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+  });
+});
+
+// Stats counters
+document.querySelectorAll('.stat-num[data-target]').forEach(el => {
+  const target = parseFloat(el.dataset.target);
+  const suffix = el.dataset.suffix || '';
+  const isDecimal = target % 1 !== 0;
+  ScrollTrigger.create({
+    trigger: el,
+    start: 'top 90%',
+    once: true,
+    onEnter: () => {
+      gsap.to({ val: 0 }, {
+        val: target, duration: 2, ease: 'power2.out',
+        onUpdate: function() {
+          el.textContent = (el.dataset.prefix || '') + (isDecimal ? this.targets()[0].val.toFixed(1) : Math.round(this.targets()[0].val)) + suffix;
+        }
+      });
+    }
+  });
+});
+// Fix $1.8B stat
+document.querySelectorAll('.stat-num').forEach(el => {
+  if (el.dataset.target === '1.8') el.textContent = '$0';
+});
+</script>
+</body>
+</html>

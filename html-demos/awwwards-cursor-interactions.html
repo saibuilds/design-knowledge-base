@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Awwwards Cursor Interactions</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --bg: #0a0a0a; --white: #f5f5f5; --amber: #f59e0b; --zinc: #18181b; }
+
+  body { background: var(--bg); color: var(--white); font-family: 'Helvetica Neue', Arial, sans-serif; cursor: none; overflow-x: hidden; min-height: 100vh; }
+
+  /* ─── CURSOR DOT ─── */
+  #cursor-dot {
+    width: 10px; height: 10px;
+    background: var(--amber);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.3s ease, height 0.3s ease, background 0.3s ease, opacity 0.3s;
+    mix-blend-mode: difference;
+  }
+  #cursor-ring {
+    width: 44px; height: 44px;
+    border: 1.5px solid var(--amber);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    opacity: 0.6;
+    transition: width 0.35s ease, height 0.35s ease, opacity 0.3s, background 0.3s, border-color 0.3s;
+  }
+  /* View state */
+  body.state-view #cursor-dot { width: 80px; height: 80px; background: var(--amber); mix-blend-mode: normal; opacity: 0.9; }
+  body.state-view #cursor-ring { opacity: 0; }
+  body.state-view #cursor-label { opacity: 1; }
+  /* Button expand */
+  body.state-btn #cursor-ring { width: 70px; height: 70px; opacity: 1; border-color: var(--amber); background: rgba(245,158,11,0.1); }
+  /* Link */
+  body.state-link #cursor-dot { width: 6px; height: 6px; }
+  body.state-link #cursor-ring { width: 30px; height: 30px; opacity: 1; }
+
+  #cursor-label {
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    font-size: 0.6rem; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--bg);
+    transform: translate(-50%, -50%);
+    opacity: 0; transition: opacity 0.2s;
+  }
+
+  /* ─── CURSOR TRAIL ─── */
+  .trail-dot {
+    width: 6px; height: 6px;
+    background: var(--amber);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9990;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+  }
+
+  /* ─── LAYOUT ─── */
+  .page-wrap { padding: 80px; max-width: 1200px; margin: 0 auto; }
+  .page-title {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .page-title em { font-style: normal; color: var(--amber); }
+  .page-sub { font-size: 1rem; color: #666; margin-bottom: 80px; }
+
+  /* ─── DEMO GRID ─── */
+  .demo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .demo-card {
+    background: var(--zinc);
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .demo-card h3 {
+    font-size: 1rem; font-weight: 700;
+    letter-spacing: -0.01em; margin-bottom: 8px;
+  }
+  .demo-card p { font-size: 0.8rem; color: #555; margin-bottom: 32px; }
+  .demo-label {
+    position: absolute; top: 20px; right: 20px;
+    font-size: 0.6rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--amber);
+  }
+
+  /* ─── IMAGE HOVER "VIEW" ─── */
+  .image-hover-demo {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+  .hover-image {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    position: relative;
+  }
+  .hover-image-bg {
+    width: 100%; height: 100%;
+    transition: transform 0.5s ease;
+  }
+  .hover-image:hover .hover-image-bg { transform: scale(1.05); }
+  .hover-image:nth-child(1) .hover-image-bg { background: linear-gradient(135deg, #1e3a5f, #0f3460); }
+  .hover-image:nth-child(2) .hover-image-bg { background: linear-gradient(135deg, #3b1a1a, #7f1d1d); }
+
+  /* ─── MAGNETIC BUTTONS ─── */
+  .magnetic-demo { display: flex; gap: 24px; flex-wrap: wrap; }
+  .magnetic-btn {
+    padding: 16px 40px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: none;
+    border: 2px solid var(--amber);
+    color: var(--amber);
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.3s;
+  }
+  .magnetic-btn::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--amber);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+  }
+  .magnetic-btn:hover::before { transform: scaleX(1); transform-origin: left; }
+  .magnetic-btn:hover { color: var(--bg); }
+  .magnetic-btn span { position: relative; z-index: 1; display: block; }
+
+  .magnetic-btn-solid {
+    padding: 16px 40px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: none;
+    background: var(--amber);
+    color: var(--bg);
+    border: 2px solid var(--amber);
+  }
+  .magnetic-btn-solid span { display: block; position: relative; }
+
+  /* ─── RIPPLE ─── */
+  .ripple-demo {
+    background: #111;
+    min-height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: none;
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+  }
+  .ripple-demo p { font-size: 0.8rem; color: #555; pointer-events: none; }
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(245, 158, 11, 0.25);
+    transform: scale(0);
+    pointer-events: none;
+  }
+
+  /* ─── TRAIL SECTION ─── */
+  .trail-demo {
+    background: #111;
+    min-height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: none;
+    font-size: 0.8rem; color: #555;
+    user-select: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+<div id="cursor-label">View</div>
+
+<!-- Trail dots (10) -->
+<div class="trail-dot" id="trail-0"></div>
+<div class="trail-dot" id="trail-1"></div>
+<div class="trail-dot" id="trail-2"></div>
+<div class="trail-dot" id="trail-3"></div>
+<div class="trail-dot" id="trail-4"></div>
+<div class="trail-dot" id="trail-5"></div>
+<div class="trail-dot" id="trail-6"></div>
+<div class="trail-dot" id="trail-7"></div>
+<div class="trail-dot" id="trail-8"></div>
+<div class="trail-dot" id="trail-9"></div>
+
+<div class="page-wrap">
+  <h1 class="page-title">Cursor<br><em>Interactions</em></h1>
+  <p class="page-sub">Move your cursor across the page to see every cursor state in action.</p>
+
+  <div class="demo-grid">
+
+    <!-- Image hover: "View" label -->
+    <div class="demo-card">
+      <div class="demo-label">01</div>
+      <h3>View Cursor on Image Hover</h3>
+      <p>Cursor expands and shows "View" label when hovering over images.</p>
+      <div class="image-hover-demo">
+        <div class="hover-image view-trigger">
+          <div class="hover-image-bg"></div>
+        </div>
+        <div class="hover-image view-trigger">
+          <div class="hover-image-bg"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Button expand -->
+    <div class="demo-card">
+      <div class="demo-label">02</div>
+      <h3>Cursor Expands on Button Hover</h3>
+      <p>The cursor ring grows and fills slightly when hovering interactive buttons.</p>
+      <div class="magnetic-demo">
+        <button class="magnetic-btn btn-trigger"><span>Hover Me</span></button>
+        <button class="magnetic-btn-solid btn-trigger"><span>Click Me</span></button>
+      </div>
+    </div>
+
+    <!-- Magnetic buttons -->
+    <div class="demo-card">
+      <div class="demo-label">03</div>
+      <h3>Magnetic Buttons</h3>
+      <p>The cursor (and button) are pulled toward each other when you approach.</p>
+      <div class="magnetic-demo">
+        <button class="magnetic-btn magnetic" data-strength="0.4"><span>Magnetic</span></button>
+        <button class="magnetic-btn-solid magnetic" data-strength="0.3"><span>Pull Me</span></button>
+        <button class="magnetic-btn magnetic" data-strength="0.5"><span>Attract</span></button>
+      </div>
+    </div>
+
+    <!-- Click ripple -->
+    <div class="demo-card">
+      <div class="demo-label">04</div>
+      <h3>Click Ripple Effect</h3>
+      <p>Click anywhere in the area below to see a ripple radiate from click point.</p>
+      <div class="ripple-demo" id="ripple-demo">
+        <p>Click anywhere here</p>
+      </div>
+    </div>
+
+    <!-- Trail effect -->
+    <div class="demo-card" style="grid-column: 1 / -1;">
+      <div class="demo-label">05</div>
+      <h3>10-Dot Trail Effect</h3>
+      <p>Move your cursor fast across the page — 10 dots follow with increasing delay, creating a motion trail.</p>
+      <div class="trail-demo">
+        <p>Move cursor fast to see the full trail</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // ─── CURSOR CORE ───
+  const dot   = document.getElementById('cursor-dot');
+  const ring  = document.getElementById('cursor-ring');
+  const label = document.getElementById('cursor-label');
+
+  let cx = -100, cy = -100;  // actual cursor
+  let rx = -100, ry = -100;  // ring (lagged)
+
+  document.addEventListener('mousemove', e => {
+    cx = e.clientX; cy = e.clientY;
+    gsap.to(dot,   { x: cx, y: cy, duration: 0.08, ease: 'none' });
+    gsap.to(label, { x: cx, y: cy, duration: 0.08, ease: 'none' });
+  });
+
+  // Ring follows with lag
+  (function moveRing() {
+    rx += (cx - rx) * 0.1;
+    ry += (cy - ry) * 0.1;
+    gsap.set(ring, { x: rx, y: ry });
+    requestAnimationFrame(moveRing);
+  })();
+
+  // ─── VIEW STATE ───
+  document.querySelectorAll('.view-trigger').forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('state-view'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('state-view'));
+  });
+
+  // ─── BUTTON EXPAND ───
+  document.querySelectorAll('.btn-trigger').forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('state-btn'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('state-btn'));
+  });
+
+  // ─── MAGNETIC BUTTONS ───
+  document.querySelectorAll('.magnetic').forEach(btn => {
+    const strength = parseFloat(btn.dataset.strength || 0.4);
+
+    btn.addEventListener('mousemove', e => {
+      const r = btn.getBoundingClientRect();
+      const bx = r.left + r.width  / 2;
+      const by = r.top  + r.height / 2;
+      const dx = e.clientX - bx;
+      const dy = e.clientY - by;
+
+      // Move button toward cursor
+      gsap.to(btn, { x: dx * strength, y: dy * strength, duration: 0.3, ease: 'power2.out' });
+
+      // Also pull ring toward button center
+      gsap.to(ring, {
+        x: bx + dx * strength,
+        y: by + dy * strength,
+        duration: 0.3, ease: 'power2.out'
+      });
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      gsap.to(btn,  { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.4)' });
+    });
+
+    btn.addEventListener('mouseenter', () => document.body.classList.add('state-btn'));
+    btn.addEventListener('mouseleave', () => document.body.classList.remove('state-btn'));
+  });
+
+  // ─── RIPPLE ───
+  document.getElementById('ripple-demo').addEventListener('click', e => {
+    const demo = e.currentTarget;
+    const rect = demo.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height) * 2.5;
+    const x = e.clientX - rect.left - size / 2;
+    const y = e.clientY - rect.top  - size / 2;
+
+    const ripple = document.createElement('div');
+    ripple.className = 'ripple';
+    ripple.style.cssText = `width:${size}px;height:${size}px;left:${x}px;top:${y}px;`;
+    demo.appendChild(ripple);
+
+    gsap.to(ripple, {
+      scale: 1, opacity: 0.8,
+      duration: 0.05,
+      onComplete() {
+        gsap.to(ripple, { scale: 1, opacity: 0, duration: 0.6, ease: 'power2.out',
+          onComplete: () => ripple.remove() });
+      }
+    });
+    gsap.to(ripple, { scale: 1, duration: 0.6, ease: 'power2.out' });
+    gsap.to(ripple, { opacity: 0, duration: 0.6, ease: 'power2.out', delay: 0.1, onComplete: () => ripple.remove() });
+
+    // Simpler direct animation
+    ripple.style.transform = 'scale(0)';
+    ripple.style.opacity = '0.6';
+    setTimeout(() => {
+      ripple.style.transition = 'transform 0.7s ease-out, opacity 0.7s ease-out';
+      ripple.style.transform = 'scale(1)';
+      ripple.style.opacity = '0';
+      setTimeout(() => ripple.remove(), 800);
+    }, 10);
+  });
+
+  // ─── TRAIL (10 DOTS) ───
+  const TRAIL_COUNT = 10;
+  const trailDots = Array.from({ length: TRAIL_COUNT }, (_, i) => document.getElementById(`trail-${i}`));
+  const trail = Array(TRAIL_COUNT).fill({ x: -100, y: -100 });
+  let trailHead = 0;
+
+  document.addEventListener('mousemove', e => {
+    trail[trailHead] = { x: e.clientX, y: e.clientY };
+    trailHead = (trailHead + 1) % TRAIL_COUNT;
+  });
+
+  (function animTrail() {
+    for (let i = 0; i < TRAIL_COUNT; i++) {
+      const idx = (trailHead - 1 - i + TRAIL_COUNT) % TRAIL_COUNT;
+      const point = trail[idx];
+      const scale = 1 - i / TRAIL_COUNT;
+      const opacity = (1 - i / TRAIL_COUNT) * 0.5;
+      gsap.set(trailDots[i], {
+        x: point.x, y: point.y,
+        scale, opacity,
+        width: 6 * scale, height: 6 * scale
+      });
+    }
+    requestAnimationFrame(animTrail);
+  })();
+</script>
+</body>
+</html>

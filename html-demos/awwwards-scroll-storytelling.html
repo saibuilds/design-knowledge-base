@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Awwwards Scroll Storytelling</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --bg: #0a0a0a; --white: #f5f5f5; --amber: #f59e0b; --zinc: #18181b; }
+
+  html { scroll-behavior: auto; }
+  body { background: var(--bg); color: var(--white); font-family: 'Helvetica Neue', Arial, sans-serif; overflow-x: hidden; }
+
+  /* ─── PROGRESS BAR ─── */
+  #progress-bar {
+    position: fixed; top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(to right, var(--amber), #ef4444);
+    width: 0%; z-index: 9999;
+    transform-origin: left;
+  }
+
+  /* ─── INTRO ─── */
+  .intro {
+    height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; text-align: center;
+    padding: 40px;
+    position: relative;
+  }
+  .intro h1 {
+    font-size: clamp(3rem, 9vw, 8rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+  }
+  .intro h1 em { font-style: normal; color: var(--amber); }
+  .intro p { margin-top: 24px; color: #666; font-size: 1rem; }
+  .scroll-down {
+    position: absolute; bottom: 40px;
+    font-size: 0.65rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: #444;
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+
+  /* ─── HORIZONTAL SCROLL ─── */
+  .h-scroll-wrapper {
+    overflow: hidden;
+    position: relative;
+  }
+  .h-scroll-track {
+    display: flex;
+    width: max-content;
+    height: 100vh;
+    align-items: center;
+    gap: 60px;
+    padding: 0 80px;
+  }
+  .h-card {
+    width: min(360px, 80vw);
+    height: 70vh;
+    background: var(--zinc);
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+    display: flex; align-items: flex-end;
+    padding: 32px;
+  }
+  .h-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    opacity: 0.7;
+  }
+  .h-card:nth-child(1)::before { background: linear-gradient(135deg, #1e3a5f, #0a0a0a); }
+  .h-card:nth-child(2)::before { background: linear-gradient(135deg, #3b1a1a, #0a0a0a); }
+  .h-card:nth-child(3)::before { background: linear-gradient(135deg, #1a3b1a, #0a0a0a); }
+  .h-card:nth-child(4)::before { background: linear-gradient(135deg, #2d1a3b, #0a0a0a); }
+  .h-card:nth-child(5)::before { background: linear-gradient(135deg, #3b2d1a, #0a0a0a); }
+  .h-card-num {
+    position: absolute; top: 24px; left: 24px;
+    font-size: 0.65rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--amber);
+  }
+  .h-card-big {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 8rem; font-weight: 900;
+    color: rgba(255,255,255,0.04);
+    letter-spacing: -0.05em;
+  }
+  .h-card-content { position: relative; z-index: 1; }
+  .h-card-content h3 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .h-card-content p  { font-size: 0.85rem; color: #888; line-height: 1.6; }
+
+  .h-scroll-label {
+    position: sticky; top: 40px;
+    text-align: center;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--amber);
+    padding: 20px 0;
+  }
+
+  /* ─── TYPEWRITER SECTION ─── */
+  .typewriter-section {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 80px 40px;
+    position: relative;
+  }
+  .typewriter-inner { max-width: 900px; }
+  .typewriter-label {
+    font-size: 0.65rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--amber);
+    margin-bottom: 24px;
+  }
+  #typewriter-text {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    min-height: 3em;
+  }
+  #typewriter-text .char {
+    opacity: 0;
+    display: inline;
+  }
+  #typewriter-cursor {
+    display: inline-block;
+    width: 3px; height: 1em;
+    background: var(--amber);
+    vertical-align: text-bottom;
+    animation: blink 0.8s steps(1) infinite;
+    margin-left: 2px;
+  }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
+  /* ─── CLIP-PATH WIPE IMAGES ─── */
+  .wipe-section {
+    padding: 120px 40px;
+  }
+  .wipe-section h2 {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 60px;
+  }
+  .wipe-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .wipe-item {
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    position: relative;
+    clip-path: inset(0 100% 0 0);
+  }
+  .wipe-item-bg {
+    position: absolute; inset: 0;
+    transform: scale(1.1);
+  }
+  .wipe-item:nth-child(1) .wipe-item-bg { background: linear-gradient(135deg, #1e293b, #334155, #475569); }
+  .wipe-item:nth-child(2) .wipe-item-bg { background: linear-gradient(135deg, #292524, #44403c, #57534e); }
+  .wipe-item:nth-child(3) .wipe-item-bg { background: linear-gradient(135deg, #14532d, #166534, #15803d); }
+  .wipe-item-label {
+    position: absolute; bottom: 20px; left: 20px;
+    font-size: 0.75rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(255,255,255,0.7);
+    z-index: 1;
+  }
+
+  /* ─── STICKY SECTION ─── */
+  .sticky-outer {
+    position: relative;
+    height: 500vh;
+  }
+  .sticky-inner {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex; align-items: center;
+  }
+  .sticky-bg {
+    position: absolute; inset: 0;
+    transition: background 0.5s ease;
+  }
+  .sticky-content {
+    position: relative; z-index: 1;
+    padding: 0 80px;
+    width: 100%;
+  }
+  .sticky-step {
+    position: absolute;
+    opacity: 0;
+    transition: none;
+    top: 50%;
+    transform: translateY(-40%);
+  }
+  .sticky-step.active { opacity: 1; transform: translateY(-50%); }
+  .sticky-step h2 {
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+  .sticky-step p {
+    margin-top: 16px;
+    font-size: 1rem;
+    color: #888;
+    max-width: 500px;
+    line-height: 1.7;
+  }
+  .sticky-step-num {
+    font-size: 0.65rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--amber);
+    margin-bottom: 16px;
+  }
+  .sticky-progress {
+    position: absolute;
+    right: 40px; top: 50%;
+    transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .sticky-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #333;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+  }
+  .sticky-dot.active { background: var(--amber); transform: scale(1.5); }
+
+  /* ─── PARALLAX LAYERS ─── */
+  .parallax-layers {
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .layer {
+    position: absolute; inset: -30%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .layer-1 { background: radial-gradient(ellipse at center, #1a1a2e 0%, transparent 70%); }
+  .layer-2 {
+    background: repeating-linear-gradient(
+      45deg, transparent, transparent 40px,
+      rgba(245,158,11,0.02) 40px, rgba(245,158,11,0.02) 41px
+    );
+  }
+  .layer-3 {
+    background: radial-gradient(circle at 30% 60%, rgba(124,58,237,0.1) 0%, transparent 50%);
+  }
+  .parallax-center-text {
+    position: relative; z-index: 10;
+    text-align: center;
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+  .parallax-center-text em { font-style: normal; color: var(--amber); }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<!-- Intro -->
+<section class="intro">
+  <h1>Scroll<br><em>Storytelling</em></h1>
+  <p>Horizontal scroll · Typewriter · Clip-path wipe · Sticky sections · Parallax layers</p>
+  <div class="scroll-down">↓ Scroll to explore</div>
+</section>
+
+<!-- Horizontal Scroll -->
+<div class="h-scroll-label">← Horizontal Scroll →</div>
+<div class="h-scroll-wrapper" id="h-scroll-wrapper">
+  <div class="h-scroll-track" id="h-scroll-track">
+    <div class="h-card">
+      <div class="h-card-num">01 / 05</div>
+      <div class="h-card-big">A</div>
+      <div class="h-card-content">
+        <h3>Discovery</h3>
+        <p>Understanding the brief, the audience, and the story that needs to be told.</p>
+      </div>
+    </div>
+    <div class="h-card">
+      <div class="h-card-num">02 / 05</div>
+      <div class="h-card-big">B</div>
+      <div class="h-card-content">
+        <h3>Concept</h3>
+        <p>Translating raw ideas into visual language — mood boards, sketches, direction.</p>
+      </div>
+    </div>
+    <div class="h-card">
+      <div class="h-card-num">03 / 05</div>
+      <div class="h-card-big">C</div>
+      <div class="h-card-content">
+        <h3>Design</h3>
+        <p>Pixel-perfect layouts crafted with intention. Every decision justified by purpose.</p>
+      </div>
+    </div>
+    <div class="h-card">
+      <div class="h-card-num">04 / 05</div>
+      <div class="h-card-big">D</div>
+      <div class="h-card-content">
+        <h3>Motion</h3>
+        <p>Breathing life into static designs through purposeful, timely animation.</p>
+      </div>
+    </div>
+    <div class="h-card">
+      <div class="h-card-num">05 / 05</div>
+      <div class="h-card-big">E</div>
+      <div class="h-card-content">
+        <h3>Launch</h3>
+        <p>Shipping experiences that earn awards, clients, and lasting recognition.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Typewriter Section -->
+<section class="typewriter-section">
+  <div class="typewriter-inner">
+    <div class="typewriter-label">Scroll-Driven Typewriter</div>
+    <div id="typewriter-text"><span id="typewriter-cursor"></span></div>
+  </div>
+</section>
+
+<!-- Clip-Path Wipe Images -->
+<section class="wipe-section">
+  <h2>Image Reveal<br>with Clip-Path</h2>
+  <div class="wipe-grid">
+    <div class="wipe-item">
+      <div class="wipe-item-bg"></div>
+      <div class="wipe-item-label">Dark & Moody</div>
+    </div>
+    <div class="wipe-item">
+      <div class="wipe-item-bg"></div>
+      <div class="wipe-item-label">Warm Tones</div>
+    </div>
+    <div class="wipe-item">
+      <div class="wipe-item-bg"></div>
+      <div class="wipe-item-label">Nature</div>
+    </div>
+  </div>
+</section>
+
+<!-- Sticky Changing Content -->
+<section class="sticky-outer" id="sticky-outer">
+  <div class="sticky-inner">
+    <div class="sticky-bg" id="sticky-bg"></div>
+    <div class="sticky-content">
+      <div class="sticky-step active" data-bg="#0a0a0a">
+        <div class="sticky-step-num">Step 01</div>
+        <h2>Research</h2>
+        <p>Dive deep into the brand's world. Understand what moves their audience before a single pixel is designed.</p>
+      </div>
+      <div class="sticky-step" data-bg="#0f0f1a">
+        <div class="sticky-step-num">Step 02</div>
+        <h2>Strategy</h2>
+        <p>Map the user journey. Identify every friction point. Design the invisible architecture first.</p>
+      </div>
+      <div class="sticky-step" data-bg="#1a0f0a">
+        <div class="sticky-step-num">Step 03</div>
+        <h2>Create</h2>
+        <p>Execute with precision and passion. Typography, spacing, color — nothing is accidental.</p>
+      </div>
+      <div class="sticky-step" data-bg="#0a1a0a">
+        <div class="sticky-step-num">Step 04</div>
+        <h2>Launch</h2>
+        <p>Ship with confidence. Monitor, iterate, and refine until the experience sings.</p>
+      </div>
+    </div>
+    <div class="sticky-progress">
+      <div class="sticky-dot active"></div>
+      <div class="sticky-dot"></div>
+      <div class="sticky-dot"></div>
+      <div class="sticky-dot"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Parallax Layers -->
+<section class="parallax-layers" id="parallax-layers">
+  <div class="layer layer-1" data-speed="0.3"></div>
+  <div class="layer layer-2" data-speed="-0.15"></div>
+  <div class="layer layer-3" data-speed="0.5"></div>
+  <div class="parallax-center-text">
+    Three<br><em>Depths</em><br>of Parallax
+  </div>
+</section>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+  // ─── LENIS ───
+  const lenis = new Lenis({ duration: 1.2 });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(t => lenis.raf(t * 1000));
+  gsap.ticker.lagSmoothing(0);
+
+  // ─── PROGRESS BAR ───
+  gsap.to('#progress-bar', {
+    width: '100%',
+    ease: 'none',
+    scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: true }
+  });
+
+  // ─── HORIZONTAL SCROLL (GSAP PIN) ───
+  const track = document.getElementById('h-scroll-track');
+  const trackWidth = track.scrollWidth - window.innerWidth;
+
+  gsap.to(track, {
+    x: -trackWidth,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '#h-scroll-wrapper',
+      start: 'top top',
+      end: () => '+=' + trackWidth,
+      scrub: 1,
+      pin: true,
+      anticipatePin: 1
+    }
+  });
+
+  // ─── TYPEWRITER (SCROLL TRIGGERED) ───
+  const twText = "Award-winning design is not decoration — it is the difference between a user who leaves and a user who stays, explores, and returns.";
+  const twEl   = document.getElementById('typewriter-text');
+  const twCursor = document.getElementById('typewriter-cursor');
+
+  // Build char spans
+  let charsHTML = '';
+  twText.split('').forEach((ch, i) => {
+    charsHTML += `<span class="char" id="c${i}">${ch === ' ' ? '&nbsp;' : ch}</span>`;
+  });
+  twEl.innerHTML = charsHTML + twCursor.outerHTML;
+  const chars = twEl.querySelectorAll('.char');
+
+  ScrollTrigger.create({
+    trigger: '.typewriter-section',
+    start: 'top 80%',
+    end: 'bottom 20%',
+    scrub: 1,
+    onUpdate(self) {
+      const visible = Math.floor(self.progress * chars.length);
+      chars.forEach((c, i) => { c.style.opacity = i < visible ? '1' : '0'; });
+    }
+  });
+
+  // ─── CLIP-PATH WIPE ───
+  document.querySelectorAll('.wipe-item').forEach((el, i) => {
+    gsap.to(el, {
+      clipPath: 'inset(0 0% 0 0)',
+      ease: 'power3.out',
+      duration: 1.2,
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 85%',
+        once: true
+      },
+      delay: i * 0.15
+    });
+
+    gsap.to(el.querySelector('.wipe-item-bg'), {
+      scale: 1,
+      ease: 'power3.out',
+      duration: 1.5,
+      scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+      delay: i * 0.15
+    });
+  });
+
+  // ─── STICKY CHANGING CONTENT ───
+  const steps    = document.querySelectorAll('.sticky-step');
+  const dots     = document.querySelectorAll('.sticky-dot');
+  const stickyBg = document.getElementById('sticky-bg');
+  const totalSteps = steps.length;
+
+  ScrollTrigger.create({
+    trigger: '#sticky-outer',
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: true,
+    onUpdate(self) {
+      const idx = Math.min(Math.floor(self.progress * totalSteps), totalSteps - 1);
+      steps.forEach((s, i) => {
+        const active = i === idx;
+        s.classList.toggle('active', active);
+        if (active) {
+          gsap.to(s, { opacity: 1, y: '-50%', duration: 0.4, ease: 'power2.out' });
+          stickyBg.style.background = s.dataset.bg;
+        } else {
+          gsap.to(s, { opacity: 0, duration: 0.3 });
+        }
+        dots[i].classList.toggle('active', i === idx);
+      });
+    }
+  });
+
+  // ─── PARALLAX LAYERS ───
+  document.querySelectorAll('.layer[data-speed]').forEach(layer => {
+    const speed = parseFloat(layer.dataset.speed);
+    gsap.to(layer, {
+      yPercent: speed * 100,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#parallax-layers',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true
+      }
+    });
+  });
+</script>
+</body>
+</html>

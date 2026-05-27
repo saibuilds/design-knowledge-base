@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Framer Motion Patterns (Vanilla JS Equivalents)</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111;
+      --border: #222;
+      --accent: #f59e0b;
+      --blue: #6366f1;
+      --text: #fff;
+      --muted: #666;
+    }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; overflow-x: hidden; }
+
+    /* Scroll progress */
+    .progress-bar { position: fixed; top:0; left:0; width:100%; height:3px; background:var(--accent); transform-origin:left; transform:scaleX(0); z-index:999; }
+
+    .section-tag {
+      display: inline-block;
+      background: rgba(99,102,241,0.12);
+      border: 1px solid rgba(99,102,241,0.3);
+      color: var(--blue);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+
+    section { padding: 100px 40px; position: relative; }
+    .container { max-width: 900px; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 56px; }
+    .section-header h2 { font-size: 40px; font-weight: 800; margin-bottom: 8px; }
+    .section-header p { color: var(--muted); font-size: 16px; line-height: 1.6; max-width: 480px; margin: 0 auto; }
+
+    /* ── SECTION 1: Scroll-triggered entrance (IntersectionObserver) ── */
+    #scroll-entrance { background: var(--surface); }
+    .entrance-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .entrance-card {
+      background: #1a1a1a;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 24px;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.6s cubic-bezier(0.25,0.1,0.25,1), transform 0.6s cubic-bezier(0.25,0.1,0.25,1);
+    }
+    .entrance-card.visible { opacity: 1; transform: translateY(0); }
+    .entrance-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .entrance-card p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+    .entrance-card .icon { font-size: 36px; margin-bottom: 16px; display: block; }
+
+    /* ── SECTION 2: Stagger children on scroll ── */
+    #stagger-children { background: var(--bg); }
+    .stagger-list { list-style: none; display: flex; flex-direction: column; gap: 0; max-width: 600px; margin: 0 auto; }
+    .stagger-item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      transform: translateX(-30px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .stagger-item.visible { opacity: 1; transform: translateX(0); }
+    .stagger-item:last-child { border-bottom: none; }
+    .stagger-num { font-size: 13px; color: var(--accent); font-weight: 700; width: 28px; flex-shrink: 0; }
+    .stagger-item h3 { font-size: 22px; font-weight: 700; flex: 1; }
+    .stagger-item span { color: var(--muted); font-size: 14px; }
+
+    /* ── SECTION 3: Page Transition Overlay ── */
+    #page-transition { background: var(--surface); min-height: 80vh; display: flex; align-items: center; }
+    .page-demo { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+    .page-demo-left {}
+    .page-demo-left h2 { font-size: 40px; font-weight: 800; margin-bottom: 16px; line-height: 1.1; }
+    .page-demo-left p { color: var(--muted); margin-bottom: 24px; line-height: 1.7; }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: #4f52d4; transform: scale(1.03); }
+    .btn-primary:active { transform: scale(0.97); }
+    .page-screens { position: relative; height: 300px; border-radius: 20px; overflow: hidden; border: 1px solid var(--border); }
+    .screen {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      font-weight: 900;
+      opacity: 0;
+      transform: translateX(30px);
+      transition: opacity 0.35s, transform 0.35s;
+    }
+    .screen.active { opacity: 1; transform: translateX(0); }
+    .screen.exit { opacity: 0; transform: translateX(-30px); }
+    #screen1 { background: #12101f; color: var(--blue); }
+    #screen2 { background: #1a1000; color: var(--accent); }
+    #screen3 { background: #0f1a10; color: #4ade80; }
+    /* Overlay wipe */
+    .transition-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--blue);
+      transform: translateX(-100%);
+      z-index: 9999;
+      pointer-events: none;
+    }
+
+    /* ── SECTION 4: Parallax on scroll ── */
+    #parallax-scroll { background: var(--bg); overflow: hidden; min-height: 80vh; display: flex; align-items: center; }
+    .parallax-scene { position: relative; height: 400px; width: 100%; border-radius: 24px; overflow: hidden; border: 1px solid var(--border); }
+    .parallax-layer {
+      position: absolute;
+      inset: -20%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      will-change: transform;
+    }
+    .parallax-bg { background: radial-gradient(ellipse at center, rgba(99,102,241,0.2) 0%, transparent 70%); }
+    .parallax-mid { font-size: 120px; opacity: 0.08; font-weight: 900; letter-spacing: -0.05em; color: var(--blue); white-space: nowrap; }
+    .parallax-fg { font-size: 48px; font-weight: 900; color: #fff; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; background: none; }
+
+    /* ── SECTION 5: Drag and Snap ── */
+    #drag-snap { background: var(--surface); min-height: 80vh; display: flex; align-items: center; }
+    .drag-demo { display: flex; flex-direction: column; align-items: center; gap: 32px; }
+    .drag-track {
+      width: 320px;
+      height: 80px;
+      background: #1a1a1a;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      position: relative;
+      overflow: hidden;
+    }
+    .drag-knob {
+      width: 72px;
+      height: 72px;
+      background: var(--blue);
+      border-radius: 100px;
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      cursor: grab;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      user-select: none;
+      transition: transform 0.15s, background 0.2s;
+      touch-action: none;
+    }
+    .drag-knob:active { cursor: grabbing; transform: scale(1.1); }
+    .drag-label { color: var(--muted); font-size: 14px; }
+    .snap-cards {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      padding-bottom: 8px;
+      width: 100%;
+      max-width: 600px;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .snap-cards::-webkit-scrollbar { display: none; }
+    .snap-card {
+      min-width: 280px;
+      height: 180px;
+      border-radius: 20px;
+      scroll-snap-align: start;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      font-weight: 900;
+      flex-shrink: 0;
+      cursor: grab;
+      transition: transform 0.2s;
+    }
+    .snap-card:hover { transform: scale(1.02); }
+    .snap-card:nth-child(1) { background: linear-gradient(135deg,#1a1030,#3d1580); color: var(--blue); }
+    .snap-card:nth-child(2) { background: linear-gradient(135deg,#1a1000,#3d2800); color: var(--accent); }
+    .snap-card:nth-child(3) { background: linear-gradient(135deg,#001a10,#003d20); color: #4ade80; }
+    .snap-card:nth-child(4) { background: linear-gradient(135deg,#1a0010,#3d0020); color: #f43f5e; }
+
+    /* ── SECTION 6: Hover scale/lift ── */
+    #hover-effects { background: var(--bg); }
+    .hover-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+    /* Scale button */
+    .hover-btn {
+      width: 100%;
+      padding: 20px;
+      background: #1a1a1a;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), background 0.2s, box-shadow 0.2s;
+    }
+    .hover-btn:hover { transform: scale(1.05) translateY(-4px); background: #222; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+    .hover-btn:active { transform: scale(0.97); }
+
+    /* Tilt card */
+    .tilt-card {
+      background: #1a1a1a;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 24px;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transition: box-shadow 0.3s;
+      will-change: transform;
+    }
+    .tilt-card:hover { box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+    .tilt-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .tilt-card p { color: var(--muted); font-size: 14px; }
+
+    /* Spotlight card */
+    .spotlight-card {
+      background: #1a1a1a;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 32px 24px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .spotlight-glow {
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .spotlight-card:hover .spotlight-glow { opacity: 1; }
+    .spotlight-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; position: relative; z-index: 1; }
+    .spotlight-card p { color: var(--muted); font-size: 14px; position: relative; z-index: 1; }
+
+    @media (max-width: 768px) {
+      .entrance-grid, .hover-grid { grid-template-columns: 1fr; }
+      .page-demo { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="transition-overlay" id="transitionOverlay"></div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 1: Scroll-Triggered Entrance
+     Pattern: whileInView — replicated with IntersectionObserver + CSS transitions
+     Framer: <motion.div initial={{opacity:0,y:40}} whileInView={{opacity:1,y:0}} viewport={{once:true}}>
+════════════════════════════════════════════ -->
+<section id="scroll-entrance">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Pattern 1 — Scroll-Triggered Entrance</div>
+      <h2>Appear on viewport entry</h2>
+      <p>IntersectionObserver triggers CSS transition. Equivalent to Framer's <code style="color:var(--blue)">whileInView</code> prop.</p>
+    </div>
+    <div class="entrance-grid">
+      <div class="entrance-card" data-stagger="0">
+        <span class="icon">⚡</span>
+        <h3>Fast by Default</h3>
+        <p>No framework overhead. Pure CSS transitions triggered by JS observer.</p>
+      </div>
+      <div class="entrance-card" data-stagger="1">
+        <span class="icon">🎯</span>
+        <h3>Precise Timing</h3>
+        <p>Custom delay per child using CSS transition-delay. 150ms stagger.</p>
+      </div>
+      <div class="entrance-card" data-stagger="2">
+        <span class="icon">✦</span>
+        <h3>Once Only</h3>
+        <p>Observer disconnects after trigger. viewport: <code>{once:true}</code> equivalent.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 2: Stagger Children on Scroll
+     Pattern: container variants + staggerChildren
+     Framer: variants={container} staggerChildren:0.1 on parent
+════════════════════════════════════════════ -->
+<section id="stagger-children">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Pattern 2 — Stagger Children on Scroll</div>
+      <h2>Sequential reveals</h2>
+      <p>Each list item receives an incrementally larger transition delay when the parent enters view.</p>
+    </div>
+    <ul class="stagger-list" id="staggerList">
+      <li class="stagger-item"><span class="stagger-num">01</span><h3>Kitchen Renovation</h3><span>From $45,000</span></li>
+      <li class="stagger-item"><span class="stagger-num">02</span><h3>Bathroom Remodel</h3><span>From $18,000</span></li>
+      <li class="stagger-item"><span class="stagger-num">03</span><h3>Basement Suite</h3><span>From $80,000</span></li>
+      <li class="stagger-item"><span class="stagger-num">04</span><h3>Garden Suite</h3><span>From $180,000</span></li>
+      <li class="stagger-item"><span class="stagger-num">05</span><h3>Full Home Renovation</h3><span>From $120,000</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 3: Page Transition Overlay
+     Pattern: AnimatePresence page transition — wipe overlay
+     Framer: key={router.pathname} initial/exit + AnimatePresence
+════════════════════════════════════════════ -->
+<section id="page-transition">
+  <div class="container">
+    <div class="page-demo">
+      <div class="page-demo-left">
+        <div class="section-tag">Pattern 3 — Page Transition Overlay</div>
+        <h2>Cinematic page<br>transitions</h2>
+        <p>A full-screen overlay wipes across the viewport between route changes. Click to cycle through "pages". Equivalent to <code style="color:var(--blue)">AnimatePresence</code> with <code style="color:var(--blue)">mode="wait"</code>.</p>
+        <button class="btn-primary" id="nextPageBtn">Next Page →</button>
+      </div>
+      <div class="page-screens">
+        <div class="screen active" id="screen1">Page 1</div>
+        <div class="screen" id="screen2">Page 2</div>
+        <div class="screen" id="screen3">Page 3</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 4: Parallax on Scroll
+     Pattern: useScroll + useTransform — scroll Y to translateY
+     Framer: const y = useTransform(scrollY, [0,500], [0,-150])
+════════════════════════════════════════════ -->
+<section id="parallax-scroll">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Pattern 4 — Parallax on Scroll</div>
+      <h2>Layered depth</h2>
+      <p>Multiple layers moving at different rates. Background slower, foreground faster.</p>
+    </div>
+    <div class="parallax-scene">
+      <div class="parallax-layer parallax-bg" id="parallaxBg"></div>
+      <div class="parallax-layer parallax-mid" id="parallaxMid">MOTION</div>
+      <div class="parallax-fg" id="parallaxFg">
+        <span style="font-size:56px;font-weight:900;">✦</span>
+        <span style="font-size:18px;color:var(--muted)">Scroll to see depth</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 5: Drag and Snap
+     Pattern: drag + dragConstraints + scroll-snap
+     Framer: <motion.div drag dragConstraints={...} dragElastic={0.1}>
+════════════════════════════════════════════ -->
+<section id="drag-snap">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Pattern 5 — Drag and Snap</div>
+      <h2>Tactile interfaces</h2>
+      <p>Drag the knob left and right. Cards below use CSS scroll-snap for native feel.</p>
+    </div>
+    <div class="drag-demo">
+      <div class="drag-track" id="dragTrack">
+        <div class="drag-knob" id="dragKnob">☰</div>
+      </div>
+      <p class="drag-label" id="dragValue">Position: 0px</p>
+
+      <!-- Scroll-snap card carousel — native CSS equivalent of Framer drag -->
+      <div class="snap-cards" id="snapCards">
+        <div class="snap-card">01</div>
+        <div class="snap-card">02</div>
+        <div class="snap-card">03</div>
+        <div class="snap-card">04</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 6: Hover Scale / Lift / Tilt / Spotlight
+     Pattern: whileHover + whileTap spring physics
+     Framer: whileHover={{scale:1.05}} whileTap={{scale:0.95}} transition={{type:'spring'}}
+════════════════════════════════════════════ -->
+<section id="hover-effects">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Pattern 6 — Hover Scale, Tilt & Spotlight</div>
+      <h2>Hover interactions</h2>
+      <p>Spring-physics scale/lift, 3D tilt via mouse position, and cursor-following spotlight glow.</p>
+    </div>
+    <div class="hover-grid">
+      <!-- Scale button -->
+      <button class="hover-btn">
+        <span style="display:block;font-size:28px;margin-bottom:8px;">⚡</span>
+        Scale + Lift<br>
+        <small style="color:var(--muted);font-weight:400;">Hover me</small>
+      </button>
+
+      <!-- 3D tilt card -->
+      <div class="tilt-card" id="tiltCard">
+        <h3>3D Tilt Card</h3>
+        <p>Mouse position drives rotateX and rotateY. Spring smoothing on leave.</p>
+      </div>
+
+      <!-- Spotlight card -->
+      <div class="spotlight-card" id="spotlightCard">
+        <div class="spotlight-glow" id="spotlightGlow"></div>
+        <h3>Spotlight Card</h3>
+        <p>Radial gradient follows cursor. Amber glow tracks your mouse position.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div style="height:20vh;"></div>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ── LENIS SMOOTH SCROLL ───────────────────
+  const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10*t)) });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(t => lenis.raf(t * 1000));
+  gsap.ticker.lagSmoothing(0);
+
+  // ── PROGRESS BAR ─────────────────────────
+  gsap.to('#progressBar', {
+    scaleX: 1, ease: 'none', transformOrigin: 'left',
+    scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 0.3 }
+  });
+
+  // ── PATTERN 1: IntersectionObserver entrance ─
+  // Stagger delay via CSS transition-delay per element index
+  const entranceCards = document.querySelectorAll('.entrance-card');
+  const io1 = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const idx = parseInt(entry.target.dataset.stagger || 0);
+        entry.target.style.transitionDelay = `${idx * 0.15}s`;
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.2 });
+  entranceCards.forEach(card => io1.observe(card));
+
+  // ── PATTERN 2: Stagger children ──────────
+  // Observer on parent, apply increasing delays to children
+  const staggerList = document.getElementById('staggerList');
+  const io2 = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.stagger-item').forEach((item, i) => {
+          setTimeout(() => item.classList.add('visible'), i * 100);
+        });
+        io2.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  io2.observe(staggerList);
+
+  // ── PATTERN 3: Page transition overlay ───
+  // Wipe overlay left→right on exit, right→left on enter
+  const screens = ['screen1','screen2','screen3'];
+  let currentScreen = 0;
+  const overlay = document.getElementById('transitionOverlay');
+
+  document.getElementById('nextPageBtn').addEventListener('click', () => {
+    const nextScreen = (currentScreen + 1) % screens.length;
+
+    // Exit current
+    const tl = gsap.timeline();
+    tl.to(overlay, {
+      x: '0%', duration: 0.35, ease: 'power3.inOut',
+      onComplete: () => {
+        document.getElementById(screens[currentScreen]).classList.remove('active');
+        document.getElementById(screens[currentScreen]).classList.remove('exit');
+        document.getElementById(screens[nextScreen]).classList.add('active');
+        currentScreen = nextScreen;
+      }
+    })
+    .to(overlay, { x: '100%', duration: 0.35, ease: 'power3.inOut' });
+  });
+
+  // Reset overlay initial position
+  gsap.set(overlay, { x: '-100%' });
+
+  // ── PATTERN 4: Parallax scroll layers ────
+  // GSAP ScrollTrigger scrub with different yPercent per layer
+  gsap.to('#parallaxBg', {
+    yPercent: -20, ease: 'none',
+    scrollTrigger: { trigger: '#parallax-scroll', start: 'top bottom', end: 'bottom top', scrub: true }
+  });
+  gsap.to('#parallaxMid', {
+    yPercent: -40, ease: 'none',
+    scrollTrigger: { trigger: '#parallax-scroll', start: 'top bottom', end: 'bottom top', scrub: true }
+  });
+  gsap.to('#parallaxFg', {
+    yPercent: -10, ease: 'none',
+    scrollTrigger: { trigger: '#parallax-scroll', start: 'top bottom', end: 'bottom top', scrub: true }
+  });
+
+  // ── PATTERN 5: Drag knob ─────────────────
+  // Pointer events drag with constraint clamping — equivalent to Framer drag + dragConstraints
+  const track = document.getElementById('dragTrack');
+  const knob  = document.getElementById('dragKnob');
+  const label = document.getElementById('dragValue');
+  let dragging = false, startX = 0, knobX = 0;
+  const maxX = track.offsetWidth - knob.offsetWidth - 8;
+
+  knob.addEventListener('pointerdown', e => {
+    dragging = true;
+    startX = e.clientX - knobX;
+    knob.setPointerCapture(e.pointerId);
+  });
+
+  knob.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    let x = Math.max(0, Math.min(maxX, e.clientX - startX));
+    knobX = x;
+    knob.style.left = (4 + x) + 'px';
+    label.textContent = `Position: ${Math.round(x)}px / ${Math.round(x/maxX*100)}%`;
+    // Color feedback
+    const hue = Math.round(x/maxX * 120); // 0=red 120=green
+    knob.style.background = `hsl(${hue},80%,55%)`;
+  });
+
+  knob.addEventListener('pointerup', () => {
+    dragging = false;
+    // Snap to nearest end
+    const mid = maxX / 2;
+    const snapTarget = knobX > mid ? maxX : 0;
+    gsap.to(knob, {
+      left: snapTarget + 4, duration: 0.4, ease: 'back.out(1.5)',
+      onUpdate: () => {
+        knobX = parseFloat(knob.style.left) - 4;
+        label.textContent = `Position: ${Math.round(knobX)}px / ${Math.round(knobX/maxX*100)}%`;
+      }
+    });
+  });
+
+  // ── PATTERN 6: 3D Tilt ───────────────────
+  // Mouse position → rotateX/Y via CSS transform. Spring on leave.
+  const tiltCard = document.getElementById('tiltCard');
+  tiltCard.addEventListener('mousemove', e => {
+    const rect = tiltCard.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top)  / rect.height - 0.5;
+    tiltCard.style.transform = `perspective(800px) rotateX(${y * -15}deg) rotateY(${x * 15}deg) scale(1.02)`;
+    tiltCard.style.transition = 'transform 0.05s linear';
+  });
+  tiltCard.addEventListener('mouseleave', () => {
+    tiltCard.style.transform = 'perspective(800px) rotateX(0) rotateY(0) scale(1)';
+    tiltCard.style.transition = 'transform 0.5s cubic-bezier(0.34,1.56,0.64,1)';
+  });
+
+  // ── PATTERN 6: Spotlight card ────────────
+  // Radial gradient follows cursor position inside card
+  const spotCard = document.getElementById('spotlightCard');
+  const spotGlow = document.getElementById('spotlightGlow');
+  spotCard.addEventListener('mousemove', e => {
+    const rect = spotCard.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    spotGlow.style.background = `radial-gradient(400px circle at ${x}px ${y}px, rgba(245,158,11,0.15), transparent 70%)`;
+  });
+</script>
+</body>
+</html>

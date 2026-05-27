@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Awwwards Navigation Patterns</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --bg: #0a0a0a; --white: #f5f5f5; --amber: #f59e0b; --zinc: #18181b; }
+  body { background: var(--bg); color: var(--white); font-family: 'Helvetica Neue', Arial, sans-serif; overflow-x: hidden; }
+
+  /* ─── SMART HEADER ─── */
+  #smart-header {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px;
+    z-index: 500;
+    background: rgba(10,10,10,0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    transform: translateY(0);
+    transition: transform 0.4s ease, background 0.3s ease;
+  }
+  #smart-header.hidden { transform: translateY(-100%); }
+  #smart-header.scrolled { background: rgba(10,10,10,0.95); }
+  .header-logo { font-size: 0.85rem; font-weight: 700; letter-spacing: -0.01em; }
+  .header-logo span { color: var(--amber); }
+  .header-links { display: flex; gap: 32px; }
+  .header-links a { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: #888; text-decoration: none; transition: color 0.2s; }
+  .header-links a:hover { color: var(--white); }
+  #menu-trigger {
+    display: flex; flex-direction: column; gap: 5px;
+    background: none; border: none; cursor: pointer; padding: 8px;
+  }
+  #menu-trigger span {
+    display: block; width: 24px; height: 1.5px;
+    background: var(--white);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  #menu-trigger.open span:nth-child(1) { transform: rotate(45deg) translate(4.5px, 4.5px); }
+  #menu-trigger.open span:nth-child(2) { opacity: 0; }
+  #menu-trigger.open span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
+
+  /* ─── FULLSCREEN MENU ─── */
+  #fullscreen-menu {
+    position: fixed; inset: 0;
+    background: var(--zinc);
+    z-index: 400;
+    clip-path: inset(0 0 100% 0);
+    display: flex; align-items: center; justify-content: center;
+  }
+  #fullscreen-menu.open { clip-path: inset(0 0 0% 0); }
+  .menu-inner { padding: 80px; }
+  .menu-nav { list-style: none; }
+  .menu-nav li {
+    overflow: hidden;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .menu-nav li:first-child { border-top: 1px solid rgba(255,255,255,0.06); }
+  .menu-nav a {
+    display: flex; align-items: center; justify-content: space-between;
+    text-decoration: none; color: var(--white);
+    font-size: clamp(2rem, 5vw, 4.5rem);
+    font-weight: 800; letter-spacing: -0.03em;
+    padding: 20px 0;
+    transform: translateY(110%);
+    transition: color 0.2s;
+  }
+  .menu-nav a:hover { color: var(--amber); }
+  .menu-nav .num { font-size: 0.65rem; letter-spacing: 0.2em; color: #444; }
+  .menu-social {
+    display: flex; gap: 24px; margin-top: 48px;
+    transform: translateY(20px); opacity: 0;
+  }
+  .menu-social a { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: #555; text-decoration: none; }
+  .menu-social a:hover { color: var(--amber); }
+
+  /* ─── SECTIONS ─── */
+  .section {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; text-align: center;
+    padding: 120px 60px 80px;
+    position: relative;
+  }
+  .section h1 { font-size: clamp(3rem, 8vw, 7rem); font-weight: 900; letter-spacing: -0.04em; line-height: 1; }
+  .section h1 em { font-style: normal; color: var(--amber); }
+  .section p { font-size: 1rem; color: #666; max-width: 500px; line-height: 1.7; margin-top: 24px; }
+
+  /* ─── PROGRESS DOTS ─── */
+  #section-dots {
+    position: fixed; right: 32px; top: 50%;
+    transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 10px;
+    z-index: 200;
+  }
+  .s-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #333;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s, height 0.3s;
+  }
+  .s-dot.active { background: var(--amber); height: 20px; border-radius: 3px; }
+
+  /* ─── FLOATING PILL NAV ─── */
+  #pill-nav {
+    position: fixed; bottom: 32px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; gap: 4px;
+    background: rgba(24,24,27,0.9);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 100px;
+    padding: 6px;
+    z-index: 200;
+  }
+  .pill-link {
+    padding: 8px 20px;
+    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; color: #888;
+    border-radius: 100px;
+    transition: color 0.2s, background 0.2s;
+  }
+  .pill-link.active { background: var(--amber); color: var(--bg); }
+  .pill-link:hover:not(.active) { color: var(--white); background: rgba(255,255,255,0.05); }
+
+  /* ─── MOBILE DRAWER ─── */
+  #mobile-drawer-btn {
+    position: fixed; bottom: 100px; right: 32px;
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: var(--amber);
+    color: var(--bg);
+    border: none; cursor: pointer;
+    font-size: 1.2rem;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 300;
+    box-shadow: 0 4px 24px rgba(245,158,11,0.3);
+  }
+  #mobile-drawer {
+    position: fixed; right: 0; top: 0; bottom: 0;
+    width: min(320px, 80vw);
+    background: var(--zinc);
+    z-index: 350;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex; flex-direction: column;
+    padding: 80px 40px 40px;
+    border-left: 1px solid rgba(255,255,255,0.06);
+  }
+  #mobile-drawer.open { transform: translateX(0); }
+  #drawer-close {
+    position: absolute; top: 24px; right: 24px;
+    background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer;
+  }
+  .drawer-links { list-style: none; }
+  .drawer-links li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .drawer-links a {
+    display: block; padding: 20px 0;
+    font-size: 1.2rem; font-weight: 700; letter-spacing: -0.02em;
+    text-decoration: none; color: var(--white); transition: color 0.2s;
+  }
+  .drawer-links a:hover { color: var(--amber); }
+
+  /* Section colors */
+  #s1 { background: var(--bg); }
+  #s2 { background: #0d0d0d; }
+  #s3 { background: #0a0d10; }
+  #s4 { background: #0d0a08; }
+</style>
+</head>
+<body>
+
+<!-- Smart Header -->
+<header id="smart-header">
+  <div class="header-logo">NAV<span>.</span>PATTERNS</div>
+  <nav class="header-links">
+    <a href="#s1">Work</a>
+    <a href="#s2">Process</a>
+    <a href="#s3">About</a>
+    <a href="#s4">Contact</a>
+  </nav>
+  <button id="menu-trigger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- Fullscreen Menu -->
+<div id="fullscreen-menu">
+  <div class="menu-inner">
+    <ul class="menu-nav">
+      <li><a href="#s1"><span>Work</span><span class="num">01</span></a></li>
+      <li><a href="#s2"><span>Process</span><span class="num">02</span></a></li>
+      <li><a href="#s3"><span>About</span><span class="num">03</span></a></li>
+      <li><a href="#s4"><span>Contact</span><span class="num">04</span></a></li>
+    </ul>
+    <div class="menu-social">
+      <a href="#">Instagram</a>
+      <a href="#">Behance</a>
+      <a href="#">Awwwards</a>
+    </div>
+  </div>
+</div>
+
+<!-- Section Progress Dots -->
+<div id="section-dots">
+  <div class="s-dot active" data-section="s1"></div>
+  <div class="s-dot" data-section="s2"></div>
+  <div class="s-dot" data-section="s3"></div>
+  <div class="s-dot" data-section="s4"></div>
+</div>
+
+<!-- Floating Pill Nav -->
+<div id="pill-nav">
+  <a href="#s1" class="pill-link active" data-s="s1">Work</a>
+  <a href="#s2" class="pill-link" data-s="s2">Process</a>
+  <a href="#s3" class="pill-link" data-s="s3">About</a>
+  <a href="#s4" class="pill-link" data-s="s4">Contact</a>
+</div>
+
+<!-- Drawer Trigger -->
+<button id="mobile-drawer-btn">☰</button>
+<div id="mobile-drawer">
+  <button id="drawer-close">✕</button>
+  <ul class="drawer-links">
+    <li><a href="#s1">Work</a></li>
+    <li><a href="#s2">Process</a></li>
+    <li><a href="#s3">About</a></li>
+    <li><a href="#s4">Contact</a></li>
+  </ul>
+</div>
+
+<!-- Sections -->
+<section class="section" id="s1">
+  <h1>Fullscreen<br><em>Menu</em></h1>
+  <p>Click the hamburger in the top-right to open the clip-path animated fullscreen navigation with stagger link reveal.</p>
+</section>
+
+<section class="section" id="s2">
+  <h1>Smart<br><em>Header</em></h1>
+  <p>The header hides as you scroll down and reappears as you scroll up — smart, unobtrusive navigation.</p>
+</section>
+
+<section class="section" id="s3">
+  <h1>Progress<br><em>Dots</em></h1>
+  <p>Section indicator dots on the right track your position. Click any dot to jump to that section.</p>
+</section>
+
+<section class="section" id="s4">
+  <h1>Floating<br><em>Pill</em></h1>
+  <p>The pill nav at the bottom provides persistent navigation without disrupting the visual experience.</p>
+</section>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// ─── LENIS ───
+const lenis = new Lenis({ duration: 1.2 });
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add(t => lenis.raf(t * 1000));
+gsap.ticker.lagSmoothing(0);
+
+// ─── SMART HEADER ───
+let lastScroll = 0;
+const header = document.getElementById('smart-header');
+
+lenis.on('scroll', ({ scroll }) => {
+  const dir = scroll > lastScroll ? 'down' : 'up';
+  header.classList.toggle('hidden', dir === 'down' && scroll > 80);
+  header.classList.toggle('scrolled', scroll > 20);
+  lastScroll = scroll;
+});
+
+// ─── FULLSCREEN MENU ───
+const menu    = document.getElementById('fullscreen-menu');
+const trigger = document.getElementById('menu-trigger');
+let menuOpen  = false;
+let menuTl    = null;
+
+function buildMenuTl() {
+  return gsap.timeline({ paused: true })
+    .to(menu, {
+      clipPath: 'inset(0 0 0% 0)',
+      duration: 0.7, ease: 'power4.inOut'
+    })
+    .to('.menu-nav a', {
+      translateY: '0%',
+      duration: 0.6, ease: 'power3.out',
+      stagger: 0.07
+    }, '-=0.2')
+    .to('.menu-social', { translateY: 0, opacity: 1, duration: 0.4 }, '-=0.1');
+}
+
+trigger.addEventListener('click', () => {
+  menuOpen = !menuOpen;
+  trigger.classList.toggle('open', menuOpen);
+
+  if (!menuTl) {
+    // Reset link positions
+    gsap.set('.menu-nav a', { translateY: '110%' });
+    gsap.set('.menu-social', { translateY: 20, opacity: 0 });
+    menuTl = buildMenuTl();
+  }
+
+  if (menuOpen) {
+    menu.classList.add('open');
+    menuTl.play();
+  } else {
+    menuTl.reverse().then(() => { menu.classList.remove('open'); menuTl = null; });
+  }
+});
+
+// Close on link click
+menu.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    menuOpen = false;
+    trigger.classList.remove('open');
+    if (menuTl) menuTl.reverse().then(() => { menu.classList.remove('open'); menuTl = null; });
+  });
+});
+
+// ─── SECTION TRACKING ───
+const sectionIds = ['s1','s2','s3','s4'];
+const dots       = document.querySelectorAll('.s-dot');
+const pillLinks  = document.querySelectorAll('.pill-link');
+
+sectionIds.forEach((id, idx) => {
+  ScrollTrigger.create({
+    trigger: `#${id}`,
+    start: 'top 60%',
+    end: 'bottom 40%',
+    onEnter()  { activate(idx); },
+    onEnterBack() { activate(idx); }
+  });
+});
+
+function activate(idx) {
+  dots.forEach((d,i) => d.classList.toggle('active', i === idx));
+  pillLinks.forEach((l,i) => l.classList.toggle('active', i === idx));
+}
+
+// Dot click
+dots.forEach((dot, idx) => {
+  dot.addEventListener('click', () => {
+    lenis.scrollTo(`#${dot.dataset.section}`, { duration: 1.2 });
+  });
+});
+
+// Pill link click
+pillLinks.forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    lenis.scrollTo(`#${link.dataset.s}`, { duration: 1.2 });
+  });
+});
+
+// ─── MOBILE DRAWER ───
+const drawer = document.getElementById('mobile-drawer');
+document.getElementById('mobile-drawer-btn').addEventListener('click', () => drawer.classList.add('open'));
+document.getElementById('drawer-close').addEventListener('click',      () => drawer.classList.remove('open'));
+drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => drawer.classList.remove('open')));
+</script>
+</body>
+</html>

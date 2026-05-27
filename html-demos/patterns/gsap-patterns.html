@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GSAP Animation Patterns</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111;
+      --border: #222;
+      --accent: #f59e0b;
+      --text: #fff;
+      --muted: #666;
+    }
+    html { scroll-behavior: auto; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; overflow-x: hidden; }
+
+    /* ── LABELS ── */
+    .technique-label {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(245,158,11,0.15);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 6px 18px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      z-index: 1000;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .section-tag {
+      display: inline-block;
+      background: rgba(245,158,11,0.12);
+      border: 1px solid rgba(245,158,11,0.3);
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+
+    /* ── SCROLL PROGRESS BAR ── */
+    /* Technique: scroll-linked progress bar via GSAP scrub */
+    .progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: var(--accent);
+      transform-origin: left center;
+      transform: scaleX(0);
+      z-index: 999;
+    }
+
+    section { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 80px 40px; position: relative; }
+    .container { max-width: 900px; width: 100%; margin: 0 auto; }
+
+    /* ─────────────────────────────────────────
+       SECTION 1: Parallax Hero
+    ───────────────────────────────────────── */
+    #parallax {
+      overflow: hidden;
+      background: var(--bg);
+    }
+    .hero-bg {
+      position: absolute;
+      inset: -30%;
+      background: radial-gradient(ellipse at 60% 40%, rgba(245,158,11,0.15) 0%, transparent 60%),
+                  radial-gradient(ellipse at 20% 80%, rgba(245,158,11,0.05) 0%, transparent 50%);
+      will-change: transform;
+    }
+    .hero-content { position: relative; z-index: 2; text-align: center; }
+    .hero-content h1 {
+      font-size: clamp(48px, 10vw, 120px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 0.9;
+      color: #fff;
+    }
+    .hero-content p { color: var(--muted); font-size: 18px; margin-top: 20px; }
+
+    /* ─────────────────────────────────────────
+       SECTION 2: Stagger Text Reveal
+    ───────────────────────────────────────── */
+    #stagger { background: var(--surface); }
+    .cards-section { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; }
+    .card {
+      background: #1a1a1a;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 24px;
+      opacity: 0;
+    }
+    .card-num { font-size: 40px; font-weight: 900; color: var(--accent); display: block; margin-bottom: 12px; }
+    .card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+    .card p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+    /* ─────────────────────────────────────────
+       SECTION 3: Horizontal Scroll
+    ───────────────────────────────────────── */
+    #horizontal-wrap {
+      overflow: hidden;
+      min-height: 100vh;
+      height: auto;
+      display: block;
+      padding: 0;
+    }
+    .panels-container {
+      display: flex;
+      width: 400vw;
+    }
+    .panel {
+      width: 100vw;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 16px;
+      flex-shrink: 0;
+    }
+    .panel:nth-child(1) { background: #0d0d0d; }
+    .panel:nth-child(2) { background: #0f0e0a; }
+    .panel:nth-child(3) { background: #0a0d0f; }
+    .panel:nth-child(4) { background: #0f0a0d; }
+    .panel-num {
+      font-size: 120px;
+      font-weight: 900;
+      color: rgba(245,158,11,0.12);
+      line-height: 1;
+      pointer-events: none;
+    }
+    .panel h2 { font-size: 48px; font-weight: 800; color: #fff; }
+    .panel p { color: var(--muted); font-size: 18px; }
+
+    /* ─────────────────────────────────────────
+       SECTION 4: Pinned Section with Changing Content
+    ───────────────────────────────────────── */
+    #pin-section {
+      padding: 0;
+      min-height: auto;
+      height: 400vh;
+      display: block;
+      align-items: unset;
+      justify-content: unset;
+    }
+    .pin-sticky {
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 60px;
+      padding: 80px;
+      background: #0a0a0a;
+    }
+    .pin-left { position: relative; }
+    .pin-right {}
+    .feature-text { opacity: 0; }
+    .feature-text h2 { font-size: 52px; font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; }
+    .feature-text p { color: var(--muted); font-size: 17px; line-height: 1.7; margin-top: 16px; }
+    .pin-visual {
+      width: 100%;
+      aspect-ratio: 4/3;
+      border-radius: 20px;
+      background: #1a1a1a;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 64px;
+      transition: background 0.5s;
+    }
+
+    /* ─────────────────────────────────────────
+       SECTION 5: Character-by-Character Reveal
+    ───────────────────────────────────────── */
+    #char-reveal { background: var(--surface); text-align: center; }
+    .hero-title {
+      font-size: clamp(36px, 7vw, 80px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: #fff;
+    }
+    .hero-title .char {
+      display: inline-block;
+      transform-style: preserve-3d;
+    }
+    .big-text {
+      font-size: clamp(24px, 4vw, 48px);
+      font-weight: 700;
+      color: var(--accent);
+      margin-top: 32px;
+    }
+    .big-text .word { display: inline-block; margin-right: 0.3em; }
+
+    /* ─────────────────────────────────────────
+       SECTION 6: SVG Path Draw-On
+    ───────────────────────────────────────── */
+    #svg-draw { background: #0a0a0a; flex-direction: column; gap: 32px; }
+    .svg-wrap {
+      width: 300px;
+      height: 300px;
+    }
+    .svg-wrap svg { width: 100%; height: 100%; }
+    #draw-path {
+      stroke: var(--accent);
+      stroke-width: 3;
+      fill: none;
+      stroke-linecap: round;
+    }
+
+    /* ─────────────────────────────────────────
+       SECTION 7: Counter Animation
+    ───────────────────────────────────────── */
+    #counters { background: var(--surface); }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; }
+    .stat-card {
+      background: #1a1a1a;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px 24px;
+      text-align: center;
+    }
+    .count {
+      display: block;
+      font-size: 56px;
+      font-weight: 900;
+      color: var(--accent);
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .stat-label { color: var(--muted); font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 8px; }
+
+    /* ─────────────────────────────────────────
+       SECTION 8: Image Reveal with Clip-Path
+    ───────────────────────────────────────── */
+    #image-reveal { background: #0a0a0a; gap: 40px; }
+    .reveal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; }
+    .image-wrap {
+      overflow: hidden;
+      border-radius: 16px;
+      aspect-ratio: 4/5;
+      position: relative;
+    }
+    .image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .image-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      background: #1a1a1a;
+    }
+
+    /* Utility */
+    .section-header { text-align: center; margin-bottom: 48px; }
+    .section-header h2 { font-size: 40px; font-weight: 800; margin-bottom: 8px; }
+    .section-header p { color: var(--muted); font-size: 16px; }
+
+    @media (max-width: 768px) {
+      .cards-section, .stats, .reveal-grid { grid-template-columns: 1fr; }
+      .pin-sticky { grid-template-columns: 1fr; }
+      .panels-container { width: 400vw; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Scroll progress bar — technique: GSAP scrub scaleX -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 1: PARALLAX HERO
+     Technique: gsap.to yPercent with scrub ScrollTrigger
+════════════════════════════════════════════ -->
+<section id="parallax">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-content">
+    <div class="section-tag">Technique 1 — Scroll Parallax</div>
+    <h1>SCROLL<br>DRIVEN<br>MOTION</h1>
+    <p>Background moves at a different rate than content, creating depth</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 2: STAGGER REVEAL
+     Technique: gsap.from stagger on scroll entry
+════════════════════════════════════════════ -->
+<section id="stagger">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Technique 2 — Stagger Reveal on Scroll</div>
+      <h2>Cards cascade in</h2>
+      <p>Each card animates in with a 150ms delay between them</p>
+    </div>
+    <div class="cards-section">
+      <div class="card">
+        <span class="card-num">01</span>
+        <h3>Design Systems</h3>
+        <p>Consistent token-based design that scales across every surface.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">02</span>
+        <h3>Motion Design</h3>
+        <p>Purposeful animation that communicates state and delights users.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">03</span>
+        <h3>Performance</h3>
+        <p>60fps guaranteed. GPU-accelerated transforms only.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 3: HORIZONTAL SCROLL
+     Technique: GSAP pin + xPercent scrub + snap
+════════════════════════════════════════════ -->
+<section id="horizontal-wrap">
+  <div class="section-tag" style="position:absolute;top:30px;left:50%;transform:translateX(-50%);z-index:10">Technique 3 — Horizontal Scroll Section</div>
+  <div class="panels-container" id="panelsContainer">
+    <div class="panel">
+      <div class="panel-num">01</div>
+      <h2>Kitchen</h2>
+      <p>Complete kitchen transformations</p>
+    </div>
+    <div class="panel">
+      <div class="panel-num">02</div>
+      <h2>Bathroom</h2>
+      <p>Luxury bathroom remodels</p>
+    </div>
+    <div class="panel">
+      <div class="panel-num">03</div>
+      <h2>Basement</h2>
+      <p>Legal suite conversions</p>
+    </div>
+    <div class="panel">
+      <div class="panel-num">04</div>
+      <h2>Garden Suite</h2>
+      <p>Backyard ADU construction</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 4: PINNED SECTION
+     Technique: ScrollTrigger pin with scrubbed opacity
+════════════════════════════════════════════ -->
+<section id="pin-section">
+  <div class="pin-sticky" id="pinSticky">
+    <div class="pin-left">
+      <div class="section-tag">Technique 4 — Pinned Section</div>
+      <div class="feature-text" id="featureText1">
+        <h2>Design<br><span style="color:var(--accent)">Intent</span></h2>
+        <p>The section stays pinned while the content animates. Scroll down to reveal the next feature. Perfect for feature showcases and product highlights.</p>
+      </div>
+      <div class="feature-text" id="featureText2" style="position:absolute;top:0;left:0;right:0;">
+        <h2>Build<br><span style="color:var(--accent)">Quality</span></h2>
+        <p>Every detail matters. From the baseline grid to the last pixel, craftsmanship is non-negotiable. This content replaces the previous on scroll.</p>
+      </div>
+      <div class="feature-text" id="featureText3" style="position:absolute;top:0;left:0;right:0;">
+        <h2>Ship<br><span style="color:var(--accent)">Fast</span></h2>
+        <p>Production-ready code from day one. Accessible, performant, and maintainable. No compromise between quality and speed.</p>
+      </div>
+    </div>
+    <div class="pin-right">
+      <div class="pin-visual" id="pinVisual">✦</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 5: CHARACTER / WORD REVEAL
+     Technique: Manual DOM split + stagger rotateX
+════════════════════════════════════════════ -->
+<section id="char-reveal">
+  <div class="container" style="text-align:center;">
+    <div class="section-tag">Technique 5 — Character & Word Reveal</div>
+    <div class="hero-title" id="heroTitle">Award-Winning Design Craftsmanship</div>
+    <div class="big-text" id="bigText">Built for humans who notice the difference</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 6: SVG PATH DRAW-ON
+     Technique: strokeDashoffset animation (no DrawSVG plugin)
+════════════════════════════════════════════ -->
+<section id="svg-draw">
+  <div class="section-tag">Technique 6 — SVG Path Draw-On Animation</div>
+  <div class="svg-wrap">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <!-- House icon path -->
+      <path id="draw-path"
+        d="M100 20 L170 80 L170 170 L30 170 L30 80 Z
+           M30 80 L100 20 L170 80
+           M75 170 L75 120 L125 120 L125 170
+           M85 90 L115 90 L115 115 L85 115 Z" />
+    </svg>
+  </div>
+  <p style="color:var(--muted);font-size:14px;text-align:center;">Scroll to trigger the path draw — uses strokeDashoffset, no paid plugin needed</p>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 7: COUNTER ANIMATION
+     Technique: GSAP counter object with onUpdate
+════════════════════════════════════════════ -->
+<section id="counters">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Technique 7 — Counter Animation</div>
+      <h2>Numbers that earn trust</h2>
+      <p>Counters animate from 0 when they enter the viewport</p>
+    </div>
+    <div class="stats">
+      <div class="stat-card">
+        <span class="count" id="count1">0</span>
+        <div class="stat-label">Projects Delivered</div>
+      </div>
+      <div class="stat-card">
+        <span class="count" id="count2">0</span>
+        <div class="stat-label">Client Satisfaction</div>
+      </div>
+      <div class="stat-card">
+        <span class="count" id="count3">0</span>
+        <div class="stat-label">Years Experience</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 8: IMAGE REVEAL WITH CLIP-PATH
+     Technique: clipPath inset wipe + scale reveal
+════════════════════════════════════════════ -->
+<section id="image-reveal">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Technique 8 — Image Reveal (Clip-Path Wipe)</div>
+      <h2>Reveal on scroll</h2>
+      <p>Clip-path wipe from left combined with scale-down from 1.3</p>
+    </div>
+    <div class="reveal-grid">
+      <div class="image-wrap">
+        <div class="image-placeholder" style="background:linear-gradient(135deg,#1a1200,#3d2800);">🏠</div>
+      </div>
+      <div class="image-wrap">
+        <div class="image-placeholder" style="background:linear-gradient(135deg,#0a1a0a,#0d3d1a);">🌿</div>
+      </div>
+      <div class="image-wrap">
+        <div class="image-placeholder" style="background:linear-gradient(135deg,#0a0a1a,#1a0d3d);">✦</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div style="height:20vh;"></div>
+
+<script>
+  // ── SETUP: Lenis smooth scroll + GSAP ticker
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+  });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ── SCROLL PROGRESS BAR ──────────────────────────────────────
+  // Technique: scaleX from 0→1 driven by scroll position
+  gsap.to('#progressBar', {
+    scaleX: 1,
+    ease: 'none',
+    transformOrigin: 'left center',
+    scrollTrigger: {
+      trigger: 'body',
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 0.3
+    }
+  });
+
+  // ── SECTION 1: PARALLAX ──────────────────────────────────────
+  // Technique: yPercent -30 scrubbed. Background moves at 30% scroll rate.
+  gsap.to('#heroBg', {
+    yPercent: -30,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '#parallax',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true
+    }
+  });
+
+  // ── SECTION 2: STAGGER REVEAL ────────────────────────────────
+  // Technique: gsap.from cards with stagger:0.15, triggered at 80% viewport
+  gsap.from('.card', {
+    opacity: 0,
+    y: 60,
+    stagger: 0.15,
+    duration: 0.8,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: '.cards-section',
+      start: 'top 80%'
+    }
+  });
+
+  // ── SECTION 3: HORIZONTAL SCROLL ─────────────────────────────
+  // Technique: pin wrap, translate panels by -100% * (n-1), snap to each panel
+  const panels = gsap.utils.toArray('.panel');
+  gsap.to(panels, {
+    xPercent: -100 * (panels.length - 1),
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '#horizontal-wrap',
+      pin: true,
+      scrub: 1,
+      snap: 1 / (panels.length - 1),
+      end: () => '+=' + document.querySelector('#horizontal-wrap').offsetWidth * 3
+    }
+  });
+
+  // ── SECTION 4: PINNED SECTION ────────────────────────────────
+  // Technique: pin element, scrub opacity/x of text blocks
+  const pinTl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '#pin-section',
+      start: 'top top',
+      end: 'bottom bottom',
+      pin: '#pinSticky',
+      scrub: 1
+    }
+  });
+
+  // Initial state
+  gsap.set('#featureText1', { opacity: 1, x: 0 });
+  gsap.set(['#featureText2', '#featureText3'], { opacity: 0, x: 40 });
+
+  const visuals = ['#1a1a1a', '#1a0f00', '#001a0f'];
+  const emojis  = ['✦', '🏗️', '🚀'];
+
+  pinTl
+    .to('#featureText1', { opacity: 0, x: -40, duration: 0.3 })
+    .to('#featureText2', { opacity: 1, x: 0, duration: 0.3 }, '<')
+    .to('#pinVisual',    { background: visuals[1], duration: 0.3 }, '<')
+    .to({}, { duration: 0.4 }) // hold
+    .to('#featureText2', { opacity: 0, x: -40, duration: 0.3 })
+    .to('#featureText3', { opacity: 1, x: 0, duration: 0.3 }, '<')
+    .to('#pinVisual',    { background: visuals[2], duration: 0.3 }, '<');
+
+  // ── SECTION 5: CHARACTER REVEAL ──────────────────────────────
+  // Technique: split textContent into .char spans, animate rotateX + stagger
+  const titleEl = document.getElementById('heroTitle');
+  titleEl.innerHTML = titleEl.textContent.replace(/\S/g, '<span class="char">$&</span>');
+
+  gsap.from('#heroTitle .char', {
+    opacity: 0,
+    y: 80,
+    rotateX: -90,
+    stagger: 0.02,
+    duration: 0.8,
+    ease: 'back.out(1.7)',
+    scrollTrigger: {
+      trigger: '#heroTitle',
+      start: 'top 80%'
+    }
+  });
+
+  // Word-by-word reveal
+  const bigTextEl = document.getElementById('bigText');
+  const words = bigTextEl.textContent.split(' ');
+  bigTextEl.innerHTML = words.map(w => `<span class="word">${w}</span>`).join(' ');
+
+  gsap.from('#bigText .word', {
+    opacity: 0,
+    y: 40,
+    stagger: 0.08,
+    duration: 0.6,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: '#bigText',
+      start: 'top 85%'
+    }
+  });
+
+  // ── SECTION 6: SVG PATH DRAW-ON ──────────────────────────────
+  // Technique: measure path length, set dasharray = dashoffset = length, animate to 0
+  const path = document.querySelector('#draw-path');
+  const length = path.getTotalLength();
+  gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
+  gsap.to(path, {
+    strokeDashoffset: 0,
+    duration: 2,
+    ease: 'power2.inOut',
+    scrollTrigger: {
+      trigger: '#svg-draw',
+      start: 'top 70%'
+    }
+  });
+
+  // ── SECTION 7: COUNTERS ──────────────────────────────────────
+  // Technique: gsap counter object with onUpdate, triggered once
+  const counterData = [
+    { el: '#count1', value: 500, suffix: '+' },
+    { el: '#count2', value: 98, suffix: '%' },
+    { el: '#count3', value: 15, suffix: 'yr' }
+  ];
+
+  counterData.forEach(({ el, value, suffix }) => {
+    const counter = { val: 0 };
+    gsap.to(counter, {
+      val: value,
+      duration: 2.5,
+      ease: 'power1.out',
+      onUpdate: () => {
+        document.querySelector(el).textContent = Math.round(counter.val).toLocaleString() + suffix;
+      },
+      scrollTrigger: {
+        trigger: '.stats',
+        start: 'top 80%',
+        once: true
+      }
+    });
+  });
+
+  // ── SECTION 8: IMAGE REVEAL ──────────────────────────────────
+  // Technique: clipPath inset wipe (right to left) + img scale from 1.3
+  document.querySelectorAll('.image-wrap').forEach((wrap, i) => {
+    gsap.set(wrap, { overflow: 'hidden' });
+    // Clip-path wipe
+    gsap.from(wrap, {
+      clipPath: 'inset(0 100% 0 0)',
+      duration: 1,
+      ease: 'power3.inOut',
+      delay: i * 0.15,
+      scrollTrigger: {
+        trigger: '.reveal-grid',
+        start: 'top 80%'
+      }
+    });
+    // Inner scale down
+    const inner = wrap.querySelector('.image-placeholder');
+    gsap.from(inner, {
+      scale: 1.3,
+      duration: 1.2,
+      ease: 'power2.out',
+      delay: i * 0.15,
+      scrollTrigger: {
+        trigger: '.reveal-grid',
+        start: 'top 80%'
+      }
+    });
+  });
+</script>
+</body>
+</html>

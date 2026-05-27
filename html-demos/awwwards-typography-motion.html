@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Awwwards Typography & Motion</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/split-type"></script>
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --bg: #0a0a0a; --white: #f5f5f5; --amber: #f59e0b; --zinc: #18181b; }
+
+  body { background: var(--bg); color: var(--white); font-family: 'Helvetica Neue', Arial, sans-serif; overflow-x: hidden; }
+
+  section { padding: 140px 80px; min-height: 100vh; display: flex; align-items: center; }
+  .section-label {
+    font-size: 0.65rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--amber);
+    margin-bottom: 24px; display: block;
+  }
+
+  /* ─── CHAR REVEAL HERO ─── */
+  .char-hero {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+  }
+  .char-hero h1 {
+    font-size: clamp(4rem, 12vw, 11rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+  }
+  /* SplitType adds .char wrapper — we animate these */
+  .char-hero .char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(1em) rotate(5deg);
+  }
+  .char-hero .word { overflow: hidden; }
+
+  /* ─── WORD STAGGER ─── */
+  .word-stagger-section {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .word-stagger-section h2 {
+    font-size: clamp(2rem, 5vw, 4.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    max-width: 900px;
+  }
+  .word-stagger-section h2 .word {
+    display: inline-block;
+    overflow: hidden;
+  }
+  .word-stagger-section h2 .word .word-inner {
+    display: inline-block;
+    transform: translateY(110%);
+  }
+  .word-stagger-section .word-sub {
+    font-size: 1rem; color: #666;
+    max-width: 500px; line-height: 1.7;
+    margin-top: 32px;
+  }
+
+  /* ─── MORPH TEXT ─── */
+  .morph-section {
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    background: var(--zinc);
+  }
+  .morph-container {
+    position: relative;
+    height: clamp(80px, 15vw, 140px);
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .morph-word {
+    font-size: clamp(3rem, 10vw, 9rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    position: absolute;
+    clip-path: inset(0 100% 0 0);
+    color: var(--amber);
+    white-space: nowrap;
+  }
+  .morph-word.out { clip-path: inset(0 0 0 0); }
+
+  /* ─── MARQUEE ─── */
+  .marquee-section {
+    padding: 80px 0;
+    overflow: hidden;
+    min-height: unset;
+    flex-direction: column; gap: 0;
+    border-top: 1px solid #1a1a1a;
+    border-bottom: 1px solid #1a1a1a;
+  }
+  .marquee-track {
+    display: flex;
+    gap: 60px;
+    white-space: nowrap;
+    animation: marquee 20s linear infinite;
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    padding: 16px 0;
+  }
+  .marquee-track.reverse { animation-direction: reverse; animation-duration: 25s; }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .marquee-track .sep { color: var(--amber); }
+  .marquee-track .outline {
+    -webkit-text-stroke: 1px var(--white);
+    color: transparent;
+  }
+
+  /* ─── SCRAMBLE ─── */
+  .scramble-section {
+    flex-direction: column;
+    gap: 48px;
+  }
+  .scramble-section h2 {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+  .scramble-items {
+    display: flex; flex-direction: column; gap: 0;
+    border-top: 1px solid #1a1a1a;
+    max-width: 800px;
+    width: 100%;
+  }
+  .scramble-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 0;
+    border-bottom: 1px solid #1a1a1a;
+    cursor: pointer;
+    transition: color 0.2s;
+    gap: 20px;
+  }
+  .scramble-item:hover { color: var(--amber); }
+  .scramble-item .title {
+    font-size: clamp(1.2rem, 3vw, 2.2rem);
+    font-weight: 700; letter-spacing: -0.02em;
+    font-family: 'Courier New', monospace;
+    min-width: 200px;
+  }
+  .scramble-item .num {
+    font-size: 0.65rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: #444;
+  }
+  .scramble-item:hover .num { color: var(--amber); }
+
+  /* ─── COUNTER ─── */
+  .counter-section {
+    flex-direction: column;
+    text-align: center;
+    gap: 80px;
+  }
+  .counter-section h2 {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: #666;
+  }
+  .counters-grid {
+    display: flex; gap: 80px;
+    flex-wrap: wrap; justify-content: center;
+  }
+  .counter-block { text-align: center; }
+  .counter-value {
+    font-size: clamp(4rem, 10vw, 9rem);
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    color: var(--white);
+    font-variant-numeric: tabular-nums;
+  }
+  .counter-value span.suffix { color: var(--amber); }
+  .counter-label {
+    font-size: 0.7rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: #444;
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+
+<!-- 1. Char-by-char reveal -->
+<section class="char-hero">
+  <span class="section-label">Technique 01 — Character Reveal</span>
+  <h1 id="char-title">Typography<br>Is Motion</h1>
+</section>
+
+<!-- 2. Word stagger on scroll -->
+<section class="word-stagger-section">
+  <span class="section-label">Technique 02 — Word Stagger on Scroll</span>
+  <h2 id="word-title">
+    Design is the silent ambassador of your brand — every letter, every space, every pause tells the story.
+  </h2>
+  <p class="word-sub">Words animate into view word-by-word as you scroll, creating a reading rhythm that guides attention naturally.</p>
+</section>
+
+<!-- 3. Morphing text -->
+<section class="morph-section">
+  <span class="section-label">Technique 03 — Word Morph (clip-path)</span>
+  <div style="margin-bottom:32px; font-size:1rem; color:#555">Watch the word transform below</div>
+  <div class="morph-container">
+    <div class="morph-word" id="morph-a">Craft</div>
+    <div class="morph-word" id="morph-b">Create</div>
+  </div>
+</section>
+
+<!-- 4. Marquee -->
+<section class="marquee-section">
+  <div class="marquee-track" id="marquee1">
+    <span>Award Winning</span>
+    <span class="sep">✦</span>
+    <span class="outline">Motion Design</span>
+    <span class="sep">✦</span>
+    <span>Typography</span>
+    <span class="sep">✦</span>
+    <span class="outline">Interaction</span>
+    <span class="sep">✦</span>
+    <span>Award Winning</span>
+    <span class="sep">✦</span>
+    <span class="outline">Motion Design</span>
+    <span class="sep">✦</span>
+    <span>Typography</span>
+    <span class="sep">✦</span>
+    <span class="outline">Interaction</span>
+    <span class="sep">✦</span>
+  </div>
+  <div class="marquee-track reverse" id="marquee2">
+    <span class="outline">GSAP</span>
+    <span class="sep">◆</span>
+    <span>ScrollTrigger</span>
+    <span class="sep">◆</span>
+    <span class="outline">SplitType</span>
+    <span class="sep">◆</span>
+    <span>Three.js</span>
+    <span class="sep">◆</span>
+    <span class="outline">GSAP</span>
+    <span class="sep">◆</span>
+    <span>ScrollTrigger</span>
+    <span class="sep">◆</span>
+    <span class="outline">SplitType</span>
+    <span class="sep">◆</span>
+    <span>Three.js</span>
+    <span class="sep">◆</span>
+  </div>
+</section>
+
+<!-- 5. Scramble text -->
+<section class="scramble-section">
+  <span class="section-label">Technique 05 — Scramble Text on Hover</span>
+  <h2>Hover to Scramble</h2>
+  <div class="scramble-items">
+    <div class="scramble-item" data-text="Branding">
+      <span class="title" data-scramble="Branding">Branding</span>
+      <span class="num">01 / 04</span>
+    </div>
+    <div class="scramble-item" data-text="Web Design">
+      <span class="title" data-scramble="Web Design">Web Design</span>
+      <span class="num">02 / 04</span>
+    </div>
+    <div class="scramble-item" data-text="Motion">
+      <span class="title" data-scramble="Motion">Motion</span>
+      <span class="num">03 / 04</span>
+    </div>
+    <div class="scramble-item" data-text="Development">
+      <span class="title" data-scramble="Development">Development</span>
+      <span class="num">04 / 04</span>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Big number counter -->
+<section class="counter-section">
+  <h2>Numbers that tell the story</h2>
+  <div class="counters-grid">
+    <div class="counter-block">
+      <div class="counter-value" data-target="247" data-suffix="+">0</div>
+      <div class="counter-label">Projects Delivered</div>
+    </div>
+    <div class="counter-block">
+      <div class="counter-value" data-target="98" data-suffix="%">0</div>
+      <div class="counter-label">Client Satisfaction</div>
+    </div>
+    <div class="counter-block">
+      <div class="counter-value" data-target="12" data-suffix="">0</div>
+      <div class="counter-label">Awards Won</div>
+    </div>
+    <div class="counter-block">
+      <div class="counter-value" data-target="8" data-suffix="yrs">0</div>
+      <div class="counter-label">In Business</div>
+    </div>
+  </div>
+</section>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// ─── LENIS ───
+const lenis = new Lenis({ duration: 1.2 });
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add(t => lenis.raf(t * 1000));
+gsap.ticker.lagSmoothing(0);
+
+// ─── 1. CHAR REVEAL (SplitType) ───
+const split = new SplitType('#char-title', { types: 'chars,words' });
+gsap.to(split.chars, {
+  opacity: 1, y: 0, rotate: 0,
+  duration: 0.6,
+  stagger: { each: 0.04, from: 'start' },
+  ease: 'back.out(1.5)',
+  delay: 0.3
+});
+
+// ─── 2. WORD STAGGER ON SCROLL ───
+const wordTitle = document.getElementById('word-title');
+// Wrap words manually
+const words = wordTitle.textContent.split(' ');
+wordTitle.innerHTML = words.map(w =>
+  `<span class="word"><span class="word-inner">${w}</span></span>`
+).join(' ');
+
+gsap.to('#word-title .word-inner', {
+  translateY: '0%',
+  duration: 0.7,
+  stagger: 0.05,
+  ease: 'power3.out',
+  scrollTrigger: {
+    trigger: '#word-title',
+    start: 'top 80%',
+    once: true
+  }
+});
+
+// ─── 3. MORPH WORD ───
+const morphA = document.getElementById('morph-a');
+const morphB = document.getElementById('morph-b');
+const morphWords = ['Craft', 'Create', 'Build', 'Design', 'Inspire', 'Deliver'];
+let morphIdx = 0;
+let isMorphing = false;
+
+function doMorph() {
+  if (isMorphing) return;
+  isMorphing = true;
+  morphIdx = (morphIdx + 1) % morphWords.length;
+  const nextWord = morphWords[morphIdx];
+
+  // Set the incoming word
+  morphB.textContent = nextWord;
+  morphB.style.clipPath = 'inset(0 100% 0 0)';
+
+  gsap.timeline({ onComplete: () => { isMorphing = false; } })
+    .to(morphA, { clipPath: 'inset(0 0 0 100%)', duration: 0.5, ease: 'power3.inOut' })
+    .to(morphB, { clipPath: 'inset(0 0% 0 0)', duration: 0.5, ease: 'power3.inOut' }, '-=0.25')
+    .add(() => {
+      morphA.textContent = morphB.textContent;
+      morphA.style.clipPath = 'inset(0 0 0 0)';
+      morphB.style.clipPath = 'inset(0 100% 0 0)';
+    });
+}
+// Initialize
+morphA.style.clipPath = 'inset(0 0 0 0)';
+setInterval(doMorph, 2000);
+
+// ─── 5. SCRAMBLE TEXT ───
+const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
+
+function scramble(el, original) {
+  let iter = 0;
+  const total = original.length * 3;
+  const id = setInterval(() => {
+    el.textContent = original.split('').map((ch, i) => {
+      if (ch === ' ') return ' ';
+      if (i < iter / 3) return ch;
+      return CHARS[Math.floor(Math.random() * CHARS.length)];
+    }).join('');
+    iter++;
+    if (iter > total) { el.textContent = original; clearInterval(id); }
+  }, 30);
+}
+
+document.querySelectorAll('[data-scramble]').forEach(el => {
+  const original = el.dataset.scramble;
+  el.closest('.scramble-item').addEventListener('mouseenter', () => scramble(el, original));
+});
+
+// ─── 6. COUNTER ───
+document.querySelectorAll('.counter-value[data-target]').forEach(el => {
+  const target = parseInt(el.dataset.target);
+  const suffix = el.dataset.suffix || '';
+  ScrollTrigger.create({
+    trigger: el,
+    start: 'top 85%',
+    once: true,
+    onEnter() {
+      gsap.to({ val: 0 }, {
+        val: target, duration: 2, ease: 'power2.out',
+        onUpdate() {
+          el.innerHTML = Math.round(this.targets()[0].val) + `<span class="suffix">${suffix}</span>`;
+        }
+      });
+    }
+  });
+});
+
+// ─── MARQUEE HOVER PAUSE ───
+document.querySelectorAll('.marquee-track').forEach(track => {
+  track.addEventListener('mouseenter', () => track.style.animationPlayState = 'paused');
+  track.addEventListener('mouseleave', () => track.style.animationPlayState = 'running');
+});
+</script>
+</body>
+</html>

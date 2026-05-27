@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Garden Suite Co. — Add a Legal Suite. Double Your Rental Income.</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0c0a09;
+  --stone: #1c1917;
+  --fg: #f5f5f4;
+  --amber: #f59e0b;
+  --amber-dark: #d97706;
+  --green: #22c55e;
+  --green-dark: #16a34a;
+  --muted: #78716c;
+  --border: #292524;
+  --card: #171412;
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--fg); font-family: 'Space Grotesk', sans-serif; overflow-x: hidden; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.25rem 3rem;
+  background: rgba(12,10,9,0.92); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { font-weight: 700; font-size: 1.1rem; letter-spacing: 0.03em; }
+.nav-logo span { color: var(--amber); }
+.nav-phone { font-size: 0.9rem; font-weight: 600; color: var(--amber); text-decoration: none; }
+.nav-cta { background: var(--amber); color: #000; padding: 0.6rem 1.5rem; border-radius: 2px; font-size: 0.85rem; font-weight: 700; text-decoration: none; transition: background 0.2s; }
+.nav-cta:hover { background: var(--amber-dark); }
+
+/* HERO */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+  padding: 8rem 3rem 5rem; position: relative; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, #0c0a09 0%, #1c1410 45%, #0c0a09 100%);
+  z-index: 0;
+}
+.hero-glow {
+  position: absolute; top: 15%; right: 0; width: 50%; height: 80%;
+  background: radial-gradient(ellipse at right, rgba(245,158,11,0.06) 0%, transparent 60%);
+  z-index: 0;
+}
+.hero-content { position: relative; z-index: 2; max-width: 850px; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3);
+  padding: 0.4rem 1rem; border-radius: 100px; font-size: 0.75rem; font-weight: 600;
+  color: var(--amber); text-transform: uppercase; letter-spacing: 0.1em;
+  margin-bottom: 2rem;
+}
+.hero-title { font-size: clamp(2.5rem, 6vw, 5.5rem); font-weight: 700; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
+.hero-title em { color: var(--amber); font-style: normal; }
+.hero-sub { font-size: 1.1rem; color: rgba(245,244,243,0.65); max-width: 520px; line-height: 1.7; margin-bottom: 3rem; }
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; margin-bottom: 3rem; }
+.btn-primary { background: var(--amber); color: #000; padding: 1rem 2.5rem; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; border-radius: 2px; transition: all 0.2s; }
+.btn-primary:hover { background: var(--amber-dark); }
+.btn-outline { border: 1px solid rgba(245,244,243,0.3); color: var(--fg); padding: 1rem 2rem; font-size: 0.9rem; font-weight: 500; text-decoration: none; border-radius: 2px; transition: all 0.2s; }
+.btn-outline:hover { border-color: var(--amber); color: var(--amber); }
+.hero-trust { display: flex; gap: 2rem; flex-wrap: wrap; }
+.trust-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--muted); }
+.trust-icon { font-size: 1rem; }
+
+/* ROI CALCULATOR */
+.roi-calc { padding: 5rem 3rem; background: var(--stone); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.calc-inner { max-width: 900px; margin: 0 auto; }
+.section-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.25em; color: var(--amber); text-transform: uppercase; margin-bottom: 0.75rem; }
+.section-title { font-size: clamp(1.8rem, 3.5vw, 3rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+.section-sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 3rem; }
+.calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+.calc-inputs { display: flex; flex-direction: column; gap: 2rem; }
+.slider-group label { display: flex; justify-content: space-between; margin-bottom: 0.75rem; }
+.slider-label { font-size: 0.85rem; font-weight: 500; }
+.slider-value { font-size: 0.9rem; font-weight: 700; color: var(--amber); }
+input[type=range] { width: 100%; -webkit-appearance: none; appearance: none; height: 3px; background: var(--border); border-radius: 2px; outline: none; cursor: pointer; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; background: var(--amber); border-radius: 50%; cursor: pointer; transition: transform 0.15s; }
+input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+.calc-results { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 2.5rem; }
+.result-item { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.result-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.result-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
+.result-value { font-size: 2.5rem; font-weight: 700; line-height: 1; }
+.result-value.green { color: var(--green); }
+.result-value.amber { color: var(--amber); }
+.result-note { font-size: 0.75rem; color: var(--muted); margin-top: 0.4rem; }
+
+/* SUITE TABS */
+.suite-tabs-section { padding: 7rem 3rem; }
+.tabs-wrapper { max-width: 1100px; margin: 0 auto; }
+.tab-nav { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 3rem; }
+.tab-btn {
+  padding: 1rem 2rem; font-size: 0.9rem; font-weight: 600; background: none; border: none;
+  color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent;
+  transition: all 0.2s; font-family: 'Space Grotesk', sans-serif;
+  margin-bottom: -1px;
+}
+.tab-btn.active { color: var(--amber); border-bottom-color: var(--amber); }
+.tab-content { display: none; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+.tab-content.active { display: grid; }
+.tab-visual { aspect-ratio: 4/3; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 5rem; position: relative; overflow: hidden; }
+.tab-visual::before { content: ''; position: absolute; inset: 0; background: inherit; }
+.tab-visual-1 { background: linear-gradient(135deg, #1a1510, #2d2010); }
+.tab-visual-2 { background: linear-gradient(135deg, #0f151a, #1a2020); }
+.tab-visual-3 { background: linear-gradient(135deg, #150f1a, #201520); }
+.tab-icon { position: relative; z-index: 1; opacity: 0.4; }
+.tab-info h3 { font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem; }
+.tab-info p { color: var(--muted); line-height: 1.7; margin-bottom: 1.5rem; }
+.tab-features { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
+.tab-features li { display: flex; align-items: center; gap: 0.75rem; font-size: 0.9rem; }
+.tab-features li::before { content: '✓'; color: var(--green); font-weight: 700; min-width: 1rem; }
+.tab-price { font-size: 1.5rem; font-weight: 700; color: var(--amber); }
+.tab-price span { font-size: 0.85rem; font-weight: 400; color: var(--muted); }
+
+/* BEFORE AFTER */
+.before-after-section { padding: 7rem 3rem; background: var(--stone); }
+.ba-inner { max-width: 900px; margin: 0 auto; }
+.ba-container { position: relative; aspect-ratio: 16/9; border-radius: 4px; overflow: hidden; margin-top: 3rem; cursor: col-resize; user-select: none; }
+.ba-before, .ba-after { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 700; }
+.ba-before { background: linear-gradient(135deg, #1a1510, #252015); z-index: 1; }
+.ba-after { background: linear-gradient(135deg, #0f1a10, #152015); z-index: 2; clip-path: inset(0 50% 0 0); transition: clip-path 0s; }
+.ba-handle { position: absolute; top: 0; bottom: 0; left: 50%; z-index: 3; width: 3px; background: var(--amber); cursor: col-resize; transform: translateX(-50%); }
+.ba-handle::before { content: '◀ ▶'; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); background: var(--amber); color: #000; padding: 0.5rem 0.75rem; border-radius: 100px; font-size: 0.7rem; white-space: nowrap; }
+.ba-label { position: absolute; top: 1rem; padding: 0.4rem 1rem; border-radius: 2px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; z-index: 4; }
+.ba-label-before { left: 1rem; background: rgba(0,0,0,0.7); color: var(--muted); }
+.ba-label-after { right: 1rem; background: var(--green); color: #000; }
+.ba-before-text { color: var(--muted); font-size: 1.2rem; }
+.ba-after-text { color: var(--green); font-size: 1.2rem; }
+
+/* PERMIT PROCESS */
+.permit-section { padding: 7rem 3rem; }
+.permit-inner { max-width: 900px; margin: 0 auto; }
+.permit-timeline { position: relative; margin-top: 4rem; padding-left: 3rem; }
+.permit-line { position: absolute; left: 0.75rem; top: 0; bottom: 0; width: 2px; background: var(--border); }
+.permit-line-fill { position: absolute; left: 0.75rem; top: 0; width: 2px; background: var(--amber); height: 0; transition: height 1.5s ease; }
+.permit-step { position: relative; margin-bottom: 3rem; }
+.permit-step:last-child { margin-bottom: 0; }
+.permit-dot { position: absolute; left: -2.55rem; top: 0.2rem; width: 14px; height: 14px; border-radius: 50%; background: var(--border); border: 2px solid var(--border); transition: all 0.3s; }
+.permit-dot.active { background: var(--amber); border-color: var(--amber); box-shadow: 0 0 12px rgba(245,158,11,0.5); }
+.permit-step-num { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; color: var(--amber); text-transform: uppercase; margin-bottom: 0.5rem; }
+.permit-step h4 { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem; }
+.permit-step p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+.permit-step-badge { display: inline-block; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); color: var(--green); padding: 0.25rem 0.75rem; border-radius: 100px; font-size: 0.7rem; font-weight: 600; margin-top: 0.5rem; }
+
+/* TRUST BADGES */
+.trust-section { padding: 4rem 3rem; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--stone); }
+.trust-grid { display: flex; justify-content: center; gap: 4rem; flex-wrap: wrap; align-items: center; }
+.trust-badge { text-align: center; }
+.trust-badge-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+.trust-badge-title { font-size: 0.85rem; font-weight: 700; }
+.trust-badge-sub { font-size: 0.75rem; color: var(--muted); }
+
+/* MULTI-STEP FORM */
+.lead-form-section { padding: 7rem 3rem; background: var(--bg); }
+.lead-form-inner { max-width: 680px; margin: 0 auto; }
+.form-steps { display: flex; gap: 0; margin-bottom: 3rem; counter-reset: none; }
+.form-step-indicator { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; position: relative; }
+.form-step-indicator::before { content: ''; position: absolute; top: 1rem; left: 50%; right: -50%; height: 2px; background: var(--border); z-index: 0; }
+.form-step-indicator:last-child::before { display: none; }
+.step-circle { width: 32px; height: 32px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; z-index: 1; transition: all 0.3s; }
+.form-step-indicator.active .step-circle { background: var(--amber); color: #000; }
+.form-step-indicator.done .step-circle { background: var(--green); color: #000; }
+.step-label { font-size: 0.7rem; color: var(--muted); text-align: center; }
+.form-panel { display: none; }
+.form-panel.active { display: block; }
+.form-panel h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+.form-panel p { color: var(--muted); margin-bottom: 2rem; font-size: 0.9rem; }
+.option-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+.option-card { border: 1px solid var(--border); padding: 1.5rem; border-radius: 4px; cursor: pointer; transition: all 0.2s; text-align: center; }
+.option-card:hover, .option-card.selected { border-color: var(--amber); background: rgba(245,158,11,0.05); }
+.option-card .option-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+.option-card .option-label { font-size: 0.85rem; font-weight: 600; }
+.timeline-options { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
+.timeline-opt { border: 1px solid var(--border); padding: 1rem 1.5rem; border-radius: 4px; cursor: pointer; font-size: 0.9rem; transition: all 0.2s; }
+.timeline-opt:hover, .timeline-opt.selected { border-color: var(--amber); background: rgba(245,158,11,0.05); color: var(--amber); }
+.contact-fields { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem; }
+.field-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.field-group label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.field-group input { background: var(--stone); border: 1px solid var(--border); color: var(--fg); padding: 0.875rem 1rem; font-family: 'Space Grotesk', sans-serif; font-size: 0.9rem; border-radius: 2px; outline: none; transition: border-color 0.2s; }
+.field-group input:focus { border-color: var(--amber); }
+.form-nav { display: flex; justify-content: space-between; align-items: center; }
+.btn-next, .btn-back, .btn-submit { padding: 0.875rem 2rem; border-radius: 2px; font-family: 'Space Grotesk', sans-serif; font-size: 0.875rem; font-weight: 700; cursor: pointer; transition: all 0.2s; border: none; }
+.btn-next, .btn-submit { background: var(--amber); color: #000; }
+.btn-next:hover, .btn-submit:hover { background: var(--amber-dark); }
+.btn-back { background: none; border: 1px solid var(--border); color: var(--muted); }
+.btn-back:hover { border-color: var(--fg); color: var(--fg); }
+.form-success { text-align: center; padding: 3rem 0; display: none; }
+.form-success .success-icon { font-size: 3rem; margin-bottom: 1rem; }
+.form-success h3 { font-size: 1.5rem; font-weight: 700; color: var(--green); margin-bottom: 0.5rem; }
+.form-success p { color: var(--muted); }
+
+/* STICKY MOBILE FOOTER */
+.mobile-sticky { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 200; background: var(--stone); border-top: 1px solid var(--border); padding: 1rem 1.5rem; gap: 1rem; }
+.mob-btn { flex: 1; padding: 0.875rem; border-radius: 2px; font-family: 'Space Grotesk', sans-serif; font-size: 0.875rem; font-weight: 700; text-align: center; text-decoration: none; cursor: pointer; }
+.mob-whatsapp { background: #25d366; color: #000; }
+.mob-phone { background: var(--amber); color: #000; border: none; }
+
+/* WHATSAPP FAB */
+.whatsapp-fab { position: fixed; bottom: 2rem; right: 2rem; z-index: 199; width: 58px; height: 58px; background: #25d366; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; box-shadow: 0 4px 20px rgba(37,211,102,0.4); text-decoration: none; transition: transform 0.2s; }
+.whatsapp-fab:hover { transform: scale(1.1); }
+
+/* FOOTER */
+footer { padding: 3rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.footer-logo { font-weight: 700; font-size: 1.1rem; }
+.footer-logo span { color: var(--amber); }
+.footer-copy { font-size: 0.8rem; color: var(--muted); }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(30px); }
+
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.25rem; }
+  .hero { padding: 6rem 1.25rem 4rem; }
+  .roi-calc, .suite-tabs-section, .before-after-section, .permit-section, .lead-form-section { padding: 4rem 1.25rem; }
+  .calc-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .tab-content.active { grid-template-columns: 1fr; }
+  .option-grid { grid-template-columns: 1fr; }
+  .mobile-sticky { display: flex; }
+  .whatsapp-fab { bottom: 5.5rem; }
+  footer { padding: 2rem 1.25rem; padding-bottom: 6rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Garden<span>Suite</span>Co.</div>
+  <a href="tel:4165552849" class="nav-phone">📞 (416) 555-2849</a>
+  <a href="#lead-form" class="nav-cta">Get Free Quote</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-badge">🏆 Toronto's #1 Rated Garden Suite Builder</div>
+    <h1 class="hero-title">Add a Legal Suite.<br><em>Double Your Rental Income.</em></h1>
+    <p class="hero-sub">Toronto-approved garden suites, legal basements, and laneway houses built in 90–120 days. Fully permitted, city-compliant, investment-ready.</p>
+    <div class="hero-actions">
+      <a href="#lead-form" class="btn-primary">Get My Free Quote</a>
+      <a href="#calculator" class="btn-outline">Calculate My ROI</a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-item"><span class="trust-icon">✓</span> 100% Permit Success Rate</div>
+      <div class="trust-item"><span class="trust-icon">✓</span> Fixed-Price Contracts</div>
+      <div class="trust-item"><span class="trust-icon">✓</span> 5-Year Structural Warranty</div>
+    </div>
+  </div>
+</section>
+
+<section class="roi-calc reveal" id="calculator">
+  <div class="calc-inner">
+    <div class="section-label">ROI Calculator</div>
+    <h2 class="section-title">See Your Return Before You Build</h2>
+    <p class="section-sub">Adjust the sliders to see your projected investment returns in real time.</p>
+    <div class="calc-grid">
+      <div class="calc-inputs">
+        <div class="slider-group">
+          <label>
+            <span class="slider-label">Build Cost</span>
+            <span class="slider-value" id="buildCostVal">$180,000</span>
+          </label>
+          <input type="range" id="buildCost" min="80000" max="400000" step="5000" value="180000" oninput="calcROI()">
+        </div>
+        <div class="slider-group">
+          <label>
+            <span class="slider-label">Monthly Rent Estimate</span>
+            <span class="slider-value" id="rentVal">$2,800/mo</span>
+          </label>
+          <input type="range" id="monthlyRent" min="1200" max="5000" step="100" value="2800" oninput="calcROI()">
+        </div>
+        <div class="slider-group">
+          <label>
+            <span class="slider-label">Vacancy Rate</span>
+            <span class="slider-value" id="vacancyVal">5%</span>
+          </label>
+          <input type="range" id="vacancy" min="0" max="20" step="1" value="5" oninput="calcROI()">
+        </div>
+      </div>
+      <div class="calc-results">
+        <div class="result-item">
+          <div class="result-label">Annual Rental Income</div>
+          <div class="result-value green" id="annualIncome">$31,920</div>
+          <div class="result-note">After vacancy allowance</div>
+        </div>
+        <div class="result-item">
+          <div class="result-label">Gross ROI</div>
+          <div class="result-value amber" id="roiPercent">17.7%</div>
+          <div class="result-note">Annual return on build investment</div>
+        </div>
+        <div class="result-item">
+          <div class="result-label">Payback Period</div>
+          <div class="result-value" id="paybackYears">5.6 years</div>
+          <div class="result-note">Time to recover full build cost</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="suite-tabs-section" id="suites">
+  <div class="tabs-wrapper">
+    <div class="section-label reveal">Suite Types</div>
+    <h2 class="section-title reveal">Choose Your Suite</h2>
+    <div class="tab-nav reveal">
+      <button class="tab-btn active" onclick="switchTab('garden', this)">Garden Suite</button>
+      <button class="tab-btn" onclick="switchTab('basement', this)">Legal Basement</button>
+      <button class="tab-btn" onclick="switchTab('laneway', this)">Laneway House</button>
+    </div>
+    <div id="tab-garden" class="tab-content active reveal">
+      <div class="tab-visual tab-visual-1"><span class="tab-icon">🌿</span></div>
+      <div class="tab-info">
+        <h3>Garden Suite</h3>
+        <p>A detached or semi-detached dwelling built in your backyard. Fully independent unit with its own entrance, kitchen, and living space. Maximum privacy for both you and your tenants.</p>
+        <ul class="tab-features">
+          <li>400–750 sq ft typical build</li>
+          <li>Fully detached — no shared walls</li>
+          <li>City of Toronto permitted & compliant</li>
+          <li>Private outdoor space for tenant</li>
+          <li>Highest rental premium vs. other suite types</li>
+        </ul>
+        <div class="tab-price">From $165,000 <span>/ fully completed</span></div>
+      </div>
+    </div>
+    <div id="tab-basement" class="tab-content reveal">
+      <div class="tab-visual tab-visual-2"><span class="tab-icon">🏠</span></div>
+      <div class="tab-info">
+        <h3>Legal Basement Apartment</h3>
+        <p>Convert your existing basement into a fully legal, income-generating apartment. Fastest path to rental income with the lowest up-front cost of any suite type.</p>
+        <ul class="tab-features">
+          <li>Full building permit & zoning compliance</li>
+          <li>Egress windows, fire separation, ceiling height upgrades</li>
+          <li>Separate entrance installation</li>
+          <li>Full kitchen & bathroom fit-out</li>
+          <li>Typical build time: 60–90 days</li>
+        </ul>
+        <div class="tab-price">From $85,000 <span>/ fully completed</span></div>
+      </div>
+    </div>
+    <div id="tab-laneway" class="tab-content reveal">
+      <div class="tab-visual tab-visual-3"><span class="tab-icon">🛖</span></div>
+      <div class="tab-info">
+        <h3>Laneway House</h3>
+        <p>A detached home built adjacent to a public laneway at the rear of your property. The premium option for maximum square footage and rental income potential.</p>
+        <ul class="tab-features">
+          <li>Up to 1,200 sq ft permitted</li>
+          <li>Two-storey builds available</li>
+          <li>Laneway access — no impact on main home</li>
+          <li>Eligible for short-term rental platforms</li>
+          <li>Significant property value appreciation</li>
+        </ul>
+        <div class="tab-price">From $250,000 <span>/ fully completed</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="before-after-section" id="before-after">
+  <div class="ba-inner">
+    <div class="section-label reveal">Transformations</div>
+    <h2 class="section-title reveal">Before &amp; After</h2>
+    <p class="reveal" style="color:var(--muted);margin-top:0.5rem">Drag the slider to reveal the transformation.</p>
+    <div class="ba-container" id="baContainer">
+      <div class="ba-before"><span class="ba-before-text">Unused Backyard</span></div>
+      <div class="ba-after" id="baAfter"><span class="ba-after-text">Income-Generating Suite</span></div>
+      <div class="ba-handle" id="baHandle"></div>
+      <div class="ba-label ba-label-before">BEFORE</div>
+      <div class="ba-label ba-label-after">AFTER</div>
+    </div>
+  </div>
+</section>
+
+<section class="permit-section" id="process">
+  <div class="permit-inner">
+    <div class="section-label reveal">The Process</div>
+    <h2 class="section-title reveal">Permit-to-Keys in 5 Steps</h2>
+    <div class="permit-timeline reveal" id="permitTimeline">
+      <div class="permit-line"></div>
+      <div class="permit-line-fill" id="permitLineFill"></div>
+      <div class="permit-step">
+        <div class="permit-dot active"></div>
+        <div class="permit-step-num">Step 01 — Week 1</div>
+        <h4>Free Site Assessment</h4>
+        <p>Our team visits your property to assess zoning eligibility, lot size, setbacks, and utility connections. We provide a detailed feasibility report within 48 hours.</p>
+        <span class="permit-step-badge">Free — No Obligation</span>
+      </div>
+      <div class="permit-step">
+        <div class="permit-dot"></div>
+        <div class="permit-step-num">Step 02 — Weeks 2–4</div>
+        <h4>Design &amp; Permit Application</h4>
+        <p>Our in-house architects draw full construction drawings. We submit the permit application to the City of Toronto and manage all correspondence.</p>
+      </div>
+      <div class="permit-step">
+        <div class="permit-dot"></div>
+        <div class="permit-step-num">Step 03 — Weeks 4–12</div>
+        <h4>City Review &amp; Permit Approval</h4>
+        <p>The city reviews the application. We handle all revision requests and resubmissions. Our 100% permit approval rate means zero wasted time for you.</p>
+        <span class="permit-step-badge">100% Permit Approval Rate</span>
+      </div>
+      <div class="permit-step">
+        <div class="permit-dot"></div>
+        <div class="permit-step-num">Step 04 — Weeks 12–20</div>
+        <h4>Construction</h4>
+        <p>Our dedicated crew begins construction. Weekly progress updates, on-site project manager, and a dedicated client portal keep you informed at every stage.</p>
+      </div>
+      <div class="permit-step">
+        <div class="permit-dot"></div>
+        <div class="permit-step-num">Step 05 — Week 20+</div>
+        <h4>Final Inspection &amp; Handover</h4>
+        <p>City final inspection, occupancy certificate, and full handover. Your suite is rent-ready on day one. We'll even help you find your first tenant.</p>
+        <span class="permit-step-badge">Rent-Ready Guarantee</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="trust-section">
+  <div class="trust-grid">
+    <div class="trust-badge reveal">
+      <div class="trust-badge-icon">🏆</div>
+      <div class="trust-badge-title">BBB Accredited</div>
+      <div class="trust-badge-sub">A+ Rating</div>
+    </div>
+    <div class="trust-badge reveal">
+      <div class="trust-badge-icon">📋</div>
+      <div class="trust-badge-title">Licensed &amp; Bonded</div>
+      <div class="trust-badge-sub">TARION Registered Builder</div>
+    </div>
+    <div class="trust-badge reveal">
+      <div class="trust-badge-icon">🛡️</div>
+      <div class="trust-badge-title">Fully Insured</div>
+      <div class="trust-badge-sub">$5M Liability Coverage</div>
+    </div>
+    <div class="trust-badge reveal">
+      <div class="trust-badge-icon">⭐</div>
+      <div class="trust-badge-title">Google Reviews</div>
+      <div class="trust-badge-sub">4.9 / 5 — 127 Reviews</div>
+    </div>
+    <div class="trust-badge reveal">
+      <div class="trust-badge-icon">🏗️</div>
+      <div class="trust-badge-title">140+ Suites Built</div>
+      <div class="trust-badge-sub">Since 2018</div>
+    </div>
+  </div>
+</section>
+
+<section class="lead-form-section" id="lead-form">
+  <div class="lead-form-inner">
+    <div class="section-label reveal">Free Quote</div>
+    <h2 class="section-title reveal">Get Your Free Estimate</h2>
+    <p class="reveal" style="color:var(--muted);margin:0.5rem 0 2rem">3 quick steps. We'll respond within 2 business hours.</p>
+    <div class="form-steps reveal" id="formSteps">
+      <div class="form-step-indicator active" id="ind-1"><div class="step-circle">1</div><div class="step-label">Suite Type</div></div>
+      <div class="form-step-indicator" id="ind-2"><div class="step-circle">2</div><div class="step-label">Timeline</div></div>
+      <div class="form-step-indicator" id="ind-3"><div class="step-circle">3</div><div class="step-label">Contact</div></div>
+    </div>
+
+    <div class="form-panel active reveal" id="panel-1">
+      <h3>What type of suite are you interested in?</h3>
+      <p>Select the option that best fits your property and goals.</p>
+      <div class="option-grid">
+        <div class="option-card" onclick="selectOption(this)">
+          <div class="option-icon">🌿</div>
+          <div class="option-label">Garden Suite</div>
+        </div>
+        <div class="option-card" onclick="selectOption(this)">
+          <div class="option-icon">🏠</div>
+          <div class="option-label">Legal Basement</div>
+        </div>
+        <div class="option-card" onclick="selectOption(this)">
+          <div class="option-icon">🛖</div>
+          <div class="option-label">Laneway House</div>
+        </div>
+        <div class="option-card" onclick="selectOption(this)">
+          <div class="option-icon">💬</div>
+          <div class="option-label">Not Sure Yet</div>
+        </div>
+      </div>
+      <div class="form-nav">
+        <div></div>
+        <button class="btn-next" onclick="nextStep(1)">Next Step →</button>
+      </div>
+    </div>
+
+    <div class="form-panel" id="panel-2">
+      <h3>What's your timeline?</h3>
+      <p>This helps us prioritize your file and allocate our team.</p>
+      <div class="timeline-options">
+        <div class="timeline-opt" onclick="selectTimeline(this)">As soon as possible — I'm ready to move</div>
+        <div class="timeline-opt" onclick="selectTimeline(this)">Within 3 months — still planning</div>
+        <div class="timeline-opt" onclick="selectTimeline(this)">Within 6 months — early research phase</div>
+        <div class="timeline-opt" onclick="selectTimeline(this)">Just exploring for now</div>
+      </div>
+      <div class="form-nav">
+        <button class="btn-back" onclick="prevStep(2)">← Back</button>
+        <button class="btn-next" onclick="nextStep(2)">Next Step →</button>
+      </div>
+    </div>
+
+    <div class="form-panel" id="panel-3">
+      <h3>Your contact info</h3>
+      <p>We'll send your free estimate and call to discuss your project.</p>
+      <div class="contact-fields">
+        <div class="field-group"><label>Full Name</label><input type="text" placeholder="Jane Smith"></div>
+        <div class="field-group"><label>Phone</label><input type="tel" placeholder="(416) 555-0000"></div>
+        <div class="field-group"><label>Email</label><input type="email" placeholder="jane@example.com"></div>
+        <div class="field-group"><label>Property Address</label><input type="text" placeholder="123 Main St, Toronto, ON"></div>
+      </div>
+      <div class="form-nav">
+        <button class="btn-back" onclick="prevStep(3)">← Back</button>
+        <button class="btn-submit" onclick="submitForm()">Get My Free Quote →</button>
+      </div>
+    </div>
+
+    <div class="form-success" id="formSuccess">
+      <div class="success-icon">✅</div>
+      <h3>You're on the list!</h3>
+      <p>We'll review your submission and call you within 2 business hours. Check your email for a confirmation.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Garden<span>Suite</span>Co.</div>
+  <div class="footer-copy">© 2026 Garden Suite Co. Toronto, Ontario. All rights reserved.</div>
+</footer>
+
+<a href="https://wa.me/14165552849" class="whatsapp-fab" target="_blank">💬</a>
+<div class="mobile-sticky">
+  <a href="https://wa.me/14165552849" class="mob-btn mob-whatsapp">💬 WhatsApp</a>
+  <a href="tel:4165552849" class="mob-btn mob-phone">📞 Call Now</a>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script>
+const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+requestAnimationFrame(raf);
+
+gsap.registerPlugin(ScrollTrigger);
+gsap.from('.hero-badge', { opacity: 0, y: 20, duration: 0.7, delay: 0.3 });
+gsap.from('.hero-title', { opacity: 0, y: 40, duration: 1, delay: 0.5 });
+gsap.from('.hero-sub', { opacity: 0, y: 20, duration: 0.8, delay: 0.9 });
+gsap.from('.hero-actions', { opacity: 0, y: 20, duration: 0.8, delay: 1.1 });
+gsap.from('.hero-trust', { opacity: 0, y: 15, duration: 0.8, delay: 1.3 });
+
+document.querySelectorAll('.reveal').forEach(el => {
+  gsap.to(el, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
+});
+
+// ROI Calc
+function calcROI() {
+  const buildCost = parseInt(document.getElementById('buildCost').value);
+  const monthlyRent = parseInt(document.getElementById('monthlyRent').value);
+  const vacancy = parseInt(document.getElementById('vacancy').value) / 100;
+  document.getElementById('buildCostVal').textContent = '$' + buildCost.toLocaleString();
+  document.getElementById('rentVal').textContent = '$' + monthlyRent.toLocaleString() + '/mo';
+  document.getElementById('vacancyVal').textContent = (vacancy * 100) + '%';
+  const annual = monthlyRent * 12 * (1 - vacancy);
+  const roi = (annual / buildCost) * 100;
+  const payback = buildCost / annual;
+  document.getElementById('annualIncome').textContent = '$' + Math.round(annual).toLocaleString();
+  document.getElementById('roiPercent').textContent = roi.toFixed(1) + '%';
+  document.getElementById('paybackYears').textContent = payback.toFixed(1) + ' years';
+}
+calcROI();
+
+// Suite tabs
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + id).classList.add('active');
+}
+
+// Before/After slider
+const baContainer = document.getElementById('baContainer');
+const baAfter = document.getElementById('baAfter');
+const baHandle = document.getElementById('baHandle');
+let isDragging = false;
+function setBA(x) {
+  const rect = baContainer.getBoundingClientRect();
+  let pct = Math.max(5, Math.min(95, ((x - rect.left) / rect.width) * 100));
+  baAfter.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+  baHandle.style.left = pct + '%';
+}
+baContainer.addEventListener('mousedown', e => { isDragging = true; setBA(e.clientX); });
+document.addEventListener('mouseup', () => isDragging = false);
+document.addEventListener('mousemove', e => { if (isDragging) setBA(e.clientX); });
+baContainer.addEventListener('touchmove', e => { e.preventDefault(); setBA(e.touches[0].clientX); }, { passive: false });
+
+// Permit timeline animation
+ScrollTrigger.create({
+  trigger: '#permitTimeline', start: 'top 60%', end: 'bottom 80%',
+  onUpdate: self => {
+    const fill = document.getElementById('permitLineFill');
+    const totalH = document.getElementById('permitTimeline').offsetHeight;
+    fill.style.height = (self.progress * totalH) + 'px';
+    document.querySelectorAll('.permit-dot').forEach((dot, i) => {
+      dot.classList.toggle('active', self.progress > i * 0.2);
+    });
+  }
+});
+
+// Multi-step form
+let currentStep = 1;
+function nextStep(from) {
+  document.getElementById('panel-' + from).classList.remove('active');
+  document.getElementById('panel-' + (from + 1)).classList.add('active');
+  document.getElementById('ind-' + from).classList.remove('active');
+  document.getElementById('ind-' + from).classList.add('done');
+  document.getElementById('ind-' + (from + 1)).classList.add('active');
+  currentStep = from + 1;
+}
+function prevStep(from) {
+  document.getElementById('panel-' + from).classList.remove('active');
+  document.getElementById('panel-' + (from - 1)).classList.add('active');
+  document.getElementById('ind-' + from).classList.remove('active');
+  document.getElementById('ind-' + (from - 1)).classList.remove('done');
+  document.getElementById('ind-' + (from - 1)).classList.add('active');
+  currentStep = from - 1;
+}
+function selectOption(el) { document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected')); el.classList.add('selected'); }
+function selectTimeline(el) { document.querySelectorAll('.timeline-opt').forEach(c => c.classList.remove('selected')); el.classList.add('selected'); }
+function submitForm() {
+  document.getElementById('panel-3').classList.remove('active');
+  document.getElementById('formSteps').style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+}
+</script>
+</body>
+</html>

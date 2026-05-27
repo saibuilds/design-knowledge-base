@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Garden Suites & Legal Basements — Toronto ADU Specialists</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0c0a09;
+      --surface: #1c1917;
+      --border: #292524;
+      --accent: #f59e0b;
+      --accent-hover: #fbbf24;
+      --success: #4ade80;
+      --text: #fafaf9;
+      --muted: #78716c;
+    }
+    html { scroll-behavior: auto; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; overflow-x: hidden; }
+
+    /* ── PROGRESS BAR ── */
+    .progress-bar { position:fixed; top:0; left:0; width:100%; height:3px; background:var(--accent); transform-origin:left; transform:scaleX(0); z-index:999; }
+
+    /* ── NAVBAR ── */
+    .main-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 500;
+      transition: background 0.3s, border-color 0.3s;
+      border-bottom: 1px solid transparent;
+    }
+    .main-nav.scrolled {
+      background: rgba(12,10,9,0.9);
+      border-color: var(--border);
+      backdrop-filter: blur(20px);
+    }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 32px; height: 72px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-size: 15px; font-weight: 900; color: #fff; text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 14px; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: #fff; }
+    .nav-cta { background: var(--accent); color: #000; font-size: 13px; font-weight: 700; padding: 10px 22px; border-radius: 10px; border: none; cursor: pointer; text-decoration: none; transition: background 0.2s; }
+    .nav-cta:hover { background: var(--accent-hover); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(135deg, var(--bg) 0%, #1c1714 50%, #0f0d0a 100%);
+      position: relative;
+      overflow: hidden;
+      padding: 120px 60px 80px;
+    }
+    /* Subtle grid background */
+    .hero-grid-bg {
+      position: absolute;
+      inset: 0;
+      opacity: 0.06;
+      background-image: linear-gradient(#fff 1px, transparent 1px),
+                        linear-gradient(90deg, #fff 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-glow {
+      position: absolute;
+      top: -20%;
+      right: -10%;
+      width: 600px;
+      height: 600px;
+      border-radius: 100%;
+      background: radial-gradient(circle, rgba(245,158,11,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; position: relative; z-index: 2; width: 100%; }
+    .hero-left {}
+    /* Compliance badge */
+    .compliance-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 100px;
+      border: 1px solid rgba(74,222,128,0.3);
+      background: rgba(74,222,128,0.08);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--success);
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    .badge-dot { width: 7px; height: 7px; border-radius: 100%; background: var(--success); animation: pulse 2s infinite; }
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+    .hero-h1 {
+      font-size: clamp(40px, 5.5vw, 72px);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    .hero-h1 .accent { color: var(--accent); }
+    .hero-p { font-size: 18px; color: var(--muted); line-height: 1.7; max-width: 480px; margin-bottom: 36px; opacity: 0; }
+    .hero-stats { display: flex; gap: 32px; margin-bottom: 36px; opacity: 0; }
+    .hero-stat .n { font-size: 32px; font-weight: 900; color: var(--accent); }
+    .hero-stat .l { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-top: 2px; }
+    .hero-ctas { display: flex; gap: 16px; opacity: 0; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 16px 32px; background: var(--accent); color: #000; font-size: 15px; font-weight: 700; border-radius: 12px; border: none; cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+    .btn-primary:hover { background: var(--accent-hover); transform: scale(1.02); }
+    .btn-ghost { display: inline-flex; align-items: center; gap: 8px; padding: 16px 28px; background: transparent; color: rgba(255,255,255,0.7); font-size: 15px; font-weight: 500; border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; cursor: pointer; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.4); color: #fff; }
+    /* Hero right — visual card */
+    .hero-right { position: relative; opacity: 0; transform: translateX(40px); }
+    .hero-visual-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      overflow: hidden;
+      aspect-ratio: 4/3.2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 100px;
+      position: relative;
+    }
+    .hero-visual-bg { background: linear-gradient(135deg, #1a1400 0%, #2d2010 100%); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 80px; }
+    /* ROI floating card */
+    .roi-card {
+      position: absolute;
+      bottom: -20px;
+      left: -20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 22px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+    .roi-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.15em; }
+    .roi-num { font-size: 36px; font-weight: 900; color: var(--success); line-height: 1; }
+    .roi-sub { font-size: 12px; color: var(--muted); }
+
+    /* ── SUITE TYPE SELECTOR ── */
+    #suite-types { padding: 120px 60px; background: var(--surface); }
+    .suite-tabs { display: flex; gap: 12px; justify-content: center; margin-bottom: 48px; flex-wrap: wrap; }
+    .suite-tab {
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .suite-tab:hover { border-color: rgba(255,255,255,0.2); color: #fff; }
+    .suite-tab.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+    .suite-detail {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 56px;
+      max-width: 900px;
+      margin: 0 auto;
+      transition: opacity 0.3s;
+    }
+    .suite-detail-left h3 { font-size: 40px; font-weight: 900; margin-bottom: 16px; }
+    .suite-detail-left p { color: var(--muted); font-size: 16px; line-height: 1.7; margin-bottom: 28px; }
+    .suite-cta { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; background: var(--accent); color: #000; font-size: 14px; font-weight: 700; border-radius: 10px; border: none; cursor: pointer; text-decoration: none; transition: background 0.2s; }
+    .suite-cta:hover { background: var(--accent-hover); }
+    .suite-specs { display: flex; flex-direction: column; gap: 0; }
+    .suite-spec { display: flex; justify-content: space-between; padding: 16px 0; border-bottom: 1px solid var(--border); }
+    .suite-spec:last-child { border-bottom: none; }
+    .spec-label { font-size: 13px; color: var(--muted); }
+    .spec-value { font-size: 13px; font-weight: 600; text-align: right; }
+
+    /* ── ROI CALCULATOR ── */
+    #roi-calc { padding: 120px 60px; background: var(--bg); }
+    .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; max-width: 1000px; margin: 0 auto; }
+    .calc-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 40px;
+    }
+    .calc-card h3 { font-size: 28px; font-weight: 900; margin-bottom: 32px; }
+    .calc-field { margin-bottom: 28px; }
+    .calc-field-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
+    .calc-field-label { font-size: 13px; color: var(--muted); }
+    .calc-field-value { font-size: 13px; font-weight: 700; color: var(--accent); }
+    input[type="range"] {
+      width: 100%;
+      -webkit-appearance: none;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--border);
+      outline: none;
+      cursor: pointer;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 100%;
+      background: var(--accent);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(245,158,11,0.4);
+    }
+    .calc-results { background: var(--bg); border: 1px solid var(--border); border-radius: 24px; padding: 40px; }
+    .calc-results h3 { font-size: 22px; font-weight: 700; margin-bottom: 24px; color: var(--muted); }
+    .result-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 24px; }
+    .result-item { padding: 20px 16px; text-align: center; border-right: 1px solid var(--border); }
+    .result-item:last-child { border-right: none; }
+    .result-num { font-size: 28px; font-weight: 900; line-height: 1; }
+    .result-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-top: 6px; }
+    .roi-green { color: var(--success); }
+    .roi-amber { color: var(--accent); }
+    .roi-blue { color: #60a5fa; }
+    .calc-cta-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .calc-cta-btn { display: block; width: 100%; margin-top: 20px; padding: 14px; background: var(--accent); color: #000; font-size: 14px; font-weight: 700; border-radius: 10px; border: none; cursor: pointer; transition: background 0.2s; text-align: center; text-decoration: none; }
+    .calc-cta-btn:hover { background: var(--accent-hover); }
+
+    /* ── PERMIT PROCESS ── */
+    #permit-process { padding: 120px 60px; background: var(--surface); }
+    .permit-steps { max-width: 700px; margin: 0 auto; }
+    .permit-step {
+      display: flex;
+      gap: 28px;
+      padding-bottom: 36px;
+      position: relative;
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    .permit-step:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 24px;
+      top: 48px;
+      bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+    .step-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 100%;
+      background: var(--accent);
+      color: #000;
+      font-size: 14px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-text h4 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+    .step-text p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* ── TRUST SIGNALS ── */
+    #trust { padding: 80px 60px; background: var(--bg); border-top: 1px solid var(--border); }
+    .trust-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; max-width: 1000px; margin: 0 auto; }
+    .trust-item { text-align: center; padding: 32px 16px; }
+    .trust-icon { font-size: 36px; margin-bottom: 12px; display: block; }
+    .trust-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .trust-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+    /* ── MULTI-STEP FORM ── */
+    #lead-form { padding: 120px 60px; background: var(--surface); }
+    .form-container { max-width: 560px; margin: 0 auto; background: var(--bg); border: 1px solid var(--border); border-radius: 24px; overflow: hidden; }
+    .form-progress-bar { height: 4px; background: var(--border); }
+    .form-progress-fill { height: 100%; background: var(--accent); transition: width 0.5s ease; }
+    .form-body { padding: 40px; }
+    .form-step-indicator { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); margin-bottom: 8px; }
+    .form-step-dots { display: flex; gap: 6px; margin-bottom: 28px; }
+    .form-dot { height: 4px; width: 28px; border-radius: 2px; background: var(--border); transition: background 0.3s; }
+    .form-dot.done { background: var(--accent); }
+    .form-step-title { font-size: 26px; font-weight: 800; margin-bottom: 28px; }
+    .form-field { margin-bottom: 18px; }
+    .form-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); display: block; margin-bottom: 7px; }
+    .form-input, .form-select {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px 16px;
+      color: #fff;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-input:focus, .form-select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(245,158,11,0.1); }
+    .form-select { appearance: none; color: rgba(255,255,255,0.6); }
+    .form-select option { background: #111; }
+    .form-radio-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .form-radio-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .form-radio-option.selected { border-color: var(--accent); background: rgba(245,158,11,0.08); }
+    .form-radio-option input { accent-color: var(--accent); }
+    .form-radio-option span { font-size: 14px; font-weight: 500; }
+    .form-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 28px; }
+    .form-back { font-size: 13px; font-weight: 500; color: var(--muted); background: none; border: none; cursor: pointer; padding: 0; transition: color 0.2s; }
+    .form-back:hover { color: #fff; }
+    .form-next { padding: 14px 32px; background: var(--accent); color: #000; font-size: 14px; font-weight: 700; border-radius: 10px; border: none; cursor: pointer; transition: background 0.2s; }
+    .form-next:hover { background: var(--accent-hover); }
+    .form-friction { font-size: 12px; color: var(--muted); text-align: center; margin-top: 12px; }
+
+    /* ── FOOTER ── */
+    footer { background: #050403; padding: 60px; border-top: 1px solid var(--border); }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .footer-logo { font-size: 18px; font-weight: 900; color: #fff; }
+    .footer-logo span { color: var(--accent); }
+    .footer-copy { color: var(--muted); font-size: 13px; }
+
+    .section-header-center { text-align: center; margin-bottom: 56px; }
+    .section-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 12px; }
+    .section-title { font-size: clamp(32px,4.5vw,54px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; }
+
+    @media (max-width: 900px) {
+      .hero-content, .calc-grid, .suite-detail { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .trust-grid { grid-template-columns: 1fr 1fr; }
+      #hero, #suite-types, #roi-calc, #permit-process, #trust, #lead-form { padding-left: 24px; padding-right: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- NAVBAR -->
+<nav class="main-nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">GARDEN<span>SUITES</span></a>
+    <ul class="nav-links">
+      <li><a href="#suite-types">Suite Types</a></li>
+      <li><a href="#roi-calc">ROI Calculator</a></li>
+      <li><a href="#permit-process">Our Process</a></li>
+    </ul>
+    <a href="#lead-form" class="nav-cta">Get Free Quote</a>
+  </div>
+</nav>
+
+<!-- ══════════════════════════
+     HERO: Earthy dark with compliance badge
+════════════════════════════ -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="compliance-badge" id="heroBadge">
+        <span class="badge-dot"></span>
+        Toronto-Approved ADU Specialists
+      </div>
+      <h1 class="hero-h1" id="heroH1">
+        Add a Legal Suite.<br>
+        <span class="accent">Double Your</span><br>
+        Income.
+      </h1>
+      <p class="hero-p" id="heroP">Garden suites, legal basements & laneway homes. Fully permitted, built to code. Serving Toronto & the GTA since 2009.</p>
+      <div class="hero-stats" id="heroStats">
+        <div class="hero-stat"><div class="n">200+</div><div class="l">Suites Built</div></div>
+        <div class="hero-stat"><div class="n">100%</div><div class="l">Permit Success</div></div>
+        <div class="hero-stat"><div class="n">$2,500</div><div class="l">Avg Monthly Rent</div></div>
+      </div>
+      <div class="hero-ctas" id="heroCtas">
+        <a href="#lead-form" class="btn-primary">Get Free Quote</a>
+        <a href="#suite-types" class="btn-ghost">See Suite Types</a>
+      </div>
+    </div>
+    <div class="hero-right" id="heroRight">
+      <div class="hero-visual-card">
+        <div class="hero-visual-bg">🌿</div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-label">Estimated ROI</div>
+        <div class="roi-num">8–12%</div>
+        <div class="roi-sub">Annual rental yield</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     SUITE TYPE SELECTOR
+════════════════════════════ -->
+<section id="suite-types">
+  <div class="section-header-center">
+    <span class="section-eyebrow">Suite Options</span>
+    <h2 class="section-title">What Type of Suite<br>Is Right For You?</h2>
+  </div>
+
+  <div class="suite-tabs">
+    <button class="suite-tab active" data-suite="0">Garden Suite</button>
+    <button class="suite-tab" data-suite="1">Legal Basement</button>
+    <button class="suite-tab" data-suite="2">Laneway Suite</button>
+  </div>
+
+  <div class="suite-detail" id="suiteDetail">
+    <div class="suite-detail-left">
+      <h3 id="suiteTitle">Garden Suite</h3>
+      <p id="suiteDesc">Detached structure in your backyard. Full kitchen, bath, separate entrance. A completely self-contained home on your property.</p>
+      <a href="#lead-form" class="suite-cta" id="suiteCta">Get Quote for Garden Suite</a>
+    </div>
+    <div class="suite-specs" id="suiteSpecs">
+      <div class="suite-spec"><span class="spec-label">Estimated Cost</span><span class="spec-value" id="specCost">$180,000–$280,000</span></div>
+      <div class="suite-spec"><span class="spec-label">Rental Income</span><span class="spec-value" id="specRent">$2,200–$3,200/mo</span></div>
+      <div class="suite-spec"><span class="spec-label">Permit Type</span><span class="spec-value" id="specPermit">Zoning + Building permit</span></div>
+      <div class="suite-spec"><span class="spec-label">Build Timeframe</span><span class="spec-value" id="specTime">6–10 months</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     ROI CALCULATOR
+     Live sliders with JS calculation
+════════════════════════════ -->
+<section id="roi-calc">
+  <div class="section-header-center">
+    <span class="section-eyebrow">Financial Planning</span>
+    <h2 class="section-title">Calculate Your Return<br>on Investment</h2>
+  </div>
+
+  <div class="calc-grid">
+    <div class="calc-card">
+      <h3>ROI Calculator</h3>
+
+      <div class="calc-field">
+        <div class="calc-field-header">
+          <span class="calc-field-label">Build Cost</span>
+          <span class="calc-field-value" id="costDisplay">$150,000</span>
+        </div>
+        <input type="range" min="60000" max="400000" step="5000" value="150000" id="costSlider" />
+        <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:11px;color:var(--muted);">
+          <span>$60K</span><span>$400K</span>
+        </div>
+      </div>
+
+      <div class="calc-field">
+        <div class="calc-field-header">
+          <span class="calc-field-label">Monthly Rent</span>
+          <span class="calc-field-value" id="rentDisplay">$2,000/mo</span>
+        </div>
+        <input type="range" min="800" max="4000" step="50" value="2000" id="rentSlider" />
+        <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:11px;color:var(--muted);">
+          <span>$800</span><span>$4,000</span>
+        </div>
+      </div>
+
+      <div class="calc-field">
+        <div class="calc-field-header">
+          <span class="calc-field-label">Vacancy Rate</span>
+          <span class="calc-field-value" id="vacancyDisplay">5%</span>
+        </div>
+        <input type="range" min="0" max="20" step="1" value="5" id="vacancySlider" />
+      </div>
+    </div>
+
+    <div class="calc-results">
+      <h3>Your Projected Returns</h3>
+      <div class="result-grid">
+        <div class="result-item">
+          <div class="result-num roi-green" id="roiResult">15.2%</div>
+          <div class="result-label">Annual ROI</div>
+        </div>
+        <div class="result-item">
+          <div class="result-num roi-amber" id="incomeResult">$24K</div>
+          <div class="result-label">Yearly Income</div>
+        </div>
+        <div class="result-item">
+          <div class="result-num roi-blue" id="paybackResult">6.6yr</div>
+          <div class="result-label">Payback Period</div>
+        </div>
+      </div>
+      <p class="calc-cta-text">Based on current Toronto rental market data. Actual returns vary by neighbourhood and suite quality. Our completed suites average <strong style="color:#fff;">8.3% ROI</strong> over 5 years.</p>
+      <a href="#lead-form" class="calc-cta-btn">Get a Custom ROI Analysis →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     PERMIT PROCESS TIMELINE
+════════════════════════════ -->
+<section id="permit-process">
+  <div class="section-header-center">
+    <span class="section-eyebrow">How It Works</span>
+    <h2 class="section-title" style="margin-bottom:64px;">From Conversation<br>to Keys in 5 Steps</h2>
+  </div>
+  <div class="permit-steps" id="permitSteps">
+    <div class="permit-step">
+      <div class="step-circle">01</div>
+      <div class="step-text">
+        <h4>Free Property Assessment</h4>
+        <p>We visit your property, review zoning bylaws, and assess technical feasibility — lot size, setbacks, services. No charge, no obligation.</p>
+      </div>
+    </div>
+    <div class="permit-step">
+      <div class="step-circle">02</div>
+      <div class="step-text">
+        <h4>Architectural Design</h4>
+        <p>Licensed architects create your drawings. We handle all design revisions until the plans are exactly what you envisioned.</p>
+      </div>
+    </div>
+    <div class="permit-step">
+      <div class="step-circle">03</div>
+      <div class="step-text">
+        <h4>Permit Application & Approval</h4>
+        <p>We submit all paperwork to the City of Toronto. Our 100% permit success rate means you'll never pay for a rejected application.</p>
+      </div>
+    </div>
+    <div class="permit-step">
+      <div class="step-circle">04</div>
+      <div class="step-text">
+        <h4>Construction</h4>
+        <p>Licensed contractors, on-time and on-budget. Weekly progress photos. Site clean every evening. Your main residence is never disrupted.</p>
+      </div>
+    </div>
+    <div class="permit-step">
+      <div class="step-circle">05</div>
+      <div class="step-text">
+        <h4>City Inspection & Occupancy Certificate</h4>
+        <p>We manage the final city inspection and obtain your occupancy certificate. Your suite is ready to rent — legally, safely, profitably.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     TRUST SIGNALS
+════════════════════════════ -->
+<section id="trust">
+  <div class="trust-grid">
+    <div class="trust-item">
+      <span class="trust-icon">🏛️</span>
+      <div class="trust-title">City of Toronto Licensed</div>
+      <div class="trust-desc">Registered contractor with all required municipal and provincial licences</div>
+    </div>
+    <div class="trust-item">
+      <span class="trust-icon">✅</span>
+      <div class="trust-title">100% Permit Success</div>
+      <div class="trust-desc">Every single permit application we've submitted has been approved</div>
+    </div>
+    <div class="trust-item">
+      <span class="trust-icon">⭐</span>
+      <div class="trust-title">4.9 / 5 Stars</div>
+      <div class="trust-desc">Over 180 verified Google reviews from homeowners across the GTA</div>
+    </div>
+    <div class="trust-item">
+      <span class="trust-icon">🛡️</span>
+      <div class="trust-title">2-Year Warranty</div>
+      <div class="trust-desc">All workmanship backed by our comprehensive 2-year warranty</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     MULTI-STEP LEAD CAPTURE FORM
+════════════════════════════ -->
+<section id="lead-form">
+  <div class="section-header-center">
+    <span class="section-eyebrow">Get Started</span>
+    <h2 class="section-title" style="margin-bottom:48px;">Get Your Free<br>Property Assessment</h2>
+  </div>
+
+  <div class="form-container">
+    <div class="form-progress-bar">
+      <div class="form-progress-fill" id="formProgress" style="width:33.3%"></div>
+    </div>
+    <div class="form-body" id="formBody">
+      <!-- Step 1 -->
+      <div id="step1">
+        <div class="form-step-indicator">Step 1 of 3</div>
+        <div class="form-step-dots">
+          <div class="form-dot done"></div>
+          <div class="form-dot"></div>
+          <div class="form-dot"></div>
+        </div>
+        <h2 class="form-step-title">What type of suite are you interested in?</h2>
+        <div class="form-radio-group">
+          <label class="form-radio-option" onclick="selectRadio(this)">
+            <input type="radio" name="suite_type" value="garden">
+            <span>Garden Suite</span>
+          </label>
+          <label class="form-radio-option" onclick="selectRadio(this)">
+            <input type="radio" name="suite_type" value="basement">
+            <span>Legal Basement</span>
+          </label>
+          <label class="form-radio-option" onclick="selectRadio(this)">
+            <input type="radio" name="suite_type" value="laneway">
+            <span>Laneway Suite</span>
+          </label>
+          <label class="form-radio-option" onclick="selectRadio(this)">
+            <input type="radio" name="suite_type" value="unsure">
+            <span>Not Sure Yet</span>
+          </label>
+        </div>
+        <div class="form-nav">
+          <div></div>
+          <button class="form-next" onclick="nextStep(2)">Continue →</button>
+        </div>
+        <p class="form-friction">2 more quick steps · No credit check · No commitment</p>
+      </div>
+
+      <!-- Step 2 (hidden) -->
+      <div id="step2" style="display:none;">
+        <div class="form-step-indicator">Step 2 of 3</div>
+        <div class="form-step-dots">
+          <div class="form-dot done"></div>
+          <div class="form-dot done"></div>
+          <div class="form-dot"></div>
+        </div>
+        <h2 class="form-step-title">Tell us about your property</h2>
+        <div class="form-field">
+          <label class="form-label">Property Address</label>
+          <input class="form-input" type="text" placeholder="123 Main St, Toronto, ON" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Property Type</label>
+          <select class="form-select">
+            <option value="">Select...</option>
+            <option>Detached House</option>
+            <option>Semi-Detached</option>
+            <option>Townhouse</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Estimated Budget</label>
+          <select class="form-select">
+            <option value="">Select range...</option>
+            <option>$60,000 – $100,000</option>
+            <option>$100,000 – $200,000</option>
+            <option>$200,000 – $350,000</option>
+            <option>$350,000+</option>
+          </select>
+        </div>
+        <div class="form-nav">
+          <button class="form-back" onclick="nextStep(1)">← Back</button>
+          <button class="form-next" onclick="nextStep(3)">Continue →</button>
+        </div>
+        <p class="form-friction">1 more quick step · No credit check · No commitment</p>
+      </div>
+
+      <!-- Step 3 (hidden) -->
+      <div id="step3" style="display:none;">
+        <div class="form-step-indicator">Step 3 of 3</div>
+        <div class="form-step-dots">
+          <div class="form-dot done"></div>
+          <div class="form-dot done"></div>
+          <div class="form-dot done"></div>
+        </div>
+        <h2 class="form-step-title">Almost done — who should we contact?</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="form-field">
+            <label class="form-label">First Name</label>
+            <input class="form-input" type="text" placeholder="Sarah" />
+          </div>
+          <div class="form-field">
+            <label class="form-label">Last Name</label>
+            <input class="form-input" type="text" placeholder="Chen" />
+          </div>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Email</label>
+          <input class="form-input" type="email" placeholder="sarah@example.com" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Phone</label>
+          <input class="form-input" type="tel" placeholder="(416) 555-0100" />
+        </div>
+        <div class="form-nav">
+          <button class="form-back" onclick="nextStep(2)">← Back</button>
+          <button class="form-next" onclick="submitForm()">Get Free Assessment</button>
+        </div>
+        <p class="form-friction">We'll call within 24 hours · 100% free · No pressure</p>
+      </div>
+
+      <!-- Success (hidden) -->
+      <div id="stepSuccess" style="display:none;text-align:center;padding:20px 0;">
+        <span style="font-size:60px;display:block;margin-bottom:20px;">✅</span>
+        <h2 class="form-step-title" style="font-size:28px;">You're on the list!</h2>
+        <p style="color:var(--muted);line-height:1.6;margin-bottom:24px;">One of our ADU specialists will call you within 24 hours to schedule your free property assessment.</p>
+        <p style="color:var(--accent);font-weight:700;font-size:16px;">Average suite ROI: 8.3% annually</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">GARDEN<span>SUITES</span></span>
+    <span class="footer-copy">© 2025 GardenSuites4You Inc. Serving Toronto & GTA</span>
+  </div>
+</footer>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ── LENIS ─────────────────────────────
+  const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10*t)) });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(t => lenis.raf(t * 1000));
+  gsap.ticker.lagSmoothing(0);
+
+  // ── PROGRESS BAR ─────────────────────
+  gsap.to('#progressBar', {
+    scaleX: 1, ease: 'none', transformOrigin: 'left',
+    scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 0.3 }
+  });
+
+  // ── NAV SCROLL ───────────────────────
+  ScrollTrigger.create({
+    start: 80,
+    onEnter: () => document.getElementById('mainNav').classList.add('scrolled'),
+    onLeaveBack: () => document.getElementById('mainNav').classList.remove('scrolled'),
+  });
+
+  // ── HERO ENTRANCE ────────────────────
+  gsap.timeline({ defaults: { ease: 'power3.out' } })
+    .to('#heroBadge', { opacity: 1, y: 0, duration: 0.5 }, 0.3)
+    .to('#heroH1',    { opacity: 1, y: 0, duration: 0.7 }, 0.5)
+    .to('#heroP',     { opacity: 1, duration: 0.6 }, 0.75)
+    .to('#heroStats', { opacity: 1, duration: 0.5 }, 0.9)
+    .to('#heroCtas',  { opacity: 1, duration: 0.5 }, 1.0)
+    .to('#heroRight', { opacity: 1, x: 0, duration: 0.8 }, 0.6);
+
+  // ── SUITE TYPE SELECTOR ──────────────
+  const suites = [
+    {
+      title: 'Garden Suite',
+      desc: 'Detached structure in your backyard. Full kitchen, bath, separate entrance. A completely self-contained home on your property.',
+      cost: '$180,000–$280,000', rent: '$2,200–$3,200/mo',
+      permit: 'Zoning + Building permit', time: '6–10 months'
+    },
+    {
+      title: 'Legal Basement',
+      desc: 'Convert your existing basement into a self-contained legal unit with its own entrance, kitchen, and bathroom.',
+      cost: '$80,000–$150,000', rent: '$1,400–$2,200/mo',
+      permit: 'Building permit + inspection', time: '3–5 months'
+    },
+    {
+      title: 'Laneway Suite',
+      desc: 'Detached unit at the rear of your property, facing the laneway. Maximum privacy for both homeowner and tenant.',
+      cost: '$200,000–$350,000', rent: '$2,500–$3,800/mo',
+      permit: 'Zoning + Building permit', time: '8–12 months'
+    }
+  ];
+
+  document.querySelectorAll('.suite-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.suite-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const s = suites[parseInt(tab.dataset.suite)];
+      const detail = document.getElementById('suiteDetail');
+
+      gsap.to(detail, {
+        opacity: 0, y: 10, duration: 0.2,
+        onComplete: () => {
+          document.getElementById('suiteTitle').textContent = s.title;
+          document.getElementById('suiteDesc').textContent = s.desc;
+          document.getElementById('specCost').textContent = s.cost;
+          document.getElementById('specRent').textContent = s.rent;
+          document.getElementById('specPermit').textContent = s.permit;
+          document.getElementById('specTime').textContent = s.time;
+          document.getElementById('suiteCta').textContent = `Get Quote for ${s.title}`;
+          gsap.to(detail, { opacity: 1, y: 0, duration: 0.3 });
+        }
+      });
+    });
+  });
+
+  // ── ROI CALCULATOR ───────────────────
+  function updateCalc() {
+    const cost    = parseInt(document.getElementById('costSlider').value);
+    const rent    = parseInt(document.getElementById('rentSlider').value);
+    const vacancy = parseInt(document.getElementById('vacancySlider').value);
+
+    const effectiveRent = rent * (1 - vacancy/100);
+    const annualIncome  = effectiveRent * 12;
+    const roi           = ((annualIncome / cost) * 100).toFixed(1);
+    const payback       = (cost / annualIncome).toFixed(1);
+
+    document.getElementById('costDisplay').textContent  = '$' + cost.toLocaleString();
+    document.getElementById('rentDisplay').textContent  = '$' + rent.toLocaleString() + '/mo';
+    document.getElementById('vacancyDisplay').textContent = vacancy + '%';
+    document.getElementById('roiResult').textContent    = roi + '%';
+    document.getElementById('incomeResult').textContent = '$' + Math.round(annualIncome/1000) + 'K';
+    document.getElementById('paybackResult').textContent = payback + 'yr';
+  }
+
+  ['costSlider','rentSlider','vacancySlider'].forEach(id => {
+    document.getElementById(id).addEventListener('input', updateCalc);
+  });
+  updateCalc();
+
+  // ── PERMIT STEPS REVEAL ──────────────
+  gsap.to('#permitSteps .permit-step', {
+    opacity: 1, x: 0, stagger: 0.15, duration: 0.6, ease: 'power2.out',
+    scrollTrigger: { trigger: '#permitSteps', start: 'top 75%' }
+  });
+
+  // ── MULTI-STEP FORM ──────────────────
+  function nextStep(n) {
+    const steps = { 1: 'step1', 2: 'step2', 3: 'step3' };
+    Object.values(steps).forEach(id => document.getElementById(id).style.display = 'none');
+    if (steps[n]) document.getElementById(steps[n]).style.display = 'block';
+    document.getElementById('formProgress').style.width = (n * 33.33) + '%';
+
+    gsap.from('#' + steps[n], { opacity: 0, x: 20, duration: 0.35, ease: 'power2.out' });
+  }
+
+  function selectRadio(label) {
+    document.querySelectorAll('.form-radio-option').forEach(l => l.classList.remove('selected'));
+    label.classList.add('selected');
+  }
+
+  function submitForm() {
+    document.getElementById('step3').style.display = 'none';
+    document.getElementById('stepSuccess').style.display = 'block';
+    document.getElementById('formProgress').style.width = '100%';
+    gsap.from('#stepSuccess', { opacity: 0, scale: 0.9, duration: 0.5, ease: 'back.out(1.5)' });
+  }
+
+  // ── SCROLL REVEALS ───────────────────
+  gsap.utils.toArray('.section-eyebrow, .section-title, .trust-item').forEach(el => {
+    gsap.from(el, {
+      opacity: 0, y: 24, duration: 0.6, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 85%' }
+    });
+  });
+</script>
+</body>
+</html>

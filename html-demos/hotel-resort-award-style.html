@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aman Cove — Luxury Resort</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #1a1208;
+    --surface: #251b0e;
+    --gold: #d4a853;
+    --gold-light: #e8c578;
+    --cream: #f5f0e8;
+    --muted: #9a8870;
+    --border: #2e2416;
+  }
+  html { scroll-behavior: auto; }
+  body { background: var(--bg); color: var(--cream); font-family: 'Lato', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 2rem 4rem; display: flex; align-items: center; justify-content: space-between; transition: all 0.5s; }
+  nav.scrolled { background: rgba(26,18,8,0.95); backdrop-filter: blur(20px); padding: 1.25rem 4rem; }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 400; letter-spacing: 0.4em; text-transform: uppercase; color: var(--cream); text-decoration: none; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { color: var(--cream); opacity: 0.7; text-decoration: none; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; transition: opacity 0.3s; }
+  .nav-links a:hover { opacity: 1; }
+  .nav-book { padding: 0.6rem 1.8rem; background: var(--gold); color: var(--bg); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; font-weight: 400; transition: background 0.3s; }
+  .nav-book:hover { background: var(--gold-light); }
+
+  /* HERO - ambient gradient animation instead of video */
+  .hero { height: 100vh; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; text-align: center; }
+  .hero-ambient {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 40%, #2a1e08 0%, #1a1208 40%, #0d0d1a 100%);
+    animation: ambientShift 12s ease-in-out infinite alternate;
+  }
+  @keyframes ambientShift {
+    0% { background: radial-gradient(ellipse at 30% 40%, #2a1e08 0%, #1a1208 50%, #0d1208 100%); }
+    33% { background: radial-gradient(ellipse at 70% 60%, #1e2a08 0%, #1a1208 50%, #1a0d08 100%); }
+    66% { background: radial-gradient(ellipse at 50% 20%, #08181a 0%, #1a1208 50%, #1a1a08 100%); }
+    100% { background: radial-gradient(ellipse at 20% 80%, #1a0d1a 0%, #1a1208 50%, #0d1a1a 100%); }
+  }
+  .hero-vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 30%, rgba(26,18,8,0.7) 100%); }
+  .hero-content { position: relative; z-index: 2; }
+  .hero-pretitle { font-size: 0.7rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); margin-bottom: 2rem; opacity: 0; }
+  .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 8vw, 8rem); font-weight: 300; line-height: 1; letter-spacing: 0.05em; margin-bottom: 1.5rem; opacity: 0; }
+  .hero-title em { font-style: italic; color: var(--gold); }
+  .hero-tagline { font-size: 1rem; font-weight: 300; color: var(--cream); opacity: 0; letter-spacing: 0.1em; margin-bottom: 3rem; }
+  .hero-cta { opacity: 0; display: flex; gap: 1.5rem; justify-content: center; }
+  .btn-gold { padding: 1rem 3rem; background: var(--gold); color: var(--bg); font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; transition: background 0.3s; }
+  .btn-gold:hover { background: var(--gold-light); }
+  .btn-outline { padding: 1rem 3rem; border: 1px solid rgba(245,240,232,0.4); color: var(--cream); font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; transition: all 0.3s; }
+  .btn-outline:hover { border-color: var(--cream); }
+  .hero-scroll-hint { position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 1rem; opacity: 0; }
+  .scroll-mouse { width: 24px; height: 38px; border: 1px solid rgba(245,240,232,0.4); border-radius: 12px; display: flex; align-items: flex-start; justify-content: center; padding-top: 6px; }
+  .scroll-mouse::after { content: ''; width: 4px; height: 8px; background: var(--gold); border-radius: 2px; animation: scrollDown 2s ease-in-out infinite; }
+  @keyframes scrollDown { 0%,100% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(12px); } }
+  .scroll-text { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); }
+
+  /* INTRO */
+  .intro { padding: 10rem 4rem; max-width: 800px; margin: 0 auto; text-align: center; border-bottom: 1px solid var(--border); }
+  .intro-quote { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.6rem, 3vw, 2.5rem); font-weight: 300; font-style: italic; line-height: 1.5; color: var(--cream); margin-bottom: 2rem; }
+  .intro-divider { width: 60px; height: 1px; background: var(--gold); margin: 2rem auto; }
+  .intro-text { color: var(--muted); line-height: 1.9; font-size: 0.95rem; }
+
+  /* SUITES - horizontal scroll */
+  .suites-section { padding: 7rem 0; overflow: hidden; }
+  .suites-header { padding: 0 4rem; margin-bottom: 4rem; display: flex; justify-content: space-between; align-items: flex-end; }
+  .section-label { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 400; line-height: 1.2; }
+  .suites-track-wrapper { overflow-x: auto; padding: 0 4rem; scrollbar-width: none; cursor: grab; }
+  .suites-track-wrapper::-webkit-scrollbar { display: none; }
+  .suites-track { display: flex; gap: 1.5rem; width: max-content; padding-bottom: 2rem; }
+  .suite-card { width: 380px; flex-shrink: 0; border: 1px solid var(--border); overflow: hidden; transition: border-color 0.4s; }
+  .suite-card:hover { border-color: var(--gold); }
+  .suite-img { height: 280px; transition: transform 0.7s cubic-bezier(0.25,0.1,0.25,1); overflow: hidden; }
+  .suite-card:nth-child(1) .suite-img { background: linear-gradient(135deg, #1a2a1a, #0d1a2a); }
+  .suite-card:nth-child(2) .suite-img { background: linear-gradient(135deg, #2a1a0d, #1a2a2a); }
+  .suite-card:nth-child(3) .suite-img { background: linear-gradient(135deg, #1a0d2a, #2a1a0d); }
+  .suite-card:nth-child(4) .suite-img { background: linear-gradient(135deg, #0d2a2a, #2a0d1a); }
+  .suite-card:nth-child(5) .suite-img { background: linear-gradient(135deg, #2a2a0d, #0d1a1a); }
+  .suite-card:hover .suite-img { transform: scale(1.03); }
+  .suite-info { padding: 2rem; }
+  .suite-type { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+  .suite-name { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; margin-bottom: 0.75rem; }
+  .suite-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.5rem; }
+  .suite-price { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--gold); }
+
+  /* PARALLAX SECTION */
+  .parallax-section { position: relative; height: 70vh; overflow: hidden; display: flex; align-items: center; justify-content: center; text-align: center; }
+  .parallax-bg { position: absolute; inset: -20%; background: linear-gradient(135deg, #0d1a0d, #1a0d0d, #0d0d1a); }
+  .parallax-overlay { position: absolute; inset: 0; background: rgba(26,18,8,0.5); }
+  .parallax-content { position: relative; z-index: 2; }
+  .parallax-content h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 300; font-style: italic; line-height: 1.2; margin-bottom: 1.5rem; }
+  .parallax-content p { color: var(--muted); max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.8; }
+
+  /* AMENITIES */
+  .amenities { padding: 7rem 4rem; border-top: 1px solid var(--border); }
+  .amenities-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3rem; margin-top: 5rem; }
+  .amenity { text-align: center; }
+  .amenity-icon { font-size: 2rem; margin-bottom: 1.5rem; display: block; }
+  .amenity-name { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; margin-bottom: 0.75rem; }
+  .amenity-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.7; }
+
+  /* TESTIMONIAL */
+  .testimonial { padding: 8rem 4rem; text-align: center; border-top: 1px solid var(--border); }
+  .testimonial-stars { color: var(--gold); font-size: 1.1rem; letter-spacing: 0.3em; margin-bottom: 2.5rem; }
+  .testimonial blockquote { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.4rem, 2.5vw, 2.2rem); font-weight: 300; font-style: italic; line-height: 1.6; max-width: 750px; margin: 0 auto 2.5rem; }
+  .testimonial cite { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+
+  /* BOOKING */
+  .booking { padding: 5rem 4rem; background: var(--surface); border-top: 1px solid var(--border); }
+  .booking-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+  .booking h2 { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 400; margin-bottom: 0.75rem; }
+  .booking p { color: var(--muted); margin-bottom: 3rem; }
+  .booking-form { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 1px; background: var(--border); }
+  .booking-field { background: var(--bg); padding: 1.25rem 1.5rem; }
+  .booking-field label { display: block; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+  .booking-field input, .booking-field select { background: none; border: none; color: var(--cream); font-family: 'Lato', sans-serif; font-size: 0.9rem; width: 100%; outline: none; }
+  .booking-field select option { background: var(--bg); }
+  .booking-btn { background: var(--gold); color: var(--bg); border: none; padding: 0 2.5rem; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: background 0.3s; white-space: nowrap; }
+  .booking-btn:hover { background: var(--gold-light); }
+
+  /* FOOTER */
+  footer { padding: 4rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 400; letter-spacing: 0.3em; text-transform: uppercase; }
+  .footer-links { display: flex; gap: 2rem; list-style: none; }
+  .footer-links a { font-size: 0.75rem; color: var(--muted); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { font-size: 0.75rem; color: var(--muted); }
+
+  .reveal { opacity: 0; transform: translateY(30px); }
+  .progress-bar { position: fixed; top: 0; left: 0; height: 1px; background: var(--gold); z-index: 200; transform-origin: left; transform: scaleX(0); }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<nav id="nav">
+  <a href="#" class="nav-logo">Aman Cove</a>
+  <ul class="nav-links">
+    <li><a href="#suites">Suites</a></li>
+    <li><a href="#amenities">Experiences</a></li>
+    <li><a href="#dining">Dining</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#booking" class="nav-book">Reserve</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-ambient"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-content">
+    <p class="hero-pretitle">Private Island Resort · Muskoka, Ontario</p>
+    <h1 class="hero-title">Where <em>Luxury</em><br>Meets Nature</h1>
+    <p class="hero-tagline">An intimate sanctuary for those who seek the extraordinary</p>
+    <div class="hero-cta">
+      <a href="#suites" class="btn-gold">Explore Suites</a>
+      <a href="#booking" class="btn-outline">Reserve Now</a>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">
+    <div class="scroll-mouse"></div>
+    <span class="scroll-text">Discover</span>
+  </div>
+</section>
+
+<div class="intro">
+  <p class="intro-quote reveal">"Some places exist not merely to stay in,<br>but to return to — again and again."</p>
+  <div class="intro-divider"></div>
+  <p class="intro-text reveal">Nestled on a private peninsula in the heart of Muskoka, Aman Cove offers just fourteen suites — each a private world unto itself. Ancient pines, granite shores, and an unhurried pace of life await those who seek refuge from the ordinary.</p>
+</div>
+
+<section class="suites-section" id="suites">
+  <div class="suites-header">
+    <div>
+      <p class="section-label reveal">Accommodations</p>
+      <h2 class="section-title reveal">Our Suites & Villas</h2>
+    </div>
+    <a href="#" class="btn-outline reveal" style="flex-shrink:0">View All →</a>
+  </div>
+  <div class="suites-track-wrapper" id="suitesTrack">
+    <div class="suites-track">
+      <div class="suite-card">
+        <div class="suite-img"></div>
+        <div class="suite-info">
+          <p class="suite-type">Signature Suite</p>
+          <h3 class="suite-name">The Shoreline Suite</h3>
+          <p class="suite-desc">Floor-to-ceiling windows frame an unbroken view of the lake. Private terrace with outdoor soaking tub, wood-burning fireplace, and butler service.</p>
+          <p class="suite-price">From $2,800 / night</p>
+        </div>
+      </div>
+      <div class="suite-card">
+        <div class="suite-img"></div>
+        <div class="suite-info">
+          <p class="suite-type">Forest Villa</p>
+          <h3 class="suite-name">The Boreal Villa</h3>
+          <p class="suite-desc">Suspended among old-growth pines, this two-bedroom villa offers complete seclusion. Private infinity pool, chef's kitchen, and personal concierge.</p>
+          <p class="suite-price">From $6,200 / night</p>
+        </div>
+      </div>
+      <div class="suite-card">
+        <div class="suite-img"></div>
+        <div class="suite-info">
+          <p class="suite-type">Garden Suite</p>
+          <h3 class="suite-name">The Garden Retreat</h3>
+          <p class="suite-desc">A serene sanctuary surrounded by curated gardens. Stone bath, private garden terrace, and direct access to our forest trail network.</p>
+          <p class="suite-price">From $1,600 / night</p>
+        </div>
+      </div>
+      <div class="suite-card">
+        <div class="suite-img"></div>
+        <div class="suite-info">
+          <p class="suite-type">Lakefront Estate</p>
+          <h3 class="suite-name">The Grand Estate</h3>
+          <p class="suite-desc">Our most exclusive offering. Four bedrooms, private dock with kayaks, dedicated chef, and 270° lake views from every room.</p>
+          <p class="suite-price">From $12,500 / night</p>
+        </div>
+      </div>
+      <div class="suite-card">
+        <div class="suite-img"></div>
+        <div class="suite-info">
+          <p class="suite-type">Treetop Suite</p>
+          <h3 class="suite-name">The Canopy Suite</h3>
+          <p class="suite-desc">Elevated 40 feet above the forest floor, glass walls on three sides create an immersive connection with the natural world above and below.</p>
+          <p class="suite-price">From $3,400 / night</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="parallax-section">
+  <div class="parallax-bg" id="parallaxBg"></div>
+  <div class="parallax-overlay"></div>
+  <div class="parallax-content">
+    <h2 class="reveal">Every detail.<br>Thoughtfully considered.</h2>
+    <p class="reveal">From the hand-selected linen to the locally sourced breakfast delivered at sunrise, every moment at Aman Cove is an act of care.</p>
+    <a href="#booking" class="btn-gold reveal">Reserve Your Stay</a>
+  </div>
+</div>
+
+<section class="amenities" id="amenities">
+  <p class="section-label reveal" style="text-align:center">Experiences</p>
+  <h2 class="section-title reveal" style="text-align:center;font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:400">Life at Aman Cove</h2>
+  <div class="amenities-grid">
+    <div class="amenity reveal">
+      <span class="amenity-icon">🛶</span>
+      <h3 class="amenity-name">Water Experiences</h3>
+      <p class="amenity-desc">Kayaking, sailing, paddleboarding, and guided sunset canoe tours on pristine Muskoka waters.</p>
+    </div>
+    <div class="amenity reveal">
+      <span class="amenity-icon">🌿</span>
+      <h3 class="amenity-name">Forest Wellness</h3>
+      <p class="amenity-desc">Guided forest bathing, meditation on the granite point, and our award-winning spa with indigenous plant treatments.</p>
+    </div>
+    <div class="amenity reveal">
+      <span class="amenity-icon">🍽️</span>
+      <h3 class="amenity-name">Culinary Arts</h3>
+      <p class="amenity-desc">Chef's table dining, private lakeside dinners, and foraging experiences with our resident naturalist.</p>
+    </div>
+    <div class="amenity reveal">
+      <span class="amenity-icon">⭐</span>
+      <h3 class="amenity-name">Bespoke Concierge</h3>
+      <p class="amenity-desc">Helicopter transfers, private guides, bespoke itineraries, and 24-hour butler service for every villa.</p>
+    </div>
+  </div>
+</section>
+
+<div class="testimonial">
+  <p class="testimonial-stars reveal">★ ★ ★ ★ ★</p>
+  <blockquote class="reveal">"We have stayed at the world's finest properties. Nothing compares to the quiet magic of Aman Cove — the way morning light falls across the lake, the silence between the trees. We will return every year for the rest of our lives."</blockquote>
+  <cite class="reveal">— Dr. & Mrs. Harrington · Returning Guests Since 2019 · London, UK</cite>
+</div>
+
+<div class="booking" id="booking">
+  <div class="booking-inner">
+    <h2 class="reveal">Begin Your Journey</h2>
+    <p class="reveal">Reservations for 2025 are now open. Our team will confirm availability within 4 hours.</p>
+    <div class="booking-form reveal">
+      <div class="booking-field">
+        <label>Arrival</label>
+        <input type="date" />
+      </div>
+      <div class="booking-field">
+        <label>Departure</label>
+        <input type="date" />
+      </div>
+      <div class="booking-field">
+        <label>Suite Type</label>
+        <select>
+          <option>Any Suite</option>
+          <option>Shoreline Suite</option>
+          <option>Boreal Villa</option>
+          <option>Garden Retreat</option>
+          <option>Grand Estate</option>
+          <option>Canopy Suite</option>
+        </select>
+      </div>
+      <button class="booking-btn">Reserve →</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-logo">Aman Cove</span>
+  <ul class="footer-links">
+    <li><a href="#">Suites</a></li>
+    <li><a href="#">Experiences</a></li>
+    <li><a href="#">Dining</a></li>
+    <li><a href="#">Gallery</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <p class="footer-copy">© 2024 Aman Cove. All rights reserved.</p>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+const lenis = new Lenis({ lerp: 0.07, smooth: true });
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add((time) => lenis.raf(time * 1000));
+gsap.ticker.lagSmoothing(0);
+
+gsap.to('#progress', {
+  scaleX: 1, ease: 'none',
+  scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 0.3 }
+});
+
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 80);
+});
+
+// Hero entrance
+const tl = gsap.timeline({ delay: 0.5 });
+tl.to('.hero-pretitle', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' })
+  .to('.hero-title', { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out' }, '-=0.5')
+  .to('.hero-tagline', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.6')
+  .to('.hero-cta', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, '-=0.4')
+  .to('.hero-scroll-hint', { opacity: 1, duration: 0.6 }, '-=0.2');
+
+// Scroll reveals
+gsap.utils.toArray('.reveal').forEach(el => {
+  gsap.to(el, {
+    opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+  });
+});
+
+// Parallax bg
+gsap.to('#parallaxBg', {
+  yPercent: 20,
+  ease: 'none',
+  scrollTrigger: { trigger: '.parallax-section', start: 'top bottom', end: 'bottom top', scrub: 1 }
+});
+
+// Suites drag scroll
+const track = document.getElementById('suitesTrack');
+let isDown = false, startX, scrollLeft;
+track.addEventListener('mousedown', e => { isDown = true; track.style.cursor = 'grabbing'; startX = e.pageX - track.offsetLeft; scrollLeft = track.scrollLeft; });
+track.addEventListener('mouseleave', () => { isDown = false; track.style.cursor = 'grab'; });
+track.addEventListener('mouseup', () => { isDown = false; track.style.cursor = 'grab'; });
+track.addEventListener('mousemove', e => { if (!isDown) return; e.preventDefault(); const x = e.pageX - track.offsetLeft; track.scrollLeft = scrollLeft - (x - startX) * 1.5; });
+</script>
+</body>
+</html>

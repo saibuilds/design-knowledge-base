@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Navigation Pattern Demos</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111;
+      --border: #1f1f1f;
+      --accent: #f59e0b;
+      --text: #fff;
+      --muted: #666;
+    }
+    html { scroll-behavior: auto; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; overflow-x: hidden; }
+
+    /* ═══════════════════════════════
+       NAV 1: FLOATING PILL NAVBAR
+       Appears + shrinks on scroll
+    ═══════════════════════════════ */
+    .floating-nav {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70%;
+      z-index: 500;
+      transition: width 0.4s cubic-bezier(0.25,0.1,0.25,1), top 0.4s;
+    }
+    .floating-nav.scrolled { width: 56%; top: 12px; }
+    .floating-nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10,10,10,0.85);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 100px;
+      padding: 10px 20px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .nav-logo { font-size: 13px; font-weight: 800; letter-spacing: 0.05em; color: #fff; text-decoration: none; }
+    .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
+    .nav-links a {
+      display: block;
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a.active { color: #000; }
+    .nav-pill {
+      position: absolute;
+      inset: 0;
+      background: var(--accent);
+      border-radius: 100px;
+      z-index: -1;
+      transition: left 0.3s cubic-bezier(0.34,1.56,0.64,1), width 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .nav-cta {
+      background: #fff;
+      color: #000;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 7px 16px;
+      border-radius: 100px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--accent); }
+
+    /* ═══════════════════════════════
+       NAV 2: FULLSCREEN HAMBURGER
+       Clip-path circle wipe
+    ═══════════════════════════════ */
+    .hamburger-btn {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 600;
+      width: 48px;
+      height: 48px;
+      background: rgba(10,10,10,0.9);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+    }
+    .hamburger-btn span {
+      display: block;
+      height: 1px;
+      background: #fff;
+      border-radius: 2px;
+      transition: transform 0.3s cubic-bezier(0.76,0,0.24,1), opacity 0.2s, width 0.3s;
+    }
+    .hamburger-btn span:nth-child(1) { width: 22px; }
+    .hamburger-btn span:nth-child(2) { width: 14px; align-self: flex-start; margin-left: 5px; }
+    .hamburger-btn span:nth-child(3) { width: 22px; }
+    .hamburger-btn.open span:nth-child(1) { transform: rotate(45deg) translate(4px,4px); }
+    .hamburger-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger-btn.open span:nth-child(3) { transform: rotate(-45deg) translate(4px,-4px); }
+
+    .fullscreen-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 550;
+      background: #0a0a0a;
+      clip-path: circle(0% at calc(100% - 48px) 48px);
+      transition: clip-path 0.7s cubic-bezier(0.76,0,0.24,1);
+      display: flex;
+      flex-direction: column;
+      padding: 80px 60px;
+      pointer-events: none;
+      opacity: 0;
+    }
+    .fullscreen-overlay.open {
+      clip-path: circle(150% at calc(100% - 48px) 48px);
+      pointer-events: all;
+      opacity: 1;
+    }
+    .overlay-nav { margin-top: auto; }
+    .overlay-nav ul { list-style: none; space: 0; }
+    .overlay-nav li {
+      overflow: hidden;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .overlay-nav a {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+      text-decoration: none;
+      transform: translateX(-40px);
+      opacity: 0;
+      transition: color 0.2s;
+    }
+    .overlay-nav a:hover .link-label { color: var(--accent); }
+    .link-num { font-size: 11px; font-weight: 700; color: var(--muted); }
+    .link-label { font-size: clamp(36px, 6vw, 64px); font-weight: 900; letter-spacing: -0.03em; color: #fff; line-height: 1.1; }
+    .overlay-footer {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-top: 32px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.4s, transform 0.4s;
+    }
+    .overlay-footer.visible { opacity: 1; transform: translateY(0); }
+    .overlay-social { display: flex; gap: 24px; list-style: none; }
+    .overlay-social a { color: var(--muted); font-size: 13px; text-decoration: none; transition: color 0.2s; }
+    .overlay-social a:hover { color: #fff; }
+
+    /* ═══════════════════════════════
+       NAV 3: SMART HEADER
+       Hides on scroll down, shows on scroll up
+    ═══════════════════════════════ */
+    .smart-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 490;
+      transition: transform 0.3s cubic-bezier(0.25,0.46,0.45,0.94), background 0.3s, border-color 0.3s;
+      border-bottom: 1px solid transparent;
+    }
+    .smart-header.scrolled { background: rgba(10,10,10,0.8); border-color: rgba(255,255,255,0.05); backdrop-filter: blur(20px); }
+    .smart-header.hidden { transform: translateY(-100%); }
+    .smart-header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* ═══════════════════════════════
+       NAV 4: MOBILE DRAWER
+       Slides in from left
+    ═══════════════════════════════ */
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 700;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      backdrop-filter: blur(4px);
+    }
+    .drawer-backdrop.open { opacity: 1; pointer-events: all; }
+    .mobile-drawer {
+      position: fixed;
+      top: 0; bottom: 0; left: 0;
+      width: min(80vw, 320px);
+      background: #0d0d0d;
+      border-right: 1px solid var(--border);
+      z-index: 710;
+      transform: translateX(-100%);
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      display: flex;
+      flex-direction: column;
+      padding: 32px 24px;
+    }
+    .mobile-drawer.open { transform: translateX(0); }
+    .drawer-logo { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 40px; }
+    .drawer-links { list-style: none; flex: 1; }
+    .drawer-links li { margin-bottom: 4px; }
+    .drawer-links a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .drawer-links a:hover { background: rgba(255,255,255,0.05); color: #fff; }
+    .drawer-links a.active { background: rgba(245,158,11,0.1); color: var(--accent); }
+    .drawer-cta {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: var(--accent);
+      color: #000;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      border-radius: 12px;
+      text-decoration: none;
+      margin-top: auto;
+    }
+
+    /* ═══════════════════════════════
+       NAV 5: SCROLL PROGRESS BAR
+       Top of page indicator
+    ═══════════════════════════════ */
+    .scroll-progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--accent);
+      transform-origin: left;
+      transform: scaleX(0);
+      z-index: 1000;
+    }
+
+    /* ═══════════════════════════════
+       NAV 6: SECTION DOTS
+       Active section indicator
+    ═══════════════════════════════ */
+    .section-dots {
+      position: fixed;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 480;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+    .dot-btn {
+      width: 8px;
+      height: 8px;
+      border-radius: 100px;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.3s, width 0.3s, height 0.3s, transform 0.3s;
+      position: relative;
+    }
+    .dot-btn::before {
+      content: attr(data-label);
+      position: absolute;
+      right: calc(100% + 12px);
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(10,10,10,0.9);
+      border: 1px solid var(--border);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .dot-btn:hover::before { opacity: 1; }
+    .dot-btn.active { background: var(--accent); transform: scale(1.5); }
+
+    /* DEMO PAGE SECTIONS */
+    .demo-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 16px;
+      padding: 120px 40px;
+      text-align: center;
+    }
+    #section1 { background: var(--bg); }
+    #section2 { background: var(--surface); }
+    #section3 { background: #0d0b09; }
+    #section4 { background: var(--bg); }
+    #section5 { background: var(--surface); }
+    #section6 { background: #0a0d0a; }
+
+    .section-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(245,158,11,0.1);
+      border: 1px solid rgba(245,158,11,0.2);
+      padding: 4px 14px;
+      border-radius: 100px;
+      display: inline-block;
+    }
+    .demo-section h1, .demo-section h2 { font-size: clamp(36px,6vw,80px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; }
+    .demo-section p { color: var(--muted); font-size: 16px; max-width: 460px; line-height: 1.7; }
+
+    /* Mobile drawer trigger (visible in demo) */
+    .drawer-trigger {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      z-index: 680;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    @media (min-width: 768px) {
+      .drawer-trigger { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════
+     NAV 5: Scroll progress bar (top)
+     Technique: GSAP scaleX scrub
+═══════════════════════════════ -->
+<div class="scroll-progress-bar" id="scrollProgressBar"></div>
+
+<!-- ═══════════════════════════════
+     NAV 1: Floating Pill Navbar
+     Shrinks width on scroll
+═══════════════════════════════ -->
+<nav class="floating-nav" id="floatingNav">
+  <div class="floating-nav-inner">
+    <a href="#section1" class="nav-logo">MOTTA</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#section1" class="active" data-section="section1">Home<span class="nav-pill" id="navPill"></span></a></li>
+      <li><a href="#section2" data-section="section2">Projects</a></li>
+      <li><a href="#section3" data-section="section3">Services</a></li>
+      <li><a href="#section4" data-section="section4">About</a></li>
+      <li><a href="#section5" data-section="section5">Contact</a></li>
+    </ul>
+    <a href="#section5" class="nav-cta">Get Quote</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════
+     NAV 3: Smart Header (hides/shows)
+     Sits behind the floating nav for demo
+═══════════════════════════════ -->
+<header class="smart-header" id="smartHeader">
+  <div class="smart-header-inner">
+    <span style="font-size:13px;font-weight:800;color:#fff;">SMART HEADER</span>
+    <span style="font-size:11px;color:var(--muted);letter-spacing:0.1em;">↑ Hides on scroll down · Shows on scroll up</span>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════
+     NAV 2: Fullscreen Hamburger
+     Clip-path circle expand
+═══════════════════════════════ -->
+<button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu" aria-expanded="false">
+  <span></span><span></span><span></span>
+</button>
+
+<div class="fullscreen-overlay" id="fullscreenOverlay" role="dialog" aria-modal="true">
+  <div class="overlay-nav">
+    <ul>
+      <li><a href="#section1" class="overlay-link"><span class="link-num">01</span><span class="link-label">Home</span></a></li>
+      <li><a href="#section2" class="overlay-link"><span class="link-num">02</span><span class="link-label">Projects</span></a></li>
+      <li><a href="#section3" class="overlay-link"><span class="link-num">03</span><span class="link-label">Services</span></a></li>
+      <li><a href="#section4" class="overlay-link"><span class="link-num">04</span><span class="link-label">About</span></a></li>
+      <li><a href="#section5" class="overlay-link"><span class="link-num">05</span><span class="link-label">Contact</span></a></li>
+    </ul>
+  </div>
+  <div class="overlay-footer" id="overlayFooter">
+    <p style="font-size:13px;color:var(--muted);">Premium renovations since 1992</p>
+    <ul class="overlay-social">
+      <li><a href="#">Instagram</a></li>
+      <li><a href="#">Houzz</a></li>
+      <li><a href="#">LinkedIn</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     NAV 4: Mobile Drawer
+═══════════════════════════════ -->
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <span class="drawer-logo">MOTTA</span>
+  <ul class="drawer-links">
+    <li><a href="#section1" class="active">Home <span>›</span></a></li>
+    <li><a href="#section2">Projects <span>›</span></a></li>
+    <li><a href="#section3">Services <span>›</span></a></li>
+    <li><a href="#section4">About <span>›</span></a></li>
+    <li><a href="#section5">Contact <span>›</span></a></li>
+  </ul>
+  <a href="#section5" class="drawer-cta">Get a Free Quote</a>
+</div>
+
+<button class="drawer-trigger" id="drawerTrigger">☰ Menu</button>
+
+<!-- ═══════════════════════════════
+     NAV 6: Section Dot Navigation
+═══════════════════════════════ -->
+<nav class="section-dots" id="sectionDots" aria-label="Section navigation">
+  <button class="dot-btn active" data-target="section1" data-label="Home"></button>
+  <button class="dot-btn" data-target="section2" data-label="Projects"></button>
+  <button class="dot-btn" data-target="section3" data-label="Services"></button>
+  <button class="dot-btn" data-target="section4" data-label="About"></button>
+  <button class="dot-btn" data-target="section5" data-label="Contact"></button>
+  <button class="dot-btn" data-target="section6" data-label="Process"></button>
+</nav>
+
+<!-- CONTENT SECTIONS -->
+<section class="demo-section" id="section1">
+  <span class="section-eyebrow">Nav Demo — Floating Pill</span>
+  <h1>Award-Winning<br>Renovations</h1>
+  <p>Scroll down to see the floating pill navbar shrink, the smart header hide/show, and the section dots update.</p>
+</section>
+
+<section class="demo-section" id="section2">
+  <span class="section-eyebrow">Active State — Spring Pill</span>
+  <h2>500+ Projects<br>Delivered</h2>
+  <p>The amber pill in the navbar slides to the active link using layoutId spring animation.</p>
+</section>
+
+<section class="demo-section" id="section3">
+  <span class="section-eyebrow">Smart Header</span>
+  <h2>Hides When<br>You Scroll Down</h2>
+  <p>The header tracks scroll direction. Scroll down: hides. Scroll up: reappears. Clean viewport maximised.</p>
+</section>
+
+<section class="demo-section" id="section4">
+  <span class="section-eyebrow">Fullscreen Hamburger</span>
+  <h2>Clip-Path<br>Circle Wipe</h2>
+  <p>Click the hamburger in the top right. A circle expands from the button position to fill the viewport.</p>
+</section>
+
+<section class="demo-section" id="section5">
+  <span class="section-eyebrow">Mobile Drawer</span>
+  <h2>Slide-in<br>Navigation</h2>
+  <p>On mobile, tap the amber menu button at the bottom left. Drags to close. Spring physics on open.</p>
+</section>
+
+<section class="demo-section" id="section6">
+  <span class="section-eyebrow">Progress Bar + Section Dots</span>
+  <h2>Always Know<br>Where You Are</h2>
+  <p>The amber line at the top tracks reading progress. Dots on the right show your current section.</p>
+</section>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ── LENIS ────────────────────────────────
+  const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10*t)) });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(t => lenis.raf(t * 1000));
+  gsap.ticker.lagSmoothing(0);
+
+  // ── NAV 5: PROGRESS BAR ──────────────────
+  gsap.to('#scrollProgressBar', {
+    scaleX: 1, ease: 'none', transformOrigin: 'left',
+    scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 0.3 }
+  });
+
+  // ── NAV 1: FLOATING PILL — shrink on scroll ──
+  const floatingNav = document.getElementById('floatingNav');
+  ScrollTrigger.create({
+    start: 100,
+    onEnter: () => floatingNav.classList.add('scrolled'),
+    onLeaveBack: () => floatingNav.classList.remove('scrolled'),
+  });
+
+  // Active link tracking with sliding pill
+  const navLinksAll = document.querySelectorAll('.nav-links a');
+  const navPill = document.getElementById('navPill');
+  let activeLinkEl = document.querySelector('.nav-links a.active');
+
+  function movePillTo(el) {
+    const navRect = el.closest('ul').getBoundingClientRect();
+    const linkRect = el.getBoundingClientRect();
+    navPill.style.left = (linkRect.left - navRect.left - 16) + 'px'; // 16 = ul padding adjustment
+    navPill.style.width = linkRect.width + 'px';
+    if (activeLinkEl) activeLinkEl.classList.remove('active');
+    el.classList.add('active');
+    activeLinkEl = el;
+  }
+
+  // Move pill on nav click
+  navLinksAll.forEach(a => {
+    a.addEventListener('click', e => {
+      movePillTo(a);
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) lenis.scrollTo(target, { duration: 1.4 });
+    });
+  });
+
+  // Init pill position
+  setTimeout(() => {
+    if (activeLinkEl) movePillTo(activeLinkEl);
+  }, 100);
+
+  // ── NAV 3: SMART HEADER ──────────────────
+  const smartHeader = document.getElementById('smartHeader');
+  let lastY = 0;
+  lenis.on('scroll', ({ scroll }) => {
+    smartHeader.classList.toggle('scrolled', scroll > 20);
+    smartHeader.classList.toggle('hidden', scroll > lastY && scroll > 80);
+    lastY = scroll;
+  });
+
+  // ── NAV 2: FULLSCREEN HAMBURGER ──────────
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const overlay = document.getElementById('fullscreenOverlay');
+  const overlayLinks = document.querySelectorAll('.overlay-link');
+  const overlayFooter = document.getElementById('overlayFooter');
+  let menuOpen = false;
+
+  function openMenu() {
+    menuOpen = true;
+    hamburgerBtn.classList.add('open');
+    hamburgerBtn.setAttribute('aria-expanded', 'true');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+
+    // Stagger links in
+    overlayLinks.forEach((link, i) => {
+      setTimeout(() => {
+        link.style.transition = `transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94) ${i*0.07}s, opacity 0.5s ${i*0.07}s`;
+        link.style.transform = 'translateX(0)';
+        link.style.opacity = '1';
+      }, 300);
+    });
+
+    setTimeout(() => overlayFooter.classList.add('visible'), 650);
+  }
+
+  function closeMenu() {
+    menuOpen = false;
+    hamburgerBtn.classList.remove('open');
+    hamburgerBtn.setAttribute('aria-expanded', 'false');
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    overlayFooter.classList.remove('visible');
+
+    overlayLinks.forEach(link => {
+      link.style.transition = 'none';
+      link.style.transform = 'translateX(-40px)';
+      link.style.opacity = '0';
+    });
+  }
+
+  hamburgerBtn.addEventListener('click', () => menuOpen ? closeMenu() : openMenu());
+
+  overlayLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      closeMenu();
+      setTimeout(() => { if (target) lenis.scrollTo(target, { duration: 1.4 }); }, 300);
+    });
+  });
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && menuOpen) closeMenu(); });
+
+  // ── NAV 4: MOBILE DRAWER ─────────────────
+  const drawerBackdrop = document.getElementById('drawerBackdrop');
+  const mobileDrawer   = document.getElementById('mobileDrawer');
+  const drawerTrigger  = document.getElementById('drawerTrigger');
+  let drawerOpen = false;
+
+  function openDrawer() {
+    drawerOpen = true;
+    drawerBackdrop.classList.add('open');
+    mobileDrawer.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    drawerOpen = false;
+    drawerBackdrop.classList.remove('open');
+    mobileDrawer.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  drawerTrigger.addEventListener('click', openDrawer);
+  drawerBackdrop.addEventListener('click', closeDrawer);
+
+  mobileDrawer.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => { closeDrawer(); });
+  });
+
+  // Touch drag to close drawer
+  let touchStartX = 0;
+  mobileDrawer.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  mobileDrawer.addEventListener('touchend', e => {
+    if (touchStartX - e.changedTouches[0].clientX > 60) closeDrawer();
+  }, { passive: true });
+
+  // ── NAV 6: SECTION DOTS ──────────────────
+  const dotBtns = document.querySelectorAll('.dot-btn');
+  const sections = ['section1','section2','section3','section4','section5','section6'];
+
+  dotBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = document.getElementById(btn.dataset.target);
+      if (target) lenis.scrollTo(target, { duration: 1.4 });
+    });
+  });
+
+  // Update active dot on scroll
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        dotBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.target === id));
+
+        // Also update floating nav pill
+        const matchingNavLink = document.querySelector(`.nav-links a[data-section="${id}"]`);
+        if (matchingNavLink) movePillTo(matchingNavLink);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) sectionObserver.observe(el);
+  });
+</script>
+</body>
+</html>
