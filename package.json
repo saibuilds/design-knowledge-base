@@ -1,0 +1,11 @@
+{
+  "name": "design-knowledge-base",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "screenshot": "node scripts/screenshot-reference-sites.mjs"
+  },
+  "dependencies": {
+    "playwright": "^1.44.0"
+  }
+}
