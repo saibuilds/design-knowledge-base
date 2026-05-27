@@ -1,21 +1,109 @@
 # Web Design Knowledge Base
-_Updated: 2026-05-27 — 68 files_
+_Updated: 2026-05-27 — 86 md files_
 
 > Local design library for Claude Code. Reference with: `~/Downloads/design-knowledge-base/md/[file].md`
 
+---
+
 ## Quick Usage
+
+**DJ Custom Reno** (renovation/construction)
+```
+Build a renovation services site. Reference:
+- md/reference-sites/industry/construction.md for dark luxury hero, project showcase
+- md/reference-sites/industry/dj-custom-reno-services.md for service breakdown + scene structure
+- md/3d/dj-custom-reno-3d-components.md for 3D service scene components
+- components/dj-custom-reno/ for ServiceScene TSX files + ServiceCatalog3D
+- md/components/lead-forms.md for multi-step lead capture + GHL webhook
+- md/seo/seo-renovation-toronto.md for keywords + LocalBusiness schema
+```
+
+**Garden Suites 4 You** (ADU/garden suite builder)
 ```
 Build a garden suite landing page. Reference:
 - md/reference-sites/industry/garden-suites-adu.md for layout + ROI calculator
+- md/3d/gardensuites4you-3d-components.md for 3D components
+- components/gardensuites4you/ for GardenGrow, BasementCrossSection, ROICalculator, PermitTimeline, ServiceCatalog, LandingPageAssembly
 - md/components/lead-forms.md for multi-step lead capture + GHL webhook
-- md/components/magicui.md for animated components
+- md/seo/seo-garden-suites-adu.md for ADU keywords + permit FAQ schema
 - md/animations/framer-motion.md for scroll reveals
 ```
+
+**Sath Ideals** (real estate)
+```
+Build a real estate agent site. Reference:
+- md/reference-sites/industry/real-estate.md for Compass/Zoopla patterns
+- md/reference-sites/industry/property-listings.md for listing grid, map+list split view
+- md/3d/sathideals-3d-components.md for 3D property components
+- components/sathideals/ for TorontoSkyline, PropertyCard3D, NeighbourhoodOrb, AgentProfile, MortgageEstimator, ServiceCatalog, LandingPageAssembly
+- md/seo/seo-real-estate.md for agent keywords + listing schema
+- md/reference-sites/industry/mortgage-finance.md for mortgage calculator patterns
+```
+
+**Motta Kitchen** (kitchen design)
+```
+Build a kitchen design studio site. Reference:
+- md/reference-sites/industry/kitchen-design.md for Smallbone/Henrybuilt patterns
+- md/reference-sites/industry/interior-design.md for interior design patterns
+- components/motta-kitchen/ (coming soon)
+- md/components/before-after-slider.md for before/after reveal
+- md/components/data-display.md for gallery lightbox + masonry
+- md/animations/gsap.md for parallax + horizontal scroll
+```
+
+---
+
+## TSX Components
+
+### components/shared/ — 11 shared reusable components
+- ShimmerButton
+- MagneticButton
+- SpotlightCard
+- BorderBeam
+- TextScramble
+- CountUpStat
+- ScrollReveal
+- FloatingNav
+- MultiStepLeadForm
+- BeforeAfterSlider
+- ParallaxHero
+
+> Reference: `md/components/shared-component-library.md`
+
+### components/dj-custom-reno/ — 7 files
+- 6 service scene components (one per service)
+- ServiceCatalog3D
+
+> Reference: `md/3d/dj-custom-reno-3d-components.md`, `md/reference-sites/industry/dj-custom-reno-services.md`
+
+### components/gardensuites4you/ — 7 files
+- GardenGrow
+- BasementCrossSection
+- ROICalculator
+- PermitTimeline
+- ServiceCatalog
+- LandingPageAssembly
+
+> Reference: `md/3d/gardensuites4you-3d-components.md`, `md/reference-sites/industry/garden-suites-adu.md`
+
+### components/sathideals/ — 7 files
+- TorontoSkyline
+- PropertyCard3D
+- NeighbourhoodOrb
+- AgentProfile
+- MortgageEstimator
+- ServiceCatalog
+- LandingPageAssembly
+
+> Reference: `md/3d/sathideals-3d-components.md`, `md/reference-sites/industry/real-estate.md`
+
+### components/motta-kitchen/ — coming soon
 
 ---
 
 ## components
 - [21st-dev.md](components/21st-dev.md) — Shimmer, magnetic, floating pill nav, spotlight card, typewriter, scramble, floating label
+- [21st-dev-full.md](components/21st-dev-full.md) — Full extended 21st.dev component reference
 - [aceternity.md](components/aceternity.md) — Spotlight, Aurora, 3D card, Lamp, Wavy background, MovingBorder, InfiniteMovingCards, TracingBeam
 - [magicui.md](components/magicui.md) — BorderBeam, ShimmerButton, Marquee, Globe, Particles, Meteors, BentoGrid, AnimatedBeam, TextReveal
 - [shadcn.md](components/shadcn.md) — All shadcn/ui component install commands and usage patterns
@@ -27,6 +115,9 @@ Build a garden suite landing page. Reference:
 - [origin-ui.md](components/origin-ui.md) — ShimmerButton, OTPInput, TagInput, StatCard, CommandPalette, TanStack data table
 - [data-display.md](components/data-display.md) — Animated stat ticker, timeline, before/after slider, gallery lightbox, infinite scroll, masonry
 - [lead-forms.md](components/lead-forms.md) — Multi-step lead form, FB lead ad structure, GHL webhook, sticky CTA, trust elements
+- [before-after-slider.md](components/before-after-slider.md) — Before/after image slider component patterns
+- [loading-screens.md](components/loading-screens.md) — Loading screen and preloader component patterns
+- [shared-component-library.md](components/shared-component-library.md) — Shared reusable component library: ShimmerButton, MagneticButton, SpotlightCard, BorderBeam, TextScramble, CountUpStat, ScrollReveal, FloatingNav, MultiStepLeadForm, BeforeAfterSlider, ParallaxHero
 
 ## animations
 - [framer-motion.md](animations/framer-motion.md) — Scroll reveals, stagger, page transitions, useScroll+useTransform, drag, layout animations
@@ -38,11 +129,15 @@ Build a garden suite landing page. Reference:
 - [micro-interactions.md](animations/micro-interactions.md) — Button hover, input focus, card hover, loaders, toast, toggle animations
 - [page-transitions.md](animations/page-transitions.md) — Full-page slide, curtain wipe panels, zoom+blur, SVG morph, GSAP clip-path, React Router
 - [css-scroll-animations.md](animations/css-scroll-animations.md) — animation-timeline: scroll()/view(), progress bar, parallax, stacking cards, clip-path reveal
+- [text-effects.md](animations/text-effects.md) — Text animation effects: split text, character reveals, typewriter, scramble
+- [scroll-triggered-text.md](animations/scroll-triggered-text.md) — Scroll-triggered text animation patterns
 
 ## 3d
 - [r3f.md](3d/r3f.md) — React Three Fiber setup, useFrame, lights, materials, performance
 - [drei-helpers.md](3d/drei-helpers.md) — Environment, Shadows, Controls, Text, Html, useGLTF, MeshTransmission, Float, Sparkles
 - [spline.md](3d/spline.md) — Spline embed in React, event handling, lazy load, free scene tips
+- [spline-components.md](3d/spline-components.md) — Spline component patterns and integration recipes
+- [spline-client-scenes.md](3d/spline-client-scenes.md) — Client-specific Spline scene references and embed configs
 - [shaders.md](3d/shaders.md) — GLSL vertex/fragment, simplex noise, distortion, wave, particles, useFrame uniforms
 - [three-js-vanilla.md](3d/three-js-vanilla.md) — Full renderer setup, OrbitControls, BufferGeometry particles, GLTF, raycasting, scroll camera
 - [immersive-scroll.md](3d/immersive-scroll.md) — Camera path on scroll, section scenes, parallax layers, velocity distortion, fullscreen canvas+HTML
@@ -58,6 +153,9 @@ Build a garden suite landing page. Reference:
 - [webgl-image-effects.md](3d/webgl-image-effects.md) — Ripple, pixel disintegration, cloth reveal, noise-warp, RGB split — full GLSL shaders
 - [3d-portfolio-patterns.md](3d/3d-portfolio-patterns.md) — folio-2019 architecture, LoadingManager, GSAP reveal, cannon physics, postprocessing stack
 - [free-assets.md](3d/free-assets.md) — Poly Haven (CC0), Sketchfab, pmndrs market, ambientCG, Draco/meshopt compression
+- [dj-custom-reno-3d-components.md](3d/dj-custom-reno-3d-components.md) — 3D components for DJ Custom Reno: service scenes, interactive materials, R3F setup
+- [gardensuites4you-3d-components.md](3d/gardensuites4you-3d-components.md) — 3D components for Garden Suites 4 You: GardenGrow, BasementCrossSection, site-specific scenes
+- [sathideals-3d-components.md](3d/sathideals-3d-components.md) — 3D components for Sath Ideals: TorontoSkyline, PropertyCard3D, NeighbourhoodOrb
 
 ## frameworks
 - [nextjs.md](frameworks/nextjs.md) — App Router, template.tsx, server components, next/font, image optimization, metadata
@@ -68,10 +166,12 @@ Build a garden suite landing page. Reference:
 ## reference-sites / industry
 - [construction.md](reference-sites/industry/construction.md) — Dark luxury hero, project showcase, testimonials, contact + Maps embed
 - [kitchen-design.md](reference-sites/industry/kitchen-design.md) — Smallbone/Henrybuilt patterns: serif type, brass accent, collection grid, material selector, before/after
+- [interior-design.md](reference-sites/industry/interior-design.md) — Interior design studio patterns: editorial layout, material palette, project gallery
 - [real-estate.md](reference-sites/industry/real-estate.md) — Compass/Zoopla patterns: property card, search hero, dual CTA, agent sidebar
 - [property-listings.md](reference-sites/industry/property-listings.md) — Listing grid, filter bar, map+list split view, property hero gallery, mortgage estimate widget
 - [mortgage-finance.md](reference-sites/industry/mortgage-finance.md) — Better.com patterns: trust bar, mortgage calculator, process timeline, multi-step form
 - [garden-suites-adu.md](reference-sites/industry/garden-suites-adu.md) — Garden suite hero, suite type selector, permit process, ROI calculator (for gardensuites4you.ca)
+- [dj-custom-reno-services.md](reference-sites/industry/dj-custom-reno-services.md) — DJ Custom Reno service breakdown, scene structure, renovation-specific UX patterns
 - [saas.md](reference-sites/industry/saas.md) — Pricing table, feature comparison, testimonial grid
 
 ## reference-sites / agencies
@@ -79,6 +179,13 @@ Build a garden suite landing page. Reference:
 - [active-theory.md](reference-sites/agencies/active-theory.md) — Active Theory patterns: preloader, GLSL transitions, Three.js scene manager
 - [bruno-simon.md](reference-sites/bruno-simon.md) — Confirmed stack from package.json, Application.js architecture, cannon.js RaycastVehicle, R3F rebuild
 - [codrops.md](reference-sites/codrops.md) — 25+ experiments with URLs: clip-path, GLSL, canvas, SVG, text effects
+
+## reference-sites / awwwards
+- [sotd-winners.md](reference-sites/awwwards/sotd-winners.md) — Awwwards Site of the Day winners: techniques, patterns, stack breakdown
+- [scroll-experiences.md](reference-sites/awwwards/scroll-experiences.md) — Award-winning scroll experience patterns and implementations
+- [immersive-3d-sites.md](reference-sites/awwwards/immersive-3d-sites.md) — Immersive 3D site patterns from Awwwards winners
+- [agency-portfolios.md](reference-sites/awwwards/agency-portfolios.md) — Agency portfolio patterns: case study layout, process section, team grid
+- [typography-motion.md](reference-sites/awwwards/typography-motion.md) — Typography + motion patterns from award-winning sites
 
 ## tools
 - [typescript-patterns.md](tools/typescript-patterns.md) — Generic components, discriminated unions, ComponentProps, Zod+RHF, R3F refs
