@@ -1,0 +1,1933 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>21st.dev — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#e5e5e5;font-family:'Inter',sans-serif;font-size:15px;line-height:1.6}.sidebar{position:fixed;left:0;top:0;width:220px;height:100vh;background:#111;border-right:1px solid #1f1f1f;padding:20px;overflow-y:auto}.sidebar h2{font-size:13px;color:#f59e0b;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}.sidebar a{display:block;color:#888;text-decoration:none;padding:6px 8px;border-radius:6px;font-size:13px;margin-bottom:2px}.sidebar a:hover{color:#fff;background:#1a1a1a}.main{margin-left:220px;padding:48px;max-width:960px}h1{font-size:32px;font-weight:700;color:#fff;margin-bottom:8px}h2{font-size:20px;font-weight:600;color:#fff;margin:40px 0 8px;padding-top:40px;border-top:1px solid #1f1f1f}h3{font-size:12px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.08em;margin:16px 0 6px}p{color:#aaa;margin-bottom:10px}.tag{display:inline-block;background:#f59e0b15;border:1px solid #f59e0b40;color:#f59e0b;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.badge.free{background:#0d2e1680;border-color:#22c55e40;color:#22c55e;display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.install{background:#0d0d0d;border:1px solid #1f1f1f;border-radius:6px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#f59e0b;margin:8px 0}.code-block{position:relative;margin:12px 0}.copy-btn{position:absolute;top:8px;right:8px;background:#1f1f1f;border:1px solid #333;color:#888;padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer}pre{border-radius:8px;overflow:auto;font-size:12px;max-height:400px}.component-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin:16px 0}.component-card{background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:14px}.component-card h4{font-size:13px;color:#e5e5e5;margin-bottom:4px}.component-card p{font-size:11px;color:#555;margin:0}input[type=search]{width:100%;background:#111;border:1px solid #2a2a2a;color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;font-family:inherit;margin-bottom:32px;outline:none}</style></head>
+<body>
+<div class="sidebar">
+  <h2>Components</h2>
+  <a href="../index.html">Home</a>
+  <a href="free-components-master.html">All Free</a>
+  <a href="magicui-components.html">MagicUI</a>
+  <a href="aceternity-components.html">Aceternity</a>
+  <a href="21st-dev-full.html">21st.dev</a>
+  <a href="hover-dev-full.html">hover.dev</a>
+  <a href="../3d/spline-scenes.html">Spline</a>
+  <a href="../animations/gsap.html">GSAP</a>
+  <hr style="border-color:#1f1f1f;margin:12px 0">
+  <a href="#overview">Overview</a>
+  <a href="#buttons">Buttons</a>
+  <a href="#cards">Cards</a>
+  <a href="#inputs">Inputs</a>
+  <a href="#navigation">Navigation</a>
+  <a href="#hero">Hero Sections</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#testimonials">Testimonials</a>
+  <a href="#faq">FAQ</a>
+  <a href="#footers">Footers</a>
+  <a href="#marketing">Marketing Blocks</a>
+  <a href="#loaders">Loaders</a>
+  <a href="#badges">Badges &amp; Tags</a>
+  <a href="#tabs">Tabs &amp; Toggles</a>
+  <a href="#modals">Modals &amp; Dialogs</a>
+  <a href="#tables">Tables</a>
+  <a href="#charts">Charts</a>
+  <a href="#avatars">Avatars</a>
+  <a href="#banners">Banners</a>
+  <a href="#backgrounds">Backgrounds</a>
+  <a href="#text-effects">Text Effects</a>
+  <a href="#usage">Usage Notes</a>
+</div>
+<div class="main">
+  <input type="search" placeholder="Search components..." oninput="filterComponents(this.value)">
+  <div id="content">
+
+    <h1>21st.dev</h1>
+    <p>Open-source React component marketplace. Free components are accessible without login. Built on Tailwind CSS + shadcn/ui patterns. All components are copy-paste ready — no CLI install required for free tier.</p>
+    <p>
+      <span class="tag">React</span>
+      <span class="tag">Tailwind CSS</span>
+      <span class="tag">TypeScript</span>
+      <span class="tag">shadcn/ui</span>
+      <span class="tag">Framer Motion</span>
+      <span class="badge free">Free Tier Available</span>
+    </p>
+    <div class="install">https://21st.dev/explore</div>
+
+    <!-- OVERVIEW -->
+    <h2 id="overview">Overview &amp; Setup</h2>
+    <p>21st.dev is a community marketplace where developers publish React components. Free components can be browsed and copied directly from the site. Many components follow the shadcn/ui registry format and can optionally be installed via CLI.</p>
+    <h3>Typical Dependencies</h3>
+    <div class="install">npm install tailwindcss @radix-ui/react-* class-variance-authority clsx tailwind-merge framer-motion lucide-react</div>
+    <h3>Utility (cn helper)</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-typescript">// lib/utils.ts
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}</code></pre>
+    </div>
+
+    <!-- BUTTONS -->
+    <h2 id="buttons">Buttons</h2>
+    <p>21st.dev hosts a wide variety of button components ranging from minimal shadcn-style to animated magnetic and gradient variants.</p>
+
+    <div data-component="shimmer-button">
+      <h3>Shimmer Button</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Animation</span>
+      <p>A button with a moving shimmer/gloss sweep animation on hover. Popular for CTAs.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// ShimmerButton.tsx
+import { cn } from "@/lib/utils"
+import React from "react"
+
+interface ShimmerButtonProps extends React.ButtonHTMLAttributes&lt;HTMLButtonElement&gt; {
+  shimmerColor?: string
+  shimmerSize?: string
+  borderRadius?: string
+  shimmerDuration?: string
+  background?: string
+  children: React.ReactNode
+}
+
+export function ShimmerButton({
+  shimmerColor = "#ffffff",
+  shimmerSize = "0.05em",
+  shimmerDuration = "3s",
+  borderRadius = "100px",
+  background = "rgba(0, 0, 0, 1)",
+  className,
+  children,
+  ...props
+}: ShimmerButtonProps) {
+  return (
+    &lt;button
+      style={
+        {
+          "--spread": "90deg",
+          "--shimmer-color": shimmerColor,
+          "--radius": borderRadius,
+          "--speed": shimmerDuration,
+          "--cut": shimmerSize,
+          "--bg": background,
+        } as React.CSSProperties
+      }
+      className={cn(
+        "group relative z-0 flex cursor-pointer items-center justify-center overflow-hidden whitespace-nowrap border border-white/10 px-6 py-3 text-white",
+        "[background:var(--bg)] [border-radius:var(--radius)]",
+        "transform-gpu transition-transform duration-300 ease-in-out active:translate-y-px",
+        className,
+      )}
+      {...props}
+    &gt;
+      {/* Shimmer layer */}
+      &lt;div
+        className={cn(
+          "absolute inset-0 overflow-visible [container-type:size]",
+        )}
+      &gt;
+        &lt;div className="absolute inset-0 h-[100cqh] animate-shimmer-slide [aspect-ratio:1] [border-radius:0] [mask:none]"&gt;
+          &lt;div className="animate-spin-around absolute -inset-full w-auto rotate-0 [background:conic-gradient(from_calc(270deg-(var(--spread)*0.5)),transparent_0,var(--shimmer-color)_var(--spread),transparent_var(--spread))] [translate:0_0]" /&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;span className="relative z-10"&gt;{children}&lt;/span&gt;
+      {/* Cutout */}
+      &lt;div className={cn(
+        "absolute inset-[var(--cut)] rounded-[calc(var(--radius)-var(--cut))] [background:var(--bg)]"
+      )} /&gt;
+    &lt;/button&gt;
+  )
+}
+
+// tailwind.config.js additions:
+// animation: { "shimmer-slide": "shimmer-slide var(--speed) ease-in-out infinite alternate", "spin-around": "spin-around calc(var(--speed)*2) infinite linear" }
+// keyframes: { "shimmer-slide": { to: { transform: "translate(calc(100cqw - 100%), 0)" } }, "spin-around": { "0%": { transform: "translateZ(0) rotate(0)" }, "15%, 35%": { transform: "translateZ(0) rotate(90deg)" }, "65%, 85%": { transform: "translateZ(0) rotate(270deg)" }, "100%": { transform: "translateZ(0) rotate(360deg)" } } }
+</code></pre>
+      </div>
+    </div>
+
+    <div data-component="gradient-button">
+      <h3>Gradient Button</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Gradient</span>
+      <p>Animated gradient border/background button. Cycles through colors continuously.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// GradientButton.tsx
+"use client"
+import { cn } from "@/lib/utils"
+
+export function GradientButton({
+  className,
+  children,
+  ...props
+}: React.ButtonHTMLAttributes&lt;HTMLButtonElement&gt;) {
+  return (
+    &lt;button
+      className={cn(
+        "relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50",
+        className
+      )}
+      {...props}
+    &gt;
+      &lt;span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" /&gt;
+      &lt;span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-6 py-1 text-sm font-medium text-white backdrop-blur-3xl"&gt;
+        {children}
+      &lt;/span&gt;
+    &lt;/button&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="magnetic-button">
+      <h3>Magnetic Button</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Interaction</span>
+      <p>Button that magnetically attracts toward the cursor on hover using mouse position tracking.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// MagneticButton.tsx
+"use client"
+import { useRef, useState } from "react"
+import { motion } from "framer-motion"
+
+export function MagneticButton({ children }: { children: React.ReactNode }) {
+  const ref = useRef&lt;HTMLButtonElement&gt;(null)
+  const [position, setPosition] = useState({ x: 0, y: 0 })
+
+  const handleMouse = (e: React.MouseEvent) => {
+    const { clientX, clientY } = e
+    const { width, height, left, top } = ref.current!.getBoundingClientRect()
+    const x = clientX - (left + width / 2)
+    const y = clientY - (top + height / 2)
+    setPosition({ x: x * 0.35, y: y * 0.35 })
+  }
+
+  const reset = () => setPosition({ x: 0, y: 0 })
+
+  return (
+    &lt;motion.button
+      ref={ref}
+      onMouseMove={handleMouse}
+      onMouseLeave={reset}
+      animate={position}
+      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+      className="relative flex items-center justify-center rounded-full bg-white text-black px-8 py-4 font-medium overflow-hidden"
+    &gt;
+      {children}
+    &lt;/motion.button&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="spotlight-button">
+      <h3>Spotlight Button</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Spotlight</span>
+      <p>A dark button with a radial spotlight that follows the mouse cursor.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// SpotlightButton.tsx
+"use client"
+import { useRef, MouseEvent } from "react"
+import { cn } from "@/lib/utils"
+
+export function SpotlightButton({
+  children,
+  className,
+  ...props
+}: React.ButtonHTMLAttributes&lt;HTMLButtonElement&gt;) {
+  const divRef = useRef&lt;HTMLButtonElement&gt;(null)
+
+  const handleMouseMove = (e: MouseEvent&lt;HTMLButtonElement&gt;) => {
+    const el = divRef.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    el.style.setProperty("--x", `${x}px`)
+    el.style.setProperty("--y", `${y}px`)
+  }
+
+  return (
+    &lt;button
+      ref={divRef}
+      onMouseMove={handleMouseMove}
+      className={cn(
+        "group relative flex cursor-pointer items-center justify-center rounded-full border border-white/20 bg-neutral-900 px-8 py-3 text-white shadow-[0_1px_0_0_rgba(255,255,255,0.1)_inset]",
+        "overflow-hidden",
+        "before:absolute before:inset-0 before:rounded-full before:opacity-0 before:transition-opacity before:duration-500 before:content-['']",
+        "before:[background:radial-gradient(100px_circle_at_var(--x)_var(--y),rgba(255,255,255,0.15),transparent_100%)]",
+        "hover:before:opacity-100",
+        className
+      )}
+      {...props}
+    &gt;
+      {children}
+    &lt;/button&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="glow-button">
+      <h3>Glow Button</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Glow</span>
+      <p>Button with a pulsing or static outer glow. Common in dark-mode landing pages.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// GlowButton.tsx
+import { cn } from "@/lib/utils"
+
+export function GlowButton({
+  children,
+  className,
+  glowColor = "#6366f1",
+  ...props
+}: React.ButtonHTMLAttributes&lt;HTMLButtonElement&gt; & { glowColor?: string }) {
+  return (
+    &lt;button
+      className={cn(
+        "relative inline-flex items-center justify-center px-8 py-3 rounded-lg font-semibold text-white transition-all duration-200",
+        "bg-indigo-600 hover:bg-indigo-500",
+        "shadow-[0_0_20px_rgba(99,102,241,0.5)] hover:shadow-[0_0_35px_rgba(99,102,241,0.8)]",
+        className
+      )}
+      {...props}
+    &gt;
+      {children}
+    &lt;/button&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- CARDS -->
+    <h2 id="cards">Cards</h2>
+    <p>Card components for displaying content with various hover and interaction effects.</p>
+
+    <div data-component="bento-card">
+      <h3>Bento Grid Card</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Layout</span>
+      <p>Bento-style grid cards popularized by Apple. Supports spanning multiple columns/rows.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// BentoGrid.tsx
+import { cn } from "@/lib/utils"
+
+export function BentoGrid({
+  className,
+  children,
+}: {
+  className?: string
+  children?: React.ReactNode
+}) {
+  return (
+    &lt;div
+      className={cn(
+        "grid grid-cols-1 md:grid-cols-3 gap-4 max-w-7xl mx-auto",
+        className
+      )}
+    &gt;
+      {children}
+    &lt;/div&gt;
+  )
+}
+
+export function BentoGridItem({
+  className,
+  title,
+  description,
+  header,
+  icon,
+}: {
+  className?: string
+  title?: string | React.ReactNode
+  description?: string | React.ReactNode
+  header?: React.ReactNode
+  icon?: React.ReactNode
+}) {
+  return (
+    &lt;div
+      className={cn(
+        "row-span-1 rounded-xl group/bento hover:shadow-xl transition duration-200 shadow-input dark:shadow-none p-4 dark:bg-black dark:border-white/[0.2] bg-white border border-transparent justify-between flex flex-col space-y-4",
+        className
+      )}
+    &gt;
+      {header}
+      &lt;div className="group-hover/bento:translate-x-2 transition duration-200"&gt;
+        {icon}
+        &lt;div className="font-sans font-bold text-neutral-600 dark:text-neutral-200 mb-2 mt-2"&gt;
+          {title}
+        &lt;/div&gt;
+        &lt;div className="font-sans font-normal text-neutral-600 text-xs dark:text-neutral-300"&gt;
+          {description}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+}
+
+// Usage:
+// &lt;BentoGrid&gt;
+//   &lt;BentoGridItem className="md:col-span-2" title="Feature" description="..." /&gt;
+//   &lt;BentoGridItem title="Feature 2" description="..." /&gt;
+// &lt;/BentoGrid&gt;</code></pre>
+      </div>
+    </div>
+
+    <div data-component="glow-card">
+      <h3>Glow Card (Mouse-Tracked)</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Interaction</span>
+      <p>Card with a glowing radial highlight that follows the cursor, creating a spotlight on the card surface.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// GlowCard.tsx
+"use client"
+import { useRef, MouseEvent } from "react"
+import { cn } from "@/lib/utils"
+
+export function GlowCard({
+  children,
+  className,
+}: {
+  children: React.ReactNode
+  className?: string
+}) {
+  const cardRef = useRef&lt;HTMLDivElement&gt;(null)
+
+  const handleMouseMove = (e: MouseEvent&lt;HTMLDivElement&gt;) => {
+    const el = cardRef.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    el.style.setProperty("--mouse-x", `${x}px`)
+    el.style.setProperty("--mouse-y", `${y}px`)
+  }
+
+  return (
+    &lt;div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      className={cn(
+        "relative overflow-hidden rounded-xl border border-white/10 bg-neutral-900 p-6",
+        "before:absolute before:inset-0 before:opacity-0 hover:before:opacity-100",
+        "before:transition-opacity before:duration-500",
+        "before:[background:radial-gradient(600px_circle_at_var(--mouse-x)_var(--mouse-y),rgba(255,255,255,0.06),transparent_40%)]",
+        className
+      )}
+    &gt;
+      {children}
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="3d-tilt-card">
+      <h3>3D Tilt Card</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">3D</span>
+      <span class="tag">Animation</span>
+      <p>Card that rotates in 3D space based on mouse position, creating a parallax tilt effect.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// TiltCard.tsx
+"use client"
+import { useRef, MouseEvent } from "react"
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
+
+export function TiltCard({ children }: { children: React.ReactNode }) {
+  const ref = useRef&lt;HTMLDivElement&gt;(null)
+
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+
+  const xSpring = useSpring(x, { stiffness: 300, damping: 30 })
+  const ySpring = useSpring(y, { stiffness: 300, damping: 30 })
+
+  const rotateX = useTransform(ySpring, [-0.5, 0.5], ["17.5deg", "-17.5deg"])
+  const rotateY = useTransform(xSpring, [-0.5, 0.5], ["-17.5deg", "17.5deg"])
+
+  const handleMouseMove = (e: MouseEvent&lt;HTMLDivElement&gt;) => {
+    const el = ref.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    x.set((e.clientX - rect.left) / rect.width - 0.5)
+    y.set((e.clientY - rect.top) / rect.height - 0.5)
+  }
+
+  const handleMouseLeave = () => {
+    x.set(0)
+    y.set(0)
+  }
+
+  return (
+    &lt;motion.div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+      className="relative rounded-xl bg-neutral-900 border border-white/10 p-6 shadow-xl cursor-pointer"
+    &gt;
+      &lt;div style={{ transform: "translateZ(75px)", transformStyle: "preserve-3d" }}&gt;
+        {children}
+      &lt;/div&gt;
+    &lt;/motion.div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="feature-card">
+      <h3>Feature Card</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Marketing</span>
+      <p>Standard feature highlight card with icon, title, and description. Common in feature grids.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// FeatureCard.tsx
+import { cn } from "@/lib/utils"
+import { LucideIcon } from "lucide-react"
+
+interface FeatureCardProps {
+  icon: LucideIcon
+  title: string
+  description: string
+  className?: string
+}
+
+export function FeatureCard({ icon: Icon, title, description, className }: FeatureCardProps) {
+  return (
+    &lt;div
+      className={cn(
+        "group relative rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-6 hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors duration-200",
+        className
+      )}
+    &gt;
+      &lt;div className="flex h-10 w-10 items-center justify-center rounded-lg bg-neutral-100 dark:bg-neutral-900 mb-4 group-hover:bg-indigo-100 dark:group-hover:bg-indigo-950 transition-colors"&gt;
+        &lt;Icon className="h-5 w-5 text-neutral-600 dark:text-neutral-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors" /&gt;
+      &lt;/div&gt;
+      &lt;h3 className="font-semibold text-neutral-900 dark:text-neutral-100 mb-2"&gt;{title}&lt;/h3&gt;
+      &lt;p className="text-sm text-neutral-500 dark:text-neutral-400"&gt;{description}&lt;/p&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- INPUTS -->
+    <h2 id="inputs">Inputs &amp; Forms</h2>
+    <p>Form components built on Radix UI primitives with Tailwind styling.</p>
+
+    <div data-component="floating-label-input">
+      <h3>Floating Label Input</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Form</span>
+      <p>Input field with a label that floats upward on focus or when a value is present.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// FloatingLabelInput.tsx
+"use client"
+import { useState } from "react"
+import { cn } from "@/lib/utils"
+
+interface FloatingLabelInputProps extends React.InputHTMLAttributes&lt;HTMLInputElement&gt; {
+  label: string
+}
+
+export function FloatingLabelInput({ label, className, id, ...props }: FloatingLabelInputProps) {
+  const [focused, setFocused] = useState(false)
+  const [hasValue, setHasValue] = useState(false)
+
+  return (
+    &lt;div className="relative"&gt;
+      &lt;input
+        id={id}
+        className={cn(
+          "peer w-full rounded-lg border border-neutral-300 dark:border-neutral-700 bg-transparent px-4 pb-2 pt-6 text-sm text-neutral-900 dark:text-neutral-100 outline-none focus:border-indigo-500 transition-colors",
+          className
+        )}
+        onFocus={() => setFocused(true)}
+        onBlur={(e) => { setFocused(false); setHasValue(e.target.value.length &gt; 0) }}
+        onChange={(e) => setHasValue(e.target.value.length &gt; 0)}
+        {...props}
+      /&gt;
+      &lt;label
+        htmlFor={id}
+        className={cn(
+          "absolute left-4 transition-all duration-200 pointer-events-none text-neutral-500",
+          focused || hasValue
+            ? "top-2 text-xs text-indigo-500"
+            : "top-1/2 -translate-y-1/2 text-sm"
+        )}
+      &gt;
+        {label}
+      &lt;/label&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="otp-input">
+      <h3>OTP Input</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Form</span>
+      <p>One-time password input with separate digit boxes and auto-advance behavior.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// OTPInput.tsx
+"use client"
+import { useRef, useState, KeyboardEvent, ClipboardEvent } from "react"
+import { cn } from "@/lib/utils"
+
+interface OTPInputProps {
+  length?: number
+  onComplete?: (otp: string) => void
+}
+
+export function OTPInput({ length = 6, onComplete }: OTPInputProps) {
+  const [otp, setOtp] = useState(Array(length).fill(""))
+  const inputsRef = useRef&lt;HTMLInputElement[]&gt;([])
+
+  const handleChange = (value: string, index: number) => {
+    if (!/^[0-9]?$/.test(value)) return
+    const newOtp = [...otp]
+    newOtp[index] = value
+    setOtp(newOtp)
+    if (value && index &lt; length - 1) inputsRef.current[index + 1]?.focus()
+    if (newOtp.every(Boolean)) onComplete?.(newOtp.join(""))
+  }
+
+  const handleKeyDown = (e: KeyboardEvent&lt;HTMLInputElement&gt;, index: number) => {
+    if (e.key === "Backspace" && !otp[index] && index &gt; 0) {
+      inputsRef.current[index - 1]?.focus()
+    }
+  }
+
+  const handlePaste = (e: ClipboardEvent) => {
+    const pasted = e.clipboardData.getData("text").slice(0, length)
+    if (!/^\d+$/.test(pasted)) return
+    const newOtp = [...otp]
+    pasted.split("").forEach((char, i) => { newOtp[i] = char })
+    setOtp(newOtp)
+    inputsRef.current[Math.min(pasted.length, length - 1)]?.focus()
+    if (pasted.length === length) onComplete?.(pasted)
+  }
+
+  return (
+    &lt;div className="flex gap-3" onPaste={handlePaste}&gt;
+      {otp.map((digit, i) => (
+        &lt;input
+          key={i}
+          ref={(el) => { if (el) inputsRef.current[i] = el }}
+          type="text"
+          inputMode="numeric"
+          maxLength={1}
+          value={digit}
+          onChange={(e) => handleChange(e.target.value, i)}
+          onKeyDown={(e) => handleKeyDown(e, i)}
+          className={cn(
+            "h-12 w-10 rounded-lg border-2 border-neutral-300 dark:border-neutral-700 bg-transparent text-center text-lg font-semibold outline-none",
+            "focus:border-indigo-500 transition-colors",
+            digit && "border-indigo-400 dark:border-indigo-600"
+          )}
+        /&gt;
+      ))}
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="search-input">
+      <h3>Command/Search Input</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Form</span>
+      <p>Styled search input with keyboard shortcut badge, commonly paired with cmdk.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// SearchInput.tsx
+import { Search } from "lucide-react"
+import { cn } from "@/lib/utils"
+
+export function SearchInput({ className, ...props }: React.InputHTMLAttributes&lt;HTMLInputElement&gt;) {
+  return (
+    &lt;div className={cn("relative flex items-center", className)}&gt;
+      &lt;Search className="absolute left-3 h-4 w-4 text-neutral-400 pointer-events-none" /&gt;
+      &lt;input
+        type="search"
+        className="w-full rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 pl-10 pr-16 py-2.5 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all"
+        {...props}
+      /&gt;
+      &lt;kbd className="absolute right-3 flex items-center gap-1 rounded-md border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 px-1.5 py-0.5 text-[10px] text-neutral-500"&gt;
+        ⌘K
+      &lt;/kbd&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <h2 id="navigation">Navigation</h2>
+    <p>Navbar and navigation components, from minimal to complex animated menus.</p>
+
+    <div data-component="floating-navbar">
+      <h3>Floating Navbar</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Navigation</span>
+      <p>A navbar that floats centered at the top, shrinks on scroll, and has a frosted glass effect.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// FloatingNavbar.tsx
+"use client"
+import { useEffect, useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { cn } from "@/lib/utils"
+
+interface NavItem {
+  name: string
+  link: string
+  icon?: React.ReactNode
+}
+
+export function FloatingNavbar({
+  navItems,
+  className,
+}: {
+  navItems: NavItem[]
+  className?: string
+}) {
+  const [visible, setVisible] = useState(true)
+  const [lastScrollY, setLastScrollY] = useState(0)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+      setVisible(currentScrollY &lt; lastScrollY || currentScrollY &lt; 10)
+      setLastScrollY(currentScrollY)
+    }
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [lastScrollY])
+
+  return (
+    &lt;AnimatePresence&gt;
+      {visible && (
+        &lt;motion.nav
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -100, opacity: 0 }}
+          transition={{ type: "spring", stiffness: 260, damping: 20 }}
+          className={cn(
+            "fixed top-4 inset-x-0 mx-auto z-50 flex max-w-fit items-center justify-center gap-4 rounded-full border border-white/20 bg-white/10 px-6 py-2.5 shadow-lg backdrop-blur-md",
+            className
+          )}
+        &gt;
+          {navItems.map((item) => (
+            &lt;a
+              key={item.name}
+              href={item.link}
+              className="flex items-center gap-1.5 text-sm font-medium text-neutral-300 hover:text-white transition-colors"
+            &gt;
+              {item.icon}
+              {item.name}
+            &lt;/a&gt;
+          ))}
+        &lt;/motion.nav&gt;
+      )}
+    &lt;/AnimatePresence&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="navbar-menu">
+      <h3>Navbar with Dropdown Mega Menu</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Navigation</span>
+      <p>Animated dropdown menu with hover card previews. Uses Framer Motion for transitions.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// NavbarMenu.tsx
+"use client"
+import React, { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { cn } from "@/lib/utils"
+
+const transition = { type: "spring", mass: 0.5, damping: 11.5, stiffness: 100, restDelta: 0.001, restSpeed: 0.001 }
+
+export function NavbarMenuItem({ setActive, active, item, children }: {
+  setActive: (item: string) => void
+  active: string | null
+  item: string
+  children?: React.ReactNode
+}) {
+  return (
+    &lt;div onMouseEnter={() => setActive(item)} className="relative"&gt;
+      &lt;motion.p
+        transition={{ duration: 0.3 }}
+        className="cursor-pointer text-neutral-600 dark:text-neutral-200 hover:text-neutral-900 dark:hover:text-white text-sm font-medium"
+      &gt;
+        {item}
+      &lt;/motion.p&gt;
+      {active === item && children && (
+        &lt;motion.div
+          initial={{ opacity: 0, scale: 0.85, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={transition}
+          className="absolute top-full left-1/2 -translate-x-1/2 pt-4"
+        &gt;
+          &lt;motion.div
+            transition={transition}
+            layoutId="active-menu"
+            className="bg-white dark:bg-neutral-900 backdrop-blur-sm rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-700 shadow-xl"
+          &gt;
+            &lt;motion.div layout className="w-max h-full p-4"&gt;
+              {children}
+            &lt;/motion.div&gt;
+          &lt;/motion.div&gt;
+        &lt;/motion.div&gt;
+      )}
+    &lt;/div&gt;
+  )
+}
+
+export function Navbar({ children, className }: { children: React.ReactNode; className?: string }) {
+  const [active, setActive] = useState&lt;string | null&gt;(null)
+  return (
+    &lt;nav
+      onMouseLeave={() => setActive(null)}
+      className={cn("relative flex justify-center space-x-8 px-8 py-6 bg-white dark:bg-neutral-950 shadow-sm", className)}
+    &gt;
+      {React.Children.map(children, (child) =&gt;
+        React.isValidElement(child)
+          ? React.cloneElement(child as React.ReactElement&lt;any&gt;, { setActive, active })
+          : child
+      )}
+    &lt;/nav&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- HERO SECTIONS -->
+    <h2 id="hero">Hero Sections</h2>
+    <p>Full-width hero section components for landing pages.</p>
+
+    <div data-component="animated-hero">
+      <h3>Animated Hero with Typewriter</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Animation</span>
+      <span class="tag">Hero</span>
+      <p>Hero section with cycling typewriter text, gradient headline, and animated CTA buttons.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// AnimatedHero.tsx
+"use client"
+import { useEffect, useState } from "react"
+import { motion } from "framer-motion"
+
+const words = ["beautiful", "modern", "fast", "accessible"]
+
+export function AnimatedHero() {
+  const [wordIndex, setWordIndex] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setWordIndex((i) => (i + 1) % words.length)
+    }, 2500)
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    &lt;section className="relative flex min-h-[90vh] flex-col items-center justify-center text-center px-4"&gt;
+      {/* Gradient orbs */}
+      &lt;div className="pointer-events-none absolute inset-0 overflow-hidden"&gt;
+        &lt;div className="absolute -top-40 left-1/2 -translate-x-1/2 h-[600px] w-[600px] rounded-full bg-indigo-500/20 blur-3xl" /&gt;
+        &lt;div className="absolute top-1/3 right-0 h-[400px] w-[400px] rounded-full bg-purple-500/10 blur-3xl" /&gt;
+      &lt;/div&gt;
+      &lt;motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="relative z-10 max-w-4xl"
+      &gt;
+        &lt;span className="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-1.5 text-sm text-indigo-300 mb-6"&gt;
+          New: Version 2.0 is here
+        &lt;/span&gt;
+        &lt;h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white mb-6"&gt;
+          Build{" "}
+          &lt;span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent"&gt;
+            {words[wordIndex]}
+          &lt;/span&gt;
+          &lt;br /&gt;
+          products faster
+        &lt;/h1&gt;
+        &lt;p className="text-lg text-neutral-400 max-w-2xl mx-auto mb-10"&gt;
+          The component platform for modern engineering teams.
+        &lt;/p&gt;
+        &lt;div className="flex flex-col sm:flex-row gap-4 justify-center"&gt;
+          &lt;button className="rounded-full bg-indigo-600 px-8 py-3 text-sm font-semibold text-white hover:bg-indigo-500 transition-colors"&gt;
+            Get started free
+          &lt;/button&gt;
+          &lt;button className="rounded-full border border-white/20 px-8 py-3 text-sm font-semibold text-white hover:bg-white/5 transition-colors"&gt;
+            View components
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/motion.div&gt;
+    &lt;/section&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="grid-hero">
+      <h3>Grid Background Hero</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Hero</span>
+      <span class="tag">Background</span>
+      <p>Hero section with an animated CSS grid/dot pattern background and fade-out at the bottom.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// GridHero.tsx
+export function GridHero() {
+  return (
+    &lt;div className="relative h-[50rem] w-full bg-white dark:bg-black flex items-center justify-center overflow-hidden"&gt;
+      {/* Grid pattern */}
+      &lt;div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, #80808012 1px, transparent 1px),
+            linear-gradient(to bottom, #80808012 1px, transparent 1px)
+          `,
+          backgroundSize: "24px 24px",
+        }}
+      /&gt;
+      {/* Radial fade */}
+      &lt;div className="absolute inset-0 bg-white dark:bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_30%,black)]" /&gt;
+      &lt;div className="relative z-10 text-center"&gt;
+        &lt;h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-b from-neutral-200 to-neutral-500 bg-clip-text text-transparent py-4"&gt;
+          Ship faster with great components
+        &lt;/h1&gt;
+        &lt;p className="text-neutral-400 max-w-lg mx-auto mt-4"&gt;
+          Copy-paste React components for your next project.
+        &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- PRICING -->
+    <h2 id="pricing">Pricing</h2>
+    <p>Pricing section and card components, including toggle-based monthly/annual switching.</p>
+
+    <div data-component="pricing-cards">
+      <h3>Pricing Cards with Toggle</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Marketing</span>
+      <p>Three-tier pricing cards with monthly/annual toggle and highlighted popular tier.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// PricingCards.tsx
+"use client"
+import { useState } from "react"
+import { Check } from "lucide-react"
+import { cn } from "@/lib/utils"
+
+const plans = [
+  {
+    name: "Starter",
+    monthly: 0,
+    annual: 0,
+    description: "For side projects",
+    features: ["5 projects", "10GB storage", "Basic analytics", "Email support"],
+    cta: "Get started",
+    popular: false,
+  },
+  {
+    name: "Pro",
+    monthly: 29,
+    annual: 19,
+    description: "For growing teams",
+    features: ["Unlimited projects", "100GB storage", "Advanced analytics", "Priority support", "Custom domains"],
+    cta: "Start free trial",
+    popular: true,
+  },
+  {
+    name: "Enterprise",
+    monthly: 99,
+    annual: 79,
+    description: "For large organizations",
+    features: ["Everything in Pro", "500GB storage", "SLA guarantee", "Dedicated support", "SSO / SAML", "Audit logs"],
+    cta: "Contact sales",
+    popular: false,
+  },
+]
+
+export function PricingCards() {
+  const [annual, setAnnual] = useState(false)
+
+  return (
+    &lt;section className="py-20 px-4"&gt;
+      &lt;div className="text-center mb-12"&gt;
+        &lt;h2 className="text-3xl font-bold text-white mb-4"&gt;Simple pricing&lt;/h2&gt;
+        &lt;div className="flex items-center justify-center gap-3"&gt;
+          &lt;span className={cn("text-sm", !annual ? "text-white" : "text-neutral-500")}&gt;Monthly&lt;/span&gt;
+          &lt;button
+            onClick={() => setAnnual(!annual)}
+            className={cn(
+              "relative w-12 h-6 rounded-full transition-colors",
+              annual ? "bg-indigo-600" : "bg-neutral-700"
+            )}
+          &gt;
+            &lt;span className={cn("absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white transition-transform", annual && "translate-x-6")} /&gt;
+          &lt;/button&gt;
+          &lt;span className={cn("text-sm", annual ? "text-white" : "text-neutral-500")}&gt;
+            Annual &lt;span className="text-green-400 text-xs"&gt;(Save 30%)&lt;/span&gt;
+          &lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto"&gt;
+        {plans.map((plan) => (
+          &lt;div
+            key={plan.name}
+            className={cn(
+              "rounded-2xl border p-8 flex flex-col",
+              plan.popular
+                ? "border-indigo-500 bg-indigo-950/50 relative"
+                : "border-neutral-800 bg-neutral-900"
+            )}
+          &gt;
+            {plan.popular && (
+              &lt;span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-indigo-600 text-white text-xs font-semibold px-3 py-1 rounded-full"&gt;
+                Most popular
+              &lt;/span&gt;
+            )}
+            &lt;h3 className="text-lg font-semibold text-white mb-1"&gt;{plan.name}&lt;/h3&gt;
+            &lt;p className="text-neutral-400 text-sm mb-4"&gt;{plan.description}&lt;/p&gt;
+            &lt;div className="mb-6"&gt;
+              &lt;span className="text-4xl font-bold text-white"&gt;${annual ? plan.annual : plan.monthly}&lt;/span&gt;
+              &lt;span className="text-neutral-400 text-sm"&gt;/mo&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;ul className="space-y-3 mb-8 flex-1"&gt;
+              {plan.features.map((f) => (
+                &lt;li key={f} className="flex items-center gap-2 text-sm text-neutral-300"&gt;
+                  &lt;Check className="h-4 w-4 text-indigo-400 shrink-0" /&gt;
+                  {f}
+                &lt;/li&gt;
+              ))}
+            &lt;/ul&gt;
+            &lt;button className={cn(
+              "w-full rounded-xl py-2.5 text-sm font-semibold transition-colors",
+              plan.popular
+                ? "bg-indigo-600 hover:bg-indigo-500 text-white"
+                : "border border-neutral-700 text-neutral-300 hover:bg-neutral-800"
+            )}&gt;
+              {plan.cta}
+            &lt;/button&gt;
+          &lt;/div&gt;
+        ))}
+      &lt;/div&gt;
+    &lt;/section&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- TESTIMONIALS -->
+    <h2 id="testimonials">Testimonials</h2>
+    <p>Testimonial section components including carousels, masonry grids, and marquees.</p>
+
+    <div data-component="testimonial-marquee">
+      <h3>Testimonial Marquee</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Animation</span>
+      <p>Horizontally scrolling marquee of testimonial cards, commonly shown in two rows scrolling in opposite directions.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// TestimonialMarquee.tsx
+import { cn } from "@/lib/utils"
+
+const testimonials = [
+  { name: "Sarah K.", role: "Engineer @ Vercel", body: "This saved us weeks of work. Copy-paste and done.", avatar: "SK" },
+  { name: "Marcus T.", role: "Founder @ Linear", body: "The component quality is genuinely impressive.", avatar: "MT" },
+  { name: "Priya R.", role: "Designer @ Figma", body: "Finally, components that look as good as they function.", avatar: "PR" },
+  { name: "Tom H.", role: "CTO @ Notion", body: "We replaced our entire design system with these.", avatar: "TH" },
+  { name: "Emily W.", role: "Lead Dev @ Stripe", body: "The animations are buttery smooth out of the box.", avatar: "EW" },
+]
+
+function TestimonialCard({ name, role, body, avatar }: typeof testimonials[0]) {
+  return (
+    &lt;figure className="relative w-64 cursor-pointer overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900 p-4 mx-2 shrink-0"&gt;
+      &lt;div className="flex items-center gap-3 mb-3"&gt;
+        &lt;div className="h-9 w-9 rounded-full bg-indigo-600 flex items-center justify-center text-xs font-bold text-white"&gt;
+          {avatar}
+        &lt;/div&gt;
+        &lt;div&gt;
+          &lt;p className="text-sm font-medium text-white"&gt;{name}&lt;/p&gt;
+          &lt;p className="text-xs text-neutral-400"&gt;{role}&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;blockquote className="text-sm text-neutral-300"&gt;"{body}"&lt;/blockquote&gt;
+    &lt;/figure&gt;
+  )
+}
+
+function Marquee({ reverse = false }: { reverse?: boolean }) {
+  return (
+    &lt;div className="flex overflow-hidden"&gt;
+      &lt;div
+        className={cn(
+          "flex animate-[marquee_25s_linear_infinite]",
+          reverse && "[animation-direction:reverse]"
+        )}
+      &gt;
+        {[...testimonials, ...testimonials].map((t, i) => (
+          &lt;TestimonialCard key={i} {...t} /&gt;
+        ))}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+}
+
+export function TestimonialMarquee() {
+  return (
+    &lt;section className="overflow-hidden py-16 space-y-4"&gt;
+      &lt;h2 className="text-center text-3xl font-bold text-white mb-10"&gt;Loved by developers&lt;/h2&gt;
+      &lt;Marquee /&gt;
+      &lt;Marquee reverse /&gt;
+    &lt;/section&gt;
+  )
+}
+
+// tailwind.config.js:
+// keyframes: { marquee: { "0%": { transform: "translateX(0)" }, "100%": { transform: "translateX(-50%)" } } }
+// animation: { marquee: "marquee 25s linear infinite" }</code></pre>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <h2 id="faq">FAQ</h2>
+    <p>Accordion-style FAQ components built on Radix UI.</p>
+
+    <div data-component="faq-accordion">
+      <h3>FAQ Accordion</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Content</span>
+      <p>Animated expand/collapse FAQ built with Radix Accordion and smooth height transition.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// FAQAccordion.tsx
+"use client"
+import * as Accordion from "@radix-ui/react-accordion"
+import { ChevronDown } from "lucide-react"
+import { cn } from "@/lib/utils"
+
+const faqs = [
+  { q: "Is it really free?", a: "Yes. All components marked free are completely free to use in personal and commercial projects." },
+  { q: "Do I need to install anything?", a: "No CLI required. You can copy the component code directly from the site." },
+  { q: "Can I customize the styles?", a: "Absolutely. All components use Tailwind CSS classes you can modify directly." },
+  { q: "Does this work with Next.js?", a: "Yes. Components are designed to work with Next.js App Router and include 'use client' where required." },
+]
+
+export function FAQAccordion() {
+  return (
+    &lt;section className="max-w-2xl mx-auto py-16 px-4"&gt;
+      &lt;h2 className="text-3xl font-bold text-white text-center mb-10"&gt;Frequently asked questions&lt;/h2&gt;
+      &lt;Accordion.Root type="single" collapsible className="space-y-2"&gt;
+        {faqs.map((faq, i) => (
+          &lt;Accordion.Item
+            key={i}
+            value={`item-${i}`}
+            className="rounded-xl border border-neutral-800 bg-neutral-900 overflow-hidden"
+          &gt;
+            &lt;Accordion.Trigger className={cn(
+              "flex w-full items-center justify-between px-6 py-4 text-sm font-medium text-neutral-100 hover:text-white transition-colors",
+              "group"
+            )}&gt;
+              {faq.q}
+              &lt;ChevronDown className="h-4 w-4 text-neutral-400 transition-transform duration-200 group-data-[state=open]:rotate-180" /&gt;
+            &lt;/Accordion.Trigger&gt;
+            &lt;Accordion.Content className="overflow-hidden data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up"&gt;
+              &lt;div className="px-6 pb-4 text-sm text-neutral-400"&gt;{faq.a}&lt;/div&gt;
+            &lt;/Accordion.Content&gt;
+          &lt;/Accordion.Item&gt;
+        ))}
+      &lt;/Accordion.Root&gt;
+    &lt;/section&gt;
+  )
+}
+
+// tailwind.config.js keyframes:
+// "accordion-down": { from: { height: "0" }, to: { height: "var(--radix-accordion-content-height)" } },
+// "accordion-up": { from: { height: "var(--radix-accordion-content-height)" }, to: { height: "0" } }</code></pre>
+      </div>
+    </div>
+
+    <!-- FOOTERS -->
+    <h2 id="footers">Footers</h2>
+
+    <div data-component="footer-minimal">
+      <h3>Minimal Footer</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Layout</span>
+      <p>Clean dark footer with logo, link columns, and social icons.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// Footer.tsx
+const links = {
+  Product: ["Features", "Pricing", "Changelog", "Roadmap"],
+  Company: ["About", "Blog", "Careers", "Press"],
+  Legal: ["Privacy", "Terms", "Cookie Policy"],
+}
+
+export function Footer() {
+  return (
+    &lt;footer className="border-t border-neutral-800 bg-neutral-950 px-6 py-12"&gt;
+      &lt;div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8"&gt;
+        &lt;div&gt;
+          &lt;span className="text-xl font-bold text-white"&gt;Acme&lt;/span&gt;
+          &lt;p className="mt-2 text-sm text-neutral-400&gt;Building the future of component development.&lt;/p&gt;
+        &lt;/div&gt;
+        {Object.entries(links).map(([category, items]) => (
+          &lt;div key={category}&gt;
+            &lt;h3 className="text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-4"&gt;{category}&lt;/h3&gt;
+            &lt;ul className="space-y-2"&gt;
+              {items.map((item) => (
+                &lt;li key={item}&gt;
+                  &lt;a href="#" className="text-sm text-neutral-400 hover:text-white transition-colors"&gt;{item}&lt;/a&gt;
+                &lt;/li&gt;
+              ))}
+            &lt;/ul&gt;
+          &lt;/div&gt;
+        ))}
+      &lt;/div&gt;
+      &lt;div className="max-w-6xl mx-auto mt-10 pt-6 border-t border-neutral-800 flex justify-between items-center text-xs text-neutral-500"&gt;
+        &lt;span&gt;© 2024 Acme Inc. All rights reserved.&lt;/span&gt;
+        &lt;div className="flex gap-4"&gt;
+          &lt;a href="#" className="hover:text-white transition-colors"&gt;Twitter&lt;/a&gt;
+          &lt;a href="#" className="hover:text-white transition-colors"&gt;GitHub&lt;/a&gt;
+          &lt;a href="#" className="hover:text-white transition-colors"&gt;Discord&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/footer&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- MARKETING BLOCKS -->
+    <h2 id="marketing">Marketing Blocks</h2>
+
+    <div data-component="cta-section">
+      <h3>CTA Section</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Marketing</span>
+      <p>Full-width call-to-action section with gradient background and email capture or button.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// CTASection.tsx
+export function CTASection() {
+  return (
+    &lt;section className="relative overflow-hidden rounded-2xl mx-4 my-16 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 p-16 text-center"&gt;
+      &lt;div className="pointer-events-none absolute inset-0 [background:radial-gradient(ellipse_at_50%_120%,rgba(255,255,255,0.15),transparent_60%)]" /&gt;
+      &lt;h2 className="text-3xl md:text-5xl font-bold text-white mb-4"&gt;
+        Ready to ship faster?
+      &lt;/h2&gt;
+      &lt;p className="text-white/70 text-lg max-w-xl mx-auto mb-8"&gt;
+        Join thousands of developers using 21st.dev to build better products.
+      &lt;/p&gt;
+      &lt;div className="flex flex-col sm:flex-row gap-3 justify-center"&gt;
+        &lt;input
+          type="email"
+          placeholder="Enter your email"
+          className="rounded-full bg-white/20 border border-white/30 text-white placeholder-white/50 px-5 py-3 text-sm outline-none focus:bg-white/30 w-64 backdrop-blur-sm"
+        /&gt;
+        &lt;button className="rounded-full bg-white text-indigo-600 font-semibold px-6 py-3 text-sm hover:bg-white/90 transition-colors"&gt;
+          Get early access
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="logo-cloud">
+      <h3>Logo Cloud / Social Proof Bar</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Marketing</span>
+      <p>Scrolling or static row of company logos for social proof, with grayscale-to-color hover effect.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// LogoCloud.tsx
+const logos = ["Vercel", "Linear", "Notion", "Stripe", "Figma", "GitHub", "Slack", "Shopify"]
+
+export function LogoCloud() {
+  return (
+    &lt;section className="py-12 border-y border-neutral-800"&gt;
+      &lt;p className="text-center text-xs font-semibold uppercase tracking-widest text-neutral-500 mb-8"&gt;
+        Trusted by teams at
+      &lt;/p&gt;
+      &lt;div className="relative flex overflow-hidden"&gt;
+        &lt;div className="flex animate-[marquee_20s_linear_infinite] gap-16 pr-16"&gt;
+          {[...logos, ...logos].map((logo, i) => (
+            &lt;span key={i} className="text-neutral-500 font-semibold text-lg whitespace-nowrap hover:text-white transition-colors cursor-default"&gt;
+              {logo}
+            &lt;/span&gt;
+          ))}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="stats-section">
+      <h3>Stats / Numbers Section</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Marketing</span>
+      <p>Animated counting number stats section with labels.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// StatsSection.tsx
+"use client"
+import { useEffect, useRef, useState } from "react"
+
+function useCountUp(target: number, duration = 2000) {
+  const [count, setCount] = useState(0)
+  const ref = useRef&lt;HTMLDivElement&gt;(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return
+      observer.disconnect()
+      let start = 0
+      const step = target / (duration / 16)
+      const timer = setInterval(() => {
+        start += step
+        if (start &gt;= target) { setCount(target); clearInterval(timer) }
+        else setCount(Math.floor(start))
+      }, 16)
+    })
+    if (ref.current) observer.observe(ref.current)
+    return () => observer.disconnect()
+  }, [target, duration])
+
+  return { count, ref }
+}
+
+const stats = [
+  { value: 10000, label: "Developers", suffix: "+" },
+  { value: 500, label: "Components", suffix: "+" },
+  { value: 99, label: "Uptime", suffix: "%" },
+  { value: 4, label: "Hours saved per sprint", suffix: "h" },
+]
+
+export function StatsSection() {
+  return (
+    &lt;section className="py-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto text-center"&gt;
+      {stats.map(({ value, label, suffix }) => {
+        const { count, ref } = useCountUp(value)
+        return (
+          &lt;div key={label} ref={ref}&gt;
+            &lt;div className="text-4xl font-bold text-white"&gt;{count.toLocaleString()}{suffix}&lt;/div&gt;
+            &lt;div className="text-sm text-neutral-400 mt-1"&gt;{label}&lt;/div&gt;
+          &lt;/div&gt;
+        )
+      })}
+    &lt;/section&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- LOADERS -->
+    <h2 id="loaders">Loaders &amp; Spinners</h2>
+
+    <div data-component="skeleton-loader">
+      <h3>Skeleton Loader</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Loading</span>
+      <p>Pulse-animated skeleton placeholders for content loading states.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// Skeleton.tsx
+import { cn } from "@/lib/utils"
+
+function Skeleton({ className }: { className?: string }) {
+  return (
+    &lt;div className={cn("animate-pulse rounded-md bg-neutral-800", className)} /&gt;
+  )
+}
+
+export function CardSkeleton() {
+  return (
+    &lt;div className="rounded-xl border border-neutral-800 bg-neutral-900 p-6 space-y-4"&gt;
+      &lt;div className="flex items-center gap-3"&gt;
+        &lt;Skeleton className="h-10 w-10 rounded-full" /&gt;
+        &lt;div className="space-y-2 flex-1"&gt;
+          &lt;Skeleton className="h-4 w-1/3" /&gt;
+          &lt;Skeleton className="h-3 w-1/4" /&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;Skeleton className="h-4 w-full" /&gt;
+      &lt;Skeleton className="h-4 w-5/6" /&gt;
+      &lt;Skeleton className="h-4 w-4/6" /&gt;
+      &lt;Skeleton className="h-9 w-28 mt-2" /&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- BADGES -->
+    <h2 id="badges">Badges &amp; Tags</h2>
+
+    <div data-component="animated-badge">
+      <h3>Animated Badge / Pill</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">UI Element</span>
+      <p>Status badges and announcement pills with pulse dot indicator.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// Badge.tsx
+import { cn } from "@/lib/utils"
+
+type BadgeVariant = "default" | "success" | "warning" | "error" | "info"
+
+const variants: Record&lt;BadgeVariant, string&gt; = {
+  default: "bg-neutral-800 text-neutral-300 border-neutral-700",
+  success: "bg-green-950 text-green-400 border-green-800",
+  warning: "bg-yellow-950 text-yellow-400 border-yellow-800",
+  error: "bg-red-950 text-red-400 border-red-800",
+  info: "bg-blue-950 text-blue-400 border-blue-800",
+}
+
+const dotColors: Record&lt;BadgeVariant, string&gt; = {
+  default: "bg-neutral-400",
+  success: "bg-green-400",
+  warning: "bg-yellow-400",
+  error: "bg-red-400",
+  info: "bg-blue-400",
+}
+
+export function Badge({ children, variant = "default", dot = false }: {
+  children: React.ReactNode
+  variant?: BadgeVariant
+  dot?: boolean
+}) {
+  return (
+    &lt;span className={cn(
+      "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium",
+      variants[variant]
+    )}&gt;
+      {dot && (
+        &lt;span className={cn("h-1.5 w-1.5 rounded-full animate-pulse", dotColors[variant])} /&gt;
+      )}
+      {children}
+    &lt;/span&gt;
+  )
+}
+
+// &lt;Badge variant="success" dot&gt;Live&lt;/Badge&gt;
+// &lt;Badge variant="warning"&gt;Beta&lt;/Badge&gt;
+// &lt;Badge variant="error" dot&gt;Degraded&lt;/Badge&gt;</code></pre>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <h2 id="tabs">Tabs &amp; Toggles</h2>
+
+    <div data-component="sliding-tabs">
+      <h3>Sliding Tabs</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Navigation</span>
+      <p>Tabs with a sliding animated indicator background using Framer Motion layoutId.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// SlidingTabs.tsx
+"use client"
+import { useState } from "react"
+import { motion } from "framer-motion"
+import { cn } from "@/lib/utils"
+
+interface Tab { id: string; label: string }
+
+export function SlidingTabs({ tabs, defaultTab }: { tabs: Tab[]; defaultTab?: string }) {
+  const [active, setActive] = useState(defaultTab ?? tabs[0].id)
+
+  return (
+    &lt;div className="inline-flex items-center rounded-full bg-neutral-900 p-1 border border-neutral-800"&gt;
+      {tabs.map((tab) => (
+        &lt;button
+          key={tab.id}
+          onClick={() => setActive(tab.id)}
+          className={cn(
+            "relative rounded-full px-4 py-1.5 text-sm font-medium transition-colors duration-200 focus:outline-none",
+            active === tab.id ? "text-white" : "text-neutral-400 hover:text-neutral-200"
+          )}
+        &gt;
+          {active === tab.id && (
+            &lt;motion.div
+              layoutId="active-tab"
+              className="absolute inset-0 rounded-full bg-neutral-700"
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            /&gt;
+          )}
+          &lt;span className="relative z-10"&gt;{tab.label}&lt;/span&gt;
+        &lt;/button&gt;
+      ))}
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- MODALS -->
+    <h2 id="modals">Modals &amp; Dialogs</h2>
+
+    <div data-component="modal-dialog">
+      <h3>Animated Modal Dialog</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Overlay</span>
+      <p>Accessible modal built on Radix Dialog with spring-based entrance animation.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// Modal.tsx
+"use client"
+import * as Dialog from "@radix-ui/react-dialog"
+import { motion, AnimatePresence } from "framer-motion"
+import { X } from "lucide-react"
+
+interface ModalProps {
+  trigger: React.ReactNode
+  title: string
+  description?: string
+  children: React.ReactNode
+}
+
+export function Modal({ trigger, title, description, children }: ModalProps) {
+  return (
+    &lt;Dialog.Root&gt;
+      &lt;Dialog.Trigger asChild&gt;{trigger}&lt;/Dialog.Trigger&gt;
+      &lt;Dialog.Portal&gt;
+        &lt;Dialog.Overlay asChild&gt;
+          &lt;motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
+          /&gt;
+        &lt;/Dialog.Overlay&gt;
+        &lt;Dialog.Content asChild&gt;
+          &lt;motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 16 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            className="fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-neutral-800 bg-neutral-950 p-6 shadow-2xl"
+          &gt;
+            &lt;div className="flex items-start justify-between mb-4"&gt;
+              &lt;div&gt;
+                &lt;Dialog.Title className="text-lg font-semibold text-white"&gt;{title}&lt;/Dialog.Title&gt;
+                {description && &lt;Dialog.Description className="text-sm text-neutral-400 mt-1"&gt;{description}&lt;/Dialog.Description&gt;}
+              &lt;/div&gt;
+              &lt;Dialog.Close className="rounded-lg p-1 text-neutral-400 hover:text-white hover:bg-neutral-800 transition-colors"&gt;
+                &lt;X className="h-4 w-4" /&gt;
+              &lt;/Dialog.Close&gt;
+            &lt;/div&gt;
+            {children}
+          &lt;/motion.div&gt;
+        &lt;/Dialog.Content&gt;
+      &lt;/Dialog.Portal&gt;
+    &lt;/Dialog.Root&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- BACKGROUNDS -->
+    <h2 id="backgrounds">Backgrounds &amp; Decorative</h2>
+
+    <div data-component="aurora-background">
+      <h3>Aurora Background</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Visual</span>
+      <p>Animated aurora/northern-lights style background using CSS keyframe animations on blurred gradients.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// AuroraBackground.tsx
+import { cn } from "@/lib/utils"
+
+export function AuroraBackground({ children, className }: { children?: React.ReactNode; className?: string }) {
+  return (
+    &lt;div className={cn("relative min-h-screen bg-black overflow-hidden", className)}&gt;
+      {/* Aurora blobs */}
+      &lt;div className="pointer-events-none absolute inset-0"&gt;
+        &lt;div className="absolute top-0 left-1/4 h-[600px] w-[600px] rounded-full bg-violet-500/30 blur-[120px] animate-[aurora_8s_ease-in-out_infinite]" /&gt;
+        &lt;div className="absolute top-1/4 right-1/4 h-[500px] w-[500px] rounded-full bg-cyan-500/20 blur-[120px] animate-[aurora_10s_ease-in-out_infinite_reverse]" /&gt;
+        &lt;div className="absolute bottom-0 left-1/3 h-[400px] w-[400px] rounded-full bg-fuchsia-500/20 blur-[120px] animate-[aurora_12s_ease-in-out_infinite_2s]" /&gt;
+      &lt;/div&gt;
+      &lt;div className="relative z-10"&gt;{children}&lt;/div&gt;
+    &lt;/div&gt;
+  )
+}
+
+// tailwind keyframes:
+// aurora: { "0%, 100%": { transform: "translate(0, 0) scale(1)" }, "33%": { transform: "translate(5%, 5%) scale(1.05)" }, "66%": { transform: "translate(-5%, 3%) scale(0.95)" } }</code></pre>
+      </div>
+    </div>
+
+    <div data-component="particles-background">
+      <h3>Particles Background</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Visual</span>
+      <p>Canvas-based floating particles that connect with lines when close to each other.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// Particles.tsx
+"use client"
+import { useEffect, useRef } from "react"
+
+interface Particle {
+  x: number; y: number; vx: number; vy: number; size: number
+}
+
+export function Particles({ count = 80, color = "rgba(255,255,255,0.6)", connectDistance = 120 }: {
+  count?: number; color?: string; connectDistance?: number
+}) {
+  const canvasRef = useRef&lt;HTMLCanvasElement&gt;(null)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext("2d")!
+    let animId: number
+
+    const resize = () => { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight }
+    resize()
+    window.addEventListener("resize", resize)
+
+    const particles: Particle[] = Array.from({ length: count }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.5,
+      vy: (Math.random() - 0.5) * 0.5,
+      size: Math.random() * 2 + 1,
+    }))
+
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      particles.forEach((p) => {
+        p.x += p.vx; p.y += p.vy
+        if (p.x &lt; 0 || p.x &gt; canvas.width) p.vx *= -1
+        if (p.y &lt; 0 || p.y &gt; canvas.height) p.vy *= -1
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
+        ctx.fillStyle = color; ctx.fill()
+      })
+      for (let i = 0; i &lt; particles.length; i++) {
+        for (let j = i + 1; j &lt; particles.length; j++) {
+          const dx = particles[i].x - particles[j].x
+          const dy = particles[i].y - particles[j].y
+          const dist = Math.sqrt(dx * dx + dy * dy)
+          if (dist &lt; connectDistance) {
+            ctx.beginPath()
+            ctx.moveTo(particles[i].x, particles[i].y)
+            ctx.lineTo(particles[j].x, particles[j].y)
+            ctx.strokeStyle = `rgba(255,255,255,${1 - dist / connectDistance})`
+            ctx.lineWidth = 0.5; ctx.stroke()
+          }
+        }
+      }
+      animId = requestAnimationFrame(draw)
+    }
+    draw()
+    return () => { cancelAnimationFrame(animId); window.removeEventListener("resize", resize) }
+  }, [count, color, connectDistance])
+
+  return &lt;canvas ref={canvasRef} className="absolute inset-0 w-full h-full" /&gt;
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- TEXT EFFECTS -->
+    <h2 id="text-effects">Text Effects</h2>
+
+    <div data-component="text-reveal">
+      <h3>Text Reveal on Scroll</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Animation</span>
+      <p>Words fade/slide in one by one as the section enters the viewport.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// TextReveal.tsx
+"use client"
+import { useRef } from "react"
+import { motion, useScroll, useTransform } from "framer-motion"
+
+export function TextReveal({ text }: { text: string }) {
+  const ref = useRef&lt;HTMLDivElement&gt;(null)
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.9", "start 0.25"] })
+
+  const words = text.split(" ")
+
+  return (
+    &lt;div ref={ref} className="relative"&gt;
+      &lt;div className="flex flex-wrap gap-x-3 gap-y-2"&gt;
+        {words.map((word, i) => {
+          const start = i / words.length
+          const end = start + 1 / words.length
+          const opacity = useTransform(scrollYProgress, [start, end], [0.15, 1])
+          const y = useTransform(scrollYProgress, [start, end], [20, 0])
+          return (
+            &lt;motion.span key={i} style={{ opacity, y }} className="text-white text-4xl font-bold"&gt;
+              {word}
+            &lt;/motion.span&gt;
+          )
+        })}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="gradient-text">
+      <h3>Animated Gradient Text</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Visual</span>
+      <p>Text with an animated moving gradient, common in hero headings.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// GradientText.tsx
+import { cn } from "@/lib/utils"
+
+export function GradientText({ children, className }: { children: React.ReactNode; className?: string }) {
+  return (
+    &lt;span
+      className={cn(
+        "bg-[length:200%_auto] bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent",
+        "animate-[gradient-shift_3s_linear_infinite]",
+        className
+      )}
+    &gt;
+      {children}
+    &lt;/span&gt;
+  )
+}
+
+// tailwind keyframes:
+// "gradient-shift": { "0%": { backgroundPosition: "0% center" }, "100%": { backgroundPosition: "200% center" } }</code></pre>
+      </div>
+    </div>
+
+    <!-- TABLES -->
+    <h2 id="tables">Tables</h2>
+
+    <div data-component="data-table">
+      <h3>Data Table</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Data</span>
+      <p>Styled sortable table with striped rows, sticky header, and hover states.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// DataTable.tsx
+import { cn } from "@/lib/utils"
+
+interface Column&lt;T&gt; {
+  key: keyof T
+  header: string
+  cell?: (value: T[keyof T], row: T) => React.ReactNode
+}
+
+interface DataTableProps&lt;T&gt; {
+  columns: Column&lt;T&gt;[]
+  data: T[]
+}
+
+export function DataTable&lt;T extends { id: string | number }&gt;({ columns, data }: DataTableProps&lt;T&gt;) {
+  return (
+    &lt;div className="overflow-hidden rounded-xl border border-neutral-800"&gt;
+      &lt;table className="w-full text-sm"&gt;
+        &lt;thead className="bg-neutral-900 border-b border-neutral-800"&gt;
+          &lt;tr&gt;
+            {columns.map((col) => (
+              &lt;th key={String(col.key)} className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-neutral-400"&gt;
+                {col.header}
+              &lt;/th&gt;
+            ))}
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody className="divide-y divide-neutral-800"&gt;
+          {data.map((row, i) => (
+            &lt;tr key={row.id} className={cn("transition-colors hover:bg-neutral-900/50", i % 2 === 0 ? "bg-neutral-950" : "bg-neutral-900/30")}&gt;
+              {columns.map((col) => (
+                &lt;td key={String(col.key)} className="px-4 py-3 text-neutral-300"&gt;
+                  {col.cell ? col.cell(row[col.key], row) : String(row[col.key])}
+                &lt;/td&gt;
+              ))}
+            &lt;/tr&gt;
+          ))}
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- AVATARS -->
+    <h2 id="avatars">Avatars</h2>
+
+    <div data-component="avatar-stack">
+      <h3>Avatar Stack</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">UI Element</span>
+      <p>Overlapping user avatar stack with overflow count badge, common for showing team members.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// AvatarStack.tsx
+import * as Avatar from "@radix-ui/react-avatar"
+import { cn } from "@/lib/utils"
+
+interface User { name: string; image?: string; fallback: string }
+
+export function AvatarStack({ users, max = 4 }: { users: User[]; max?: number }) {
+  const visible = users.slice(0, max)
+  const overflow = users.length - max
+
+  return (
+    &lt;div className="flex items-center"&gt;
+      {visible.map((user, i) => (
+        &lt;Avatar.Root
+          key={user.name}
+          className={cn(
+            "relative h-9 w-9 rounded-full border-2 border-neutral-950 overflow-hidden",
+            i &gt; 0 && "-ml-3"
+          )}
+          title={user.name}
+        &gt;
+          &lt;Avatar.Image src={user.image} alt={user.name} className="h-full w-full object-cover" /&gt;
+          &lt;Avatar.Fallback className="flex h-full w-full items-center justify-center bg-indigo-600 text-xs font-bold text-white"&gt;
+            {user.fallback}
+          &lt;/Avatar.Fallback&gt;
+        &lt;/Avatar.Root&gt;
+      ))}
+      {overflow &gt; 0 && (
+        &lt;div className="-ml-3 flex h-9 w-9 items-center justify-center rounded-full border-2 border-neutral-950 bg-neutral-800 text-xs font-semibold text-neutral-300"&gt;
+          +{overflow}
+        &lt;/div&gt;
+      )}
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- BANNERS -->
+    <h2 id="banners">Banners &amp; Alerts</h2>
+
+    <div data-component="announcement-banner">
+      <h3>Announcement Banner</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Notification</span>
+      <p>Sticky top announcement/promo bar with dismiss button.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// AnnouncementBanner.tsx
+"use client"
+import { useState } from "react"
+import { X, ArrowRight } from "lucide-react"
+
+export function AnnouncementBanner() {
+  const [visible, setVisible] = useState(true)
+  if (!visible) return null
+
+  return (
+    &lt;div className="relative flex items-center justify-center gap-3 bg-indigo-600 px-4 py-2.5 text-sm text-white"&gt;
+      &lt;span className="font-medium"&gt;New: Component library v2.0 is live.&lt;/span&gt;
+      &lt;a href="#" className="flex items-center gap-1 font-semibold underline-offset-2 hover:underline"&gt;
+        See what&apos;s new &lt;ArrowRight className="h-3.5 w-3.5" /&gt;
+      &lt;/a&gt;
+      &lt;button
+        onClick={() => setVisible(false)}
+        className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1 hover:bg-indigo-700 transition-colors"
+      &gt;
+        &lt;X className="h-4 w-4" /&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- USAGE NOTES -->
+    <h2 id="usage">Usage Notes</h2>
+    <p>Key things to know when working with 21st.dev components:</p>
+    <div class="component-grid">
+      <div class="component-card">
+        <h4>Access model</h4>
+        <p>Free components visible without login. Browse /explore or /components.</p>
+      </div>
+      <div class="component-card">
+        <h4>Install method</h4>
+        <p>Copy-paste preferred. Optional CLI: npx shadcn add [url]</p>
+      </div>
+      <div class="component-card">
+        <h4>Stack</h4>
+        <p>React + Tailwind CSS + TypeScript. Radix UI for primitives.</p>
+      </div>
+      <div class="component-card">
+        <h4>Framer Motion</h4>
+        <p>Many animated components require framer-motion as a peer dep.</p>
+      </div>
+      <div class="component-card">
+        <h4>Dark mode</h4>
+        <p>Components use dark: variants. Add class="dark" to html element.</p>
+      </div>
+      <div class="component-card">
+        <h4>Community</h4>
+        <p>Components published by community authors. Quality varies — review before use.</p>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div>
+<script>
+hljs.highlightAll();
+document.querySelectorAll('.code-block').forEach(b => {
+  const btn = b.querySelector('.copy-btn');
+  if (btn) btn.onclick = () => {
+    navigator.clipboard.writeText(b.querySelector('code').innerText);
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1500);
+  };
+});
+function filterComponents(q) {
+  const ql = q.toLowerCase();
+  document.querySelectorAll('[data-component]').forEach(el => {
+    el.style.display = !q || el.dataset.component.includes(ql) || el.textContent.toLowerCase().includes(ql) ? '' : 'none';
+  });
+}
+</script>
+</body></html>

@@ -1,0 +1,882 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>GSAP Plugins — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#e5e5e5;font-family:'Inter',sans-serif;font-size:15px;line-height:1.6}.sidebar{position:fixed;left:0;top:0;width:220px;height:100vh;background:#111;border-right:1px solid #1f1f1f;padding:20px;overflow-y:auto}.sidebar h2{font-size:13px;color:#f59e0b;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}.sidebar a{display:block;color:#888;text-decoration:none;padding:6px 8px;border-radius:6px;font-size:13px;margin-bottom:2px}.sidebar a:hover{color:#fff;background:#1a1a1a}.main{margin-left:220px;padding:48px;max-width:960px}h1{font-size:32px;font-weight:700;color:#fff;margin-bottom:8px}h2{font-size:20px;font-weight:600;color:#fff;margin:40px 0 12px;padding-top:40px;border-top:1px solid #1f1f1f}h3{font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.08em;margin:20px 0 8px}p{color:#aaa;margin-bottom:12px}.tag{display:inline-block;background:#f59e0b15;border:1px solid #f59e0b40;color:#f59e0b;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.badge.free{background:#0d2e1680;border:1px solid #22c55e40;color:#22c55e}.badge.paid{background:#2e0d0d80;border:1px solid #ef444440;color:#ef4444}.badge.included{background:#1a1a2e;border:1px solid #6366f140;color:#818cf8}.install{background:#0d0d0d;border:1px solid #1f1f1f;border-radius:6px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#f59e0b;margin:8px 0}.code-block{position:relative;margin:12px 0}.copy-btn{position:absolute;top:8px;right:8px;background:#1f1f1f;border:1px solid #333;color:#888;padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer}.copy-btn:hover{color:#fff}pre{border-radius:8px;overflow:auto;font-size:12px;max-height:450px}input[type=search]{width:100%;background:#111;border:1px solid #2a2a2a;color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;font-family:inherit;margin-bottom:32px;outline:none}input[type=search]:focus{border-color:#f59e0b50}.info-box{background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:16px 20px;margin:12px 0}.info-box.tip{border-color:#f59e0b30;background:#f59e0b08}.info-box.success{border-color:#22c55e30;background:#22c55e08}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:12px 0}.card{background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:16px}.card h4{color:#fff;font-size:14px;margin-bottom:6px}table{width:100%;border-collapse:collapse;margin:12px 0}td,th{padding:8px 12px;border:1px solid #1f1f1f;font-size:13px;text-align:left}th{color:#888;background:#111}td{color:#ccc}code{background:#1a1a1a;border:1px solid #2a2a2a;padding:1px 5px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#f59e0b}</style></head>
+<body>
+<div class="sidebar">
+  <h2>Design KB</h2>
+  <a href="../index.html">&#127968; Home</a>
+  <a href="../3d/spline-scenes.html">Spline Scenes</a>
+  <a href="../3d/spline-rive-resources.html">Spline + Rive</a>
+  <a href="../3d/r3f.html">R3F</a>
+  <a href="../animations/gsap.html">GSAP</a>
+  <a href="../animations/gsap-plugins.html" style="color:#f59e0b">GSAP Plugins</a>
+  <a href="../animations/framer-motion.html">Framer Motion</a>
+  <a href="../animations/framer-motion-advanced.html">Framer Advanced</a>
+  <a href="../animations/lottie-rive.html">Lottie + Rive</a>
+  <a href="../components/magicui-components.html">MagicUI</a>
+</div>
+<div class="main">
+  <input type="search" placeholder="Search plugins..." oninput="search(this.value)">
+  <div id="content">
+
+    <h1>GSAP Plugins</h1>
+    <p>GSAP is now <strong style="color:#22c55e">100% free for all users</strong> (including all previously Club-only plugins) thanks to Webflow's sponsorship. All plugins below are free to use in any project.</p>
+
+    <div class="info-box success">
+      <strong style="color:#22c55e">GSAP is now entirely free.</strong> As of 2024, Webflow acquired/sponsors GSAP, making all plugins — including previously paid Club GSAP plugins (SplitText, MorphSVG, DrawSVG, ScrambleText, etc.) — free for everyone. No membership required.
+    </div>
+
+    <div class="install">npm i gsap</div>
+
+    <!-- ========== PLUGIN REFERENCE TABLE ========== -->
+    <div data-section="plugin overview table">
+      <h2>All Plugins — Quick Reference</h2>
+      <table>
+        <tr>
+          <th>Plugin</th>
+          <th>Status</th>
+          <th>Category</th>
+          <th>What it does</th>
+        </tr>
+        <tr><td>ScrollTrigger</td><td><span class="badge free">Free</span></td><td>Scroll</td><td>Scroll-triggered animations, pinning, scrubbing</td></tr>
+        <tr><td>ScrollSmoother</td><td><span class="badge free">Free</span></td><td>Scroll</td><td>Native-scroll smooth scrolling (requires ScrollTrigger)</td></tr>
+        <tr><td>ScrollTo</td><td><span class="badge free">Free</span></td><td>Scroll</td><td>Animate scroll position to targets</td></tr>
+        <tr><td>Observer</td><td><span class="badge free">Free</span></td><td>Scroll/Events</td><td>Unified wheel/touch/pointer/scroll event system</td></tr>
+        <tr><td>Flip</td><td><span class="badge free">Free</span></td><td>UI / Layout</td><td>FLIP technique — animate between DOM states</td></tr>
+        <tr><td>Draggable</td><td><span class="badge free">Free</span></td><td>Interaction</td><td>Drag, spin, throw with physics</td></tr>
+        <tr><td>Inertia</td><td><span class="badge free">Free</span></td><td>Interaction</td><td>Momentum-based dragging (requires Draggable)</td></tr>
+        <tr><td>MotionPath</td><td><span class="badge free">Free</span></td><td>SVG</td><td>Animate elements along SVG paths</td></tr>
+        <tr><td>MotionPathHelper</td><td><span class="badge free">Free</span></td><td>SVG / Dev</td><td>Browser-based path editing tool</td></tr>
+        <tr><td>DrawSVG</td><td><span class="badge free">Free</span></td><td>SVG</td><td>Progressively draw/erase SVG strokes</td></tr>
+        <tr><td>MorphSVG</td><td><span class="badge free">Free</span></td><td>SVG</td><td>Morph between SVG shapes</td></tr>
+        <tr><td>SplitText</td><td><span class="badge free">Free</span></td><td>Text</td><td>Split text into chars/words/lines for animation</td></tr>
+        <tr><td>TextPlugin</td><td><span class="badge free">Free</span></td><td>Text</td><td>Animate text replacement char-by-char or word-by-word</td></tr>
+        <tr><td>ScrambleText</td><td><span class="badge free">Free</span></td><td>Text</td><td>Scramble/decode text effect</td></tr>
+        <tr><td>CustomEase</td><td><span class="badge free">Free</span></td><td>Easing</td><td>Define custom cubic bezier or SVG-path easing</td></tr>
+        <tr><td>EasePack</td><td><span class="badge free">Free</span></td><td>Easing</td><td>Extra eases: RoughEase, SlowMo, ExpoScaleEase</td></tr>
+        <tr><td>CustomWiggle</td><td><span class="badge free">Free</span></td><td>Easing</td><td>Custom wiggle easing curves</td></tr>
+        <tr><td>CustomBounce</td><td><span class="badge free">Free</span></td><td>Easing</td><td>Custom bounce easing with squash/stretch</td></tr>
+        <tr><td>Physics2D</td><td><span class="badge free">Free</span></td><td>Physics</td><td>Gravity, velocity, friction, acceleration</td></tr>
+        <tr><td>PhysicsProps</td><td><span class="badge free">Free</span></td><td>Physics</td><td>Physics-based property animation</td></tr>
+        <tr><td>GSDevTools</td><td><span class="badge free">Free</span></td><td>Dev</td><td>Debug timeline UI — scrub, rewind, time-scale</td></tr>
+        <tr><td>Easel</td><td><span class="badge free">Free</span></td><td>Canvas</td><td>CreateJS/EaselJS integration</td></tr>
+        <tr><td>Pixi</td><td><span class="badge free">Free</span></td><td>Canvas</td><td>PixiJS library integration</td></tr>
+      </table>
+    </div>
+
+    <!-- ========== SCROLL TRIGGER ========== -->
+    <div data-section="scrolltrigger scroll trigger">
+      <h2>ScrollTrigger <span class="badge free">Free</span></h2>
+      <p>The most popular GSAP plugin. Trigger animations when elements enter/leave the viewport. Supports pinning, scrubbing (linking progress to scroll position), snapping, and callbacks.</p>
+      <div class="install">gsap.registerPlugin(ScrollTrigger)</div>
+
+      <h3>Basic Trigger on Enter</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-js">import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+// Animate when .box enters the viewport
+gsap.to('.box', {
+  x: 500,
+  opacity: 1,
+  duration: 1,
+  ease: 'power3.out',
+  scrollTrigger: {
+    trigger: '.box',      // element that triggers the animation
+    start: 'top 80%',     // "element top" meets "viewport 80%"
+    end: 'bottom 20%',    // "element bottom" meets "viewport 20%"
+    toggleActions: 'play none none reverse',
+    // toggleActions: 'onEnter onLeave onEnterBack onLeaveBack'
+    // values: play | pause | resume | reset | restart | complete | reverse | none
+  },
+});</code></pre>
+      </div>
+
+      <h3>Scrub — Link to Scroll Progress</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-js">// scrub: true — instantly follows scroll
+// scrub: 0.5 — 0.5s lag (smoother feel)
+gsap.to('.parallax-img', {
+  y: -200,
+  scrollTrigger: {
+    trigger: '.section',
+    start: 'top top',
+    end: 'bottom top',
+    scrub: 1,
+  },
+});</code></pre>
+      </div>
+
+      <h3>Pin — Lock Element During Scroll</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-js">// Pin .hero in place while the page scrolls through 500px of content
+ScrollTrigger.create({
+  trigger: '.hero',
+  start: 'top top',
+  end: '+=500',         // pin for 500px of scroll distance
+  pin: true,
+  pinSpacing: true,     // adds space below pinned element
+});</code></pre>
+      </div>
+
+      <h3>Horizontal Scroll Section</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-js">// Horizontal scroll carousel pinned in place
+const sections = gsap.utils.toArray('.panel');
+
+gsap.to(sections, {
+  xPercent: -100 * (sections.length - 1),
+  ease: 'none',
+  scrollTrigger: {
+    trigger: '.container',
+    pin: true,
+    scrub: 1,
+    snap: 1 / (sections.length - 1),   // snap to each panel
+    end: () => '+=' + document.querySelector('.container').offsetWidth,
+  },
+});</code></pre>
+      </div>
+
+      <h3>Stagger Children on Enter</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-js">gsap.from('.card', {
+  opacity: 0,
+  y: 60,
+  duration: 0.6,
+  stagger: 0.1,
+  ease: 'power2.out',
+  scrollTrigger: {
+    trigger: '.cards-container',
+    start: 'top 75%',
+    toggleActions: 'play none none none',
+  },
+});</code></pre>
+      </div>
+
+      <h3>React Hook (reusable)</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+export function useScrollReveal&lt;T extends HTMLElement&gt;(options = {}) {
+  const ref = useRef&lt;T&gt;(null);
+
+  useEffect(() => {
+    if (!ref.current) return;
+    const el = ref.current;
+
+    const ctx = gsap.context(() => {
+      gsap.from(el, {
+        opacity: 0,
+        y: 40,
+        duration: 0.7,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+          ...options,
+        },
+      });
+    }, el);
+
+    return () => ctx.revert();
+  }, []);
+
+  return ref;
+}
+
+// Usage:
+// const ref = useScrollReveal&lt;HTMLDivElement&gt;({ start: 'top 70%' });
+// &lt;div ref={ref}&gt;...&lt;/div&gt;</code></pre>
+      </div>
+    </div>
+
+    <!-- ========== SCROLL SMOOTHER ========== -->
+    <div data-section="scrollsmoother smooth scroll">
+      <h2>ScrollSmoother <span class="badge free">Free</span></h2>
+      <p>Smooth scrolling built on native scroll technology (not intercepted JS). Requires ScrollTrigger. Adds momentum, speed effects, and parallax to elements.</p>
+      <div class="install">gsap.registerPlugin(ScrollTrigger, ScrollSmoother)</div>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-html">&lt;!-- Required HTML structure --&gt;
+&lt;body&gt;
+  &lt;div id="smooth-wrapper"&gt;
+    &lt;div id="smooth-content"&gt;
+      &lt;!-- ALL your page content here --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;</code></pre>
+      </div>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-js">import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollSmoother } from 'gsap/ScrollSmoother';
+
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+
+const smoother = ScrollSmoother.create({
+  wrapper: '#smooth-wrapper',
+  content: '#smooth-content',
+  smooth: 1.5,           // smoothing factor (0 = no smooth, 2 = very smooth)
+  effects: true,         // enable data-speed and data-lag attributes
+  normalizeScroll: true, // prevents janky mobile scroll
+});
+
+// Parallax via data attributes:
+// &lt;img data-speed="0.5" /&gt;   — moves at 50% scroll speed
+// &lt;div data-lag="0.3" /&gt;    — lags 0.3s behind scroll
+
+// Programmatic scroll
+smoother.scrollTo('#section-3', true, 'top top');
+
+// Pause/resume
+smoother.paused(true);
+smoother.paused(false);</code></pre>
+      </div>
+    </div>
+
+    <!-- ========== OBSERVER ========== -->
+    <div data-section="observer events wheel touch pointer">
+      <h2>Observer <span class="badge free">Free</span></h2>
+      <p>Unified event handler for wheel, touch, pointer, and scroll. Perfect for full-page scroll snapping without hijacking native scroll. If ScrollTrigger is loaded, access via <code>ScrollTrigger.observe()</code>.</p>
+      <div class="install">gsap.registerPlugin(Observer)</div>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-js">import { gsap } from 'gsap';
+import { Observer } from 'gsap/Observer';
+
+gsap.registerPlugin(Observer);
+
+// Full-page section snapping
+const sections = document.querySelectorAll('.section');
+let current = 0;
+let animating = false;
+
+function goTo(index) {
+  if (animating || index === current) return;
+  animating = true;
+  const prev = sections[current];
+  const next = sections[index];
+  const direction = index > current ? 1 : -1;
+
+  gsap.timeline({
+    onComplete: () => { animating = false; current = index; },
+  })
+    .to(prev, { yPercent: -100 * direction, duration: 1, ease: 'power2.inOut' }, 0)
+    .from(next, { yPercent: 100 * direction, duration: 1, ease: 'power2.inOut' }, 0);
+}
+
+Observer.create({
+  target: window,
+  type: 'wheel,touch,pointer',
+  wheelSpeed: -1,
+  onDown: () => goTo(Math.min(current + 1, sections.length - 1)),
+  onUp: () => goTo(Math.max(current - 1, 0)),
+  tolerance: 10,
+  preventDefault: true,
+});</code></pre>
+      </div>
+    </div>
+
+    <!-- ========== FLIP ========== -->
+    <div data-section="flip layout animation dom state">
+      <h2>Flip <span class="badge free">Free</span></h2>
+      <p>Animate between two DOM states using the FLIP (First, Last, Invert, Play) technique. Elements can move across layouts, grids, or containers seamlessly — even with DOM restructuring.</p>
+      <div class="install">gsap.registerPlugin(Flip)</div>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-js">import { gsap } from 'gsap';
+import { Flip } from 'gsap/Flip';
+
+gsap.registerPlugin(Flip);
+
+// 3-step pattern
+function toggleLayout() {
+  // Step 1: Record current state (positions, sizes)
+  const state = Flip.getState('.item');
+
+  // Step 2: Make DOM/class changes that alter layout
+  document.querySelector('.container').classList.toggle('grid-view');
+
+  // Step 3: Animate from old state to new state
+  Flip.from(state, {
+    duration: 0.6,
+    ease: 'power1.inOut',
+    stagger: 0.05,
+    absolute: true,         // use position:absolute during animation
+    onEnter: (elements) => gsap.from(elements, { opacity: 0, scale: 0, duration: 0.3 }),
+    onLeave: (elements) => gsap.to(elements, { opacity: 0, scale: 0, duration: 0.3 }),
+  });
+}</code></pre>
+      </div>
+
+      <h3>React — Grid / List Toggle</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useState, useLayoutEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { Flip } from 'gsap/Flip';
+
+gsap.registerPlugin(Flip);
+
+export default function FlipGrid() {
+  const [isGrid, setIsGrid] = useState(true);
+  const containerRef = useRef&lt;HTMLDivElement&gt;(null);
+  const stateRef = useRef&lt;ReturnType&lt;typeof Flip.getState&gt; | null&gt;(null);
+
+  const toggle = () => {
+    // Capture before the React re-render
+    stateRef.current = Flip.getState('.flip-item');
+    setIsGrid(v => !v);
+  };
+
+  useLayoutEffect(() => {
+    if (!stateRef.current) return;
+    Flip.from(stateRef.current, {
+      duration: 0.5,
+      ease: 'power2.inOut',
+      stagger: 0.04,
+      absolute: true,
+    });
+    stateRef.current = null;
+  }, [isGrid]);
+
+  const items = ['A','B','C','D','E','F'];
+
+  return (
+    &lt;div&gt;
+      &lt;button onClick={toggle}&gt;Toggle Layout&lt;/button&gt;
+      &lt;div
+        ref={containerRef}
+        style={{
+          display: isGrid ? 'grid' : 'flex',
+          gridTemplateColumns: isGrid ? 'repeat(3,1fr)' : undefined,
+          flexDirection: isGrid ? undefined : 'column',
+          gap: 12,
+        }}
+      &gt;
+        {items.map(i =&gt; (
+          &lt;div key={i} className="flip-item" style={{
+            background: '#1a1a1a', padding: 24, borderRadius: 8, color: '#fff',
+          }}&gt;
+            Item {i}
+          &lt;/div&gt;
+        ))}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- ========== SPLIT TEXT ========== -->
+    <div data-section="splittext text split chars words lines">
+      <h2>SplitText <span class="badge free">Free</span></h2>
+      <p>Split HTML text into individual characters, words, and/or lines — each wrapped in a span — for precise stagger animations. Automatically handles responsive re-splitting and accessibility (aria attributes).</p>
+      <div class="install">gsap.registerPlugin(SplitText)</div>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-js">import { gsap } from 'gsap';
+import { SplitText } from 'gsap/SplitText';
+
+gsap.registerPlugin(SplitText);
+
+// Split by chars and words
+const split = SplitText.create('.headline', {
+  type: 'chars,words,lines',
+  linesClass: 'line',       // CSS class applied to line wrappers
+  charsClass: 'char',
+  wordsClass: 'word',
+  aria: 'description',      // accessibility: keep original text for screen readers
+});
+
+// Staggered character reveal from below
+gsap.from(split.chars, {
+  duration: 0.6,
+  y: 100,
+  autoAlpha: 0,
+  stagger: 0.03,
+  ease: 'back.out(1.7)',
+  scrollTrigger: {
+    trigger: '.headline',
+    start: 'top 80%',
+  },
+});
+
+// Cleanup
+split.revert();   // restores original HTML</code></pre>
+      </div>
+
+      <h3>Masked Line Reveal (Cinema Style)</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-js">// Each line slides up from behind a mask (overflow:hidden wrapper)
+const split = SplitText.create('.masked-text', {
+  type: 'lines',
+  mask: 'lines',   // wraps each line in overflow:hidden container
+});
+
+gsap.from(split.lines, {
+  yPercent: 110,
+  duration: 0.8,
+  stagger: 0.1,
+  ease: 'power3.out',
+  scrollTrigger: { trigger: '.masked-text', start: 'top 85%' },
+});</code></pre>
+      </div>
+    </div>
+
+    <!-- ========== DRAW SVG ========== -->
+    <div data-section="drawsvg svg stroke draw">
+      <h2>DrawSVG <span class="badge free">Free</span></h2>
+      <p>Progressively draw or erase SVG strokes by manipulating <code>stroke-dashoffset</code> and <code>stroke-dasharray</code>. Works with paths, circles, polylines, etc.</p>
+      <div class="install">gsap.registerPlugin(DrawSVGPlugin)</div>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-html">&lt;!-- SVG must have stroke defined --&gt;
+&lt;svg viewBox="0 0 200 200"&gt;
+  &lt;circle class="ring" cx="100" cy="100" r="80"
+    fill="none" stroke="#f59e0b" stroke-width="4" /&gt;
+  &lt;path class="logo-path" d="M10 80 Q 95 10 180 80 Q 95 150 10 80"
+    fill="none" stroke="#fff" stroke-width="2" /&gt;
+&lt;/svg&gt;</code></pre>
+      </div>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-js">import { gsap } from 'gsap';
+import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
+
+gsap.registerPlugin(DrawSVGPlugin);
+
+// Draw from 0 to full
+gsap.from('.ring', { drawSVG: 0, duration: 2, ease: 'power2.inOut' });
+
+// Draw from center outward
+gsap.from('.ring', { drawSVG: '50% 50%', duration: 1.5 });
+
+// Erase (reverse direction)
+gsap.to('.logo-path', { drawSVG: 0, duration: 1.5 });
+
+// Partial draw (draw first 40%)
+gsap.from('.logo-path', { drawSVG: '0% 40%', duration: 1 });
+
+// Timeline sequence: draw then erase
+gsap.timeline({ scrollTrigger: { trigger: 'svg', start: 'top center' } })
+  .from('.logo-path', { drawSVG: 0, duration: 2 })
+  .to('.logo-path', { drawSVG: 0, duration: 1.5, delay: 0.5 });</code></pre>
+      </div>
+    </div>
+
+    <!-- ========== MOTION PATH ========== -->
+    <div data-section="motionpath path svg animate along">
+      <h2>MotionPathPlugin <span class="badge free">Free</span></h2>
+      <p>Animate any element along an SVG path with auto-rotation. Supports path data strings, SVG elements, and coordinate arrays.</p>
+      <div class="install">gsap.registerPlugin(MotionPathPlugin)</div>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-html">&lt;svg viewBox="0 0 500 300"&gt;
+  &lt;path id="track"
+    d="M10,150 C100,50 200,250 300,150 S450,50 490,150"
+    fill="none" stroke="#333" stroke-width="1" /&gt;
+  &lt;div id="car"&gt;🚀&lt;/div&gt;
+&lt;/svg&gt;</code></pre>
+      </div>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-js">import { gsap } from 'gsap';
+import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
+
+gsap.registerPlugin(MotionPathPlugin);
+
+gsap.to('#car', {
+  motionPath: {
+    path: '#track',          // SVG path element selector
+    align: '#track',         // align element to path coordinate system
+    alignOrigin: [0.5, 0.5], // anchor point of the element (center)
+    autoRotate: true,        // rotate element to face direction of motion
+    start: 0,                // 0 = path start
+    end: 1,                  // 1 = path end
+  },
+  duration: 4,
+  ease: 'none',
+  repeat: -1,
+});
+
+// Using path data string directly (no SVG element needed)
+gsap.to('.dot', {
+  motionPath: {
+    path: 'M0,0 C100,-100 200,100 300,0',
+    autoRotate: 90,    // offset rotation by 90°
+  },
+  duration: 3,
+  ease: 'power1.inOut',
+});</code></pre>
+      </div>
+    </div>
+
+    <!-- ========== TEXT PLUGIN ========== -->
+    <div data-section="textplugin text replace typewriter">
+      <h2>TextPlugin <span class="badge free">Free</span></h2>
+      <p>Animate text replacement character-by-character or word-by-word. Useful for typewriter effects and dynamic content transitions.</p>
+      <div class="install">gsap.registerPlugin(TextPlugin)</div>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-js">import { gsap } from 'gsap';
+import { TextPlugin } from 'gsap/TextPlugin';
+
+gsap.registerPlugin(TextPlugin);
+
+// Basic typewriter
+gsap.to('.headline', {
+  text: 'Hello, World!',
+  duration: 2,
+  ease: 'none',   // linear for typewriter feel
+});
+
+// Word by word
+gsap.to('.subtitle', {
+  text: { value: 'Fast beautiful production ready', delimiter: ' ' },
+  duration: 1.5,
+  ease: 'none',
+});
+
+// Cycle through phrases (looping typewriter)
+const phrases = ['Build faster.', 'Ship better.', 'Look great.'];
+let i = 0;
+
+function cycleText() {
+  gsap.timeline({ onComplete: cycleText })
+    .to('.hero-text', {
+      text: phrases[i % phrases.length],
+      duration: 1.5,
+      ease: 'none',
+    })
+    .to('.hero-text', { opacity: 0.3, duration: 0.3, delay: 1 })
+    .to('.hero-text', { opacity: 1, duration: 0.2 });
+  i++;
+}
+cycleText();</code></pre>
+      </div>
+    </div>
+
+    <!-- ========== SCRAMBLE TEXT ========== -->
+    <div data-section="scrambletext scramble decode text">
+      <h2>ScrambleTextPlugin <span class="badge free">Free</span></h2>
+      <p>Randomizes characters while resolving to the target text — like a hacker-style decode effect. Configurable character set.</p>
+      <div class="install">gsap.registerPlugin(ScrambleTextPlugin)</div>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-js">import { gsap } from 'gsap';
+import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin';
+
+gsap.registerPlugin(ScrambleTextPlugin);
+
+gsap.to('.code-text', {
+  duration: 2,
+  scrambleText: {
+    text: 'SYSTEM ONLINE',
+    chars: '01',              // binary characters for sci-fi feel
+    speed: 0.5,               // scramble speed (0.1 slow – 1 fast)
+    revealDelay: 0.3,         // delay before revealing correct chars
+    delimiter: '',            // '' = char by char, ' ' = word by word
+  },
+});
+
+// Normal character set
+gsap.to('.label', {
+  duration: 1.5,
+  scrambleText: 'New Value',  // shorthand string
+});</code></pre>
+      </div>
+    </div>
+
+    <!-- ========== MORPH SVG ========== -->
+    <div data-section="morphsvg morph shape svg">
+      <h2>MorphSVGPlugin <span class="badge free">Free</span></h2>
+      <p>Morph between SVG paths, even those with different numbers of points. Auto-handles point equalization.</p>
+      <div class="install">gsap.registerPlugin(MorphSVGPlugin)</div>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-js">import { gsap } from 'gsap';
+import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin';
+
+gsap.registerPlugin(MorphSVGPlugin);
+
+// Morph circle into star path
+gsap.to('#shape', {
+  morphSVG: '#star',     // target SVG path selector
+  duration: 1.5,
+  ease: 'power2.inOut',
+});
+
+// Morph to a path data string directly
+gsap.to('#blob', {
+  morphSVG: 'M10,50 C30,-20 70,-20 90,50 C110,120 150,120 170,50',
+  duration: 2,
+  repeat: -1,
+  yoyo: true,
+  ease: 'sine.inOut',
+});
+
+// Control which anchor points map to each other
+gsap.to('#shape1', {
+  morphSVG: {
+    shape: '#shape2',
+    map: 'complexity',   // 'size' | 'position' | 'complexity' | 'reverse'
+    origin: '50% 50%',
+  },
+  duration: 1,
+});</code></pre>
+      </div>
+    </div>
+
+    <!-- ========== CUSTOM EASE ========== -->
+    <div data-section="customease easing custom curve">
+      <h2>CustomEase <span class="badge free">Free</span></h2>
+      <p>Define any easing curve using an SVG path data string. Use GSAP's Ease Visualizer to draw curves visually.</p>
+      <div class="install">gsap.registerPlugin(CustomEase)</div>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-js">import { gsap } from 'gsap';
+import { CustomEase } from 'gsap/CustomEase';
+
+gsap.registerPlugin(CustomEase);
+
+// Create named ease from SVG path
+CustomEase.create('myBounce', 'M0,0 C0.14,0 0.242,0.438 0.272,0.561 0.3,0.683 0.36,0.989 0.40,1 0.44,1.011 0.464,0.898 0.484,0.8 0.504,0.702 0.53,0.963 0.56,1 0.58,1.026 0.601,0.95 0.62,0.95 0.641,0.95 0.661,1.003 0.68,1 0.7,0.997 0.72,0.97 0.74,0.97 0.76,0.97 0.78,0.998 0.8,1 0.82,1.002 0.843,0.988 0.862,0.99 0.88,0.992 0.9,1 0.92,1 1,1');
+
+gsap.to('.ball', {
+  y: 300,
+  duration: 2,
+  ease: 'myBounce',
+  repeat: -1,
+});
+
+// Quick spring feel
+CustomEase.create('spring', 'M0,0 C0,0 0.01,0.067 0.028,0.116 0.048,0.17 0.066,0.211 0.088,0.262 0.112,0.316 0.124,0.38 0.148,0.412 0.172,0.445 0.208,0.483 0.236,0.502 0.256,0.516 0.282,0.526 0.302,0.53 0.322,0.534 0.35,0.536 0.37,0.544 0.39,0.552 0.406,0.578 0.426,0.64 0.44,0.676 0.454,0.7 0.47,0.72 0.488,0.742 0.516,0.78 0.526,0.816 0.538,0.856 0.55,0.88 0.572,0.92 0.588,0.944 0.604,0.96 0.62,0.974 0.64,0.988 0.66,0.998 0.68,1 0.7,1 1,1');
+
+gsap.to('.card', { scale: 1, duration: 0.8, ease: 'spring', from: 0 });</code></pre>
+      </div>
+    </div>
+
+    <!-- ========== GSAP + REACT PATTERN ========== -->
+    <div data-section="gsap react pattern usegsap context">
+      <h2>GSAP + React — Best Practices</h2>
+      <p>Always use <code>gsap.context()</code> with a cleanup function to prevent memory leaks in React components.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useRef, useLayoutEffect } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { SplitText } from 'gsap/SplitText';
+
+gsap.registerPlugin(ScrollTrigger, SplitText);
+
+export default function AnimatedSection() {
+  const sectionRef = useRef&lt;HTMLElement&gt;(null);
+
+  useLayoutEffect(() => {
+    // gsap.context scopes all selectors to sectionRef
+    const ctx = gsap.context(() => {
+      const split = SplitText.create('.section-title', { type: 'chars' });
+
+      gsap.from(split.chars, {
+        opacity: 0,
+        y: 40,
+        stagger: 0.04,
+        duration: 0.5,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.section-title',
+          start: 'top 80%',
+        },
+      });
+
+      gsap.from('.section-body', {
+        opacity: 0,
+        y: 24,
+        duration: 0.6,
+        delay: 0.3,
+        scrollTrigger: {
+          trigger: '.section-body',
+          start: 'top 85%',
+        },
+      });
+    }, sectionRef); // &lt;-- scope
+
+    return () => ctx.revert(); // &lt;-- cleanup on unmount
+  }, []);
+
+  return (
+    &lt;section ref={sectionRef}&gt;
+      &lt;h2 className="section-title"&gt;Animated Title&lt;/h2&gt;
+      &lt;p className="section-body"&gt;This paragraph fades in on scroll.&lt;/p&gt;
+    &lt;/section&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- ========== ANIMATE.CSS ========== -->
+    <div data-section="animate.css css animations classes">
+      <h2>Animate.css — CSS Animation Library <span class="badge free">Free</span></h2>
+      <p>Zero-JS CSS animations. Apply classes to trigger pre-built animations. MIT-compatible (Hippocratic License 2.1).</p>
+      <div class="install">npm i animate.css</div>
+      <p style="color:#666;font-size:13px">Or CDN: <code>https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css</code></p>
+
+      <h3>All Animation Classes</h3>
+      <table>
+        <tr><th>Category</th><th>Classes</th></tr>
+        <tr>
+          <td>Attention Seekers</td>
+          <td><code>bounce</code> <code>flash</code> <code>pulse</code> <code>rubberBand</code> <code>shakeX</code> <code>shakeY</code> <code>headShake</code> <code>swing</code> <code>tada</code> <code>wobble</code> <code>jello</code> <code>heartBeat</code></td>
+        </tr>
+        <tr>
+          <td>Back Entrances</td>
+          <td><code>backInDown</code> <code>backInLeft</code> <code>backInRight</code> <code>backInUp</code></td>
+        </tr>
+        <tr>
+          <td>Back Exits</td>
+          <td><code>backOutDown</code> <code>backOutLeft</code> <code>backOutRight</code> <code>backOutUp</code></td>
+        </tr>
+        <tr>
+          <td>Bouncing Entrances</td>
+          <td><code>bounceIn</code> <code>bounceInDown</code> <code>bounceInLeft</code> <code>bounceInRight</code> <code>bounceInUp</code></td>
+        </tr>
+        <tr>
+          <td>Bouncing Exits</td>
+          <td><code>bounceOut</code> <code>bounceOutDown</code> <code>bounceOutLeft</code> <code>bounceOutRight</code> <code>bounceOutUp</code></td>
+        </tr>
+        <tr>
+          <td>Fading Entrances</td>
+          <td><code>fadeIn</code> <code>fadeInDown</code> <code>fadeInDownBig</code> <code>fadeInLeft</code> <code>fadeInLeftBig</code> <code>fadeInRight</code> <code>fadeInRightBig</code> <code>fadeInUp</code> <code>fadeInUpBig</code> <code>fadeInTopLeft</code> <code>fadeInTopRight</code> <code>fadeInBottomLeft</code> <code>fadeInBottomRight</code></td>
+        </tr>
+        <tr>
+          <td>Fading Exits</td>
+          <td><code>fadeOut</code> <code>fadeOutDown</code> <code>fadeOutDownBig</code> <code>fadeOutLeft</code> <code>fadeOutLeftBig</code> <code>fadeOutRight</code> <code>fadeOutRightBig</code> <code>fadeOutUp</code> <code>fadeOutUpBig</code> <code>fadeOutTopLeft</code> <code>fadeOutTopRight</code> <code>fadeOutBottomLeft</code> <code>fadeOutBottomRight</code></td>
+        </tr>
+        <tr>
+          <td>Flippers</td>
+          <td><code>flip</code> <code>flipInX</code> <code>flipInY</code> <code>flipOutX</code> <code>flipOutY</code></td>
+        </tr>
+        <tr>
+          <td>Lightspeed</td>
+          <td><code>lightSpeedInRight</code> <code>lightSpeedInLeft</code> <code>lightSpeedOutRight</code> <code>lightSpeedOutLeft</code></td>
+        </tr>
+        <tr>
+          <td>Rotating Entrances</td>
+          <td><code>rotateIn</code> <code>rotateInDownLeft</code> <code>rotateInDownRight</code> <code>rotateInUpLeft</code> <code>rotateInUpRight</code></td>
+        </tr>
+        <tr>
+          <td>Rotating Exits</td>
+          <td><code>rotateOut</code> <code>rotateOutDownLeft</code> <code>rotateOutDownRight</code> <code>rotateOutUpLeft</code> <code>rotateOutUpRight</code></td>
+        </tr>
+        <tr>
+          <td>Specials</td>
+          <td><code>hinge</code> <code>jackInTheBox</code> <code>rollIn</code> <code>rollOut</code></td>
+        </tr>
+        <tr>
+          <td>Zooming Entrances</td>
+          <td><code>zoomIn</code> <code>zoomInDown</code> <code>zoomInLeft</code> <code>zoomInRight</code> <code>zoomInUp</code></td>
+        </tr>
+        <tr>
+          <td>Zooming Exits</td>
+          <td><code>zoomOut</code> <code>zoomOutDown</code> <code>zoomOutLeft</code> <code>zoomOutRight</code> <code>zoomOutUp</code></td>
+        </tr>
+        <tr>
+          <td>Sliding Entrances</td>
+          <td><code>slideInDown</code> <code>slideInLeft</code> <code>slideInRight</code> <code>slideInUp</code></td>
+        </tr>
+        <tr>
+          <td>Sliding Exits</td>
+          <td><code>slideOutDown</code> <code>slideOutLeft</code> <code>slideOutRight</code> <code>slideOutUp</code></td>
+        </tr>
+      </table>
+
+      <h3>Usage</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-html">&lt;!-- Static --&gt;
+&lt;h1 class="animate__animated animate__fadeInUp"&gt;Hello&lt;/h1&gt;
+
+&lt;!-- With delay and speed modifiers --&gt;
+&lt;div class="animate__animated animate__bounceIn animate__delay-1s animate__slow"&gt;
+  Delayed slow bounce
+&lt;/div&gt;
+
+&lt;!-- Infinite loop --&gt;
+&lt;div class="animate__animated animate__pulse animate__infinite"&gt;
+  Pulsing element
+&lt;/div&gt;</code></pre>
+      </div>
+
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-js">// Add animation on scroll via JS
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+
+// Remove animation to replay
+element.classList.remove('animate__animated', 'animate__bounce');
+element.offsetWidth; // force reflow
+element.classList.add('animate__animated', 'animate__bounce');</code></pre>
+      </div>
+
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-css">/* Customize via CSS variables */
+:root {
+  --animate-duration: 0.6s;
+  --animate-delay: 0.3s;
+  --animate-repeat: 1;
+}
+
+/* Override per-element */
+.fast-animation {
+  --animate-duration: 300ms;
+}</code></pre>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+hljs.highlightAll();
+document.querySelectorAll('.code-block').forEach(b=>{
+  const btn=b.querySelector('.copy-btn');
+  if(btn)btn.onclick=()=>{
+    navigator.clipboard.writeText(b.querySelector('code').innerText);
+    btn.textContent='Copied!';setTimeout(()=>btn.textContent='Copy',1500);
+  };
+});
+function search(q){
+  const ql=q.toLowerCase();
+  document.querySelectorAll('[data-section]').forEach(el=>{
+    el.style.display=!q||el.textContent.toLowerCase().includes(ql)?'':'none';
+  });
+}
+</script>
+</body></html>

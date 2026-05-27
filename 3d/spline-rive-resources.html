@@ -1,0 +1,824 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Spline + Rive Resources — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#e5e5e5;font-family:'Inter',sans-serif;font-size:15px;line-height:1.6}.sidebar{position:fixed;left:0;top:0;width:220px;height:100vh;background:#111;border-right:1px solid #1f1f1f;padding:20px;overflow-y:auto}.sidebar h2{font-size:13px;color:#f59e0b;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}.sidebar a{display:block;color:#888;text-decoration:none;padding:6px 8px;border-radius:6px;font-size:13px;margin-bottom:2px}.sidebar a:hover{color:#fff;background:#1a1a1a}.main{margin-left:220px;padding:48px;max-width:960px}h1{font-size:32px;font-weight:700;color:#fff;margin-bottom:8px}h2{font-size:20px;font-weight:600;color:#fff;margin:40px 0 12px;padding-top:40px;border-top:1px solid #1f1f1f}h3{font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.08em;margin:20px 0 8px}p{color:#aaa;margin-bottom:12px}.tag{display:inline-block;background:#f59e0b15;border:1px solid #f59e0b40;color:#f59e0b;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.badge.free{background:#0d2e1680;border:1px solid #22c55e40;color:#22c55e}.badge.paid{background:#2e0d0d80;border:1px solid #ef444440;color:#ef4444}.install{background:#0d0d0d;border:1px solid #1f1f1f;border-radius:6px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#f59e0b;margin:8px 0}.code-block{position:relative;margin:12px 0}.copy-btn{position:absolute;top:8px;right:8px;background:#1f1f1f;border:1px solid #333;color:#888;padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer}.copy-btn:hover{color:#fff}pre{border-radius:8px;overflow:auto;font-size:12px;max-height:450px}input[type=search]{width:100%;background:#111;border:1px solid #2a2a2a;color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;font-family:inherit;margin-bottom:32px;outline:none}input[type=search]:focus{border-color:#f59e0b50}.info-box{background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:16px 20px;margin:12px 0}.info-box.tip{border-color:#f59e0b30;background:#f59e0b08}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}.card{background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:16px}.card h4{color:#fff;font-size:14px;margin-bottom:6px}table{width:100%;border-collapse:collapse;margin:12px 0}td,th{padding:8px 12px;border:1px solid #1f1f1f;font-size:13px;text-align:left}th{color:#888;background:#111}td{color:#ccc}</style></head>
+<body>
+<div class="sidebar">
+  <h2>Design KB</h2>
+  <a href="../index.html">&#127968; Home</a>
+  <a href="../3d/spline-scenes.html">Spline Scenes</a>
+  <a href="../3d/spline-rive-resources.html" style="color:#f59e0b">Spline + Rive</a>
+  <a href="../3d/r3f.html">R3F</a>
+  <a href="../animations/gsap.html">GSAP</a>
+  <a href="../animations/gsap-plugins.html">GSAP Plugins</a>
+  <a href="../animations/framer-motion.html">Framer Motion</a>
+  <a href="../animations/framer-motion-advanced.html">Framer Advanced</a>
+  <a href="../animations/lottie-rive.html">Lottie + Rive</a>
+  <a href="../components/magicui-components.html">MagicUI</a>
+</div>
+<div class="main">
+  <input type="search" placeholder="Search..." oninput="search(this.value)">
+  <div id="content">
+
+    <h1>Spline + Rive Resources</h1>
+    <p>Free 3D scenes and interactive animations for production web hero sections. Spline for 3D, Rive for GPU-accelerated vector animation with state machines.</p>
+
+    <!-- ============================================================ SPLINE ============================================================ -->
+    <div data-section="spline overview">
+      <h2>Spline — 3D for the Web</h2>
+      <p>Spline is a real-time collaborative 3D design platform that exports production-ready interactive experiences directly to web. No Three.js required — scenes run via a lightweight viewer runtime.</p>
+      <div class="grid">
+        <div class="card"><h4>Key Features</h4><ul style="color:#aaa;font-size:13px;padding-left:16px"><li>Real-time 3D in the browser</li><li>Physics, particles, timeline animation</li><li>Variables &amp; webhook API</li><li>Multi-platform export (Web, iOS, Android)</li><li>Webflow, Framer, Next.js integrations</li></ul></div>
+        <div class="card"><h4>NPM Packages</h4>
+          <div class="install">npm i @splinetool/viewer</div>
+          <div class="install">npm i @splinetool/react-spline</div>
+          <div class="install">npm i @splinetool/runtime</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-section="spline iframe embed">
+      <h2>Method 1 — iframe Embed (Simplest)</h2>
+      <p>Every Spline scene published to the web gets a shareable URL. Use an iframe for zero-dependency embedding in any HTML page or CMS.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-html">&lt;!-- Paste your Spline scene URL from: File > Export > Web (Public URL) --&gt;
+&lt;div style="width:100%;height:600px;position:relative"&gt;
+  &lt;iframe
+    src="https://my.spline.design/SCENE_ID/embed"
+    frameborder="0"
+    width="100%"
+    height="100%"
+    allowfullscreen
+    style="border:none"
+  &gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+&lt;!-- For a full-viewport hero section --&gt;
+&lt;section style="
+  width:100vw;
+  height:100vh;
+  position:relative;
+  overflow:hidden;
+"&gt;
+  &lt;iframe
+    src="https://my.spline.design/YOUR_SCENE_ID/embed"
+    frameborder="0"
+    style="
+      position:absolute;
+      top:0; left:0;
+      width:100%; height:100%;
+      border:none;
+      pointer-events:all;
+    "
+  &gt;&lt;/iframe&gt;
+  &lt;!-- Hero content sits on top --&gt;
+  &lt;div style="
+    position:relative;
+    z-index:10;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height:100%;
+  "&gt;
+    &lt;h1 style="color:#fff;font-size:72px"&gt;Your Headline&lt;/h1&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+      </div>
+    </div>
+
+    <div data-section="spline web component viewer">
+      <h2>Method 2 — Web Component Viewer</h2>
+      <p>The <code>@splinetool/viewer</code> package provides a native web component <code>&lt;spline-viewer&gt;</code> — works in plain HTML, Vue, Angular, any framework.</p>
+      <div class="install">npm i @splinetool/viewer@latest</div>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-html">&lt;!-- Via CDN (no npm needed) --&gt;
+&lt;script
+  type="module"
+  src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"
+&gt;&lt;/script&gt;
+
+&lt;spline-viewer
+  url="https://prod.spline.design/9951u9cumiw2Ehj8/scene.splinecode"
+  loading-anim-type="spinner-small-dark"
+  hint
+&gt;&lt;/spline-viewer&gt;
+
+&lt;!-- Full hero with overlay --&gt;
+&lt;style&gt;
+  spline-viewer {
+    width: 100vw;
+    height: 100vh;
+    display: block;
+  }
+  .hero-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 10;
+  }
+&lt;/style&gt;
+
+&lt;body&gt;
+  &lt;spline-viewer url="https://prod.spline.design/YOUR_SCENE/scene.splinecode"&gt;&lt;/spline-viewer&gt;
+  &lt;div class="hero-overlay"&gt;
+    &lt;h1&gt;Beautiful 3D Hero&lt;/h1&gt;
+  &lt;/div&gt;
+&lt;/body&gt;</code></pre>
+      </div>
+    </div>
+
+    <div data-section="spline react component">
+      <h2>Method 3 — React Component (@splinetool/react-spline)</h2>
+      <p>Official React wrapper with event callbacks and programmatic access to objects inside the scene.</p>
+      <div class="install">npm i @splinetool/react-spline @splinetool/runtime</div>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-jsx">// Basic usage
+import Spline from '@splinetool/react-spline';
+
+export default function Hero() {
+  return (
+    &lt;div style={{ width: '100vw', height: '100vh' }}&gt;
+      &lt;Spline scene="https://prod.spline.design/YOUR_SCENE_ID/scene.splinecode" /&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+      </div>
+
+      <h3>Full Hero with Interaction + Object Control</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-jsx">import { useRef, useCallback } from 'react';
+import Spline from '@splinetool/react-spline';
+
+export default function SplineHero() {
+  const splineRef = useRef(null);
+
+  // Called once the scene is fully loaded
+  const onLoad = useCallback((splineApp) => {
+    splineRef.current = splineApp;
+
+    // Find an object by name (set in Spline editor)
+    const cube = splineApp.findObjectByName('Cube');
+    if (cube) {
+      console.log('Found cube:', cube.position);
+    }
+  }, []);
+
+  // React to Spline events (set up in Spline editor via Events panel)
+  const onSplineMouseDown = useCallback((e) => {
+    if (e.target.name === 'Button') {
+      console.log('Button clicked in 3D scene');
+      // Trigger a variable in the scene
+      splineRef.current?.setVariable('isActive', true);
+    }
+  }, []);
+
+  const triggerAnimation = () => {
+    // Call a named event/trigger in Spline
+    splineRef.current?.emitEvent('mouseDown', 'Cube');
+  };
+
+  return (
+    &lt;section style={{ position: 'relative', width: '100vw', height: '100vh' }}&gt;
+      &lt;Spline
+        scene="https://prod.spline.design/YOUR_SCENE_ID/scene.splinecode"
+        onLoad={onLoad}
+        onSplineMouseDown={onSplineMouseDown}
+        style={{ width: '100%', height: '100%' }}
+      /&gt;
+
+      {/* Hero content overlay */}
+      &lt;div style={{
+        position: 'absolute',
+        top: '50%',
+        left: '10%',
+        transform: 'translateY(-50%)',
+        zIndex: 10,
+        pointerEvents: 'none',
+      }}&gt;
+        &lt;h1 style={{ color: '#fff', fontSize: '5rem', fontWeight: 700 }}&gt;
+          3D Hero
+        &lt;/h1&gt;
+        &lt;p style={{ color: '#aaa', fontSize: '1.25rem' }}&gt;
+          Interactive. Real-time. Production-ready.
+        &lt;/p&gt;
+      &lt;/div&gt;
+
+      &lt;button
+        onClick={triggerAnimation}
+        style={{ position: 'absolute', bottom: 40, left: '50%', transform: 'translateX(-50%)', zIndex: 10 }}
+      &gt;
+        Trigger Scene Event
+      &lt;/button&gt;
+    &lt;/section&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-section="spline lazy load next.js">
+      <h2>Spline in Next.js (Lazy Load)</h2>
+      <p>Spline runtime is large (~2MB). Always lazy-load it in Next.js to avoid blocking the initial bundle.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// components/SplineScene.tsx
+'use client';
+
+import dynamic from 'next/dynamic';
+import { Suspense } from 'react';
+
+// Lazy-load Spline only on client, excluded from SSR
+const Spline = dynamic(() => import('@splinetool/react-spline'), {
+  ssr: false,
+  loading: () => (
+    &lt;div style={{
+      width: '100%',
+      height: '100%',
+      background: 'linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 100%)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}&gt;
+      &lt;div style={{ color: '#555', fontSize: 14 }}&gt;Loading 3D scene...&lt;/div&gt;
+    &lt;/div&gt;
+  ),
+});
+
+interface SplineSceneProps {
+  sceneUrl: string;
+  className?: string;
+}
+
+export function SplineScene({ sceneUrl, className }: SplineSceneProps) {
+  return (
+    &lt;div className={className} style={{ width: '100%', height: '100%' }}&gt;
+      &lt;Suspense fallback={null}&gt;
+        &lt;Spline scene={sceneUrl} /&gt;
+      &lt;/Suspense&gt;
+    &lt;/div&gt;
+  );
+}
+
+// Usage in page:
+// &lt;SplineScene
+//   sceneUrl="https://prod.spline.design/YOUR_ID/scene.splinecode"
+//   className="hero-spline"
+// /&gt;</code></pre>
+      </div>
+    </div>
+
+    <div data-section="spline low-end device fallback">
+      <h2>Performance: GPU Detect + Fallback</h2>
+      <p>Detect low-end devices and fall back to a static image or video to avoid janky 3D on weak hardware.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">'use client';
+import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
+
+const Spline = dynamic(() => import('@splinetool/react-spline'), { ssr: false });
+
+function isLowEndDevice(): boolean {
+  if (typeof navigator === 'undefined') return false;
+  // Check hardware concurrency (CPU cores)
+  if (navigator.hardwareConcurrency &lt;= 2) return true;
+  // Check device memory (GB), available in Chrome
+  if ((navigator as any).deviceMemory &lt;= 2) return true;
+  // Check if mobile with reduced motion preference
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true;
+  return false;
+}
+
+export default function AdaptiveHero() {
+  const [showSpline, setShowSpline] = useState(false);
+
+  useEffect(() => {
+    setShowSpline(!isLowEndDevice());
+  }, []);
+
+  if (!showSpline) {
+    return (
+      &lt;div style={{ width: '100vw', height: '100vh', position: 'relative' }}&gt;
+        &lt;img
+          src="/hero-fallback.jpg"
+          alt="Hero"
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        /&gt;
+      &lt;/div&gt;
+    );
+  }
+
+  return (
+    &lt;div style={{ width: '100vw', height: '100vh' }}&gt;
+      &lt;Spline scene="https://prod.spline.design/YOUR_ID/scene.splinecode" /&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-section="spline community free scenes">
+      <h2>Finding Free Spline Scenes</h2>
+      <div class="info-box tip">
+        <strong style="color:#f59e0b">Community URL:</strong> <a href="https://app.spline.design/community" target="_blank" style="color:#60a5fa">https://app.spline.design/community</a>
+        — Browse thousands of free 3D scenes. Click any scene → "Remix" to duplicate it to your account → Export → Web.
+      </div>
+      <div class="grid">
+        <div class="card">
+          <h4>Workflow: Community Scene → Your Site</h4>
+          <ol style="color:#aaa;font-size:13px;padding-left:16px;line-height:2">
+            <li>Browse community.spline.design</li>
+            <li>Click scene → "Remix" (copies to your account)</li>
+            <li>Edit colors/materials to match brand</li>
+            <li>File → Export → Web (Hosted)</li>
+            <li>Copy the <code>.splinecode</code> URL</li>
+            <li>Paste into your React component</li>
+          </ol>
+        </div>
+        <div class="card">
+          <h4>Best Scene Types for Heroes</h4>
+          <ul style="color:#aaa;font-size:13px;padding-left:16px;line-height:2">
+            <li>Abstract blob/fluid shapes</li>
+            <li>Floating geometric objects</li>
+            <li>Product showcases (3D phone, device)</li>
+            <li>Particle systems / galaxies</li>
+            <li>Interactive cursor-reactive scenes</li>
+            <li>Morphing shapes with physics</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div data-section="spline events api variables">
+      <h2>Spline Events API &amp; Variables</h2>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// Full Spline event API reference
+import Spline from '@splinetool/react-spline';
+import { Application } from '@splinetool/runtime';
+
+export default function SplineWithEvents() {
+  const handleLoad = (app: Application) => {
+    // ---- Object access ----
+    const obj = app.findObjectByName('MyObject');
+    const byId = app.findObjectById('uuid-string');
+
+    // ---- Read/Write variables (defined in Spline editor) ----
+    app.setVariable('speed', 2.5);
+    app.setVariable('color', '#ff0000');
+    const currentSpeed = app.getVariable('speed');
+
+    // ---- Emit events to trigger animations ----
+    app.emitEvent('mouseDown', 'ButtonObject');
+    app.emitEventReverse('mouseDown', 'ButtonObject');
+  };
+
+  return (
+    &lt;Spline
+      scene="https://prod.spline.design/YOUR_ID/scene.splinecode"
+      onLoad={handleLoad}
+      onSplineMouseDown={(e) =&gt; console.log('mousedown on:', e.target.name)}
+      onSplineMouseUp={(e) =&gt; console.log('mouseup on:', e.target.name)}
+      onSplineMouseHover={(e) =&gt; console.log('hover on:', e.target.name)}
+      onSplineKeyDown={(e) =&gt; console.log('keydown on:', e.target.name)}
+      onSplineLookAt={(e) =&gt; console.log('look at:', e.target.name)}
+      onSplineFollow={(e) =&gt; console.log('follow:', e.target.name)}
+    /&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- ============================================================ RIVE ============================================================ -->
+    <div data-section="rive overview">
+      <h2>Rive — Interactive Animation Engine</h2>
+      <p>Rive is a design-and-animation platform with an open-source runtime. GPU-accelerated vector graphics at 120fps. State machines bridge designer intent and developer control. Used by Spotify, Duolingo, Disney.</p>
+      <div class="grid">
+        <div class="card">
+          <h4>Key Advantages</h4>
+          <ul style="color:#aaa;font-size:13px;padding-left:16px;line-height:2">
+            <li>Files up to 90% smaller than Lottie/video</li>
+            <li>GPU-accelerated (WebGL2 renderer)</li>
+            <li>120fps on capable devices</li>
+            <li>State machines for interactive logic</li>
+            <li>Open source runtimes</li>
+            <li>Designer edits ≠ breaking code changes</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>NPM Packages</h4>
+          <div class="install">npm i @rive-app/react-webgl2</div>
+          <p style="font-size:12px;color:#666;margin-top:4px">Recommended — best performance, Vector Feathering support</p>
+          <div class="install">npm i @rive-app/react-canvas</div>
+          <p style="font-size:12px;color:#666;margin-top:4px">Canvas renderer — wider browser support</p>
+          <div class="install">npm i @rive-app/react-canvas-lite</div>
+          <p style="font-size:12px;color:#666;margin-top:4px">Smallest bundle, fewer features</p>
+        </div>
+      </div>
+    </div>
+
+    <div data-section="rive basic usage useRive hook">
+      <h2>Basic Usage — useRive Hook</h2>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useRive } from '@rive-app/react-webgl2';
+
+export default function RiveAnimation() {
+  const { RiveComponent } = useRive({
+    src: '/animations/hero.riv',  // path to your .riv file
+    autoplay: true,
+  });
+
+  // RiveComponent renders a &lt;canvas&gt; sized to its parent
+  return (
+    &lt;div style={{ width: 400, height: 400 }}&gt;
+      &lt;RiveComponent /&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-section="rive useRive full parameters">
+      <h2>useRive — All Parameters</h2>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useRive, Layout, Fit, Alignment } from '@rive-app/react-webgl2';
+
+const { rive, RiveComponent } = useRive({
+  // --- Source ---
+  src: '/animations/character.riv',   // local file path
+  // OR: src: 'https://cdn.example.com/file.riv',
+
+  // --- Artboard (if .riv has multiple) ---
+  artboard: 'Main',
+
+  // --- Animations (simple, not state machine) ---
+  animations: ['Idle', 'Run'],
+
+  // --- State Machine ---
+  stateMachines: 'StateMachine1',    // name from Rive editor
+
+  // --- Playback ---
+  autoplay: true,
+
+  // --- Layout ---
+  layout: new Layout({
+    fit: Fit.Cover,           // Cover | Contain | Fill | FitWidth | FitHeight | None | ScaleDown
+    alignment: Alignment.Center,  // TopLeft | TopCenter | TopRight | CenterLeft | Center | etc.
+  }),
+
+  // --- Callbacks ---
+  onLoad: () => console.log('Rive loaded'),
+  onPlay: (animationName) => console.log('Playing:', animationName),
+  onPause: (animationName) => console.log('Paused:', animationName),
+  onStop: (animationName) => console.log('Stopped:', animationName),
+  onLoop: (animationName) => console.log('Looped:', animationName),
+  onStateChange: (stateName) => console.log('State:', stateName),
+});</code></pre>
+      </div>
+    </div>
+
+    <div data-section="rive state machines inputs">
+      <h2>State Machines &amp; Inputs</h2>
+      <p>State machines are the core of interactive Rive animations. They expose boolean, number, and trigger inputs that you control from React.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useRive, useStateMachineInput } from '@rive-app/react-webgl2';
+
+export default function InteractiveButton() {
+  const STATE_MACHINE = 'ButtonStateMachine';
+
+  const { rive, RiveComponent } = useRive({
+    src: '/animations/button.riv',
+    stateMachines: STATE_MACHINE,
+    autoplay: true,
+  });
+
+  // Boolean input — toggles state
+  const isHovered = useStateMachineInput(rive, STATE_MACHINE, 'isHovered');
+  // Number input — controls value
+  const progress = useStateMachineInput(rive, STATE_MACHINE, 'progress');
+  // Trigger input — fires once
+  const clickTrigger = useStateMachineInput(rive, STATE_MACHINE, 'onClick');
+
+  return (
+    &lt;div
+      style={{ width: 200, height: 80, cursor: 'pointer' }}
+      onMouseEnter={() =&gt; {
+        if (isHovered) isHovered.value = true;
+      }}
+      onMouseLeave={() =&gt; {
+        if (isHovered) isHovered.value = false;
+      }}
+      onClick={() =&gt; {
+        if (clickTrigger) clickTrigger.fire();         // fire a trigger
+        if (progress) progress.value = 100;            // set a number
+      }}
+    &gt;
+      &lt;RiveComponent /&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-section="rive hover play pause">
+      <h2>Hover to Play / Pause Pattern</h2>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useRive } from '@rive-app/react-webgl2';
+
+export default function HoverAnimCard() {
+  const { rive, RiveComponent } = useRive({
+    src: '/animations/card-anim.riv',
+    stateMachines: 'Main',
+    autoplay: false,
+  });
+
+  return (
+    &lt;div
+      style={{ width: 300, height: 300 }}
+      onMouseEnter={() =&gt; rive &amp;&amp; rive.play()}
+      onMouseLeave={() =&gt; rive &amp;&amp; rive.pause()}
+    &gt;
+      &lt;RiveComponent /&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-section="rive cursor tracking">
+      <h2>Cursor-Tracking Character (Mouse Position → State Machine)</h2>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useRef, useCallback } from 'react';
+import { useRive, useStateMachineInput } from '@rive-app/react-webgl2';
+
+export default function CursorTracker() {
+  const containerRef = useRef&lt;HTMLDivElement&gt;(null);
+
+  const { rive, RiveComponent } = useRive({
+    src: '/animations/character.riv',
+    stateMachines: 'LookAround',
+    autoplay: true,
+  });
+
+  // x/y inputs in range -100 to 100 (set up in Rive editor)
+  const xInput = useStateMachineInput(rive, 'LookAround', 'mouseX');
+  const yInput = useStateMachineInput(rive, 'LookAround', 'mouseY');
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!containerRef.current || !xInput || !yInput) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    // Map to -100..100
+    xInput.value = ((e.clientX - cx) / (rect.width / 2)) * 100;
+    yInput.value = ((e.clientY - cy) / (rect.height / 2)) * 100;
+  }, [xInput, yInput]);
+
+  return (
+    &lt;div
+      ref={containerRef}
+      style={{ width: 400, height: 400 }}
+      onMouseMove={handleMouseMove}
+    &gt;
+      &lt;RiveComponent /&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-section="rive scroll linked animation">
+      <h2>Scroll-Linked Rive Animation</h2>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">'use client';
+import { useEffect, useRef } from 'react';
+import { useRive, useStateMachineInput } from '@rive-app/react-webgl2';
+
+export default function ScrollRive() {
+  const { rive, RiveComponent } = useRive({
+    src: '/animations/scroll-anim.riv',
+    stateMachines: 'ScrollMachine',
+    autoplay: true,
+  });
+
+  // Number input "scrollProgress" 0–100 in Rive editor
+  const scrollInput = useStateMachineInput(rive, 'ScrollMachine', 'scrollProgress');
+
+  useEffect(() => {
+    const onScroll = () => {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (window.scrollY / maxScroll) * 100;
+      if (scrollInput) scrollInput.value = Math.min(100, Math.max(0, progress));
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [scrollInput]);
+
+  return (
+    &lt;div style={{ width: '100%', height: 400 }}&gt;
+      &lt;RiveComponent /&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-section="rive community free animations">
+      <h2>Finding Free Rive Animations</h2>
+      <div class="info-box tip">
+        <strong style="color:#f59e0b">Community URL:</strong> <a href="https://rive.app/community" target="_blank" style="color:#60a5fa">https://rive.app/community</a>
+        — Free .riv files. Click any animation → "Download" → use the .riv file directly in your project.
+      </div>
+      <table>
+        <tr><th>Category</th><th>Use Case</th></tr>
+        <tr><td>Characters &amp; mascots</td><td>Onboarding, empty states, 404 pages</td></tr>
+        <tr><td>Loaders &amp; progress</td><td>Loading screens, progress bars</td></tr>
+        <tr><td>UI elements</td><td>Toggle switches, buttons, checkboxes</td></tr>
+        <tr><td>Icons</td><td>Animated icon sets for menus/actions</td></tr>
+        <tr><td>Abstract / decorative</td><td>Hero backgrounds, section accents</td></tr>
+      </table>
+    </div>
+
+    <!-- ============================================================ OGL ============================================================ -->
+    <div data-section="ogl webgl library">
+      <h2>OGL — Minimal WebGL Library</h2>
+      <p>OGL (Open GL) is a zero-dependency, minimal WebGL library (~29kb minzipped) for developers who want GPU control without Three.js's weight. Ideal for custom shaders, post-processing, and lightweight 3D backgrounds.</p>
+      <div class="install">npm i ogl</div>
+      <div class="grid">
+        <div class="card">
+          <h4>Module Structure</h4>
+          <ul style="color:#aaa;font-size:13px;padding-left:16px;line-height:2">
+            <li><strong>Math</strong> (6kb) — Vec2, Vec3, Vec4, Mat3, Mat4, Quat, Euler, Color</li>
+            <li><strong>Core</strong> (8kb) — Renderer, Camera, Transform, Geometry, Program, Mesh, Texture, RenderTarget</li>
+            <li><strong>Extras</strong> (15kb) — GLTFLoader, Orbit, Post, Shadow, Animation, Raycast, Text, NormalProgram</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>CDN / Import Options</h4>
+          <div class="install">import { Renderer } from 'ogl'</div>
+          <div class="install">// CDN (jsDelivr)<br>https://cdn.jsdelivr.net/npm/ogl/src/index.js</div>
+          <div class="install">// CDN (Skypack)<br>https://cdn.skypack.dev/ogl</div>
+        </div>
+      </div>
+
+      <h3>Basic Spinning Cube</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-js">import { Renderer, Camera, Transform, Geometry, Program, Mesh } from 'ogl';
+
+const renderer = new Renderer({ dpr: Math.min(window.devicePixelRatio, 2) });
+const gl = renderer.gl;
+document.body.appendChild(gl.canvas);
+gl.clearColor(0.05, 0.05, 0.05, 1);
+
+const camera = new Camera(gl, { fov: 35 });
+camera.position.set(0, 0, 5);
+
+const scene = new Transform();
+
+const geometry = new Geometry(gl, {
+  position: { size: 3, data: new Float32Array([
+    -1,-1, 1,  1,-1, 1,  1, 1, 1, -1, 1, 1,  // front
+    -1,-1,-1, -1, 1,-1,  1, 1,-1,  1,-1,-1,  // back
+  ])},
+  index: { data: new Uint16Array([0,1,2, 0,2,3, 4,5,6, 4,6,7]) },
+});
+
+const program = new Program(gl, {
+  vertex: /* glsl */`
+    attribute vec3 position;
+    uniform mat4 modelViewMatrix;
+    uniform mat4 projectionMatrix;
+    void main() {
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  `,
+  fragment: /* glsl */`
+    precision highp float;
+    void main() {
+      gl_FragColor = vec4(0.96, 0.62, 0.04, 1.0);
+    }
+  `,
+});
+
+const mesh = new Mesh(gl, { geometry, program });
+mesh.setParent(scene);
+
+function update(t) {
+  requestAnimationFrame(update);
+  mesh.rotation.y = t * 0.001;
+  mesh.rotation.x = t * 0.0005;
+  renderer.render({ scene, camera });
+}
+requestAnimationFrame(update);</code></pre>
+      </div>
+
+      <h3>Full-Screen Shader Background (React)</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useEffect, useRef } from 'react';
+import { Renderer, Camera, Geometry, Program, Mesh, Transform } from 'ogl';
+
+export default function OGLShaderBg() {
+  const containerRef = useRef&lt;HTMLDivElement&gt;(null);
+
+  useEffect(() => {
+    const renderer = new Renderer();
+    const gl = renderer.gl;
+    containerRef.current!.appendChild(gl.canvas);
+    Object.assign(gl.canvas.style, {
+      position: 'absolute', inset: 0, width: '100%', height: '100%',
+    });
+
+    const resize = () => {
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    // Full-screen quad
+    const geometry = new Geometry(gl, {
+      position: { size: 2, data: new Float32Array([-1,-1, 3,-1, -1,3]) },
+      uv: { size: 2, data: new Float32Array([0,0, 2,0, 0,2]) },
+    });
+
+    const program = new Program(gl, {
+      vertex: `
+        attribute vec2 position;
+        attribute vec2 uv;
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = vec4(position, 0, 1);
+        }
+      `,
+      fragment: `
+        precision highp float;
+        uniform float uTime;
+        varying vec2 vUv;
+
+        void main() {
+          vec2 uv = vUv - 0.5;
+          float d = length(uv);
+          float wave = sin(d * 10.0 - uTime * 2.0) * 0.5 + 0.5;
+          vec3 color = mix(vec3(0.05, 0.05, 0.1), vec3(0.9, 0.4, 0.1), wave * (1.0 - d * 2.0));
+          gl_FragColor = vec4(color, 1.0);
+        }
+      `,
+      uniforms: { uTime: { value: 0 } },
+    });
+
+    const mesh = new Mesh(gl, { geometry, program });
+
+    let raf: number;
+    const update = (t: number) => {
+      raf = requestAnimationFrame(update);
+      program.uniforms.uTime.value = t * 0.001;
+      renderer.render({ scene: mesh });
+    };
+    raf = requestAnimationFrame(update);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', resize);
+      gl.canvas.remove();
+    };
+  }, []);
+
+  return &lt;div ref={containerRef} style={{ position: 'absolute', inset: 0 }} /&gt;;
+}</code></pre>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+hljs.highlightAll();
+document.querySelectorAll('.code-block').forEach(b=>{
+  const btn=b.querySelector('.copy-btn');
+  if(btn)btn.onclick=()=>{
+    navigator.clipboard.writeText(b.querySelector('code').innerText);
+    btn.textContent='Copied!';setTimeout(()=>btn.textContent='Copy',1500);
+  };
+});
+function search(q){
+  const ql=q.toLowerCase();
+  document.querySelectorAll('[data-section]').forEach(el=>{
+    el.style.display=!q||el.textContent.toLowerCase().includes(ql)?'':'none';
+  });
+}
+</script>
+</body></html>

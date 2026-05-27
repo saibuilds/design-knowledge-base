@@ -1,0 +1,1205 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Tremor + Origin UI + Cult UI + Syntax UI — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#e5e5e5;font-family:'Inter',sans-serif;font-size:15px;line-height:1.6}.sidebar{position:fixed;left:0;top:0;width:220px;height:100vh;background:#111;border-right:1px solid #1f1f1f;padding:20px;overflow-y:auto}.sidebar h2{font-size:13px;color:#f59e0b;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}.sidebar a{display:block;color:#888;text-decoration:none;padding:6px 8px;border-radius:6px;font-size:13px;margin-bottom:2px}.sidebar a:hover{color:#fff;background:#1a1a1a}.main{margin-left:220px;padding:48px;max-width:960px}h1{font-size:32px;font-weight:700;color:#fff;margin-bottom:8px}h2{font-size:20px;font-weight:600;color:#fff;margin:40px 0 12px;padding-top:40px;border-top:1px solid #1f1f1f}h3{font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.08em;margin:20px 0 8px}p{color:#aaa;margin-bottom:12px}.tag{display:inline-block;background:#f59e0b15;border:1px solid #f59e0b40;color:#f59e0b;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.badge.free{background:#0d2e1680;border:1px solid #22c55e40;color:#22c55e;display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.install{background:#0d0d0d;border:1px solid #1f1f1f;border-radius:6px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#f59e0b;margin:8px 0}.code-block{position:relative;margin:12px 0}.copy-btn{position:absolute;top:8px;right:8px;background:#1f1f1f;border:1px solid #333;color:#888;padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer}pre{border-radius:8px;overflow:auto;font-size:12px;max-height:450px}.component-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin:16px 0}.component-card{background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:14px}.component-card h4{font-size:13px;color:#e5e5e5;margin-bottom:4px}.component-card p{font-size:11px;color:#555;margin:0}input[type=search]{width:100%;background:#111;border:1px solid #2a2a2a;color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;font-family:inherit;margin-bottom:32px;outline:none}.source-link{display:inline-block;color:#60a5fa;font-size:12px;text-decoration:none;margin-bottom:8px}.source-link:hover{text-decoration:underline}</style></head>
+<body>
+<div class="sidebar">
+  <h2>Components</h2>
+  <a href="../index.html">&#127968; Home</a>
+  <a href="free-components-master.html">&#9733; All Free</a>
+  <a href="shadcn.html">shadcn/ui</a>
+  <a href="shadcn-blocks.html">shadcn Blocks</a>
+  <a href="magicui-components.html">MagicUI</a>
+  <a href="aceternity-components.html">Aceternity</a>
+  <a href="tailwind-components.html">Tailwind</a>
+  <a href="more-free-components.html">More Free</a>
+  <a href="21st-dev-full.html">21st.dev</a>
+  <a href="hover-dev-full.html">hover.dev</a>
+</div>
+<div class="main">
+  <input type="search" placeholder="Search components..." oninput="search(this.value)">
+  <div id="content">
+
+    <h1>More Free Components</h1>
+    <p>Tremor dashboard charts, Origin UI copy-paste components, Cult UI animated cards, and Syntax UI animated effects — all free.</p>
+
+    <!-- =================== TREMOR SECTION =================== -->
+    <h2>Tremor — React Dashboard Components</h2>
+    <p>Open-source React components for analytics dashboards: charts, metrics, KPI cards, data tables. Built on top of Tailwind CSS.</p>
+    <a class="source-link" href="https://www.tremor.so/components" target="_blank">tremor.so/components ↗</a>
+    <div class="install">npm install @tremor/react</div>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-js">// tailwind.config.js — add Tremor content path
+module.exports = {
+  content: [
+    "./node_modules/@tremor/**/*.{js,ts,jsx,tsx}",
+  ],
+  // Tremor uses its own color palette — keep default Tailwind colors
+}</code></pre>
+    </div>
+
+    <div class="component-grid">
+      <div class="component-card"><h4>Area Chart</h4><p>Stacked, percent, gradient fills</p></div>
+      <div class="component-card"><h4>Bar Chart</h4><p>Grouped, stacked, horizontal</p></div>
+      <div class="component-card"><h4>Line Chart</h4><p>Multi-series with legend</p></div>
+      <div class="component-card"><h4>Donut Chart</h4><p>With center label</p></div>
+      <div class="component-card"><h4>Bar List</h4><p>Ranked list with bars</p></div>
+      <div class="component-card"><h4>Category Bar</h4><p>Segmented progress bar</p></div>
+      <div class="component-card"><h4>Progress Bar</h4><p>Linear with label</p></div>
+      <div class="component-card"><h4>Tracker</h4><p>Status grid (uptime)</p></div>
+      <div class="component-card"><h4>Card</h4><p>KPI metric card</p></div>
+      <div class="component-card"><h4>Badge</h4><p>Status indicators</p></div>
+      <div class="component-card"><h4>Table</h4><p>Sortable data table</p></div>
+      <div class="component-card"><h4>Tabs</h4><p>Underline + boxed tabs</p></div>
+    </div>
+
+    <div data-component="tremor area chart analytics time series stacked">
+      <h3>Tremor — Area Chart</h3>
+      <p>Animated area chart with multiple data series, value formatter, legend, and interactive tooltip.</p>
+      <span class="badge free">FREE</span> <span class="tag">Tremor</span> <span class="tag">Charts</span> <span class="tag">React</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { AreaChart } from "@tremor/react";
+
+const chartdata = [
+  { date: "Jan 22", SolarPanels: 2890, Inverters: 2338 },
+  { date: "Feb 22", SolarPanels: 2756, Inverters: 2103 },
+  { date: "Mar 22", SolarPanels: 3322, Inverters: 2194 },
+  { date: "Apr 22", SolarPanels: 3470, Inverters: 2108 },
+  { date: "May 22", SolarPanels: 3475, Inverters: 1812 },
+  { date: "Jun 22", SolarPanels: 3129, Inverters: 1726 },
+  { date: "Jul 22", SolarPanels: 3490, Inverters: 1982 },
+  { date: "Aug 22", SolarPanels: 2903, Inverters: 2012 },
+  { date: "Sep 22", SolarPanels: 2643, Inverters: 2342 },
+  { date: "Oct 22", SolarPanels: 2837, Inverters: 2473 },
+  { date: "Nov 22", SolarPanels: 2954, Inverters: 3848 },
+  { date: "Dec 22", SolarPanels: 3239, Inverters: 3736 },
+];
+
+const valueFormatter = (number: number) =>
+  `$ ${Intl.NumberFormat("us").format(number).toString()}`;
+
+export default function ChartExample() {
+  return (
+    &lt;AreaChart
+      className="h-72 mt-4"
+      data={chartdata}
+      index="date"
+      categories={["SolarPanels", "Inverters"]}
+      colors={["indigo", "cyan"]}
+      valueFormatter={valueFormatter}
+      yAxisWidth={60}
+      onValueChange={(v) =&gt; console.log(v)}
+    /&gt;
+  );
+}
+
+// Stacked variant:
+// &lt;AreaChart ... stack={true} /&gt;
+
+// Percent variant (0-100%):
+// &lt;AreaChart ... type="percent" /&gt;
+
+// No fill, just lines:
+// &lt;AreaChart ... fill="none" /&gt;</code></pre>
+      </div>
+    </div>
+
+    <div data-component="tremor bar chart grouped stacked horizontal analytics">
+      <h3>Tremor — Bar Chart</h3>
+      <p>Grouped, stacked, or horizontal bar charts for comparison data.</p>
+      <span class="badge free">FREE</span> <span class="tag">Tremor</span> <span class="tag">Charts</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { BarChart } from "@tremor/react";
+
+const chartdata = [
+  { name: "Amphibians", "Number of threatened species": 2488 },
+  { name: "Birds", "Number of threatened species": 1445 },
+  { name: "Crustaceans", "Number of threatened species": 743 },
+  { name: "Ferns", "Number of threatened species": 281 },
+  { name: "Arachnids", "Number of threatened species": 251 },
+  { name: "Corals", "Number of threatened species": 232 },
+  { name: "Algae", "Number of threatened species": 98 },
+];
+
+const dataFormatter = (number: number) =&gt;
+  Intl.NumberFormat("us").format(number).toString();
+
+export default function BarChartExample() {
+  return (
+    &lt;BarChart
+      className="mt-6"
+      data={chartdata}
+      index="name"
+      categories={["Number of threatened species"]}
+      colors={["blue"]}
+      valueFormatter={dataFormatter}
+      yAxisWidth={48}
+    /&gt;
+  );
+}
+
+// Multi-series grouped:
+// categories={["Series A", "Series B"]} colors={["blue", "teal"]}
+
+// Stacked bars:
+// &lt;BarChart ... stack={true} /&gt;
+
+// Horizontal / rotated:
+// &lt;BarChart ... layout="vertical" /&gt;</code></pre>
+      </div>
+    </div>
+
+    <div data-component="tremor donut chart pie percentage">
+      <h3>Tremor — Donut Chart</h3>
+      <span class="badge free">FREE</span> <span class="tag">Tremor</span> <span class="tag">Charts</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { DonutChart, Legend } from "@tremor/react";
+
+const sales = [
+  { name: "New York", sales: 9800 },
+  { name: "London", sales: 4567 },
+  { name: "Hong Kong", sales: 3908 },
+  { name: "San Francisco", sales: 2400 },
+  { name: "Singapore", sales: 1908 },
+  { name: "Zurich", sales: 1398 },
+];
+
+const valueFormatter = (number: number) =&gt;
+  `$ ${Intl.NumberFormat("us").format(number).toString()}`;
+
+export default function DonutChartExample() {
+  return (
+    &lt;div className="flex flex-col items-center gap-6"&gt;
+      &lt;DonutChart
+        data={sales}
+        category="sales"
+        index="name"
+        valueFormatter={valueFormatter}
+        colors={["slate", "violet", "indigo", "rose", "cyan", "amber"]}
+        className="w-40"
+        label="$24,000"  {/* center label */}
+      /&gt;
+      &lt;Legend
+        categories={sales.map(s =&gt; s.name)}
+        colors={["slate", "violet", "indigo", "rose", "cyan", "amber"]}
+        className="max-w-xs"
+      /&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="tremor bar list ranked metrics">
+      <h3>Tremor — BarList</h3>
+      <p>Horizontal ranked list with embedded progress bars. Great for top-N metrics.</p>
+      <span class="badge free">FREE</span> <span class="tag">Tremor</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { BarList, Card, Title } from "@tremor/react";
+
+const data = [
+  { name: "/home", value: 456 },
+  { name: "/imprint", value: 351 },
+  { name: "/cancellation", value: 271 },
+  { name: "/blocks", value: 191 },
+  { name: "/documentation", value: 91 },
+];
+
+const valueFormatter = (number: number) =&gt;
+  Intl.NumberFormat("us").format(number).toString();
+
+export default function BarListExample() {
+  return (
+    &lt;Card className="max-w-lg"&gt;
+      &lt;Title&gt;Top Pages&lt;/Title&gt;
+      &lt;div className="flex justify-between mt-4"&gt;
+        &lt;p className="text-sm font-medium text-gray-500"&gt;Page&lt;/p&gt;
+        &lt;p className="text-sm font-medium text-gray-500"&gt;Views&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;BarList data={data} valueFormatter={valueFormatter} className="mt-2" /&gt;
+    &lt;/Card&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="tremor card metric kpi number stat">
+      <h3>Tremor — Metric / KPI Card</h3>
+      <p>Dashboard KPI card with metric value, label, and trend badge.</p>
+      <span class="badge free">FREE</span> <span class="tag">Tremor</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { BadgeDelta, Card, Flex, Metric, Text } from "@tremor/react";
+
+const kpis = [
+  {
+    title: "Sales",
+    metric: "$ 12,699",
+    progress: 15.9,
+    target: "$ 80,000",
+    delta: "13.2%",
+    deltaType: "moderateIncrease",
+  },
+  {
+    title: "Users",
+    metric: "1,072",
+    progress: 53.6,
+    target: "2,000",
+    delta: "10.1%",
+    deltaType: "moderateIncrease",
+  },
+  {
+    title: "Revenue",
+    metric: "$ 45,564",
+    progress: 60.1,
+    target: "$ 75,000",
+    delta: "23.9%",
+    deltaType: "increase",
+  },
+];
+
+export default function KPICards() {
+  return (
+    &lt;div className="grid grid-cols-1 gap-6 sm:grid-cols-3"&gt;
+      {kpis.map((item) =&gt; (
+        &lt;Card key={item.title} className="max-w-xs"&gt;
+          &lt;Flex alignItems="start"&gt;
+            &lt;div&gt;
+              &lt;Text&gt;{item.title}&lt;/Text&gt;
+              &lt;Metric&gt;{item.metric}&lt;/Metric&gt;
+            &lt;/div&gt;
+            &lt;BadgeDelta deltaType={item.deltaType as any}&gt;{item.delta}&lt;/BadgeDelta&gt;
+          &lt;/Flex&gt;
+          &lt;Flex className="mt-4"&gt;
+            &lt;Text className="truncate"&gt;{item.progress}% of {item.target}&lt;/Text&gt;
+            &lt;Text&gt;{item.target}&lt;/Text&gt;
+          &lt;/Flex&gt;
+          &lt;!-- ProgressBar value={item.progress} color="indigo" className="mt-2" / --&gt;
+        &lt;/Card&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="tremor tracker uptime status grid monitoring">
+      <h3>Tremor — Tracker (Uptime / Status)</h3>
+      <p>Visual status grid — great for uptime monitoring pages.</p>
+      <span class="badge free">FREE</span> <span class="tag">Tremor</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { Card, Tracker, type Color } from "@tremor/react";
+
+interface Tracker {
+  color: Color;
+  tooltip: string;
+}
+
+const data: Tracker[] = [
+  { color: "emerald", tooltip: "Operational" },
+  { color: "emerald", tooltip: "Operational" },
+  { color: "emerald", tooltip: "Operational" },
+  { color: "rose", tooltip: "Downtime" },
+  { color: "emerald", tooltip: "Operational" },
+  { color: "emerald", tooltip: "Operational" },
+  { color: "yellow", tooltip: "Degraded" },
+  { color: "emerald", tooltip: "Operational" },
+  // ... repeat for 30 days
+];
+
+export default function TrackerExample() {
+  return (
+    &lt;Card className="max-w-sm"&gt;
+      &lt;p className="text-sm font-medium text-gray-700"&gt;API — 98.1% uptime&lt;/p&gt;
+      &lt;Tracker data={data} className="mt-2" /&gt;
+      &lt;div className="flex justify-between mt-2"&gt;
+        &lt;p className="text-xs text-gray-500"&gt;30 days ago&lt;/p&gt;
+        &lt;p className="text-xs text-gray-500"&gt;Today&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/Card&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- =================== ORIGIN UI SECTION =================== -->
+    <h2>Origin UI — Copy-Paste shadcn + Tailwind</h2>
+    <p>Beautiful, accessible copy-paste components built on top of shadcn/ui and Tailwind CSS. Browse at originui.com.</p>
+    <a class="source-link" href="https://originui.com/" target="_blank">originui.com ↗</a>
+    <div class="install">npx shadcn@latest init  &nbsp;# origin ui uses shadcn primitives
+# Then copy component code directly from originui.com</div>
+
+    <div data-component="origin ui input floating label password toggle">
+      <h3>Origin UI — Enhanced Input with Floating Label</h3>
+      <p>Modern input pattern with floating label animation, password visibility toggle, and icon adornments.</p>
+      <span class="badge free">FREE</span> <span class="tag">Origin UI</span> <span class="tag">shadcn</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// Enhanced password input with show/hide toggle
+// Pattern used across many Origin UI form components
+
+import { useState } from "react"
+import { Eye, EyeOff, Lock } from "lucide-react"
+
+export function PasswordInput() {
+  const [showPassword, setShowPassword] = useState(false)
+
+  return (
+    &lt;div className="relative"&gt;
+      &lt;div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"&gt;
+        &lt;Lock className="h-4 w-4 text-muted-foreground" /&gt;
+      &lt;/div&gt;
+      &lt;input
+        type={showPassword ? "text" : "password"}
+        placeholder="Password"
+        className="flex h-10 w-full rounded-md border border-input bg-background pl-9 pr-10 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+      /&gt;
+      &lt;button
+        type="button"
+        onClick={() =&gt; setShowPassword(!showPassword)}
+        className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground hover:text-foreground"
+      &gt;
+        {showPassword ? &lt;EyeOff className="h-4 w-4" /&gt; : &lt;Eye className="h-4 w-4" /&gt;}
+      &lt;/button&gt;
+    &lt;/div&gt;
+  )
+}
+
+// Enhanced input with floating label animation:
+export function FloatingLabelInput({ label, id, ...props }: any) {
+  const [focused, setFocused] = useState(false)
+  const [hasValue, setHasValue] = useState(false)
+
+  return (
+    &lt;div className="relative"&gt;
+      &lt;input
+        id={id}
+        {...props}
+        onFocus={() =&gt; setFocused(true)}
+        onBlur={(e) =&gt; { setFocused(false); setHasValue(!!e.target.value) }}
+        onChange={(e) =&gt; setHasValue(!!e.target.value)}
+        className="peer block w-full rounded-md border border-input bg-background px-3 pt-5 pb-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        placeholder=" "
+      /&gt;
+      &lt;label
+        htmlFor={id}
+        className={`absolute left-3 text-muted-foreground transition-all duration-150 pointer-events-none
+          ${focused || hasValue ? 'top-1.5 text-xs text-primary' : 'top-3 text-sm'}`}
+      &gt;
+        {label}
+      &lt;/label&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="origin ui otp verification code input">
+      <h3>Origin UI — OTP / Verification Code Input</h3>
+      <p>Multi-box OTP input with auto-focus progression. Common in 2FA flows.</p>
+      <span class="badge free">FREE</span> <span class="tag">Origin UI</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useRef, useState } from "react"
+
+export function OTPInput({ length = 6, onComplete }: { length?: number; onComplete?: (otp: string) => void }) {
+  const [otp, setOtp] = useState(Array(length).fill(""))
+  const inputRefs = useRef&lt;HTMLInputElement[]&gt;([])
+
+  const handleChange = (e: React.ChangeEvent&lt;HTMLInputElement&gt;, index: number) =&gt; {
+    const val = e.target.value.replace(/\D/g, "").slice(-1)
+    const newOtp = [...otp]
+    newOtp[index] = val
+    setOtp(newOtp)
+
+    if (val && index &lt; length - 1) {
+      inputRefs.current[index + 1]?.focus()
+    }
+
+    if (newOtp.every(Boolean)) {
+      onComplete?.(newOtp.join(""))
+    }
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent, index: number) =&gt; {
+    if (e.key === "Backspace" && !otp[index] && index &gt; 0) {
+      inputRefs.current[index - 1]?.focus()
+    }
+  }
+
+  const handlePaste = (e: React.ClipboardEvent) =&gt; {
+    const paste = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, length)
+    const newOtp = [...otp]
+    paste.split("").forEach((char, i) =&gt; { newOtp[i] = char })
+    setOtp(newOtp)
+    inputRefs.current[Math.min(paste.length, length - 1)]?.focus()
+  }
+
+  return (
+    &lt;div className="flex gap-2" onPaste={handlePaste}&gt;
+      {otp.map((digit, index) =&gt; (
+        &lt;input
+          key={index}
+          ref={(el) =&gt; { if (el) inputRefs.current[index] = el }}
+          type="text"
+          inputMode="numeric"
+          maxLength={1}
+          value={digit}
+          onChange={(e) =&gt; handleChange(e, index)}
+          onKeyDown={(e) =&gt; handleKeyDown(e, index)}
+          className="h-12 w-10 rounded-md border border-input bg-background text-center text-lg font-semibold shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        /&gt;
+      ))}
+    &lt;/div&gt;
+  )
+}
+
+// Usage:
+// &lt;OTPInput length={6} onComplete={(code) =&gt; console.log("OTP:", code)} /&gt;</code></pre>
+      </div>
+    </div>
+
+    <div data-component="origin ui file upload drag drop input">
+      <h3>Origin UI — File Upload (Drag & Drop)</h3>
+      <p>File upload zone with drag-and-drop support, file list preview, and remove functionality.</p>
+      <span class="badge free">FREE</span> <span class="tag">Origin UI</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useState, useCallback } from "react"
+import { Upload, X, File } from "lucide-react"
+
+export function FileUpload() {
+  const [files, setFiles] = useState&lt;File[]&gt;([])
+  const [dragOver, setDragOver] = useState(false)
+
+  const onDrop = useCallback((e: React.DragEvent) =&gt; {
+    e.preventDefault()
+    setDragOver(false)
+    const dropped = Array.from(e.dataTransfer.files)
+    setFiles(prev =&gt; [...prev, ...dropped])
+  }, [])
+
+  const onFileChange = (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
+    if (e.target.files) {
+      setFiles(prev =&gt; [...prev, ...Array.from(e.target.files!)])
+    }
+  }
+
+  const removeFile = (index: number) =&gt;
+    setFiles(prev =&gt; prev.filter((_, i) =&gt; i !== index))
+
+  return (
+    &lt;div className="space-y-4"&gt;
+      &lt;label
+        className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer transition-colors ${
+          dragOver
+            ? "border-primary bg-primary/5"
+            : "border-border bg-muted/30 hover:bg-muted/50"
+        }`}
+        onDragOver={(e) =&gt; { e.preventDefault(); setDragOver(true) }}
+        onDragLeave={() =&gt; setDragOver(false)}
+        onDrop={onDrop}
+      &gt;
+        &lt;div className="flex flex-col items-center gap-2 text-muted-foreground"&gt;
+          &lt;Upload className="h-8 w-8" /&gt;
+          &lt;p className="text-sm"&gt;
+            &lt;span className="font-semibold text-primary"&gt;Click to upload&lt;/span&gt; or drag and drop
+          &lt;/p&gt;
+          &lt;p className="text-xs"&gt;PNG, JPG, PDF up to 10MB&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;input type="file" multiple className="hidden" onChange={onFileChange} /&gt;
+      &lt;/label&gt;
+
+      {files.length &gt; 0 &amp;&amp; (
+        &lt;ul className="space-y-2"&gt;
+          {files.map((file, i) =&gt; (
+            &lt;li key={i} className="flex items-center justify-between rounded-md border bg-muted/30 px-3 py-2"&gt;
+              &lt;div className="flex items-center gap-2 text-sm"&gt;
+                &lt;File className="h-4 w-4 text-muted-foreground" /&gt;
+                &lt;span className="truncate max-w-xs"&gt;{file.name}&lt;/span&gt;
+                &lt;span className="text-xs text-muted-foreground"&gt;
+                  ({(file.size / 1024).toFixed(1)} KB)
+                &lt;/span&gt;
+              &lt;/div&gt;
+              &lt;button onClick={() =&gt; removeFile(i)} className="text-muted-foreground hover:text-destructive"&gt;
+                &lt;X className="h-4 w-4" /&gt;
+              &lt;/button&gt;
+            &lt;/li&gt;
+          ))}
+        &lt;/ul&gt;
+      )}
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- =================== CULT UI SECTION =================== -->
+    <h2>Cult UI — Animated shadcn Components</h2>
+    <p>78+ animated components built on top of shadcn/ui with Framer Motion. Free and open source (MIT).</p>
+    <a class="source-link" href="https://www.cult-ui.com/" target="_blank">cult-ui.com ↗</a>
+    <div class="install">pnpm dlx shadcn@latest add https://cult-ui.com/r/[component-name].json</div>
+
+    <div data-component="cult ui shift card hover reveal animation framer motion">
+      <h3>Cult UI — Shift Card (Hover Reveal)</h3>
+      <p>Card that reveals additional content on hover with smooth layout animations using Framer Motion.</p>
+      <span class="badge free">FREE</span> <span class="tag">Cult UI</span> <span class="tag">Framer Motion</span>
+      <div class="install">pnpm dlx shadcn@latest add https://cult-ui.com/r/shift-card.json</div>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// After installing: import from your components folder
+import { ShiftCard } from "@/components/ui/shift-card"
+
+export default function ShiftCardDemo() {
+  return (
+    &lt;ShiftCard
+      // Top section: icon + title
+      topContent={
+        &lt;div className="flex items-center gap-2"&gt;
+          &lt;div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center"&gt;
+            &#9889;
+          &lt;/div&gt;
+          &lt;span className="font-medium text-sm"&gt;Featured Component&lt;/span&gt;
+        &lt;/div&gt;
+      }
+      // This content animates upward on hover
+      topAnimateContent={
+        &lt;p className="text-xs text-muted-foreground"&gt;Hover to reveal more&lt;/p&gt;
+      }
+      // Center: main visual (image, icon, etc.)
+      middleContent={
+        &lt;div className="w-full aspect-video rounded-lg bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center text-white text-2xl"&gt;
+          &#128248;
+        &lt;/div&gt;
+      }
+      // Bottom: revealed on hover
+      bottomContent={
+        &lt;div className="space-y-2"&gt;
+          &lt;p className="text-sm text-muted-foreground"&gt;
+            This content slides in from the bottom when you hover the card.
+            Perfect for additional actions or descriptions.
+          &lt;/p&gt;
+          &lt;div className="flex gap-2"&gt;
+            &lt;button className="flex-1 text-xs border rounded px-3 py-1.5 hover:bg-muted"&gt;
+              Share
+            &lt;/button&gt;
+            &lt;button className="flex-1 text-xs bg-primary text-primary-foreground rounded px-3 py-1.5"&gt;
+              View
+            &lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      }
+    /&gt;
+  )
+}
+
+// The underlying animation pattern (without the component):
+import { motion, AnimatePresence } from "framer-motion"
+import { useState } from "react"
+
+export function HoverRevealCard() {
+  const [hovered, setHovered] = useState(false)
+
+  return (
+    &lt;motion.div
+      layout
+      className="relative overflow-hidden rounded-xl border bg-card p-4 cursor-pointer"
+      onHoverStart={() =&gt; setHovered(true)}
+      onHoverEnd={() =&gt; setHovered(false)}
+    &gt;
+      &lt;motion.div layout className="flex items-center gap-2 mb-3"&gt;
+        &lt;div className="w-8 h-8 rounded-full bg-primary/10" /&gt;
+        &lt;motion.span layout className="font-medium text-sm"&gt;Card Title&lt;/motion.span&gt;
+      &lt;/motion.div&gt;
+
+      &lt;motion.div
+        layout
+        className="w-full h-32 rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500"
+      /&gt;
+
+      &lt;AnimatePresence&gt;
+        {hovered &amp;&amp; (
+          &lt;motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            className="mt-3 space-y-2"
+          &gt;
+            &lt;p className="text-sm text-muted-foreground"&gt;Revealed on hover!&lt;/p&gt;
+            &lt;button className="w-full text-sm bg-primary text-primary-foreground rounded px-3 py-2"&gt;
+              Action
+            &lt;/button&gt;
+          &lt;/motion.div&gt;
+        )}
+      &lt;/AnimatePresence&gt;
+    &lt;/motion.div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="cult ui animated background gradient mesh">
+      <h3>Cult UI — Animated Gradient Card Background</h3>
+      <p>Mesh gradient background that animates on hover. Great for hero sections and feature cards.</p>
+      <span class="badge free">FREE</span> <span class="tag">Cult UI</span> <span class="tag">CSS Animation</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// Animated gradient card — CSS keyframes approach
+// No Framer Motion dependency needed for this one
+
+export function GradientCard({ children }: { children: React.ReactNode }) {
+  return (
+    &lt;div className="group relative overflow-hidden rounded-2xl p-[1px] bg-gradient-to-br from-violet-500 via-purple-500 to-blue-500"&gt;
+      {/* Animated gradient border */}
+      &lt;div className="absolute inset-0 bg-gradient-to-br from-violet-500 via-purple-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-[gradient_3s_ease_infinite]" /&gt;
+
+      {/* Card content */}
+      &lt;div className="relative rounded-2xl bg-background p-6"&gt;
+        {children}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+}
+
+// CSS for the gradient animation (add to globals.css):
+// @keyframes gradient {
+//   0%, 100% { background-position: 0% 50%; }
+//   50% { background-position: 100% 50%; }
+// }
+
+// Tailwind config addition:
+// animation: { 'gradient': 'gradient 3s ease infinite' }
+
+// Pure CSS animated mesh gradient background:
+export function MeshGradientBg() {
+  return (
+    &lt;div
+      className="w-full h-64 rounded-xl relative overflow-hidden"
+      style={{
+        background: `
+          radial-gradient(at 40% 20%, hsla(28,100%,74%,1) 0px, transparent 50%),
+          radial-gradient(at 80% 0%, hsla(189,100%,56%,1) 0px, transparent 50%),
+          radial-gradient(at 0% 50%, hsla(355,100%,93%,1) 0px, transparent 50%),
+          radial-gradient(at 80% 50%, hsla(340,100%,76%,1) 0px, transparent 50%),
+          radial-gradient(at 0% 100%, hsla(22,100%,77%,1) 0px, transparent 50%),
+          radial-gradient(at 80% 100%, hsla(242,100%,70%,1) 0px, transparent 50%),
+          radial-gradient(at 0% 0%, hsla(343,100%,76%,1) 0px, transparent 50%)
+        `,
+      }}
+    /&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- =================== SYNTAX UI SECTION =================== -->
+    <h2>Syntax UI — Animated React + Tailwind Components</h2>
+    <p>Free animated components and blocks built with React and Tailwind CSS. Focus on fast development with polished motion.</p>
+    <a class="source-link" href="https://syntaxui.com/" target="_blank">syntaxui.com ↗</a>
+
+    <div data-component="syntax ui infinite scroll marquee skewed">
+      <h3>Syntax UI — Skewed Infinite Scroll (Marquee)</h3>
+      <p>Horizontally scrolling marquee with a skewed transform — popular for logo clouds and testimonials.</p>
+      <span class="badge free">FREE</span> <span class="tag">Syntax UI</span> <span class="tag">CSS Animation</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// Skewed infinite scroll / marquee component
+// tailwind.config.js: add custom animation
+// animation: { 'infinite-scroll': 'infinite-scroll 20s linear infinite' }
+// keyframes: { 'infinite-scroll': { from: { transform: 'translateX(0)' }, to: { transform: 'translateX(-50%)' } } }
+
+const logos = [
+  { name: "Vercel", src: "https://logo.clearbit.com/vercel.com" },
+  { name: "Next.js", src: "https://logo.clearbit.com/nextjs.org" },
+  { name: "React", src: "https://logo.clearbit.com/react.dev" },
+  { name: "Tailwind", src: "https://logo.clearbit.com/tailwindcss.com" },
+  { name: "TypeScript", src: "https://logo.clearbit.com/typescriptlang.org" },
+]
+
+export function SkewedMarquee() {
+  const doubled = [...logos, ...logos] // duplicate for seamless loop
+
+  return (
+    &lt;div
+      className="relative overflow-hidden py-6"
+      style={{ transform: "skewY(-3deg)" }}
+    &gt;
+      {/* Gradient masks */}
+      &lt;div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10" /&gt;
+      &lt;div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10" /&gt;
+
+      &lt;div className="flex animate-[infinite-scroll_25s_linear_infinite] w-max gap-8"&gt;
+        {doubled.map((logo, i) =&gt; (
+          &lt;div
+            key={i}
+            className="flex items-center gap-2 bg-muted/50 rounded-lg px-4 py-2 border"
+          &gt;
+            &lt;img src={logo.src} alt={logo.name} className="h-5 w-5 rounded" /&gt;
+            &lt;span className="text-sm font-medium text-muted-foreground"&gt;{logo.name}&lt;/span&gt;
+          &lt;/div&gt;
+        ))}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+}
+
+// Pause on hover variant:
+export function PauseOnHoverMarquee() {
+  return (
+    &lt;div className="overflow-hidden relative group"&gt;
+      &lt;div className="flex gap-4 [animation:scroll_20s_linear_infinite] group-hover:[animation-play-state:paused] w-max"&gt;
+        {/* items */}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+}
+
+// tailwind.config.js keyframes for @keyframes scroll:
+// { from: { transform: 'translateX(0)' }, to: { transform: 'translateX(-50%)' } }</code></pre>
+      </div>
+    </div>
+
+    <div data-component="syntax ui emoji confetti celebration animation">
+      <h3>Syntax UI — Emoji Confetti Animation</h3>
+      <p>Burst of emojis that animate outward from a click point. Great for celebration moments.</p>
+      <span class="badge free">FREE</span> <span class="tag">Syntax UI</span> <span class="tag">Animation</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useState, useCallback } from "react"
+
+interface Particle {
+  id: number
+  emoji: string
+  x: number
+  y: number
+  angle: number
+  speed: number
+}
+
+const EMOJIS = ["🎉", "🎊", "✨", "🌟", "💫", "🎈", "🎆"]
+
+export function EmojiConfetti({ children }: { children: React.ReactNode }) {
+  const [particles, setParticles] = useState&lt;Particle[]&gt;([])
+
+  const burst = useCallback((e: React.MouseEvent) =&gt; {
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+
+    const newParticles: Particle[] = Array.from({ length: 12 }, (_, i) =&gt; ({
+      id: Date.now() + i,
+      emoji: EMOJIS[Math.floor(Math.random() * EMOJIS.length)],
+      x,
+      y,
+      angle: (360 / 12) * i,
+      speed: 40 + Math.random() * 60,
+    }))
+
+    setParticles(prev =&gt; [...prev, ...newParticles])
+    setTimeout(() =&gt; {
+      setParticles(prev =&gt; prev.filter(p =&gt; !newParticles.find(n =&gt; n.id === p.id)))
+    }, 800)
+  }, [])
+
+  return (
+    &lt;div className="relative inline-block" onClick={burst}&gt;
+      {children}
+      {particles.map((p) =&gt; {
+        const rad = (p.angle * Math.PI) / 180
+        const tx = Math.cos(rad) * p.speed
+        const ty = Math.sin(rad) * p.speed
+
+        return (
+          &lt;span
+            key={p.id}
+            className="pointer-events-none absolute select-none text-lg"
+            style={{
+              left: p.x,
+              top: p.y,
+              animation: `confetti-burst 0.8s ease-out forwards`,
+              "--tx": `${tx}px`,
+              "--ty": `${ty}px`,
+            } as React.CSSProperties}
+          &gt;
+            {p.emoji}
+          &lt;/span&gt;
+        )
+      })}
+
+      {/* Add to globals.css:
+        @keyframes confetti-burst {
+          0%   { transform: translate(0, 0) scale(1); opacity: 1; }
+          100% { transform: translate(var(--tx), var(--ty)) scale(0.3); opacity: 0; }
+        }
+      */}
+    &lt;/div&gt;
+  )
+}
+
+// Usage:
+// &lt;EmojiConfetti&gt;&lt;button className="btn"&gt;Click me!&lt;/button&gt;&lt;/EmojiConfetti&gt;</code></pre>
+      </div>
+    </div>
+
+    <div data-component="syntax ui image fade hover effect">
+      <h3>Syntax UI — Image Fade Hover Effect</h3>
+      <p>Images that fade between a default and colored/styled state on hover.</p>
+      <span class="badge free">FREE</span> <span class="tag">Syntax UI</span> <span class="tag">Tailwind</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// Image that desaturates at rest, colors on hover
+export function FadeImage({ src, alt }: { src: string; alt: string }) {
+  return (
+    &lt;div className="overflow-hidden rounded-xl"&gt;
+      &lt;img
+        src={src}
+        alt={alt}
+        className="w-full h-64 object-cover grayscale hover:grayscale-0 transition-all duration-500 hover:scale-105"
+      /&gt;
+    &lt;/div&gt;
+  )
+}
+
+// Image with overlay text reveal on hover
+export function OverlayCard({ src, title, description }: any) {
+  return (
+    &lt;div className="group relative overflow-hidden rounded-xl cursor-pointer"&gt;
+      &lt;img
+        src={src}
+        alt={title}
+        className="w-full h-72 object-cover transition-transform duration-500 group-hover:scale-110"
+      /&gt;
+      &lt;div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" /&gt;
+      &lt;div className="absolute bottom-0 left-0 right-0 p-4 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300"&gt;
+        &lt;h3 className="text-white font-semibold text-lg"&gt;{title}&lt;/h3&gt;
+        &lt;p className="text-white/80 text-sm mt-1"&gt;{description}&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+}
+
+// Stagger gallery hover (dims others when one is hovered)
+export function StaggerGallery({ images }: { images: string[] }) {
+  return (
+    &lt;div className="group/gallery flex gap-2"&gt;
+      {images.map((src, i) =&gt; (
+        &lt;img
+          key={i}
+          src={src}
+          className="flex-1 h-48 object-cover rounded-lg transition-all duration-300 group-hover/gallery:opacity-50 hover:!opacity-100 hover:flex-[2]"
+        /&gt;
+      ))}
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="animated gradient text shimmer heading">
+      <h3>Animated Gradient Text</h3>
+      <p>Shimmer/flow gradient text effect. Used widely in hero headings across all these libraries.</p>
+      <span class="badge free">FREE</span> <span class="tag">CSS</span> <span class="tag">Tailwind</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// Method 1: Tailwind animate-background-position (Tailwind v4 native)
+export function GradientHeading({ children }: { children: React.ReactNode }) {
+  return (
+    &lt;h1 className="bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 bg-clip-text text-transparent text-5xl font-bold bg-[length:200%_200%] animate-[gradient-x_3s_ease_infinite]"&gt;
+      {children}
+    &lt;/h1&gt;
+  )
+}
+
+// tailwind.config.js:
+// animation: { 'gradient-x': 'gradient-x 3s ease infinite' }
+// keyframes: { 'gradient-x': { '0%,100%': { 'background-position': 'left center' }, '50%': { 'background-position': 'right center' } } }
+
+// Method 2: shimmer / glint sweep
+export function ShimmerText({ children }: { children: React.ReactNode }) {
+  return (
+    &lt;span
+      className="bg-clip-text text-transparent font-bold text-4xl"
+      style={{
+        backgroundImage: "linear-gradient(90deg, #6366f1 0%, #8b5cf6 25%, #c084fc 50%, #8b5cf6 75%, #6366f1 100%)",
+        backgroundSize: "200% auto",
+        animation: "shimmer 2s linear infinite",
+      }}
+    &gt;
+      {children}
+    &lt;/span&gt;
+  )
+}
+// globals.css: @keyframes shimmer { from { background-position: 200% center } to { background-position: -200% center } }
+
+// Method 3: static gradient (no animation, always works)
+export function StaticGradientText({ children }: { children: React.ReactNode }) {
+  return (
+    &lt;span className="bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent"&gt;
+      {children}
+    &lt;/span&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="animated counter number stat increment">
+      <h3>Animated Number Counter</h3>
+      <p>Count-up animation for statistics and KPI numbers. Uses Framer Motion or CSS.</p>
+      <span class="badge free">FREE</span> <span class="tag">React</span> <span class="tag">Animation</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useEffect, useRef, useState } from "react"
+import { useInView } from "framer-motion"
+
+function useCountUp(target: number, duration = 2000) {
+  const [count, setCount] = useState(0)
+
+  useEffect(() =&gt; {
+    let start = 0
+    const increment = target / (duration / 16)
+
+    const timer = setInterval(() =&gt; {
+      start += increment
+      if (start &gt;= target) {
+        setCount(target)
+        clearInterval(timer)
+      } else {
+        setCount(Math.floor(start))
+      }
+    }, 16)
+
+    return () =&gt; clearInterval(timer)
+  }, [target, duration])
+
+  return count
+}
+
+export function AnimatedStat({
+  value,
+  label,
+  prefix = "",
+  suffix = "",
+}: {
+  value: number
+  label: string
+  prefix?: string
+  suffix?: string
+}) {
+  const ref = useRef&lt;HTMLDivElement&gt;(null)
+  const isInView = useInView(ref, { once: true })
+  const count = isInView ? value : 0
+  const display = useCountUp(count)
+
+  return (
+    &lt;div ref={ref} className="text-center"&gt;
+      &lt;div className="text-4xl font-bold text-foreground"&gt;
+        {prefix}{display.toLocaleString()}{suffix}
+      &lt;/div&gt;
+      &lt;div className="text-sm text-muted-foreground mt-1"&gt;{label}&lt;/div&gt;
+    &lt;/div&gt;
+  )
+}
+
+// Usage:
+export function StatsRow() {
+  return (
+    &lt;div className="grid grid-cols-3 gap-8 py-12"&gt;
+      &lt;AnimatedStat value={10000} label="Users" suffix="+" /&gt;
+      &lt;AnimatedStat value={99} label="Uptime" suffix="%" /&gt;
+      &lt;AnimatedStat value={4.9} label="Rating" prefix="★ " /&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="typewriter text animation typing effect">
+      <h3>Typewriter Text Effect</h3>
+      <p>Typewriter animation cycling through multiple words. Common in hero sections.</p>
+      <span class="badge free">FREE</span> <span class="tag">React</span> <span class="tag">Animation</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useEffect, useState } from "react"
+
+export function Typewriter({
+  words,
+  speed = 80,
+  deleteSpeed = 40,
+  pauseDuration = 1500,
+}: {
+  words: string[]
+  speed?: number
+  deleteSpeed?: number
+  pauseDuration?: number
+}) {
+  const [text, setText] = useState("")
+  const [wordIndex, setWordIndex] = useState(0)
+  const [isDeleting, setIsDeleting] = useState(false)
+
+  useEffect(() =&gt; {
+    const word = words[wordIndex % words.length]
+
+    const timeout = setTimeout(() =&gt; {
+      if (!isDeleting) {
+        setText(word.substring(0, text.length + 1))
+        if (text.length === word.length) {
+          setTimeout(() =&gt; setIsDeleting(true), pauseDuration)
+        }
+      } else {
+        setText(word.substring(0, text.length - 1))
+        if (text.length === 0) {
+          setIsDeleting(false)
+          setWordIndex(i =&gt; i + 1)
+        }
+      }
+    }, isDeleting ? deleteSpeed : speed)
+
+    return () =&gt; clearTimeout(timeout)
+  }, [text, isDeleting, wordIndex, words, speed, deleteSpeed, pauseDuration])
+
+  return (
+    &lt;span&gt;
+      {text}
+      &lt;span className="inline-block w-0.5 h-[1em] bg-current ml-0.5 animate-[blink_1s_step-end_infinite]" /&gt;
+    &lt;/span&gt;
+  )
+}
+
+// globals.css: @keyframes blink { 0%,100% { opacity: 1 } 50% { opacity: 0 } }
+
+// Usage:
+// &lt;h1&gt;
+//   Build &lt;Typewriter words={["faster", "smarter", "together"]} /&gt;
+// &lt;/h1&gt;</code></pre>
+      </div>
+    </div>
+
+    <div data-component="glass morphism glassmorphism frosted blur card">
+      <h3>Glassmorphism Card</h3>
+      <p>Frosted glass effect card with backdrop blur. Popular in dark/gradient backgrounds.</p>
+      <span class="badge free">FREE</span> <span class="tag">CSS</span> <span class="tag">Tailwind</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-html">&lt;!-- Pure Tailwind glassmorphism --&gt;
+&lt;div class="relative min-h-screen bg-gradient-to-br from-purple-800 to-blue-900 flex items-center justify-center"&gt;
+  &lt;div class="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-8 shadow-xl max-w-sm w-full"&gt;
+    &lt;h2 class="text-xl font-semibold text-white mb-2"&gt;Glass Card&lt;/h2&gt;
+    &lt;p class="text-white/70 text-sm mb-4"&gt;A frosted glass effect using backdrop-blur and bg-opacity.&lt;/p&gt;
+    &lt;button class="w-full bg-white/20 hover:bg-white/30 border border-white/30 text-white rounded-lg px-4 py-2 text-sm font-medium transition-colors"&gt;
+      Action
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Dark glass variant --&gt;
+&lt;div class="backdrop-blur-lg bg-black/20 border border-white/10 rounded-2xl p-6 shadow-2xl"&gt;
+  &lt;p class="text-white/80"&gt;Dark glass card&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;!-- Colored glass --&gt;
+&lt;div class="backdrop-blur-md bg-violet-500/20 border border-violet-400/30 rounded-2xl p-6"&gt;
+  &lt;p class="text-white/90"&gt;Violet glass card&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </div>
+
+    <div data-component="spotlight effect cursor follow glow react">
+      <h3>Cursor Spotlight / Glow Effect</h3>
+      <p>Card with a spotlight glow that follows the mouse cursor position.</p>
+      <span class="badge free">FREE</span> <span class="tag">React</span> <span class="tag">CSS</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useRef, useState } from "react"
+
+export function SpotlightCard({ children }: { children: React.ReactNode }) {
+  const ref = useRef&lt;HTMLDivElement&gt;(null)
+  const [position, setPosition] = useState({ x: 0, y: 0 })
+  const [isHovered, setIsHovered] = useState(false)
+
+  const handleMouseMove = (e: React.MouseEvent) =&gt; {
+    if (!ref.current) return
+    const rect = ref.current.getBoundingClientRect()
+    setPosition({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    })
+  }
+
+  return (
+    &lt;div
+      ref={ref}
+      className="relative overflow-hidden rounded-xl border border-border bg-card p-6 transition-all duration-300"
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() =&gt; setIsHovered(true)}
+      onMouseLeave={() =&gt; setIsHovered(false)}
+    &gt;
+      {/* Spotlight glow */}
+      &lt;div
+        className="pointer-events-none absolute inset-0 transition-opacity duration-300"
+        style={{
+          opacity: isHovered ? 1 : 0,
+          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(139, 92, 246, 0.15), transparent 40%)`,
+        }}
+      /&gt;
+      {children}
+    &lt;/div&gt;
+  )
+}
+
+// Spotlight grid (multiple cards, one glow effect spans whole grid):
+export function SpotlightGrid() {
+  const containerRef = useRef&lt;HTMLDivElement&gt;(null)
+  const [mouse, setMouse] = useState({ x: 0, y: 0 })
+
+  return (
+    &lt;div
+      ref={containerRef}
+      className="grid grid-cols-3 gap-4"
+      onMouseMove={(e) =&gt; {
+        const rect = containerRef.current!.getBoundingClientRect()
+        setMouse({ x: e.clientX - rect.left, y: e.clientY - rect.top })
+      }}
+    &gt;
+      {[...Array(6)].map((_, i) =&gt; (
+        &lt;div
+          key={i}
+          className="relative overflow-hidden rounded-xl border bg-card p-6 h-32"
+          style={{
+            background: `radial-gradient(500px circle at ${mouse.x}px ${mouse.y}px, rgba(99,102,241,0.08), transparent 50%), hsl(var(--card))`,
+          }}
+        &gt;
+          &lt;p className="text-sm text-muted-foreground"&gt;Card {i + 1}&lt;/p&gt;
+        &lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+  </div><!-- #content -->
+</div><!-- .main -->
+<script>
+hljs.highlightAll();
+document.querySelectorAll('.code-block').forEach(b => {
+  const btn = b.querySelector('.copy-btn');
+  if (btn) btn.onclick = () => {
+    navigator.clipboard.writeText(b.querySelector('code').innerText);
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1500);
+  };
+});
+function search(q) {
+  document.querySelectorAll('[data-component]').forEach(el => {
+    el.style.display = !q || el.textContent.toLowerCase().includes(q.toLowerCase()) ? '' : 'none';
+  });
+}
+</script>
+</body></html>

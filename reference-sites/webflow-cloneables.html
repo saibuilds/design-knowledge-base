@@ -1,0 +1,593 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Webflow Cloneables — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#e5e5e5;font-family:'Inter',sans-serif;font-size:15px;line-height:1.6}.sidebar{position:fixed;left:0;top:0;width:220px;height:100vh;background:#111;border-right:1px solid #1f1f1f;padding:20px;overflow-y:auto}.sidebar h2{font-size:13px;color:#f59e0b;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}.sidebar a{display:block;color:#888;text-decoration:none;padding:6px 8px;border-radius:6px;font-size:13px;margin-bottom:2px}.sidebar a:hover{color:#fff;background:#1a1a1a}.sidebar a.active{color:#f59e0b;background:#1a1a1a}.main{margin-left:220px;padding:48px;max-width:960px}h1{font-size:32px;font-weight:700;color:#fff;margin-bottom:8px}h2{font-size:20px;font-weight:600;color:#fff;margin:40px 0 12px;padding-top:40px;border-top:1px solid #1f1f1f}h3{font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.08em;margin:20px 0 8px}p{color:#aaa;margin-bottom:12px}.tag{display:inline-block;background:#f59e0b15;border:1px solid #f59e0b40;color:#f59e0b;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.badge.free{background:#0d2e1680;border:1px solid #22c55e40;color:#22c55e}.badge.own{background:#1e1b4b80;border:1px solid #818cf840;color:#818cf8}.install{background:#0d0d0d;border:1px solid #1f1f1f;border-radius:6px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#f59e0b;margin:8px 0}.code-block{position:relative;margin:12px 0}.copy-btn{position:absolute;top:8px;right:8px;background:#1f1f1f;border:1px solid #333;color:#888;padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer;z-index:10}.copy-btn:hover{color:#fff}pre{border-radius:8px;overflow:auto;font-size:12px;max-height:420px}input[type=search]{width:100%;background:#111;border:1px solid #2a2a2a;color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;font-family:inherit;margin-bottom:32px;outline:none}input[type=search]:focus{border-color:#f59e0b50}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}.card{background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:16px;transition:border-color .2s}.card:hover{border-color:#f59e0b40}.card h4{font-size:14px;font-weight:600;color:#fff;margin-bottom:6px}.card p{font-size:13px;color:#777;margin:0 0 8px}.card a{color:#f59e0b;font-size:12px;text-decoration:none}.card .meta{font-size:11px;color:#555;margin-top:6px}.note{background:#0d1a0d;border:1px solid #22c55e30;border-radius:6px;padding:12px 16px;color:#86efac;font-size:13px;margin:16px 0}.warn{background:#1a1000;border:1px solid #f59e0b30;border-radius:6px;padding:12px 16px;color:#d4a800;font-size:13px;margin:12px 0}.pattern-row{display:flex;gap:8px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #161616}.pattern-row:last-child{border-bottom:none}.pattern-label{min-width:180px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#f59e0b}.pattern-desc{font-size:13px;color:#888}</style></head>
+<body>
+<div class="sidebar">
+  <h2>Design KB</h2>
+  <a href="../index.html">Home</a>
+  <a href="../3d/r3f.html">R3F</a>
+  <a href="../3d/r3f-advanced.html">R3F Advanced</a>
+  <a href="../3d/threejs-patterns.html">Three.js</a>
+  <a href="../3d/spline-scenes.html">Spline</a>
+  <a href="../reference-sites/webflow-cloneables.html" class="active">Webflow Free</a>
+  <a href="../reference-sites/codrops-experiments.html">Codrops</a>
+  <a href="../animations/gsap.html">GSAP</a>
+  <a href="../components/magicui-components.html">MagicUI</a>
+</div>
+<div class="main">
+  <input type="search" placeholder="Search interactions, animations, patterns..." oninput="search(this.value)">
+  <div id="content">
+
+    <h1>Webflow Cloneables</h1>
+    <p>Free-to-clone Webflow projects. <span class="badge free">100% Free</span> <span class="badge own">You Own the Code</span></p>
+    <div class="note">
+      Webflow cloneables are free to clone and the exported HTML/CSS/JS is 100% yours to own, modify, and use commercially. No licensing restrictions on cloned projects. Browse at <a href="https://webflow.com/made-in-webflow/cloneables" target="_blank" style="color:#86efac">webflow.com/made-in-webflow/cloneables</a>.
+    </div>
+    <div class="warn">
+      To get the code: Clone the project → open in Webflow Designer → Export Code (requires paid plan) OR inspect elements in browser DevTools for the interaction patterns.
+    </div>
+
+    <!-- HOW WEBFLOW INTERACTIONS WORK -->
+    <div data-section>
+    <h2>How Webflow Interactions Work</h2>
+    <p>Webflow interactions output clean CSS animations + vanilla JS (no jQuery). Understanding the patterns lets you recreate them in any framework.</p>
+
+    <h3>Interaction Types</h3>
+    <div class="pattern-row"><span class="pattern-label">Page Load trigger</span><span class="pattern-desc">Runs once on DOMContentLoaded. Used for entrance animations: fade-in, slide-up, staggered reveals.</span></div>
+    <div class="pattern-row"><span class="pattern-label">Scroll Into View</span><span class="pattern-desc">IntersectionObserver-based. Triggers when element enters viewport. Stagger delay on child elements.</span></div>
+    <div class="pattern-row"><span class="pattern-label">Scroll Position</span><span class="pattern-desc">Maps scroll percentage to element properties (opacity, transform, color). Equivalent to GSAP ScrollTrigger scrub.</span></div>
+    <div class="pattern-row"><span class="pattern-label">Mouse Move (global)</span><span class="pattern-desc">Maps cursor X/Y to element rotation/translation. Creates parallax and magnetic effects.</span></div>
+    <div class="pattern-row"><span class="pattern-label">Hover trigger</span><span class="pattern-desc">Mouse enter/leave. Typically animates scale, color, border, clip-path on hover.</span></div>
+    <div class="pattern-row"><span class="pattern-label">Click trigger</span><span class="pattern-desc">Toggle states. Used for accordions, modals, nav menus, tab switches.</span></div>
+    <div class="pattern-row"><span class="pattern-label">While Scrolling</span><span class="pattern-desc">Sticky elements, progress bars, parallax layers. Tied to scroll progress 0-100%.</span></div>
+
+    <h3>Exported Interaction Code Pattern</h3>
+    <p>Webflow exports interactions as inline attribute-driven JS. Here's the reconstructed pattern:</p>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">// Webflow scroll-into-view pattern (reconstructed)
+// data-w-id attributes map to animation timelines
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible')
+      // Webflow applies inline style transforms:
+      // opacity: 0 -> 1, transform: translateY(20px) -> translateY(0)
+    }
+  })
+}, { threshold: 0.15 })
+
+document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el))
+</code></pre>
+    </div>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-css">/* Webflow stagger entrance — recreate in plain CSS */
+[data-animate] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+[data-animate].visible { opacity: 1; transform: translateY(0); }
+
+/* Stagger children */
+[data-animate].visible > *:nth-child(1) { transition-delay: 0.0s; }
+[data-animate].visible > *:nth-child(2) { transition-delay: 0.1s; }
+[data-animate].visible > *:nth-child(3) { transition-delay: 0.2s; }
+[data-animate].visible > *:nth-child(4) { transition-delay: 0.3s; }
+[data-animate].visible > *:nth-child(5) { transition-delay: 0.4s; }
+</code></pre>
+    </div>
+    </div>
+
+    <!-- TOP CLONEABLES -->
+    <div data-section>
+    <h2>Top Free Cloneables — UI Components</h2>
+    <div class="grid">
+      <div class="card">
+        <h4>Expanding Cards Menu</h4>
+        <p>Cards expand on hover revealing content. CSS clip-path + transform transition.</p>
+        <div><span class="tag">hover</span><span class="tag">cards</span><span class="tag">clip-path</span></div>
+        <div class="meta">by Flowbase · 195 likes</div>
+        <a href="https://webflow.com/made-in-webflow/website/expanding-cards-menu" target="_blank">Clone →</a>
+      </div>
+      <div class="card">
+        <h4>Stacked Cards</h4>
+        <p>Cards stack and unstack on scroll. Sticky positioning + scale transforms.</p>
+        <div><span class="tag">scroll</span><span class="tag">cards</span><span class="tag">sticky</span></div>
+        <div class="meta">by Neue World · 49 likes</div>
+        <a href="https://webflow.com/made-in-webflow/cloneables" target="_blank">Clone →</a>
+      </div>
+      <div class="card">
+        <h4>Scrolling App Features</h4>
+        <p>Feature showcase with scroll-synced content switching. Sticky text + scrolling media.</p>
+        <div><span class="tag">scroll</span><span class="tag">features</span><span class="tag">sticky</span></div>
+        <div class="meta">by Vimalan V · 465 likes</div>
+        <a href="https://webflow.com/made-in-webflow/cloneables" target="_blank">Clone →</a>
+      </div>
+      <div class="card">
+        <h4>Alternate Column Scroll</h4>
+        <p>Two columns scrolling in opposite directions. translateY on scroll position.</p>
+        <div><span class="tag">scroll</span><span class="tag">parallax</span><span class="tag">columns</span></div>
+        <div class="meta">by Anil Pervaiz · 128 likes</div>
+        <a href="https://webflow.com/made-in-webflow/cloneables" target="_blank">Clone →</a>
+      </div>
+      <div class="card">
+        <h4>Vertical Text Infinite Scroll</h4>
+        <p>Marquee-style infinite vertical text scroll. CSS animation loop.</p>
+        <div><span class="tag">marquee</span><span class="tag">animation</span><span class="tag">text</span></div>
+        <div class="meta">by Anil Pervaiz · 99 likes</div>
+        <a href="https://webflow.com/made-in-webflow/cloneables" target="_blank">Clone →</a>
+      </div>
+      <div class="card">
+        <h4>Sun Circle Animation</h4>
+        <p>Rotating circle/sun SVG animation. CSS keyframe rotation + scale pulse.</p>
+        <div><span class="tag">svg</span><span class="tag">animation</span><span class="tag">decorative</span></div>
+        <div class="meta">by Anil Pervaiz · 53 likes</div>
+        <a href="https://webflow.com/made-in-webflow/cloneables" target="_blank">Clone →</a>
+      </div>
+      <div class="card">
+        <h4>6 Hero Sections</h4>
+        <p>Six ready-to-use hero layout patterns. Typography, CTA, media placement variations.</p>
+        <div><span class="tag">hero</span><span class="tag">layout</span><span class="tag">templates</span></div>
+        <div class="meta">by BRIX Templates · 53 likes</div>
+        <a href="https://webflow.com/made-in-webflow/cloneables" target="_blank">Clone →</a>
+      </div>
+      <div class="card">
+        <h4>3 Website Tabs</h4>
+        <p>Tab navigation with animated content transitions. Good for product showcase.</p>
+        <div><span class="tag">tabs</span><span class="tag">navigation</span><span class="tag">interaction</span></div>
+        <div class="meta">by BRIX Templates · 67 likes</div>
+        <a href="https://webflow.com/made-in-webflow/cloneables" target="_blank">Clone →</a>
+      </div>
+      <div class="card">
+        <h4>Slider Pricing Calculator</h4>
+        <p>Range input driving price display. Good SaaS pricing page pattern.</p>
+        <div><span class="tag">pricing</span><span class="tag">interactive</span><span class="tag">slider</span></div>
+        <div class="meta">by BRIX Templates · 91 likes</div>
+        <a href="https://webflow.com/made-in-webflow/cloneables" target="_blank">Clone →</a>
+      </div>
+      <div class="card">
+        <h4>Agency Landing — Horizontal Scroll</h4>
+        <p>Horizontal scroll section with CMS content. GSAP-driven with sticky wrapper.</p>
+        <div><span class="tag">horizontal-scroll</span><span class="tag">gsap</span><span class="tag">agency</span></div>
+        <div class="meta">by Abdul Qader · 105 likes</div>
+        <a href="https://webflow.com/made-in-webflow/cloneables" target="_blank">Clone →</a>
+      </div>
+    </div>
+    </div>
+
+    <!-- INTERACTION PATTERNS CODE -->
+    <div data-section>
+    <h2>Reconstructed Interaction Patterns</h2>
+    <p>The core CSS/JS behind the most popular Webflow interactions. Use these directly without Webflow.</p>
+
+    <h3>Infinite Horizontal Marquee</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-html">&lt;style&gt;
+.marquee-wrapper {
+  overflow: hidden;
+  white-space: nowrap;
+  display: flex;
+}
+.marquee-track {
+  display: flex;
+  gap: 40px;
+  animation: marquee 20s linear infinite;
+}
+.marquee-track:hover { animation-play-state: paused; }
+
+/* Duplicate track for seamless loop */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+&lt;/style&gt;
+
+&lt;div class="marquee-wrapper"&gt;
+  &lt;div class="marquee-track"&gt;
+    &lt;span&gt;Design&lt;/span&gt; &lt;span&gt;—&lt;/span&gt;
+    &lt;span&gt;Develop&lt;/span&gt; &lt;span&gt;—&lt;/span&gt;
+    &lt;span&gt;Deploy&lt;/span&gt; &lt;span&gt;—&lt;/span&gt;
+    &lt;span&gt;Iterate&lt;/span&gt; &lt;span&gt;—&lt;/span&gt;
+    &lt;!-- Duplicate for seamless loop: --&gt;
+    &lt;span&gt;Design&lt;/span&gt; &lt;span&gt;—&lt;/span&gt;
+    &lt;span&gt;Develop&lt;/span&gt; &lt;span&gt;—&lt;/span&gt;
+    &lt;span&gt;Deploy&lt;/span&gt; &lt;span&gt;—&lt;/span&gt;
+    &lt;span&gt;Iterate&lt;/span&gt; &lt;span&gt;—&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <h3>Stacked Cards on Scroll</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-css">/* Stacked cards — sticky scroll reveal */
+.cards-container {
+  position: relative;
+  height: 400vh; /* tall scroll zone */
+}
+.card-sticky-wrapper {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card {
+  position: absolute;
+  width: 600px;
+  padding: 48px;
+  border-radius: 24px;
+  background: #111;
+  border: 1px solid #1f1f1f;
+}
+/* GSAP handles scale + translateY per card on scroll */
+</code></pre>
+    </div>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">// Stacked cards GSAP implementation
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
+
+const cards = document.querySelectorAll('.card')
+
+cards.forEach((card, i) => {
+  if (i === cards.length - 1) return // last card stays
+
+  gsap.to(card, {
+    scale: 0.9 - (i * 0.05),
+    yPercent: -10 * i,
+    scrollTrigger: {
+      trigger: '.cards-container',
+      start: `${(i / cards.length) * 100}% top`,
+      end: `${((i + 1) / cards.length) * 100}% top`,
+      scrub: 1,
+    }
+  })
+})
+</code></pre>
+    </div>
+
+    <h3>Horizontal Scroll Section</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">// Webflow-style horizontal scroll (GSAP)
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
+
+const wrapper = document.querySelector('.h-scroll-wrapper')
+const track   = document.querySelector('.h-scroll-track')
+
+const totalWidth = track.scrollWidth - window.innerWidth
+
+gsap.to(track, {
+  x: -totalWidth,
+  ease: 'none',
+  scrollTrigger: {
+    trigger: wrapper,
+    pin: true,
+    scrub: 1,
+    start: 'top top',
+    end: () => `+=${totalWidth}`,
+    invalidateOnRefresh: true,
+  }
+})
+</code></pre>
+    </div>
+
+    <h3>Mouse Parallax (Global)</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">// Webflow mouse-move parallax — reconstructed pattern
+document.addEventListener('mousemove', (e) => {
+  const cx = window.innerWidth  / 2
+  const cy = window.innerHeight / 2
+  const dx = (e.clientX - cx) / cx  // -1 to 1
+  const dy = (e.clientY - cy) / cy  // -1 to 1
+
+  // Parallax layers with different depths
+  document.querySelectorAll('[data-parallax]').forEach(el => {
+    const depth = parseFloat(el.dataset.parallax) || 1
+    const tx = dx * depth * 20
+    const ty = dy * depth * 20
+    el.style.transform = `translate(${tx}px, ${ty}px)`
+  })
+
+  // Tilt card effect
+  document.querySelectorAll('[data-tilt]').forEach(el => {
+    const rect = el.getBoundingClientRect()
+    const lx = (e.clientX - rect.left) / rect.width  - 0.5  // -0.5 to 0.5
+    const ly = (e.clientY - rect.top)  / rect.height - 0.5
+    el.style.transform = `perspective(800px) rotateY(${lx * 15}deg) rotateX(${-ly * 15}deg)`
+  })
+})
+</code></pre>
+    </div>
+
+    <h3>Scroll-Triggered Fade + Slide</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">// Webflow scroll-into-view — vanilla IntersectionObserver
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(({ target, isIntersecting }) => {
+    if (!isIntersecting) return
+    target.style.opacity = '1'
+    target.style.transform = 'translateY(0) scale(1)'
+    io.unobserve(target) // fire once
+  })
+}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' })
+
+document.querySelectorAll('[data-reveal]').forEach((el, i) => {
+  el.style.opacity = '0'
+  el.style.transform = 'translateY(32px) scale(0.97)'
+  el.style.transition = `opacity 0.7s ease ${i * 0.08}s, transform 0.7s ease ${i * 0.08}s`
+  io.observe(el)
+})
+</code></pre>
+    </div>
+
+    <h3>Expanding Card Hover</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-css">/* Expanding card — Webflow pattern */
+.card-grid {
+  display: flex;
+  gap: 8px;
+  height: 420px;
+}
+.exp-card {
+  flex: 1;
+  border-radius: 16px;
+  background: #111;
+  border: 1px solid #1f1f1f;
+  overflow: hidden;
+  transition: flex 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+.exp-card:hover { flex: 4; }
+.exp-card .content {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.3s 0.2s, transform 0.3s 0.2s;
+}
+.exp-card:hover .content { opacity: 1; transform: translateY(0); }
+</code></pre>
+    </div>
+    </div>
+
+    <!-- WEBFLOW TEMPLATE PATTERNS -->
+    <div data-section>
+    <h2>Free Template Patterns</h2>
+    <p>Pattern categories from <a href="https://webflow.com/templates?price=free" target="_blank">free Webflow templates</a>. These export clean semantic HTML.</p>
+
+    <h3>Navigation Patterns</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-css">/* Webflow navbar — common export pattern */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 16px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(10, 10, 10, 0);
+  backdrop-filter: blur(0px);
+  border-bottom: 1px solid transparent;
+  transition: background 0.4s, backdrop-filter 0.4s, border-color 0.4s;
+}
+.navbar.scrolled {
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom-color: #1f1f1f;
+}
+</code></pre>
+    </div>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">// Navbar scroll state
+window.addEventListener('scroll', () => {
+  document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 20)
+})
+</code></pre>
+    </div>
+
+    <h3>CMS Blog Template Pattern</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-css">/* Webflow blog grid — clean semantic export */
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+.post-card {
+  background: #111;
+  border: 1px solid #1f1f1f;
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.post-card:hover {
+  transform: translateY(-4px);
+  border-color: #f59e0b40;
+}
+.post-card-image {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  display: block;
+}
+.post-card-body { padding: 24px; }
+.post-tag {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #f59e0b;
+  font-weight: 600;
+}
+.post-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  margin: 8px 0;
+  line-height: 1.4;
+}
+.post-excerpt { font-size: 14px; color: #777; }
+</code></pre>
+    </div>
+    </div>
+
+    <!-- ECOMMERCE / SAAS PATTERNS -->
+    <div data-section>
+    <h2>SaaS / Product Patterns</h2>
+
+    <h3>Dashboard Sidebar (Dark)</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-css">/* Elearn Dashboard pattern — Kevin R clone */
+.dashboard {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+}
+.dash-sidebar {
+  background: #111;
+  border-right: 1px solid #1f1f1f;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.dash-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: #777;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.15s, color 0.15s;
+}
+.dash-nav-item:hover, .dash-nav-item.active {
+  background: #1a1a1a;
+  color: #fff;
+}
+.dash-nav-item.active { color: #f59e0b; }
+.dash-main {
+  padding: 32px 40px;
+  background: #0a0a0a;
+  overflow-y: auto;
+}
+</code></pre>
+    </div>
+
+    <h3>Link-in-Bio Pattern</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-css">/* BRIX Templates link-in-bio */
+.bio-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 24px;
+  background: #0a0a0a;
+}
+.bio-avatar {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #1f1f1f;
+  margin-bottom: 16px;
+}
+.bio-name { font-size: 20px; font-weight: 600; color: #fff; }
+.bio-desc { font-size: 14px; color: #777; text-align: center; max-width: 280px; margin: 8px 0 32px; }
+.bio-links { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 380px; }
+.bio-link {
+  display: flex; align-items: center; justify-content: center;
+  padding: 14px 24px;
+  background: #111;
+  border: 1px solid #1f1f1f;
+  border-radius: 12px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: background 0.15s, border-color 0.15s, transform 0.15s;
+}
+.bio-link:hover { background: #1a1a1a; border-color: #333; transform: translateY(-1px); }
+</code></pre>
+    </div>
+    </div>
+
+    <!-- WEBFLOW RESOURCES -->
+    <div data-section>
+    <h2>Resources + Finding More</h2>
+    <div class="grid">
+      <div class="card">
+        <h4>Made in Webflow</h4>
+        <p>Main cloneables directory. Filter by "Free" and "Cloneable".</p>
+        <a href="https://webflow.com/made-in-webflow/cloneables" target="_blank">Browse →</a>
+      </div>
+      <div class="card">
+        <h4>Flowbase Components</h4>
+        <p>High-quality free components. Expanding menus, navigation, sliders.</p>
+        <a href="https://www.flowbase.co" target="_blank">Browse →</a>
+      </div>
+      <div class="card">
+        <h4>Relume Library</h4>
+        <p>250+ free Webflow components. Figma + Webflow native.</p>
+        <a href="https://library.relume.io" target="_blank">Browse →</a>
+      </div>
+      <div class="card">
+        <h4>Webflow University</h4>
+        <p>Free video courses + interaction tutorials.</p>
+        <a href="https://university.webflow.com" target="_blank">Browse →</a>
+      </div>
+      <div class="card">
+        <h4>Client-First System</h4>
+        <p>Free Webflow CSS naming convention. Best practice structure.</p>
+        <a href="https://www.finsweet.com/client-first" target="_blank">Browse →</a>
+      </div>
+      <div class="card">
+        <h4>Webflow Templates (Free)</h4>
+        <p>Official free starter templates. Clean exports.</p>
+        <a href="https://webflow.com/templates?price=free" target="_blank">Browse →</a>
+      </div>
+    </div>
+    </div>
+
+  </div>
+</div>
+<script>
+hljs.highlightAll()
+document.querySelectorAll('.code-block').forEach(b => {
+  const btn = b.querySelector('.copy-btn')
+  if (btn) btn.onclick = () => {
+    navigator.clipboard.writeText(b.querySelector('code').innerText)
+    btn.textContent = 'Copied!'
+    setTimeout(() => btn.textContent = 'Copy', 1500)
+  }
+})
+function search(q) {
+  document.querySelectorAll('[data-section]').forEach(el => {
+    el.style.display = !q || el.textContent.toLowerCase().includes(q.toLowerCase()) ? '' : 'none'
+  })
+}
+</script>
+</body></html>

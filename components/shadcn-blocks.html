@@ -1,0 +1,666 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>shadcn/ui Blocks + Radix UI — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#e5e5e5;font-family:'Inter',sans-serif;font-size:15px;line-height:1.6}.sidebar{position:fixed;left:0;top:0;width:220px;height:100vh;background:#111;border-right:1px solid #1f1f1f;padding:20px;overflow-y:auto}.sidebar h2{font-size:13px;color:#f59e0b;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}.sidebar a{display:block;color:#888;text-decoration:none;padding:6px 8px;border-radius:6px;font-size:13px;margin-bottom:2px}.sidebar a:hover{color:#fff;background:#1a1a1a}.main{margin-left:220px;padding:48px;max-width:960px}h1{font-size:32px;font-weight:700;color:#fff;margin-bottom:8px}h2{font-size:20px;font-weight:600;color:#fff;margin:40px 0 12px;padding-top:40px;border-top:1px solid #1f1f1f}h3{font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.08em;margin:20px 0 8px}p{color:#aaa;margin-bottom:12px}.tag{display:inline-block;background:#f59e0b15;border:1px solid #f59e0b40;color:#f59e0b;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.badge.free{background:#0d2e1680;border:1px solid #22c55e40;color:#22c55e;display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.install{background:#0d0d0d;border:1px solid #1f1f1f;border-radius:6px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#f59e0b;margin:8px 0}.code-block{position:relative;margin:12px 0}.copy-btn{position:absolute;top:8px;right:8px;background:#1f1f1f;border:1px solid #333;color:#888;padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer}pre{border-radius:8px;overflow:auto;font-size:12px;max-height:450px}.component-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin:16px 0}.component-card{background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:14px}.component-card h4{font-size:13px;color:#e5e5e5;margin-bottom:4px}.component-card p{font-size:11px;color:#555;margin:0}input[type=search]{width:100%;background:#111;border:1px solid #2a2a2a;color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;font-family:inherit;margin-bottom:32px;outline:none}</style></head>
+<body>
+<div class="sidebar">
+  <h2>Components</h2>
+  <a href="../index.html">&#127968; Home</a>
+  <a href="free-components-master.html">&#9733; All Free</a>
+  <a href="shadcn.html">shadcn/ui</a>
+  <a href="shadcn-blocks.html">shadcn Blocks</a>
+  <a href="magicui-components.html">MagicUI</a>
+  <a href="aceternity-components.html">Aceternity</a>
+  <a href="tailwind-components.html">Tailwind</a>
+  <a href="more-free-components.html">More Free</a>
+  <a href="21st-dev-full.html">21st.dev</a>
+  <a href="hover-dev-full.html">hover.dev</a>
+</div>
+<div class="main">
+  <input type="search" placeholder="Search components..." oninput="search(this.value)">
+  <div id="content">
+
+    <h1>shadcn/ui Blocks + Radix UI Primitives</h1>
+    <p>Pre-built full-page block templates from shadcn/ui and the underlying headless Radix UI primitives. All free and open source.</p>
+    <p>
+      <span class="badge free">FREE</span>
+      <span class="tag">React</span>
+      <span class="tag">Tailwind CSS</span>
+      <span class="tag">shadcn/ui</span>
+      <span class="tag">Radix UI</span>
+    </p>
+
+    <!-- ======================== SHADCN BLOCKS ======================== -->
+    <h2>shadcn/ui Block Templates</h2>
+    <p>Full-page layout blocks. Run one command and get a complete, styled page scaffold dropped into your project.</p>
+    <div class="install">npx shadcn@latest init  &nbsp;# initialize shadcn in your project first</div>
+
+    <div data-component="dashboard-01 dashboard sidebar charts data table">
+      <h3>dashboard-01 — Dashboard with Sidebar + Charts</h3>
+      <p>A full dashboard layout with collapsible sidebar, area/bar charts, and a data table. The most complete block template.</p>
+      <span class="badge free">FREE</span> <span class="tag">Dashboard</span> <span class="tag">Charts</span> <span class="tag">Table</span>
+      <div class="install">npx shadcn@latest add dashboard-01</div>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// After running: npx shadcn@latest add dashboard-01
+// The block generates these files in your project:
+// app/dashboard/page.tsx  (main page)
+// components/app-sidebar.tsx
+// components/chart-area-interactive.tsx
+// components/data-table.tsx
+// components/nav-main.tsx  etc.
+
+// Minimal usage — import the page component:
+import DashboardPage from "@/app/dashboard/page"
+
+export default function App() {
+  return &lt;DashboardPage /&gt;
+}
+
+// The sidebar uses SidebarProvider from shadcn:
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/app-sidebar"
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    &lt;SidebarProvider&gt;
+      &lt;AppSidebar /&gt;
+      &lt;main&gt;
+        &lt;SidebarTrigger /&gt;
+        {children}
+      &lt;/main&gt;
+    &lt;/SidebarProvider&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="sidebar-07 sidebar collapsible icons">
+      <h3>sidebar-07 — Collapsible Icon Sidebar</h3>
+      <p>A sidebar that collapses to icon-only mode. Perfect for dashboards where screen space matters.</p>
+      <span class="badge free">FREE</span> <span class="tag">Sidebar</span> <span class="tag">Collapsible</span>
+      <div class="install">npx shadcn@latest add sidebar-07</div>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// sidebar-07 generates an icon-collapsible sidebar
+// Key pattern — collapsible="icon" prop on SidebarProvider:
+
+import { SidebarProvider } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/app-sidebar"
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    &lt;SidebarProvider defaultOpen={true}&gt;
+      &lt;AppSidebar collapsible="icon" /&gt;
+      &lt;main className="flex-1"&gt;
+        {children}
+      &lt;/main&gt;
+    &lt;/SidebarProvider&gt;
+  )
+}
+
+// In app-sidebar.tsx, sidebar items use tooltips when collapsed:
+import {
+  Sidebar, SidebarContent, SidebarGroup,
+  SidebarGroupContent, SidebarMenu,
+  SidebarMenuButton, SidebarMenuItem,
+} from "@/components/ui/sidebar"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+
+const items = [
+  { title: "Home", url: "/", icon: Home },
+  { title: "Inbox", url: "/inbox", icon: Inbox },
+  { title: "Settings", url: "/settings", icon: Settings },
+]
+
+export function AppSidebar() {
+  return (
+    &lt;Sidebar collapsible="icon"&gt;
+      &lt;SidebarContent&gt;
+        &lt;SidebarGroup&gt;
+          &lt;SidebarGroupContent&gt;
+            &lt;SidebarMenu&gt;
+              {items.map((item) =&gt; (
+                &lt;SidebarMenuItem key={item.title}&gt;
+                  &lt;SidebarMenuButton asChild tooltip={item.title}&gt;
+                    &lt;a href={item.url}&gt;
+                      &lt;item.icon /&gt;
+                      &lt;span&gt;{item.title}&lt;/span&gt;
+                    &lt;/a&gt;
+                  &lt;/SidebarMenuButton&gt;
+                &lt;/SidebarMenuItem&gt;
+              ))}
+            &lt;/SidebarMenu&gt;
+          &lt;/SidebarGroupContent&gt;
+        &lt;/SidebarGroup&gt;
+      &lt;/SidebarContent&gt;
+    &lt;/Sidebar&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="sidebar-03 sidebar submenus nested navigation">
+      <h3>sidebar-03 — Sidebar with Submenus</h3>
+      <p>A sidebar featuring nested navigation items with expandable submenus using Collapsible components.</p>
+      <span class="badge free">FREE</span> <span class="tag">Sidebar</span> <span class="tag">Submenus</span>
+      <div class="install">npx shadcn@latest add sidebar-03</div>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// sidebar-03 — nested submenu pattern
+import {
+  Collapsible, CollapsibleContent, CollapsibleTrigger,
+} from "@/components/ui/collapsible"
+import {
+  SidebarGroup, SidebarGroupLabel, SidebarMenu,
+  SidebarMenuButton, SidebarMenuItem, SidebarMenuSub,
+  SidebarMenuSubButton, SidebarMenuSubItem,
+} from "@/components/ui/sidebar"
+import { ChevronRight } from "lucide-react"
+
+const navItems = [
+  {
+    title: "Platform",
+    icon: SquareTerminal,
+    isActive: true,
+    items: [
+      { title: "History", url: "#" },
+      { title: "Starred", url: "#" },
+      { title: "Settings", url: "#" },
+    ],
+  },
+]
+
+export function NavMain({ items }: { items: typeof navItems }) {
+  return (
+    &lt;SidebarGroup&gt;
+      &lt;SidebarGroupLabel&gt;Platform&lt;/SidebarGroupLabel&gt;
+      &lt;SidebarMenu&gt;
+        {items.map((item) =&gt; (
+          &lt;Collapsible key={item.title} asChild defaultOpen={item.isActive}&gt;
+            &lt;SidebarMenuItem&gt;
+              &lt;SidebarMenuButton asChild tooltip={item.title}&gt;
+                &lt;a href="#"&gt;
+                  &lt;item.icon /&gt;
+                  &lt;span&gt;{item.title}&lt;/span&gt;
+                &lt;/a&gt;
+              &lt;/SidebarMenuButton&gt;
+              &lt;CollapsibleTrigger asChild&gt;
+                &lt;SidebarMenuButton size="sm"&gt;
+                  &lt;ChevronRight className="transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" /&gt;
+                &lt;/SidebarMenuButton&gt;
+              &lt;/CollapsibleTrigger&gt;
+              &lt;CollapsibleContent&gt;
+                &lt;SidebarMenuSub&gt;
+                  {item.items.map((subItem) =&gt; (
+                    &lt;SidebarMenuSubItem key={subItem.title}&gt;
+                      &lt;SidebarMenuSubButton asChild&gt;
+                        &lt;a href={subItem.url}&gt;{subItem.title}&lt;/a&gt;
+                      &lt;/SidebarMenuSubButton&gt;
+                    &lt;/SidebarMenuSubItem&gt;
+                  ))}
+                &lt;/SidebarMenuSub&gt;
+              &lt;/CollapsibleContent&gt;
+            &lt;/SidebarMenuItem&gt;
+          &lt;/Collapsible&gt;
+        ))}
+      &lt;/SidebarMenu&gt;
+    &lt;/SidebarGroup&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="login-03 authentication login muted background">
+      <h3>login-03 — Login Page (Muted Background)</h3>
+      <p>Clean login page with muted background color, card-centered form, email/password inputs.</p>
+      <span class="badge free">FREE</span> <span class="tag">Auth</span> <span class="tag">Login</span>
+      <div class="install">npx shadcn@latest add login-03</div>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// login-03 pattern — centered card on muted background
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+
+export default function LoginPage() {
+  return (
+    &lt;div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6 md:p-10"&gt;
+      &lt;div className="w-full max-w-sm"&gt;
+        &lt;Card&gt;
+          &lt;CardHeader className="text-center"&gt;
+            &lt;CardTitle className="text-xl"&gt;Welcome back&lt;/CardTitle&gt;
+            &lt;CardDescription&gt;Login with your account&lt;/CardDescription&gt;
+          &lt;/CardHeader&gt;
+          &lt;CardContent&gt;
+            &lt;form&gt;
+              &lt;div className="grid gap-6"&gt;
+                &lt;div className="grid gap-2"&gt;
+                  &lt;Label htmlFor="email"&gt;Email&lt;/Label&gt;
+                  &lt;Input id="email" type="email" placeholder="m@example.com" required /&gt;
+                &lt;/div&gt;
+                &lt;div className="grid gap-2"&gt;
+                  &lt;div className="flex items-center"&gt;
+                    &lt;Label htmlFor="password"&gt;Password&lt;/Label&gt;
+                    &lt;a href="#" className="ml-auto text-sm underline-offset-4 hover:underline"&gt;
+                      Forgot password?
+                    &lt;/a&gt;
+                  &lt;/div&gt;
+                  &lt;Input id="password" type="password" required /&gt;
+                &lt;/div&gt;
+                &lt;Button type="submit" className="w-full"&gt;Login&lt;/Button&gt;
+                &lt;Button variant="outline" className="w-full"&gt;
+                  Login with Google
+                &lt;/Button&gt;
+              &lt;/div&gt;
+              &lt;div className="mt-4 text-center text-sm"&gt;
+                Don&amp;apos;t have an account?{" "}
+                &lt;a href="#" className="underline underline-offset-4"&gt;Sign up&lt;/a&gt;
+              &lt;/div&gt;
+            &lt;/form&gt;
+          &lt;/CardContent&gt;
+        &lt;/Card&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="login-04 authentication login image split">
+      <h3>login-04 — Login Page with Image</h3>
+      <p>Split-screen login: form on left, full-height image on right. Great for marketing-forward auth pages.</p>
+      <span class="badge free">FREE</span> <span class="tag">Auth</span> <span class="tag">Split Screen</span>
+      <div class="install">npx shadcn@latest add login-04</div>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// login-04 — split screen layout pattern
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+
+export default function LoginPage() {
+  return (
+    &lt;div className="grid min-h-svh lg:grid-cols-2"&gt;
+      {/* Left: form */}
+      &lt;div className="flex flex-col gap-4 p-6 md:p-10"&gt;
+        &lt;div className="flex justify-center gap-2 md:justify-start"&gt;
+          &lt;a href="#" className="flex items-center gap-2 font-medium"&gt;
+            &lt;div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground"&gt;
+              &#9670;
+            &lt;/div&gt;
+            Acme Inc.
+          &lt;/a&gt;
+        &lt;/div&gt;
+        &lt;div className="flex flex-1 items-center justify-center"&gt;
+          &lt;div className="w-full max-w-xs"&gt;
+            &lt;div className="flex flex-col gap-6"&gt;
+              &lt;div className="flex flex-col items-center gap-2 text-center"&gt;
+                &lt;h1 className="text-2xl font-bold"&gt;Login to your account&lt;/h1&gt;
+                &lt;p className="text-balance text-sm text-muted-foreground"&gt;
+                  Enter your email below to login
+                &lt;/p&gt;
+              &lt;/div&gt;
+              &lt;div className="grid gap-6"&gt;
+                &lt;div className="grid gap-2"&gt;
+                  &lt;Label htmlFor="email"&gt;Email&lt;/Label&gt;
+                  &lt;Input id="email" type="email" placeholder="m@example.com" required /&gt;
+                &lt;/div&gt;
+                &lt;div className="grid gap-2"&gt;
+                  &lt;Label htmlFor="password"&gt;Password&lt;/Label&gt;
+                  &lt;Input id="password" type="password" required /&gt;
+                &lt;/div&gt;
+                &lt;Button type="submit" className="w-full"&gt;Login&lt;/Button&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      {/* Right: image */}
+      &lt;div className="relative hidden bg-muted lg:block"&gt;
+        &lt;img
+          src="/placeholder.svg"
+          alt="Login background"
+          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2]"
+        /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- ======================== RADIX PRIMITIVES ======================== -->
+    <h2>Radix UI Primitives</h2>
+    <p>Unstyled, accessible headless components. The foundation of shadcn/ui. Use these directly when you need full style control.</p>
+    <div class="install">npm install radix-ui  &nbsp;# unified package (v1+)</div>
+    <p>Or install individually: <code style="color:#f59e0b;font-family:'JetBrains Mono',monospace;font-size:12px">npm install @radix-ui/react-dialog @radix-ui/react-dropdown-menu ...</code></p>
+
+    <div class="component-grid">
+      <div class="component-card"><h4>Dialog</h4><p>Modal & non-modal with focus trap</p></div>
+      <div class="component-card"><h4>Dropdown Menu</h4><p>With submenus, checkboxes, radio</p></div>
+      <div class="component-card"><h4>Select</h4><p>Custom accessible select</p></div>
+      <div class="component-card"><h4>Tooltip</h4><p>Hover/focus triggered popover</p></div>
+      <div class="component-card"><h4>Accordion</h4><p>Single or multi-open sections</p></div>
+      <div class="component-card"><h4>Popover</h4><p>Floating content with collision</p></div>
+      <div class="component-card"><h4>Slider</h4><p>Range input with multi-thumb</p></div>
+      <div class="component-card"><h4>Switch</h4><p>Accessible toggle</p></div>
+      <div class="component-card"><h4>Tabs</h4><p>Keyboard navigable tab panels</p></div>
+      <div class="component-card"><h4>Radio Group</h4><p>Single selection with arrows</p></div>
+      <div class="component-card"><h4>Scroll Area</h4><p>Custom cross-browser scrollbar</p></div>
+      <div class="component-card"><h4>Toggle Group</h4><p>Single/multi pressed states</p></div>
+    </div>
+
+    <div data-component="radix dialog modal accessible focus trap">
+      <h3>Dialog — Modal</h3>
+      <p>Modal and non-modal dialog with automatic focus trapping, ESC to close, and screen reader announcements.</p>
+      <span class="badge free">FREE</span> <span class="tag">Headless</span> <span class="tag">Accessible</span>
+      <div class="install">npm install @radix-ui/react-dialog</div>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { Dialog } from "radix-ui";
+// OR: import * as Dialog from "@radix-ui/react-dialog";
+
+export default function MyDialog() {
+  return (
+    &lt;Dialog.Root&gt;
+      &lt;Dialog.Trigger asChild&gt;
+        &lt;button className="px-4 py-2 bg-blue-600 text-white rounded-md"&gt;
+          Open Dialog
+        &lt;/button&gt;
+      &lt;/Dialog.Trigger&gt;
+
+      &lt;Dialog.Portal&gt;
+        {/* Overlay */}
+        &lt;Dialog.Overlay className="fixed inset-0 bg-black/50 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" /&gt;
+
+        {/* Content */}
+        &lt;Dialog.Content className="fixed left-[50%] top-[50%] z-50 translate-x-[-50%] translate-y-[-50%] bg-white rounded-lg shadow-xl p-6 w-full max-w-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95"&gt;
+          &lt;Dialog.Title className="text-lg font-semibold mb-2"&gt;
+            Edit Profile
+          &lt;/Dialog.Title&gt;
+          &lt;Dialog.Description className="text-sm text-gray-500 mb-4"&gt;
+            Make changes to your profile here. Click save when done.
+          &lt;/Dialog.Description&gt;
+
+          &lt;div className="grid gap-4"&gt;
+            &lt;input className="border rounded px-3 py-2 w-full" placeholder="Name" /&gt;
+            &lt;input className="border rounded px-3 py-2 w-full" placeholder="Username" /&gt;
+          &lt;/div&gt;
+
+          &lt;div className="flex justify-end gap-3 mt-6"&gt;
+            &lt;Dialog.Close asChild&gt;
+              &lt;button className="px-4 py-2 border rounded-md"&gt;Cancel&lt;/button&gt;
+            &lt;/Dialog.Close&gt;
+            &lt;button className="px-4 py-2 bg-blue-600 text-white rounded-md"&gt;Save&lt;/button&gt;
+          &lt;/div&gt;
+
+          &lt;Dialog.Close className="absolute right-4 top-4 opacity-70 hover:opacity-100"&gt;
+            &times;
+          &lt;/Dialog.Close&gt;
+        &lt;/Dialog.Content&gt;
+      &lt;/Dialog.Portal&gt;
+    &lt;/Dialog.Root&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="radix dropdown menu submenus checkboxes radio items">
+      <h3>Dropdown Menu — Full Featured</h3>
+      <p>Context menus and dropdowns with submenus, checkbox items, radio groups, keyboard navigation, and typeahead.</p>
+      <span class="badge free">FREE</span> <span class="tag">Headless</span> <span class="tag">Keyboard Nav</span>
+      <div class="install">npm install @radix-ui/react-dropdown-menu</div>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import * as React from "react";
+import { CheckIcon } from "@radix-ui/react-icons";
+import { DropdownMenu } from "radix-ui";
+// OR: import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+
+export default function MyDropdown() {
+  const [checked, setChecked] = React.useState(true);
+  const [color, setColor] = React.useState("blue");
+
+  return (
+    &lt;DropdownMenu.Root&gt;
+      &lt;DropdownMenu.Trigger asChild&gt;
+        &lt;button className="px-4 py-2 bg-gray-100 rounded-md border"&gt;
+          Options &#9660;
+        &lt;/button&gt;
+      &lt;/DropdownMenu.Trigger&gt;
+
+      &lt;DropdownMenu.Portal&gt;
+        &lt;DropdownMenu.Content
+          className="min-w-48 bg-white rounded-lg shadow-lg border p-1 z-50"
+          sideOffset={4}
+        &gt;
+          &lt;DropdownMenu.Label className="px-2 py-1 text-xs text-gray-400 font-semibold"&gt;
+            Actions
+          &lt;/DropdownMenu.Label&gt;
+
+          &lt;DropdownMenu.Item className="px-2 py-1.5 text-sm rounded cursor-pointer hover:bg-gray-100 outline-none"&gt;
+            New File
+          &lt;/DropdownMenu.Item&gt;
+          &lt;DropdownMenu.Item className="px-2 py-1.5 text-sm rounded cursor-pointer hover:bg-gray-100 outline-none"&gt;
+            Open File
+          &lt;/DropdownMenu.Item&gt;
+
+          &lt;DropdownMenu.Separator className="my-1 border-t border-gray-100" /&gt;
+
+          &lt;DropdownMenu.CheckboxItem
+            className="flex items-center gap-2 px-2 py-1.5 text-sm rounded cursor-pointer hover:bg-gray-100 outline-none"
+            checked={checked}
+            onCheckedChange={setChecked}
+          &gt;
+            &lt;DropdownMenu.ItemIndicator&gt;
+              &lt;CheckIcon /&gt;
+            &lt;/DropdownMenu.ItemIndicator&gt;
+            Show Preview
+          &lt;/DropdownMenu.CheckboxItem&gt;
+
+          &lt;DropdownMenu.Separator className="my-1 border-t border-gray-100" /&gt;
+
+          &lt;DropdownMenu.Label className="px-2 py-1 text-xs text-gray-400"&gt;Theme&lt;/DropdownMenu.Label&gt;
+          &lt;DropdownMenu.RadioGroup value={color} onValueChange={setColor}&gt;
+            {["red", "blue", "green"].map((c) =&gt; (
+              &lt;DropdownMenu.RadioItem
+                key={c}
+                className="flex items-center gap-2 px-2 py-1.5 text-sm rounded cursor-pointer hover:bg-gray-100 outline-none"
+                value={c}
+              &gt;
+                &lt;DropdownMenu.ItemIndicator&gt;
+                  &lt;CheckIcon /&gt;
+                &lt;/DropdownMenu.ItemIndicator&gt;
+                {c.charAt(0).toUpperCase() + c.slice(1)}
+              &lt;/DropdownMenu.RadioItem&gt;
+            ))}
+          &lt;/DropdownMenu.RadioGroup&gt;
+
+          &lt;DropdownMenu.Arrow className="fill-white" /&gt;
+        &lt;/DropdownMenu.Content&gt;
+      &lt;/DropdownMenu.Portal&gt;
+    &lt;/DropdownMenu.Root&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="radix select dropdown accessible custom">
+      <h3>Select — Custom Accessible Dropdown</h3>
+      <p>Fully accessible select with custom styling, scroll buttons, and typeahead. Replaces native &lt;select&gt;.</p>
+      <span class="badge free">FREE</span> <span class="tag">Headless</span> <span class="tag">Form</span>
+      <div class="install">npm install @radix-ui/react-select</div>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import * as React from "react";
+import { Select as SelectPrimitive } from "radix-ui";
+import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
+
+// Reusable wrapper components
+export const Select = React.forwardRef&lt;
+  React.ElementRef&lt;typeof SelectPrimitive.Trigger&gt;,
+  React.ComponentPropsWithoutRef&lt;typeof SelectPrimitive.Root&gt;
+&gt;(({ children, ...props }, forwardedRef) =&gt; (
+  &lt;SelectPrimitive.Root {...props}&gt;
+    &lt;SelectPrimitive.Trigger
+      ref={forwardedRef}
+      className="inline-flex items-center justify-between gap-2 px-3 py-2 border rounded-md text-sm w-full bg-white hover:bg-gray-50 outline-none focus:ring-2 focus:ring-blue-500"
+    &gt;
+      &lt;SelectPrimitive.Value placeholder="Select an option…" /&gt;
+      &lt;SelectPrimitive.Icon&gt;&lt;ChevronDownIcon /&gt;&lt;/SelectPrimitive.Icon&gt;
+    &lt;/SelectPrimitive.Trigger&gt;
+    &lt;SelectPrimitive.Portal&gt;
+      &lt;SelectPrimitive.Content className="bg-white rounded-md shadow-lg border overflow-hidden z-50"&gt;
+        &lt;SelectPrimitive.ScrollUpButton className="flex items-center justify-center h-6 bg-white cursor-default"&gt;
+          &lt;ChevronUpIcon /&gt;
+        &lt;/SelectPrimitive.ScrollUpButton&gt;
+        &lt;SelectPrimitive.Viewport className="p-1"&gt;{children}&lt;/SelectPrimitive.Viewport&gt;
+        &lt;SelectPrimitive.ScrollDownButton className="flex items-center justify-center h-6 bg-white cursor-default"&gt;
+          &lt;ChevronDownIcon /&gt;
+        &lt;/SelectPrimitive.ScrollDownButton&gt;
+      &lt;/SelectPrimitive.Content&gt;
+    &lt;/SelectPrimitive.Portal&gt;
+  &lt;/SelectPrimitive.Root&gt;
+));
+
+export const SelectItem = React.forwardRef&lt;
+  React.ElementRef&lt;typeof SelectPrimitive.Item&gt;,
+  React.ComponentPropsWithoutRef&lt;typeof SelectPrimitive.Item&gt;
+&gt;(({ children, ...props }, forwardedRef) =&gt; (
+  &lt;SelectPrimitive.Item
+    {...props}
+    ref={forwardedRef}
+    className="flex items-center gap-2 px-3 py-1.5 text-sm rounded cursor-pointer outline-none data-[highlighted]:bg-blue-50 data-[highlighted]:text-blue-900"
+  &gt;
+    &lt;SelectPrimitive.ItemText&gt;{children}&lt;/SelectPrimitive.ItemText&gt;
+    &lt;SelectPrimitive.ItemIndicator className="ml-auto"&gt;
+      &lt;CheckIcon /&gt;
+    &lt;/SelectPrimitive.ItemIndicator&gt;
+  &lt;/SelectPrimitive.Item&gt;
+));
+
+// Usage
+export default function App() {
+  return (
+    &lt;Select defaultValue="apple"&gt;
+      &lt;SelectItem value="apple"&gt;Apple&lt;/SelectItem&gt;
+      &lt;SelectItem value="banana"&gt;Banana&lt;/SelectItem&gt;
+      &lt;SelectItem value="cherry"&gt;Cherry&lt;/SelectItem&gt;
+    &lt;/Select&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="radix tooltip hover focus accessible">
+      <h3>Tooltip</h3>
+      <p>Hover/focus triggered tooltip with arrow, delay, and collision avoidance.</p>
+      <span class="badge free">FREE</span> <span class="tag">Headless</span>
+      <div class="install">npm install @radix-ui/react-tooltip</div>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { Tooltip } from "radix-ui";
+// OR: import * as Tooltip from "@radix-ui/react-tooltip";
+
+// Wrap your app root with TooltipProvider once
+export function App() {
+  return (
+    &lt;Tooltip.Provider delayDuration={300}&gt;
+      &lt;MyComponent /&gt;
+    &lt;/Tooltip.Provider&gt;
+  );
+}
+
+export function TooltipDemo() {
+  return (
+    &lt;Tooltip.Root&gt;
+      &lt;Tooltip.Trigger asChild&gt;
+        &lt;button className="px-4 py-2 bg-gray-100 rounded-md border"&gt;
+          Hover me
+        &lt;/button&gt;
+      &lt;/Tooltip.Trigger&gt;
+
+      &lt;Tooltip.Portal&gt;
+        &lt;Tooltip.Content
+          className="bg-gray-900 text-white text-xs rounded px-2 py-1 shadow-md select-none animate-in fade-in-0 zoom-in-95"
+          sideOffset={5}
+        &gt;
+          This is a tooltip
+          &lt;Tooltip.Arrow className="fill-gray-900" /&gt;
+        &lt;/Tooltip.Content&gt;
+      &lt;/Tooltip.Portal&gt;
+    &lt;/Tooltip.Root&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="radix accordion expandable collapsible sections">
+      <h3>Accordion</h3>
+      <p>Expandable sections. Supports single or multiple open items simultaneously with smooth animations.</p>
+      <span class="badge free">FREE</span> <span class="tag">Headless</span>
+      <div class="install">npm install @radix-ui/react-accordion</div>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { Accordion } from "radix-ui";
+import { ChevronDownIcon } from "@radix-ui/react-icons";
+
+const items = [
+  { value: "item-1", question: "Is it accessible?", answer: "Yes. It adheres to the WAI-ARIA design pattern." },
+  { value: "item-2", question: "Is it unstyled?", answer: "Yes. It has no styles applied by default, giving you full control." },
+  { value: "item-3", question: "Can it be animated?", answer: "Yes! Use CSS animations targeting data-[state=open/closed]." },
+];
+
+export default function AccordionDemo() {
+  return (
+    &lt;Accordion.Root
+      type="single"  // or "multiple" for multi-open
+      defaultValue="item-1"
+      collapsible
+      className="w-full max-w-md border rounded-lg overflow-hidden"
+    &gt;
+      {items.map((item) =&gt; (
+        &lt;Accordion.Item
+          key={item.value}
+          value={item.value}
+          className="border-b last:border-0"
+        &gt;
+          &lt;Accordion.Header&gt;
+            &lt;Accordion.Trigger className="flex w-full items-center justify-between px-4 py-3 text-sm font-medium hover:bg-gray-50 data-[state=open]:text-blue-600 group"&gt;
+              {item.question}
+              &lt;ChevronDownIcon className="transition-transform duration-200 group-data-[state=open]:rotate-180" /&gt;
+            &lt;/Accordion.Trigger&gt;
+          &lt;/Accordion.Header&gt;
+          &lt;Accordion.Content className="overflow-hidden text-sm text-gray-600 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-top-1 data-[state=open]:slide-in-from-top-1"&gt;
+            &lt;div className="px-4 pb-3"&gt;{item.answer}&lt;/div&gt;
+          &lt;/Accordion.Content&gt;
+        &lt;/Accordion.Item&gt;
+      ))}
+    &lt;/Accordion.Root&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+  </div><!-- #content -->
+</div><!-- .main -->
+<script>
+hljs.highlightAll();
+document.querySelectorAll('.code-block').forEach(b => {
+  const btn = b.querySelector('.copy-btn');
+  if (btn) btn.onclick = () => {
+    navigator.clipboard.writeText(b.querySelector('code').innerText);
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1500);
+  };
+});
+function search(q) {
+  document.querySelectorAll('[data-component]').forEach(el => {
+    el.style.display = !q || el.textContent.toLowerCase().includes(q.toLowerCase()) ? '' : 'none';
+  });
+}
+</script>
+</body></html>

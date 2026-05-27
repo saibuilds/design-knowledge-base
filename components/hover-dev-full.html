@@ -1,0 +1,1873 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>hover.dev — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#e5e5e5;font-family:'Inter',sans-serif;font-size:15px;line-height:1.6}.sidebar{position:fixed;left:0;top:0;width:220px;height:100vh;background:#111;border-right:1px solid #1f1f1f;padding:20px;overflow-y:auto}.sidebar h2{font-size:13px;color:#f59e0b;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}.sidebar a{display:block;color:#888;text-decoration:none;padding:6px 8px;border-radius:6px;font-size:13px;margin-bottom:2px}.sidebar a:hover{color:#fff;background:#1a1a1a}.main{margin-left:220px;padding:48px;max-width:960px}h1{font-size:32px;font-weight:700;color:#fff;margin-bottom:8px}h2{font-size:20px;font-weight:600;color:#fff;margin:40px 0 8px;padding-top:40px;border-top:1px solid #1f1f1f}h3{font-size:12px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.08em;margin:16px 0 6px}p{color:#aaa;margin-bottom:10px}.tag{display:inline-block;background:#f59e0b15;border:1px solid #f59e0b40;color:#f59e0b;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.badge.free{background:#0d2e1680;border-color:#22c55e40;color:#22c55e;display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.install{background:#0d0d0d;border:1px solid #1f1f1f;border-radius:6px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#f59e0b;margin:8px 0}.code-block{position:relative;margin:12px 0}.copy-btn{position:absolute;top:8px;right:8px;background:#1f1f1f;border:1px solid #333;color:#888;padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer}pre{border-radius:8px;overflow:auto;font-size:12px;max-height:500px}.component-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin:16px 0}.component-card{background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:14px}.component-card h4{font-size:13px;color:#e5e5e5;margin-bottom:4px}.component-card p{font-size:11px;color:#555;margin:0}input[type=search]{width:100%;background:#111;border:1px solid #2a2a2a;color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;font-family:inherit;margin-bottom:32px;outline:none}</style></head>
+<body>
+<div class="sidebar">
+  <h2>Components</h2>
+  <a href="../index.html">Home</a>
+  <a href="free-components-master.html">All Free</a>
+  <a href="magicui-components.html">MagicUI</a>
+  <a href="aceternity-components.html">Aceternity</a>
+  <a href="21st-dev-full.html">21st.dev</a>
+  <a href="hover-dev-full.html">hover.dev</a>
+  <a href="../3d/spline-scenes.html">Spline</a>
+  <a href="../animations/gsap.html">GSAP</a>
+  <hr style="border-color:#1f1f1f;margin:12px 0">
+  <a href="#overview">Overview</a>
+  <a href="#buttons">Buttons</a>
+  <a href="#cards">Cards</a>
+  <a href="#links">Links</a>
+  <a href="#menus">Menus</a>
+  <a href="#lists">Lists</a>
+  <a href="#inputs">Inputs</a>
+  <a href="#loaders">Loaders</a>
+  <a href="#other">Other</a>
+</div>
+<div class="main">
+  <input type="search" placeholder="Search components..." oninput="filterComponents(this.value)">
+  <div id="content">
+
+    <h1>hover.dev</h1>
+    <p>Free, open-source React component library built entirely with Framer Motion. All components are fully free — no account, no paywall, no CLI required. Copy the JSX directly.</p>
+    <p>
+      <span class="tag">React</span>
+      <span class="tag">Framer Motion</span>
+      <span class="tag">TypeScript</span>
+      <span class="tag">Tailwind CSS</span>
+      <span class="badge free">100% Free</span>
+    </p>
+    <div class="install">https://www.hover.dev/components</div>
+
+    <h2 id="overview">Setup</h2>
+    <div class="install">npm install framer-motion</div>
+    <p>Most components also use Tailwind CSS for layout. A few use inline styles only. All components are self-contained — paste the file and import it.</p>
+
+    <!-- BUTTONS -->
+    <h2 id="buttons">Buttons</h2>
+    <p>All hover.dev buttons use Framer Motion for their core interaction. They are fully keyboard accessible.</p>
+
+    <div data-component="encrypt-button">
+      <h3>EncryptButton</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Text Animation</span>
+      <p>On hover, letters scramble through random characters before resolving back to the target text. Creates a hacker/terminal aesthetic.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// EncryptButton.tsx
+"use client"
+import { useRef, useState } from "react"
+
+const CYCLES_PER_LETTER = 2
+const SHUFFLE_TIME = 50
+const CHARS = "!@#$%^&*():{};|,.<>/?"
+
+interface EncryptButtonProps {
+  targetText: string
+}
+
+export const EncryptButton = ({ targetText }: EncryptButtonProps) => {
+  const intervalRef = useRef&lt;ReturnType&lt;typeof setInterval&gt; | null&gt;(null)
+  const [text, setText] = useState(targetText)
+
+  const scramble = () => {
+    let pos = 0
+
+    intervalRef.current = setInterval(() => {
+      const scrambled = targetText
+        .split("")
+        .map((char, index) => {
+          if (pos / CYCLES_PER_LETTER &gt; index) {
+            return char
+          }
+          const randomChar = CHARS[Math.floor(Math.random() * CHARS.length)]
+          return randomChar
+        })
+        .join("")
+
+      setText(scrambled)
+      pos++
+
+      if (pos &gt;= targetText.length * CYCLES_PER_LETTER) {
+        stopScramble()
+      }
+    }, SHUFFLE_TIME)
+  }
+
+  const stopScramble = () => {
+    clearInterval(intervalRef.current ?? undefined)
+    setText(targetText)
+  }
+
+  return (
+    &lt;button
+      onMouseEnter={scramble}
+      onMouseLeave={stopScramble}
+      className="group relative overflow-hidden rounded-lg border border-neutral-500 bg-neutral-700 px-4 py-2 font-mono font-medium uppercase text-neutral-300 transition-colors hover:text-indigo-300"
+    &gt;
+      &lt;div className="relative z-10 flex items-center gap-2"&gt;
+        &lt;span&gt;{text}&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;motion.div
+        initial={{ y: "100%" }}
+        animate={{ y: "-100%" }}
+        transition={{ repeat: Infinity, repeatType: "loop", duration: 1, ease: "linear" }}
+        className="absolute inset-0 z-0 scale-125 bg-gradient-to-t from-indigo-400/0 from-40% via-indigo-400/100 to-indigo-400/0 to-60% opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+      /&gt;
+    &lt;/button&gt;
+  )
+}
+
+// Import motion from framer-motion at top of file:
+// import { motion } from "framer-motion"</code></pre>
+      </div>
+    </div>
+
+    <div data-component="bubble-button">
+      <h3>BubbleButton</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Bubbles</span>
+      <span class="tag">Animation</span>
+      <p>Clicking the button spawns small circular bubble particles that float upward and fade out.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// BubbleButton.tsx
+"use client"
+import { useRef, useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+
+interface Bubble {
+  id: number
+  x: number
+  y: number
+  size: number
+}
+
+interface BubbleButtonProps extends React.ButtonHTMLAttributes&lt;HTMLButtonElement&gt; {
+  children: React.ReactNode
+}
+
+export function BubbleButton({ children, onClick, className, ...props }: BubbleButtonProps) {
+  const [bubbles, setBubbles] = useState&lt;Bubble[]&gt;([])
+  const containerRef = useRef&lt;HTMLButtonElement&gt;(null)
+
+  const handleClick = (e: React.MouseEvent&lt;HTMLButtonElement&gt;) => {
+    const rect = containerRef.current!.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+
+    const newBubbles: Bubble[] = Array.from({ length: 6 }, (_, i) => ({
+      id: Date.now() + i,
+      x: x + (Math.random() - 0.5) * 60,
+      y: y + (Math.random() - 0.5) * 20,
+      size: Math.random() * 12 + 6,
+    }))
+
+    setBubbles((prev) => [...prev, ...newBubbles])
+    setTimeout(() => {
+      setBubbles((prev) => prev.filter((b) => !newBubbles.find((nb) => nb.id === b.id)))
+    }, 700)
+
+    onClick?.(e)
+  }
+
+  return (
+    &lt;button
+      ref={containerRef}
+      onClick={handleClick}
+      className={`relative overflow-hidden rounded-full bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-indigo-500 transition-colors active:scale-95 ${className ?? ""}`}
+      {...props}
+    &gt;
+      {children}
+      &lt;AnimatePresence&gt;
+        {bubbles.map((bubble) => (
+          &lt;motion.span
+            key={bubble.id}
+            initial={{ opacity: 0.8, scale: 0, x: bubble.x, y: bubble.y }}
+            animate={{ opacity: 0, scale: 1, y: bubble.y - 60 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            style={{
+              position: "absolute",
+              width: bubble.size,
+              height: bubble.size,
+              borderRadius: "50%",
+              background: "rgba(255,255,255,0.6)",
+              pointerEvents: "none",
+              translateX: "-50%",
+              translateY: "-50%",
+            }}
+          /&gt;
+        ))}
+      &lt;/AnimatePresence&gt;
+    &lt;/button&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="splash-button">
+      <h3>SplashButton</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Ripple</span>
+      <span class="tag">Animation</span>
+      <p>Click creates a radial ripple/splash wave that expands from the click point and fades out.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// SplashButton.tsx
+"use client"
+import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+
+interface Ripple {
+  id: number
+  x: number
+  y: number
+}
+
+interface SplashButtonProps extends React.ButtonHTMLAttributes&lt;HTMLButtonElement&gt; {
+  children: React.ReactNode
+  color?: string
+}
+
+export function SplashButton({ children, onClick, color = "rgba(255,255,255,0.35)", className, ...props }: SplashButtonProps) {
+  const [ripples, setRipples] = useState&lt;Ripple[]&gt;([])
+
+  const handleClick = (e: React.MouseEvent&lt;HTMLButtonElement&gt;) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const newRipple: Ripple = {
+      id: Date.now(),
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    }
+    setRipples((r) => [...r, newRipple])
+    setTimeout(() => setRipples((r) => r.filter((rp) => rp.id !== newRipple.id)), 800)
+    onClick?.(e)
+  }
+
+  return (
+    &lt;button
+      onClick={handleClick}
+      className={`relative overflow-hidden rounded-xl bg-violet-600 px-6 py-3 font-semibold text-white hover:bg-violet-500 transition-colors ${className ?? ""}`}
+      {...props}
+    &gt;
+      {children}
+      &lt;AnimatePresence&gt;
+        {ripples.map((ripple) => (
+          &lt;motion.span
+            key={ripple.id}
+            initial={{ opacity: 1, scale: 0, x: ripple.x, y: ripple.y, width: 0, height: 0 }}
+            animate={{ opacity: 0, scale: 1, width: 300, height: 300 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            style={{
+              position: "absolute",
+              background: color,
+              borderRadius: "50%",
+              transform: "translate(-50%, -50%)",
+              pointerEvents: "none",
+            }}
+          /&gt;
+        ))}
+      &lt;/AnimatePresence&gt;
+    &lt;/button&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="glitch-button">
+      <h3>GlitchButton</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Glitch</span>
+      <span class="tag">CSS</span>
+      <p>On hover, button text creates RGB-split glitch layers that shift horizontally, simulating a VHS/glitch effect.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// GlitchButton.tsx
+"use client"
+import { useState } from "react"
+import { motion } from "framer-motion"
+
+interface GlitchButtonProps {
+  children: string
+  className?: string
+}
+
+export function GlitchButton({ children, className }: GlitchButtonProps) {
+  const [hovered, setHovered] = useState(false)
+
+  return (
+    &lt;button
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className={`relative overflow-hidden rounded-lg border border-white/20 bg-neutral-900 px-6 py-3 font-mono font-bold uppercase text-white ${className ?? ""}`}
+    &gt;
+      {/* Main text */}
+      &lt;span className="relative z-10"&gt;{children}&lt;/span&gt;
+
+      {/* Red ghost layer */}
+      &lt;motion.span
+        aria-hidden
+        animate={hovered ? { x: [0, -4, 3, -2, 0], opacity: [0, 0.8, 0.8, 0.8, 0] } : { x: 0, opacity: 0 }}
+        transition={{ duration: 0.4, times: [0, 0.2, 0.5, 0.8, 1] }}
+        className="absolute inset-0 flex items-center justify-center font-mono font-bold uppercase"
+        style={{ color: "#ff0000", mixBlendMode: "screen", clipPath: "inset(30% 0 30% 0)" }}
+      &gt;
+        {children}
+      &lt;/motion.span&gt;
+
+      {/* Blue ghost layer */}
+      &lt;motion.span
+        aria-hidden
+        animate={hovered ? { x: [0, 4, -3, 2, 0], opacity: [0, 0.8, 0.8, 0.8, 0] } : { x: 0, opacity: 0 }}
+        transition={{ duration: 0.4, times: [0, 0.2, 0.5, 0.8, 1], delay: 0.05 }}
+        className="absolute inset-0 flex items-center justify-center font-mono font-bold uppercase"
+        style={{ color: "#00ffff", mixBlendMode: "screen", clipPath: "inset(60% 0 5% 0)" }}
+      &gt;
+        {children}
+      &lt;/motion.span&gt;
+    &lt;/button&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="magnet-button">
+      <h3>MagnetButton</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Magnetic</span>
+      <span class="tag">Physics</span>
+      <p>The button (and optionally its inner label) moves toward the mouse cursor as it approaches, snapping back with a spring when the cursor leaves. Classic magnetic cursor effect.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// MagnetButton.tsx
+"use client"
+import { useRef, useState } from "react"
+import { motion, useSpring, useTransform, MotionValue } from "framer-motion"
+
+function useMagnet(strength = 0.4) {
+  const ref = useRef&lt;HTMLButtonElement&gt;(null)
+  const x = useSpring(0, { stiffness: 200, damping: 20 })
+  const y = useSpring(0, { stiffness: 200, damping: 20 })
+
+  const onMouseMove = (e: React.MouseEvent) => {
+    const el = ref.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const cx = rect.left + rect.width / 2
+    const cy = rect.top + rect.height / 2
+    x.set((e.clientX - cx) * strength)
+    y.set((e.clientY - cy) * strength)
+  }
+
+  const onMouseLeave = () => {
+    x.set(0)
+    y.set(0)
+  }
+
+  return { ref, x, y, onMouseMove, onMouseLeave }
+}
+
+interface MagnetButtonProps {
+  children: React.ReactNode
+  className?: string
+  strength?: number
+}
+
+export function MagnetButton({ children, className, strength = 0.4 }: MagnetButtonProps) {
+  const { ref, x, y, onMouseMove, onMouseLeave } = useMagnet(strength)
+
+  return (
+    &lt;motion.button
+      ref={ref}
+      style={{ x, y }}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+      className={`relative rounded-full bg-white px-8 py-4 font-semibold text-black transition-shadow hover:shadow-xl ${className ?? ""}`}
+    &gt;
+      &lt;motion.span
+        style={{ x: useTransform(x, (v) =&gt; v * 0.4), y: useTransform(y, (v) =&gt; v * 0.4) }}
+        className="block"
+      &gt;
+        {children}
+      &lt;/motion.span&gt;
+    &lt;/motion.button&gt;
+  )
+}
+
+// Note: useTransform inside render is fine here but for strict mode
+// move inner span transform to a dedicated sub-component if needed.</code></pre>
+      </div>
+    </div>
+
+    <div data-component="flip-button">
+      <h3>FlipButton</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">3D</span>
+      <span class="tag">Hover</span>
+      <p>Button with two faces that flips on hover, revealing alternate text or content on the back face using 3D CSS transforms.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// FlipButton.tsx
+"use client"
+import { motion } from "framer-motion"
+
+interface FlipButtonProps {
+  frontText: string
+  backText: string
+  frontClass?: string
+  backClass?: string
+}
+
+export function FlipButton({ frontText, backText, frontClass, backClass }: FlipButtonProps) {
+  return (
+    &lt;motion.button
+      initial="rest"
+      whileHover="hover"
+      className="relative overflow-hidden rounded-full px-6 py-2.5 font-semibold"
+      style={{ perspective: 600 }}
+    &gt;
+      {/* Front face */}
+      &lt;motion.span
+        variants={{
+          rest: { rotateX: 0, y: 0, opacity: 1 },
+          hover: { rotateX: -90, y: 10, opacity: 0 },
+        }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+        className={`block ${frontClass ?? "bg-neutral-900 text-white"}`}
+        style={{ backfaceVisibility: "hidden", padding: "10px 24px", borderRadius: 9999 }}
+      &gt;
+        {frontText}
+      &lt;/motion.span&gt;
+      {/* Back face */}
+      &lt;motion.span
+        variants={{
+          rest: { rotateX: 90, y: -10, opacity: 0 },
+          hover: { rotateX: 0, y: "-100%", opacity: 1 },
+        }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+        className={`absolute inset-0 flex items-center justify-center ${backClass ?? "bg-indigo-600 text-white"}`}
+        style={{ backfaceVisibility: "hidden", borderRadius: 9999 }}
+      &gt;
+        {backText}
+      &lt;/motion.span&gt;
+    &lt;/motion.button&gt;
+  )
+}
+
+// Usage:
+// &lt;FlipButton frontText="Get started" backText="Let's go →" /&gt;</code></pre>
+      </div>
+    </div>
+
+    <div data-component="countdown-button">
+      <h3>CountdownButton</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Interaction</span>
+      <p>Button that requires the user to hold it down for a countdown before confirming — prevents accidental destructive actions.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// CountdownButton.tsx
+"use client"
+import { useEffect, useRef, useState } from "react"
+import { motion } from "framer-motion"
+
+interface CountdownButtonProps {
+  holdDuration?: number
+  onConfirm: () => void
+  children: React.ReactNode
+}
+
+export function CountdownButton({ holdDuration = 2000, onConfirm, children }: CountdownButtonProps) {
+  const [holding, setHolding] = useState(false)
+  const [progress, setProgress] = useState(0)
+  const startTime = useRef&lt;number | null&gt;(null)
+  const rafRef = useRef&lt;number&gt;(0)
+
+  const startHold = () => {
+    setHolding(true)
+    startTime.current = performance.now()
+    const tick = () => {
+      const elapsed = performance.now() - (startTime.current ?? 0)
+      const pct = Math.min(elapsed / holdDuration, 1)
+      setProgress(pct)
+      if (pct &lt; 1) {
+        rafRef.current = requestAnimationFrame(tick)
+      } else {
+        onConfirm()
+        setHolding(false)
+        setProgress(0)
+      }
+    }
+    rafRef.current = requestAnimationFrame(tick)
+  }
+
+  const stopHold = () => {
+    cancelAnimationFrame(rafRef.current)
+    setHolding(false)
+    setProgress(0)
+  }
+
+  return (
+    &lt;button
+      onMouseDown={startHold}
+      onMouseUp={stopHold}
+      onMouseLeave={stopHold}
+      onTouchStart={startHold}
+      onTouchEnd={stopHold}
+      className="relative overflow-hidden rounded-xl bg-red-600 px-6 py-3 font-semibold text-white select-none"
+    &gt;
+      {/* Progress fill */}
+      &lt;motion.span
+        className="pointer-events-none absolute inset-0 origin-left bg-red-400"
+        style={{ scaleX: progress }}
+      /&gt;
+      &lt;span className="relative z-10"&gt;
+        {holding ? `Hold... ${Math.round(progress * 100)}%` : children}
+      &lt;/span&gt;
+    &lt;/button&gt;
+  )
+}
+
+// Usage:
+// &lt;CountdownButton onConfirm={() => deleteItem()}&gt;Hold to Delete&lt;/CountdownButton&gt;</code></pre>
+      </div>
+    </div>
+
+    <!-- CARDS -->
+    <h2 id="cards">Cards</h2>
+
+    <div data-component="swipe-cards">
+      <h3>SwipeCards</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Gesture</span>
+      <span class="tag">Tinder-style</span>
+      <p>A draggable stack of cards. Drag a card past a threshold to dismiss it left or right. The card beneath becomes active. Tinder-style swipe UI.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// SwipeCards.tsx
+"use client"
+import { useState } from "react"
+import { motion, useMotionValue, useTransform, AnimatePresence } from "framer-motion"
+
+interface CardData {
+  id: number
+  content: string
+  bg: string
+}
+
+const INITIAL_CARDS: CardData[] = [
+  { id: 1, content: "Card One", bg: "#6366f1" },
+  { id: 2, content: "Card Two", bg: "#8b5cf6" },
+  { id: 3, content: "Card Three", bg: "#ec4899" },
+  { id: 4, content: "Card Four", bg: "#f59e0b" },
+]
+
+function SwipeCard({
+  card,
+  onSwipe,
+  isTop,
+}: {
+  card: CardData
+  onSwipe: (id: number, dir: "left" | "right") => void
+  isTop: boolean
+}) {
+  const x = useMotionValue(0)
+  const rotate = useTransform(x, [-200, 200], [-25, 25])
+  const opacity = useTransform(x, [-200, -100, 0, 100, 200], [0, 1, 1, 1, 0])
+
+  const handleDragEnd = (_: unknown, info: { offset: { x: number } }) => {
+    if (info.offset.x &gt; 100) onSwipe(card.id, "right")
+    else if (info.offset.x &lt; -100) onSwipe(card.id, "left")
+  }
+
+  return (
+    &lt;motion.div
+      drag={isTop ? "x" : false}
+      dragConstraints={{ left: 0, right: 0 }}
+      onDragEnd={handleDragEnd}
+      style={{ x, rotate, opacity, background: card.bg }}
+      className="absolute inset-0 flex items-center justify-center rounded-2xl text-2xl font-bold text-white shadow-2xl cursor-grab active:cursor-grabbing"
+      whileDrag={{ scale: 1.05 }}
+    &gt;
+      {card.content}
+    &lt;/motion.div&gt;
+  )
+}
+
+export function SwipeCards() {
+  const [cards, setCards] = useState(INITIAL_CARDS)
+
+  const handleSwipe = (id: number) => {
+    setCards((prev) => prev.filter((c) => c.id !== id))
+  }
+
+  return (
+    &lt;div className="relative h-64 w-48 mx-auto"&gt;
+      &lt;AnimatePresence&gt;
+        {cards.map((card, i) => (
+          &lt;SwipeCard
+            key={card.id}
+            card={card}
+            isTop={i === cards.length - 1}
+            onSwipe={handleSwipe}
+          /&gt;
+        ))}
+      &lt;/AnimatePresence&gt;
+      {cards.length === 0 && (
+        &lt;button
+          onClick={() => setCards(INITIAL_CARDS)}
+          className="absolute inset-0 flex items-center justify-center rounded-2xl border-2 border-dashed border-neutral-600 text-neutral-400 text-sm"
+        &gt;
+          Reset cards
+        &lt;/button&gt;
+      )}
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="tilt-card">
+      <h3>TiltCard</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">3D</span>
+      <span class="tag">Mouse Tracking</span>
+      <p>Card that tilts in 3D perspective based on mouse position. Inner elements can be given a translateZ offset to create a parallax depth effect.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// TiltCard.tsx
+"use client"
+import { useRef } from "react"
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
+
+interface TiltCardProps {
+  children: React.ReactNode
+  className?: string
+  tiltStrength?: number
+}
+
+export function TiltCard({ children, className, tiltStrength = 15 }: TiltCardProps) {
+  const cardRef = useRef&lt;HTMLDivElement&gt;(null)
+
+  const rawX = useMotionValue(0)
+  const rawY = useMotionValue(0)
+
+  const x = useSpring(rawX, { stiffness: 300, damping: 30 })
+  const y = useSpring(rawY, { stiffness: 300, damping: 30 })
+
+  const rotateX = useTransform(y, [-0.5, 0.5], [tiltStrength, -tiltStrength])
+  const rotateY = useTransform(x, [-0.5, 0.5], [-tiltStrength, tiltStrength])
+
+  // Shine effect
+  const shineX = useTransform(x, [-0.5, 0.5], ["140%", "-40%"])
+  const shineY = useTransform(y, [-0.5, 0.5], ["140%", "-40%"])
+
+  const handleMouseMove = (e: React.MouseEvent&lt;HTMLDivElement&gt;) => {
+    const el = cardRef.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    rawX.set((e.clientX - rect.left) / rect.width - 0.5)
+    rawY.set((e.clientY - rect.top) / rect.height - 0.5)
+  }
+
+  const handleMouseLeave = () => {
+    rawX.set(0)
+    rawY.set(0)
+  }
+
+  return (
+    &lt;motion.div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+      className={`relative overflow-hidden rounded-2xl border border-white/10 bg-neutral-900 p-6 shadow-2xl ${className ?? ""}`}
+    &gt;
+      {/* Shine overlay */}
+      &lt;motion.div
+        className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100"
+        style={{
+          background: useTransform(
+            [shineX, shineY],
+            ([sx, sy]: string[]) =&gt; `radial-gradient(circle at ${sx} ${sy}, rgba(255,255,255,0.12), transparent 60%)`
+          ),
+        }}
+      /&gt;
+      &lt;div style={{ transform: "translateZ(40px)" }}&gt;
+        {children}
+      &lt;/div&gt;
+    &lt;/motion.div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="hover-image-links">
+      <h3>HoverImageLinks</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Image Reveal</span>
+      <span class="tag">Navigation</span>
+      <p>A list of links where hovering over each reveals a floating image preview that follows the cursor. Made famous by awwwards-style agency sites.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// HoverImageLinks.tsx
+"use client"
+import { useRef, useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+
+interface LinkItem {
+  title: string
+  href: string
+  imgSrc: string
+}
+
+const links: LinkItem[] = [
+  { title: "About", href: "/about", imgSrc: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400" },
+  { title: "Work", href: "/work", imgSrc: "https://images.unsplash.com/photo-1558655146-364adaf1fcc9?w=400" },
+  { title: "Contact", href: "/contact", imgSrc: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=400" },
+]
+
+function LinkItem({ item }: { item: LinkItem }) {
+  const [hovered, setHovered] = useState(false)
+  const [pos, setPos] = useState({ x: 0, y: 0 })
+  const ref = useRef&lt;HTMLAnchorElement&gt;(null)
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    setPos({ x: e.clientX, y: e.clientY })
+  }
+
+  return (
+    &lt;&gt;
+      &lt;a
+        ref={ref}
+        href={item.href}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        onMouseMove={handleMouseMove}
+        className="block border-b border-neutral-800 py-6 text-3xl font-bold text-neutral-300 transition-colors hover:text-white cursor-none"
+      &gt;
+        {item.title}
+      &lt;/a&gt;
+      &lt;AnimatePresence&gt;
+        {hovered && (
+          &lt;motion.div
+            initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            exit={{ opacity: 0, scale: 0.8, rotate: 5 }}
+            transition={{ duration: 0.2 }}
+            style={{ left: pos.x + 20, top: pos.y - 80 }}
+            className="pointer-events-none fixed z-50 h-40 w-56 overflow-hidden rounded-xl shadow-2xl"
+          &gt;
+            &lt;img src={item.imgSrc} alt={item.title} className="h-full w-full object-cover" /&gt;
+          &lt;/motion.div&gt;
+        )}
+      &lt;/AnimatePresence&gt;
+    &lt;/&gt;
+  )
+}
+
+export function HoverImageLinks() {
+  return (
+    &lt;nav className="max-w-2xl mx-auto py-16 px-4"&gt;
+      {links.map((item) => (
+        &lt;LinkItem key={item.title} item={item} /&gt;
+      ))}
+    &lt;/nav&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="parallax-card">
+      <h3>ParallaxCard</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Parallax</span>
+      <span class="tag">Scroll</span>
+      <p>Card whose background image moves at a slower rate than the scroll speed, creating a parallax depth illusion.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// ParallaxCard.tsx
+"use client"
+import { useRef } from "react"
+import { motion, useScroll, useTransform } from "framer-motion"
+
+interface ParallaxCardProps {
+  imgSrc: string
+  title: string
+  description?: string
+}
+
+export function ParallaxCard({ imgSrc, title, description }: ParallaxCardProps) {
+  const ref = useRef&lt;HTMLDivElement&gt;(null)
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] })
+  const imgY = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"])
+
+  return (
+    &lt;div ref={ref} className="relative h-80 overflow-hidden rounded-2xl"&gt;
+      &lt;motion.img
+        src={imgSrc}
+        alt={title}
+        style={{ y: imgY, scale: 1.3 }}
+        className="absolute inset-0 h-full w-full object-cover"
+      /&gt;
+      &lt;div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" /&gt;
+      &lt;div className="absolute bottom-0 left-0 p-6"&gt;
+        &lt;h3 className="text-xl font-bold text-white"&gt;{title}&lt;/h3&gt;
+        {description && &lt;p className="text-sm text-white/70 mt-1"&gt;{description}&lt;/p&gt;}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- LINKS -->
+    <h2 id="links">Links &amp; Text Effects</h2>
+    <p>hover.dev's link components are some of its most distinctive — all built purely with Framer Motion.</p>
+
+    <div data-component="underline-to-background">
+      <h3>UnderlineToBackground</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Link Effect</span>
+      <p>On hover, a colored underline expands upward to fill the full height of the text element, inverting text color — creating a highlight/background reveal effect.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// UnderlineToBackground.tsx
+"use client"
+import { motion } from "framer-motion"
+
+interface UnderlineToBackgroundProps {
+  children: string
+  href?: string
+  highlightColor?: string
+  textColor?: string
+  className?: string
+}
+
+export function UnderlineToBackground({
+  children,
+  href = "#",
+  highlightColor = "#ffffff",
+  textColor = "#000000",
+  className,
+}: UnderlineToBackgroundProps) {
+  return (
+    &lt;motion.a
+      href={href}
+      initial="rest"
+      whileHover="hover"
+      className={`relative inline-block cursor-pointer overflow-hidden font-semibold ${className ?? ""}`}
+    &gt;
+      {/* Highlight background that grows from bottom */}
+      &lt;motion.span
+        variants={{
+          rest: { scaleY: 0, originY: 1 },
+          hover: { scaleY: 1, originY: 1 },
+        }}
+        transition={{ duration: 0.2, ease: "easeInOut" }}
+        style={{ background: highlightColor }}
+        className="absolute inset-0 z-0"
+      /&gt;
+      {/* Text that changes color on hover */}
+      &lt;motion.span
+        variants={{
+          rest: { color: "inherit" },
+          hover: { color: textColor },
+        }}
+        transition={{ duration: 0.2 }}
+        className="relative z-10 block px-1"
+      &gt;
+        {children}
+      &lt;/motion.span&gt;
+    &lt;/motion.a&gt;
+  )
+}
+
+// Usage:
+// &lt;UnderlineToBackground highlightColor="#6366f1" textColor="#fff"&gt;About&lt;/UnderlineToBackground&gt;</code></pre>
+      </div>
+    </div>
+
+    <div data-component="scramble-hover">
+      <h3>ScrambleHover</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Text Effect</span>
+      <p>Text scrambles through random characters on hover, then resolves character by character from left to right. A more refined version of the EncryptButton effect applied to any text.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// ScrambleHover.tsx
+"use client"
+import { useRef, useState } from "react"
+
+const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+const SCRAMBLE_SPEED = 40
+const RESOLVE_SPEED = 60
+
+interface ScrambleHoverProps {
+  text: string
+  className?: string
+  as?: keyof JSX.IntrinsicElements
+}
+
+export function ScrambleHover({ text, className, as: Tag = "span" }: ScrambleHoverProps) {
+  const [displayed, setDisplayed] = useState(text)
+  const intervalRef = useRef&lt;ReturnType&lt;typeof setInterval&gt; | null&gt;(null)
+  const resolvedRef = useRef(0)
+
+  const scramble = () => {
+    resolvedRef.current = 0
+
+    // First: full scramble
+    intervalRef.current = setInterval(() => {
+      setDisplayed(
+        text
+          .split("")
+          .map((char, i) =>
+            i &lt; resolvedRef.current
+              ? char
+              : char === " "
+              ? " "
+              : CHARS[Math.floor(Math.random() * CHARS.length)]
+          )
+          .join("")
+      )
+    }, SCRAMBLE_SPEED)
+  }
+
+  const resolve = () => {
+    clearInterval(intervalRef.current!)
+
+    const resolveInterval = setInterval(() => {
+      resolvedRef.current += 1
+      if (resolvedRef.current &gt; text.length) {
+        clearInterval(resolveInterval)
+        setDisplayed(text)
+        return
+      }
+      setDisplayed(
+        text
+          .split("")
+          .map((char, i) =&gt;
+            i &lt; resolvedRef.current
+              ? char
+              : char === " "
+              ? " "
+              : CHARS[Math.floor(Math.random() * CHARS.length)]
+          )
+          .join("")
+      )
+    }, RESOLVE_SPEED)
+  }
+
+  return (
+    &lt;Tag
+      onMouseEnter={scramble}
+      onMouseLeave={resolve}
+      className={`cursor-pointer font-mono ${className ?? ""}`}
+    &gt;
+      {displayed}
+    &lt;/Tag&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="flip-link">
+      <h3>FlipLink</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Link Effect</span>
+      <span class="tag">3D</span>
+      <p>Navbar/menu link where on hover the text flips upward in 3D, revealing a duplicate text below. Each letter is wrapped individually for a staggered wave effect.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// FlipLink.tsx
+"use client"
+import { motion } from "framer-motion"
+
+const DURATION = 0.25
+const STAGGER = 0.025
+
+interface FlipLinkProps {
+  children: string
+  href: string
+  className?: string
+}
+
+export function FlipLink({ children, href, className }: FlipLinkProps) {
+  return (
+    &lt;motion.a
+      initial="initial"
+      whileHover="hovered"
+      href={href}
+      className={`relative block overflow-hidden whitespace-nowrap font-black uppercase ${className ?? ""}`}
+      style={{ lineHeight: 0.75 }}
+    &gt;
+      {/* Top text (visible at rest) */}
+      &lt;div&gt;
+        {children.split("").map((letter, i) => (
+          &lt;motion.span
+            key={i}
+            variants={{
+              initial: { y: 0 },
+              hovered: { y: "-100%" },
+            }}
+            transition={{
+              duration: DURATION,
+              ease: "easeInOut",
+              delay: STAGGER * i,
+            }}
+            className="inline-block"
+          &gt;
+            {letter === " " ? "\u00A0" : letter}
+          &lt;/motion.span&gt;
+        ))}
+      &lt;/div&gt;
+      {/* Bottom text (revealed on hover) */}
+      &lt;div className="absolute inset-0"&gt;
+        {children.split("").map((letter, i) => (
+          &lt;motion.span
+            key={i}
+            variants={{
+              initial: { y: "100%" },
+              hovered: { y: 0 },
+            }}
+            transition={{
+              duration: DURATION,
+              ease: "easeInOut",
+              delay: STAGGER * i,
+            }}
+            className="inline-block"
+          &gt;
+            {letter === " " ? "\u00A0" : letter}
+          &lt;/motion.span&gt;
+        ))}
+      &lt;/div&gt;
+    &lt;/motion.a&gt;
+  )
+}
+
+// Usage in a nav:
+// &lt;FlipLink href="/about"&gt;About&lt;/FlipLink&gt;
+// &lt;FlipLink href="/work"&gt;Work&lt;/FlipLink&gt;</code></pre>
+      </div>
+    </div>
+
+    <!-- MENUS -->
+    <h2 id="menus">Menus &amp; Navigation</h2>
+
+    <div data-component="full-screen-menu">
+      <h3>FullScreenMenu</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Navigation</span>
+      <span class="tag">Overlay</span>
+      <p>Fullscreen overlay menu that animates open with a staggered reveal of nav links. Often paired with FlipLink for the link animation.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// FullScreenMenu.tsx
+"use client"
+import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { FlipLink } from "./FlipLink"
+
+const navLinks = [
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Work", href: "/work" },
+  { label: "Journal", href: "/journal" },
+  { label: "Contact", href: "/contact" },
+]
+
+export function FullScreenMenu() {
+  const [open, setOpen] = useState(false)
+
+  return (
+    &lt;&gt;
+      {/* Hamburger trigger */}
+      &lt;button
+        onClick={() => setOpen(true)}
+        className="fixed right-6 top-6 z-50 flex flex-col gap-1.5"
+      &gt;
+        {[0, 1, 2].map((i) => (
+          &lt;span key={i} className="block h-0.5 w-7 bg-white" /&gt;
+        ))}
+      &lt;/button&gt;
+
+      &lt;AnimatePresence&gt;
+        {open && (
+          &lt;motion.div
+            initial={{ clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)" }}
+            animate={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)" }}
+            exit={{ clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)" }}
+            transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
+            className="fixed inset-0 z-40 flex flex-col items-start justify-center bg-neutral-950 px-12"
+          &gt;
+            {/* Close */}
+            &lt;button
+              onClick={() => setOpen(false)}
+              className="absolute right-6 top-6 text-neutral-400 hover:text-white text-sm"
+            &gt;
+              Close
+            &lt;/button&gt;
+
+            {/* Links */}
+            &lt;nav className="space-y-2"&gt;
+              {navLinks.map((link, i) => (
+                &lt;motion.div
+                  key={link.label}
+                  initial={{ opacity: 0, x: -40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ delay: 0.3 + i * 0.07, duration: 0.4, ease: "easeOut" }}
+                &gt;
+                  &lt;FlipLink
+                    href={link.href}
+                    className="text-5xl md:text-7xl text-white py-2"
+                  &gt;
+                    {link.label}
+                  &lt;/FlipLink&gt;
+                &lt;/motion.div&gt;
+              ))}
+            &lt;/nav&gt;
+
+            {/* Footer info */}
+            &lt;motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ delay: 0.6 }}
+              className="absolute bottom-10 left-12 flex gap-8 text-sm text-neutral-500"
+            &gt;
+              &lt;a href="#" className="hover:text-white transition-colors"&gt;Twitter&lt;/a&gt;
+              &lt;a href="#" className="hover:text-white transition-colors"&gt;Instagram&lt;/a&gt;
+              &lt;a href="#" className="hover:text-white transition-colors"&gt;LinkedIn&lt;/a&gt;
+            &lt;/motion.div&gt;
+          &lt;/motion.div&gt;
+        )}
+      &lt;/AnimatePresence&gt;
+    &lt;/&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="reveal-links">
+      <h3>RevealLinks</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Navigation</span>
+      <span class="tag">Stagger</span>
+      <p>A set of nav links that animate in with a staggered clip-path reveal — each link slides up from behind a mask. Common in portfolio hero sections.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// RevealLinks.tsx
+"use client"
+import { motion } from "framer-motion"
+
+const links = ["Home", "About", "Projects", "Contact"]
+
+export function RevealLinks() {
+  return (
+    &lt;nav className="flex flex-col gap-4"&gt;
+      {links.map((link, i) => (
+        &lt;div key={link} className="overflow-hidden"&gt;
+          &lt;motion.a
+            href="#"
+            initial={{ y: "100%", opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{
+              delay: 0.1 + i * 0.08,
+              duration: 0.6,
+              ease: [0.33, 1, 0.68, 1],
+            }}
+            className="block text-4xl font-bold text-white hover:text-neutral-400 transition-colors"
+          &gt;
+            {link}
+          &lt;/motion.a&gt;
+        &lt;/div&gt;
+      ))}
+    &lt;/nav&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- LISTS -->
+    <h2 id="lists">Lists &amp; Data Display</h2>
+
+    <div data-component="animated-list">
+      <h3>AnimatedList</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">List</span>
+      <span class="tag">Stagger</span>
+      <p>List items that animate in with a staggered entrance. New items entering the list push others down with a spring animation.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// AnimatedList.tsx
+"use client"
+import { motion, AnimatePresence } from "framer-motion"
+
+interface ListItem {
+  id: string
+  content: React.ReactNode
+}
+
+interface AnimatedListProps {
+  items: ListItem[]
+  className?: string
+}
+
+export function AnimatedList({ items, className }: AnimatedListProps) {
+  return (
+    &lt;ul className={`space-y-2 ${className ?? ""}`}&gt;
+      &lt;AnimatePresence initial={false}&gt;
+        {items.map((item) => (
+          &lt;motion.li
+            key={item.id}
+            layout
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, x: 40, scale: 0.9 }}
+            transition={{
+              layout: { type: "spring", stiffness: 300, damping: 30 },
+              duration: 0.25,
+            }}
+          &gt;
+            {item.content}
+          &lt;/motion.li&gt;
+        ))}
+      &lt;/AnimatePresence&gt;
+    &lt;/ul&gt;
+  )
+}
+
+// Usage:
+// const [items, setItems] = useState([{ id: "1", content: &lt;div&gt;Item 1&lt;/div&gt; }])
+// &lt;AnimatedList items={items} /&gt;
+// setItems(prev =&gt; [{ id: Date.now().toString(), content: &lt;div&gt;New item&lt;/div&gt; }, ...prev])</code></pre>
+      </div>
+    </div>
+
+    <div data-component="stagger-reveal">
+      <h3>StaggerReveal</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Animation</span>
+      <span class="tag">Scroll</span>
+      <p>Wraps any list of children and animates them in with a staggered delay when they enter the viewport using IntersectionObserver.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// StaggerReveal.tsx
+"use client"
+import { useRef } from "react"
+import { motion, useInView } from "framer-motion"
+
+interface StaggerRevealProps {
+  children: React.ReactNode[]
+  stagger?: number
+  className?: string
+}
+
+export function StaggerReveal({ children, stagger = 0.08, className }: StaggerRevealProps) {
+  const ref = useRef&lt;HTMLDivElement&gt;(null)
+  const inView = useInView(ref, { once: true, margin: "-50px" })
+
+  return (
+    &lt;div ref={ref} className={className}&gt;
+      {children.map((child, i) => (
+        &lt;motion.div
+          key={i}
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: i * stagger, ease: [0.33, 1, 0.68, 1] }}
+        &gt;
+          {child}
+        &lt;/motion.div&gt;
+      ))}
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- INPUTS -->
+    <h2 id="inputs">Inputs</h2>
+
+    <div data-component="motion-input">
+      <h3>Motion Input</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Form</span>
+      <p>Input field with animated focus ring that scales in with a spring, and a label that transitions to a floating state.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// MotionInput.tsx
+"use client"
+import { useState } from "react"
+import { motion } from "framer-motion"
+
+interface MotionInputProps extends React.InputHTMLAttributes&lt;HTMLInputElement&gt; {
+  label: string
+}
+
+export function MotionInput({ label, id, ...props }: MotionInputProps) {
+  const [focused, setFocused] = useState(false)
+  const [hasValue, setHasValue] = useState(false)
+  const active = focused || hasValue
+
+  return (
+    &lt;div className="relative"&gt;
+      {/* Animated focus ring */}
+      &lt;motion.span
+        animate={{ opacity: focused ? 1 : 0, scale: focused ? 1 : 0.98 }}
+        transition={{ duration: 0.15 }}
+        className="pointer-events-none absolute -inset-px rounded-xl ring-2 ring-indigo-500"
+      /&gt;
+      &lt;input
+        id={id}
+        onFocus={() => setFocused(true)}
+        onBlur={(e) => { setFocused(false); setHasValue(e.target.value.length &gt; 0) }}
+        onChange={(e) => setHasValue(e.target.value.length &gt; 0)}
+        className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 pb-2.5 pt-6 text-sm text-white outline-none transition-colors"
+        {...props}
+      /&gt;
+      &lt;motion.label
+        htmlFor={id}
+        animate={active ? { y: -10, scale: 0.8, originX: 0, color: "#818cf8" } : { y: 0, scale: 1 }}
+        transition={{ type: "spring", stiffness: 300, damping: 25 }}
+        className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm text-neutral-500"
+      &gt;
+        {label}
+      &lt;/motion.label&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- LOADERS -->
+    <h2 id="loaders">Loaders</h2>
+
+    <div data-component="spinner">
+      <h3>Framer Spinner</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Loading</span>
+      <p>Smooth animated loading spinner using Framer Motion rotate animation.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// Spinner.tsx
+import { motion } from "framer-motion"
+
+interface SpinnerProps {
+  size?: number
+  color?: string
+  thickness?: number
+}
+
+export function Spinner({ size = 32, color = "#6366f1", thickness = 3 }: SpinnerProps) {
+  return (
+    &lt;motion.div
+      animate={{ rotate: 360 }}
+      transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+      style={{
+        width: size,
+        height: size,
+        borderRadius: "50%",
+        border: `${thickness}px solid transparent`,
+        borderTopColor: color,
+        borderRightColor: color,
+      }}
+    /&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="progress-bar">
+      <h3>Animated Progress Bar</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Loading</span>
+      <p>Smooth animated progress bar with spring physics. Accepts a 0-100 value.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// ProgressBar.tsx
+"use client"
+import { motion, useSpring, useTransform } from "framer-motion"
+import { useEffect } from "react"
+
+interface ProgressBarProps {
+  value: number
+  className?: string
+  color?: string
+}
+
+export function ProgressBar({ value, className, color = "#6366f1" }: ProgressBarProps) {
+  const spring = useSpring(0, { stiffness: 80, damping: 20 })
+  const width = useTransform(spring, (v) =&gt; `${v}%`)
+
+  useEffect(() => { spring.set(Math.min(Math.max(value, 0), 100)) }, [value, spring])
+
+  return (
+    &lt;div className={`relative h-2 w-full overflow-hidden rounded-full bg-neutral-800 ${className ?? ""}`}&gt;
+      &lt;motion.div style={{ width, background: color }} className="absolute inset-y-0 left-0 rounded-full" /&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- OTHER -->
+    <h2 id="other">Other Components</h2>
+
+    <div data-component="word-pull-up">
+      <h3>WordPullUp</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Text Animation</span>
+      <p>Heading where each word pulls up into view with a stagger, masked by a clip-path so words appear to emerge from below the baseline.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// WordPullUp.tsx
+"use client"
+import { motion } from "framer-motion"
+
+interface WordPullUpProps {
+  words: string
+  className?: string
+}
+
+export function WordPullUp({ words, className }: WordPullUpProps) {
+  const wordArray = words.split(" ")
+
+  return (
+    &lt;h2 className={`flex flex-wrap justify-center gap-x-3 ${className ?? ""}`}&gt;
+      {wordArray.map((word, i) => (
+        &lt;div key={i} className="overflow-hidden"&gt;
+          &lt;motion.span
+            initial={{ y: "100%", opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{
+              delay: i * 0.1,
+              duration: 0.5,
+              ease: [0.33, 1, 0.68, 1],
+            }}
+            className="inline-block"
+          &gt;
+            {word}
+          &lt;/motion.span&gt;
+        &lt;/div&gt;
+      ))}
+    &lt;/h2&gt;
+  )
+}
+
+// Usage:
+// &lt;WordPullUp words="Build beautiful products faster" className="text-5xl font-bold text-white" /&gt;</code></pre>
+      </div>
+    </div>
+
+    <div data-component="cursor-follow">
+      <h3>CursorFollow</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Cursor</span>
+      <p>Custom cursor dot that follows the mouse with spring-based lag. Can expand on hover over interactive elements.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// CursorFollow.tsx
+"use client"
+import { useEffect, useState } from "react"
+import { motion, useSpring } from "framer-motion"
+
+export function CursorFollow() {
+  const [visible, setVisible] = useState(false)
+  const [hovered, setHovered] = useState(false)
+
+  const cursorX = useSpring(0, { stiffness: 200, damping: 20 })
+  const cursorY = useSpring(0, { stiffness: 200, damping: 20 })
+
+  useEffect(() => {
+    const move = (e: MouseEvent) => {
+      cursorX.set(e.clientX)
+      cursorY.set(e.clientY)
+      setVisible(true)
+    }
+    const enter = (e: MouseEvent) => {
+      if ((e.target as HTMLElement).closest("a, button")) setHovered(true)
+    }
+    const leave = (e: MouseEvent) => {
+      if ((e.target as HTMLElement).closest("a, button")) setHovered(false)
+    }
+    window.addEventListener("mousemove", move)
+    window.addEventListener("mouseover", enter)
+    window.addEventListener("mouseout", leave)
+    return () => {
+      window.removeEventListener("mousemove", move)
+      window.removeEventListener("mouseover", enter)
+      window.removeEventListener("mouseout", leave)
+    }
+  }, [cursorX, cursorY])
+
+  if (!visible) return null
+
+  return (
+    &lt;motion.div
+      style={{ x: cursorX, y: cursorY, translateX: "-50%", translateY: "-50%" }}
+      animate={{ scale: hovered ? 2.5 : 1, opacity: hovered ? 0.5 : 1 }}
+      transition={{ scale: { type: "spring", stiffness: 300, damping: 20 } }}
+      className="pointer-events-none fixed top-0 left-0 z-[9999] h-4 w-4 rounded-full bg-white mix-blend-difference"
+    /&gt;
+  )
+}
+
+// Mount at root layout — hides the default cursor via CSS:
+// body { cursor: none; }
+// a, button { cursor: none; }</code></pre>
+      </div>
+    </div>
+
+    <div data-component="infinite-scroll-marquee">
+      <h3>Infinite Scroll Marquee</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Animation</span>
+      <span class="tag">Marquee</span>
+      <p>Infinitely scrolling horizontal ticker using Framer Motion's x-axis animation. Supports pause on hover and reverse direction.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// InfiniteMarquee.tsx
+"use client"
+import { useRef } from "react"
+import { motion, useAnimationFrame, useMotionValue, useTransform, wrap } from "framer-motion"
+
+interface InfiniteMarqueeProps {
+  children: React.ReactNode
+  speed?: number
+  direction?: "left" | "right"
+}
+
+export function InfiniteMarquee({ children, speed = 50, direction = "left" }: InfiniteMarqueeProps) {
+  const x = useMotionValue(0)
+  const containerRef = useRef&lt;HTMLDivElement&gt;(null)
+
+  useAnimationFrame((_, delta) => {
+    const moveBy = direction === "left" ? -speed : speed
+    x.set(x.get() + (moveBy * delta) / 1000)
+  })
+
+  const wrapped = useTransform(x, (v) =&gt; {
+    const el = containerRef.current
+    if (!el) return v
+    const width = el.scrollWidth / 2
+    return wrap(-width, 0, v)
+  })
+
+  return (
+    &lt;div className="overflow-hidden"&gt;
+      &lt;motion.div ref={containerRef} style={{ x: wrapped }} className="flex whitespace-nowrap"&gt;
+        {/* Render twice for seamless loop */}
+        &lt;div className="flex shrink-0"&gt;{children}&lt;/div&gt;
+        &lt;div className="flex shrink-0"&gt;{children}&lt;/div&gt;
+      &lt;/motion.div&gt;
+    &lt;/div&gt;
+  )
+}
+
+// Usage:
+// &lt;InfiniteMarquee speed={60}&gt;
+//   {["React", "Framer", "TypeScript", "Tailwind"].map(t =&gt; (
+//     &lt;span key={t} className="mx-8 text-2xl font-bold text-neutral-400"&gt;{t}&lt;/span&gt;
+//   ))}
+// &lt;/InfiniteMarquee&gt;</code></pre>
+      </div>
+    </div>
+
+    <div data-component="spring-modal">
+      <h3>SpringModal</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Modal</span>
+      <p>Lightweight modal with spring entrance animation — no Radix UI dependency needed. Uses AnimatePresence for mount/unmount transitions.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// SpringModal.tsx
+"use client"
+import { motion, AnimatePresence } from "framer-motion"
+import { useEffect } from "react"
+
+interface SpringModalProps {
+  isOpen: boolean
+  onClose: () => void
+  children: React.ReactNode
+}
+
+export function SpringModal({ isOpen, onClose, children }: SpringModalProps) {
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose() }
+    document.addEventListener("keydown", handleKey)
+    return () => document.removeEventListener("keydown", handleKey)
+  }, [onClose])
+
+  return (
+    &lt;AnimatePresence&gt;
+      {isOpen && (
+        &lt;&gt;
+          {/* Backdrop */}
+          &lt;motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
+          /&gt;
+          {/* Modal panel */}
+          &lt;motion.div
+            initial={{ opacity: 0, y: 60, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 40, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            className="fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-neutral-950 border border-neutral-800 p-6 shadow-2xl"
+          &gt;
+            {children}
+          &lt;/motion.div&gt;
+        &lt;/&gt;
+      )}
+    &lt;/AnimatePresence&gt;
+  )
+}
+
+// Usage:
+// const [open, setOpen] = useState(false)
+// &lt;SpringModal isOpen={open} onClose={() => setOpen(false)}&gt;
+//   &lt;h2&gt;Modal Title&lt;/h2&gt;
+// &lt;/SpringModal&gt;</code></pre>
+      </div>
+    </div>
+
+    <div data-component="drag-to-confirm">
+      <h3>DragToConfirm (Slider)</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Gesture</span>
+      <p>A horizontal drag slider that requires the user to drag a handle all the way to the right to confirm an action. Common for payment confirmations.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// DragToConfirm.tsx
+"use client"
+import { useRef, useState } from "react"
+import { motion, useMotionValue, useTransform, animate } from "framer-motion"
+import { ArrowRight, Check } from "lucide-react"
+
+interface DragToConfirmProps {
+  onConfirm: () => void
+  label?: string
+}
+
+export function DragToConfirm({ onConfirm, label = "Slide to confirm" }: DragToConfirmProps) {
+  const trackRef = useRef&lt;HTMLDivElement&gt;(null)
+  const x = useMotionValue(0)
+  const [confirmed, setConfirmed] = useState(false)
+  const HANDLE_SIZE = 48
+
+  const handleWidth = useTransform(x, (v) =&gt; v + HANDLE_SIZE)
+  const opacity = useTransform(x, [0, 100], [1, 0])
+
+  const handleDragEnd = () => {
+    const track = trackRef.current
+    if (!track) return
+    const maxX = track.offsetWidth - HANDLE_SIZE
+    if (x.get() &gt;= maxX * 0.9) {
+      animate(x, maxX, { type: "spring", stiffness: 300, damping: 30 })
+      setConfirmed(true)
+      onConfirm()
+    } else {
+      animate(x, 0, { type: "spring", stiffness: 300, damping: 30 })
+    }
+  }
+
+  return (
+    &lt;div
+      ref={trackRef}
+      className="relative h-12 w-full max-w-xs overflow-hidden rounded-full bg-neutral-800"
+    &gt;
+      {/* Fill background */}
+      &lt;motion.div
+        style={{ width: handleWidth }}
+        className="absolute inset-y-0 left-0 rounded-full bg-indigo-600"
+      /&gt;
+      {/* Label */}
+      &lt;motion.span
+        style={{ opacity }}
+        className="absolute inset-0 flex items-center justify-center text-sm font-medium text-neutral-400 select-none pointer-events-none"
+      &gt;
+        {label}
+      &lt;/motion.span&gt;
+      {/* Handle */}
+      &lt;motion.button
+        drag={confirmed ? false : "x"}
+        dragConstraints={trackRef}
+        dragElastic={0}
+        style={{ x }}
+        onDragEnd={handleDragEnd}
+        className="absolute top-0 left-0 h-12 w-12 rounded-full bg-white shadow-lg flex items-center justify-center cursor-grab active:cursor-grabbing"
+      &gt;
+        {confirmed ? &lt;Check className="h-5 w-5 text-indigo-600" /&gt; : &lt;ArrowRight className="h-5 w-5 text-indigo-600" /&gt;}
+      &lt;/motion.button&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="accordion-faq">
+      <h3>Framer Accordion (no Radix)</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Accordion</span>
+      <p>Pure Framer Motion accordion with animated height using layout animations — zero external dependencies beyond framer-motion.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// FramerAccordion.tsx
+"use client"
+import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { Plus } from "lucide-react"
+
+interface AccordionItem {
+  question: string
+  answer: string
+}
+
+function AccordionRow({ item }: { item: AccordionItem }) {
+  const [open, setOpen] = useState(false)
+
+  return (
+    &lt;div className="border-b border-neutral-800"&gt;
+      &lt;button
+        onClick={() => setOpen(!open)}
+        className="flex w-full items-center justify-between py-5 text-left text-white font-medium hover:text-neutral-300 transition-colors"
+      &gt;
+        {item.question}
+        &lt;motion.span
+          animate={{ rotate: open ? 45 : 0 }}
+          transition={{ duration: 0.2 }}
+          className="shrink-0 ml-4"
+        &gt;
+          &lt;Plus className="h-5 w-5 text-neutral-400" /&gt;
+        &lt;/motion.span&gt;
+      &lt;/button&gt;
+      &lt;AnimatePresence initial={false}&gt;
+        {open && (
+          &lt;motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="overflow-hidden"
+          &gt;
+            &lt;p className="pb-5 text-sm text-neutral-400"&gt;{item.answer}&lt;/p&gt;
+          &lt;/motion.div&gt;
+        )}
+      &lt;/AnimatePresence&gt;
+    &lt;/div&gt;
+  )
+}
+
+export function FramerAccordion({ items }: { items: AccordionItem[] }) {
+  return (
+    &lt;div className="max-w-2xl mx-auto"&gt;
+      {items.map((item) => (
+        &lt;AccordionRow key={item.question} item={item} /&gt;
+      ))}
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="scroll-velocity">
+      <h3>ScrollVelocity Text</h3>
+      <span class="badge free">Free</span>
+      <span class="tag">Scroll</span>
+      <span class="tag">Animation</span>
+      <p>Horizontal scrolling text that speeds up and slows down based on scroll velocity — fast scrolling = fast text, stopped = slow drift.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// ScrollVelocity.tsx
+"use client"
+import { useRef } from "react"
+import {
+  motion,
+  useAnimationFrame,
+  useMotionValue,
+  useScroll,
+  useSpring,
+  useTransform,
+  useVelocity,
+  wrap,
+} from "framer-motion"
+
+interface ScrollVelocityProps {
+  text: string
+  velocity?: number
+  className?: string
+}
+
+function VelocityText({ text, velocity = 5, className }: ScrollVelocityProps) {
+  const baseX = useMotionValue(0)
+  const { scrollY } = useScroll()
+  const scrollVelocity = useVelocity(scrollY)
+  const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 })
+  const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 5], { clamp: false })
+  const ref = useRef&lt;HTMLDivElement&gt;(null)
+  const x = useTransform(baseX, (v) =&gt; {
+    const el = ref.current
+    if (!el) return v
+    return wrap(-el.scrollWidth / 2, 0, v)
+  })
+
+  let directionFactor = useRef&lt;number&gt;(1)
+
+  useAnimationFrame((_, delta) => {
+    let moveBy = directionFactor.current * velocity * (delta / 1000)
+    if (velocityFactor.get() &lt; 0) directionFactor.current = -1
+    else if (velocityFactor.get() &gt; 0) directionFactor.current = 1
+    moveBy += directionFactor.current * moveBy * velocityFactor.get()
+    baseX.set(baseX.get() + moveBy)
+  })
+
+  return (
+    &lt;div className="overflow-hidden"&gt;
+      &lt;motion.div ref={ref} style={{ x }} className={`flex whitespace-nowrap ${className ?? ""}`}&gt;
+        {Array(4).fill(text).map((t, i) => (
+          &lt;span key={i} className="mr-12 text-4xl font-black uppercase"&gt;{t}&lt;/span&gt;
+        ))}
+      &lt;/motion.div&gt;
+    &lt;/div&gt;
+  )
+}
+
+export function ScrollVelocity({ text, velocity, className }: ScrollVelocityProps) {
+  return (
+    &lt;section className="py-8 space-y-4"&gt;
+      &lt;VelocityText text={text} velocity={velocity} className={className} /&gt;
+      &lt;VelocityText text={text} velocity={-(velocity ?? 5)} className={className} /&gt;
+    &lt;/section&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div>
+<script>
+hljs.highlightAll();
+document.querySelectorAll('.code-block').forEach(b => {
+  const btn = b.querySelector('.copy-btn');
+  if (btn) btn.onclick = () => {
+    navigator.clipboard.writeText(b.querySelector('code').innerText);
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1500);
+  };
+});
+function filterComponents(q) {
+  const ql = q.toLowerCase();
+  document.querySelectorAll('[data-component]').forEach(el => {
+    el.style.display = !q || el.dataset.component.includes(ql) || el.textContent.toLowerCase().includes(ql) ? '' : 'none';
+  });
+}
+</script>
+</body></html>

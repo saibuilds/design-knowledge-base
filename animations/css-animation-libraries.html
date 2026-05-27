@@ -1,0 +1,617 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>CSS Animation Libraries — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#e5e5e5;font-family:'Inter',sans-serif;font-size:15px;line-height:1.6}.sidebar{position:fixed;left:0;top:0;width:220px;height:100vh;background:#111;border-right:1px solid #1f1f1f;padding:20px;overflow-y:auto}.sidebar h2{font-size:13px;color:#f59e0b;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}.sidebar a{display:block;color:#888;text-decoration:none;padding:6px 8px;border-radius:6px;font-size:13px;margin-bottom:2px}.sidebar a:hover{color:#fff;background:#1a1a1a}.main{margin-left:220px;padding:48px;max-width:960px}h1{font-size:32px;font-weight:700;color:#fff;margin-bottom:8px}h2{font-size:20px;font-weight:600;color:#fff;margin:40px 0 12px;padding-top:40px;border-top:1px solid #1f1f1f}h3{font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.08em;margin:20px 0 8px}p{color:#aaa;margin-bottom:12px}.tag{display:inline-block;background:#f59e0b15;border:1px solid #f59e0b40;color:#f59e0b;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.badge.free{background:#0d2e1680;border:1px solid #22c55e40;color:#22c55e;display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.badge.attr{background:#1a1400;border:1px solid #f59e0b40;color:#f59e0b;display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.install{background:#0d0d0d;border:1px solid #1f1f1f;border-radius:6px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#f59e0b;margin:8px 0}.code-block{position:relative;margin:12px 0}.copy-btn{position:absolute;top:8px;right:8px;background:#1f1f1f;border:1px solid #333;color:#888;padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer}.copy-btn:hover{color:#fff}pre{border-radius:8px;overflow:auto;font-size:12px;max-height:450px}.anim-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin:12px 0}.anim-pill{background:#111;border:1px solid #1f1f1f;border-radius:6px;padding:6px 10px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#888}.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:16px 0}.resource-card{background:#111;border:1px solid #1f1f1f;border-radius:10px;padding:16px}.resource-card h4{font-size:14px;color:#fff;margin-bottom:6px}.resource-card p{font-size:12px;color:#666;margin:0}input[type=search]{width:100%;background:#111;border:1px solid #2a2a2a;color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;font-family:inherit;margin-bottom:32px;outline:none}input[type=search]:focus{border-color:#f59e0b50}.note{background:#111;border:1px solid #1f1f1f;border-left:3px solid #f59e0b;padding:12px 16px;border-radius:0 6px 6px 0;margin:12px 0;font-size:13px;color:#888}</style></head>
+<body>
+<div class="sidebar">
+  <h2>Design KB</h2>
+  <a href="../index.html">Home</a>
+  <a href="../components/animated-components.html">Animated Components</a>
+  <a href="../animations/css-animation-libraries.html" style="color:#f59e0b">CSS Animations</a>
+  <a href="../3d/webgl-libraries.html">WebGL / 3D</a>
+  <a href="../reference-sites/design-galleries.html">Design Galleries</a>
+  <a href="../assets/free-templates.html">Free Templates</a>
+  <a href="../assets/icons-fonts.html">Icons + Fonts</a>
+</div>
+<div class="main">
+  <input type="search" placeholder="Search animations, classes, libraries..." oninput="search(this.value)">
+  <div id="content">
+
+    <h1>CSS &amp; JS Animation Libraries</h1>
+    <p>Pure CSS animation libraries and lightweight JS animation tools. All MIT or similarly permissive licensed — full code ownership, no restrictions on commercial use.</p>
+    <div class="note">All libraries below are free for personal and commercial use. Animate.css uses Hippocratic License 2.1 — ethically permissive but with human rights clauses. Magic.css has no explicit license but is open-source on GitHub.</div>
+
+    <!-- ANIMATE.CSS -->
+    <div data-section="animate.css animate css">
+    <h2 id="animate-css">Animate.css</h2>
+    <p>The most popular CSS animation library. Cross-browser, zero-dependency, add a class and animate. Used by millions of sites since 2013. Hippocratic License 2.1 — free for all use.</p>
+    <span class="badge free">FREE</span> <span class="tag">Hippocratic License 2.1</span> <span class="tag">Pure CSS</span> <span class="tag">Zero JS</span> <span class="tag">75+ animations</span>
+    <p style="margin-top:12px"><a href="https://animate.style" target="_blank" style="color:#f59e0b">animate.style →</a></p>
+
+    <h3>Install</h3>
+    <div class="install">npm install animate.css --save</div>
+    <div class="install">&lt;!-- CDN --&gt;<br>&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/&gt;</div>
+
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-html">&lt;!-- Add animate__animated + one effect class --&gt;
+&lt;h1 class="animate__animated animate__bounce"&gt;Bouncing heading&lt;/h1&gt;
+&lt;div class="animate__animated animate__fadeInUp animate__delay-1s"&gt;Delayed fade&lt;/div&gt;
+
+&lt;!-- Utility classes --&gt;
+&lt;!-- Speeds: animate__slow (2s), animate__slower (3s), animate__fast (0.8s), animate__faster (0.5s) --&gt;
+&lt;!-- Delays: animate__delay-1s through animate__delay-5s --&gt;
+&lt;!-- Repeat:  animate__repeat-1, animate__repeat-2, animate__repeat-3, animate__infinite --&gt;
+
+&lt;p class="animate__animated animate__fadeIn animate__faster animate__infinite"&gt;
+  Fast, infinite fade
+&lt;/p&gt;</code></pre>
+    </div>
+
+    <h3>JavaScript — Trigger on Event</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">// Add animation class, remove when done
+function animateCSS(element, animation, prefix = 'animate__') {
+  return new Promise((resolve) => {
+    const el = typeof element === 'string' ? document.querySelector(element) : element;
+    const classes = [`${prefix}animated`, `${prefix}${animation}`];
+    el.classList.add(...classes);
+
+    function handleEnd() {
+      el.classList.remove(...classes);
+      el.removeEventListener('animationend', handleEnd);
+      resolve('Animation ended');
+    }
+    el.addEventListener('animationend', handleEnd);
+  });
+}
+
+// Usage
+animateCSS('.my-element', 'bounceOutLeft').then(() => {
+  // element has finished animating out
+  document.querySelector('.my-element').remove();
+});
+
+// Intersection Observer — animate on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));</code></pre>
+    </div>
+
+    <h3>All Animation Classes</h3>
+    <h3>Attention Seekers</h3>
+    <div class="anim-grid">
+      <div class="anim-pill">animate__bounce</div>
+      <div class="anim-pill">animate__flash</div>
+      <div class="anim-pill">animate__pulse</div>
+      <div class="anim-pill">animate__rubberBand</div>
+      <div class="anim-pill">animate__shakeX</div>
+      <div class="anim-pill">animate__shakeY</div>
+      <div class="anim-pill">animate__headShake</div>
+      <div class="anim-pill">animate__swing</div>
+      <div class="anim-pill">animate__tada</div>
+      <div class="anim-pill">animate__wobble</div>
+      <div class="anim-pill">animate__jello</div>
+      <div class="anim-pill">animate__heartBeat</div>
+    </div>
+    <h3>Entrances (In)</h3>
+    <div class="anim-grid">
+      <div class="anim-pill">animate__backInDown</div>
+      <div class="anim-pill">animate__backInLeft</div>
+      <div class="anim-pill">animate__backInRight</div>
+      <div class="anim-pill">animate__backInUp</div>
+      <div class="anim-pill">animate__bounceIn</div>
+      <div class="anim-pill">animate__bounceInDown</div>
+      <div class="anim-pill">animate__bounceInLeft</div>
+      <div class="anim-pill">animate__bounceInRight</div>
+      <div class="anim-pill">animate__bounceInUp</div>
+      <div class="anim-pill">animate__fadeIn</div>
+      <div class="anim-pill">animate__fadeInDown</div>
+      <div class="anim-pill">animate__fadeInLeft</div>
+      <div class="anim-pill">animate__fadeInRight</div>
+      <div class="anim-pill">animate__fadeInUp</div>
+      <div class="anim-pill">animate__fadeInTopLeft</div>
+      <div class="anim-pill">animate__fadeInTopRight</div>
+      <div class="anim-pill">animate__fadeInBottomLeft</div>
+      <div class="anim-pill">animate__fadeInBottomRight</div>
+      <div class="anim-pill">animate__flipInX</div>
+      <div class="anim-pill">animate__flipInY</div>
+      <div class="anim-pill">animate__lightSpeedInRight</div>
+      <div class="anim-pill">animate__lightSpeedInLeft</div>
+      <div class="anim-pill">animate__rotateIn</div>
+      <div class="anim-pill">animate__rotateInDownLeft</div>
+      <div class="anim-pill">animate__rotateInDownRight</div>
+      <div class="anim-pill">animate__rotateInUpLeft</div>
+      <div class="anim-pill">animate__rotateInUpRight</div>
+      <div class="anim-pill">animate__zoomIn</div>
+      <div class="anim-pill">animate__zoomInDown</div>
+      <div class="anim-pill">animate__zoomInLeft</div>
+      <div class="anim-pill">animate__zoomInRight</div>
+      <div class="anim-pill">animate__zoomInUp</div>
+      <div class="anim-pill">animate__slideInDown</div>
+      <div class="anim-pill">animate__slideInLeft</div>
+      <div class="anim-pill">animate__slideInRight</div>
+      <div class="anim-pill">animate__slideInUp</div>
+      <div class="anim-pill">animate__jackInTheBox</div>
+      <div class="anim-pill">animate__rollIn</div>
+    </div>
+    <h3>Exits (Out)</h3>
+    <div class="anim-grid">
+      <div class="anim-pill">animate__backOutDown</div>
+      <div class="anim-pill">animate__backOutLeft</div>
+      <div class="anim-pill">animate__backOutRight</div>
+      <div class="anim-pill">animate__backOutUp</div>
+      <div class="anim-pill">animate__bounceOut</div>
+      <div class="anim-pill">animate__bounceOutDown</div>
+      <div class="anim-pill">animate__bounceOutLeft</div>
+      <div class="anim-pill">animate__bounceOutRight</div>
+      <div class="anim-pill">animate__bounceOutUp</div>
+      <div class="anim-pill">animate__fadeOut</div>
+      <div class="anim-pill">animate__fadeOutDown</div>
+      <div class="anim-pill">animate__fadeOutLeft</div>
+      <div class="anim-pill">animate__fadeOutRight</div>
+      <div class="anim-pill">animate__fadeOutUp</div>
+      <div class="anim-pill">animate__flipOutX</div>
+      <div class="anim-pill">animate__flipOutY</div>
+      <div class="anim-pill">animate__lightSpeedOutRight</div>
+      <div class="anim-pill">animate__lightSpeedOutLeft</div>
+      <div class="anim-pill">animate__rotateOut</div>
+      <div class="anim-pill">animate__rotateOutDownLeft</div>
+      <div class="anim-pill">animate__rotateOutDownRight</div>
+      <div class="anim-pill">animate__rotateOutUpLeft</div>
+      <div class="anim-pill">animate__rotateOutUpRight</div>
+      <div class="anim-pill">animate__zoomOut</div>
+      <div class="anim-pill">animate__zoomOutDown</div>
+      <div class="anim-pill">animate__zoomOutLeft</div>
+      <div class="anim-pill">animate__zoomOutRight</div>
+      <div class="anim-pill">animate__zoomOutUp</div>
+      <div class="anim-pill">animate__slideOutDown</div>
+      <div class="anim-pill">animate__slideOutLeft</div>
+      <div class="anim-pill">animate__slideOutRight</div>
+      <div class="anim-pill">animate__slideOutUp</div>
+      <div class="anim-pill">animate__hinge</div>
+      <div class="anim-pill">animate__rollOut</div>
+    </div>
+    </div>
+
+    <!-- MAGIC.CSS -->
+    <div data-section="magic css magic.css">
+    <h2 id="magic-css">Magic.css</h2>
+    <p>CSS3 animation library by miniMAC with 70+ special animation effects. Includes perspective transforms, bling effects, and unique transitions not found in Animate.css. Open-source on GitHub (miniMAC/magic).</p>
+    <span class="badge free">FREE</span> <span class="tag">Open Source</span> <span class="tag">Pure CSS</span> <span class="tag">70+ effects</span>
+    <p style="margin-top:12px"><a href="https://www.minimamente.com/project/magic/" target="_blank" style="color:#f59e0b">minimamente.com/project/magic →</a> &nbsp; <a href="https://github.com/miniMAC/magic" target="_blank" style="color:#f59e0b">GitHub →</a></p>
+
+    <h3>Install</h3>
+    <div class="install">npm install magic.css</div>
+    <div class="install">&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/magic.css/dist/magic.min.css"&gt;</div>
+
+    <h3>Usage</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-html">&lt;!-- Add magictime + effect class --&gt;
+&lt;div class="magictime puffIn"&gt;Puff entrance&lt;/div&gt;
+&lt;div class="magictime vanishOut"&gt;Vanish exit&lt;/div&gt;
+&lt;div class="magictime twisterInDown"&gt;Twister in&lt;/div&gt;
+&lt;div class="magictime perspectiveDown"&gt;Perspective tilt&lt;/div&gt;</code></pre>
+    </div>
+
+    <h3>All Effect Categories</h3>
+    <div class="anim-grid">
+      <div class="anim-pill">twisterInDown</div>
+      <div class="anim-pill">twisterInUp</div>
+      <div class="anim-pill">swap</div>
+      <div class="anim-pill">puffIn</div>
+      <div class="anim-pill">puffOut</div>
+      <div class="anim-pill">vanishIn</div>
+      <div class="anim-pill">vanishOut</div>
+      <div class="anim-pill">openDownLeft</div>
+      <div class="anim-pill">openDownRight</div>
+      <div class="anim-pill">openUpLeft</div>
+      <div class="anim-pill">openUpRight</div>
+      <div class="anim-pill">openDownLeftReturn</div>
+      <div class="anim-pill">openDownRightReturn</div>
+      <div class="anim-pill">openUpLeftReturn</div>
+      <div class="anim-pill">openUpRightReturn</div>
+      <div class="anim-pill">perspectiveDown</div>
+      <div class="anim-pill">perspectiveUp</div>
+      <div class="anim-pill">perspectiveLeft</div>
+      <div class="anim-pill">perspectiveRight</div>
+      <div class="anim-pill">perspectiveDownReturn</div>
+      <div class="anim-pill">perspectiveUpReturn</div>
+      <div class="anim-pill">perspectiveLeftReturn</div>
+      <div class="anim-pill">perspectiveRightReturn</div>
+      <div class="anim-pill">rotateDown</div>
+      <div class="anim-pill">rotateUp</div>
+      <div class="anim-pill">rotateLeft</div>
+      <div class="anim-pill">rotateRight</div>
+      <div class="anim-pill">slideDown</div>
+      <div class="anim-pill">slideUp</div>
+      <div class="anim-pill">slideLeft</div>
+      <div class="anim-pill">slideRight</div>
+      <div class="anim-pill">swashOut</div>
+      <div class="anim-pill">swashIn</div>
+      <div class="anim-pill">foolishIn</div>
+      <div class="anim-pill">holeOut</div>
+    </div>
+    </div>
+
+    <!-- ANIMXYZ -->
+    <div data-section="animxyz xyz composable">
+    <h2 id="animxyz">AnimXYZ</h2>
+    <p>Composable CSS animation toolkit — combine xyz utilities like Tailwind to create complex animations without writing keyframes. Works with Vue, React, HTML. MIT licensed. Made by Ingram Micro Cloud.</p>
+    <span class="badge free">FREE</span> <span class="tag">MIT</span> <span class="tag">CSS Variables</span> <span class="tag">React</span> <span class="tag">Vue</span> <span class="tag">Composable</span>
+    <p style="margin-top:12px"><a href="https://animxyz.com" target="_blank" style="color:#f59e0b">animxyz.com →</a></p>
+
+    <h3>Install</h3>
+    <div class="install">npm install @animxyz/core</div>
+    <div class="install">npm install @animxyz/react  # React<br>npm install @animxyz/vue3  # Vue 3<br>npm install @animxyz/vue   # Vue 2</div>
+
+    <h3>CSS Import</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-css">/* In your main CSS or JS entry */
+@import "@animxyz/core";</code></pre>
+    </div>
+
+    <h3>HTML Usage — Compose animations with xyz attribute</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-html">&lt;!-- Basic: fade + slide up --&gt;
+&lt;div class="xyz-in" xyz="fade up"&gt;Animates in&lt;/div&gt;
+
+&lt;!-- Combined effects --&gt;
+&lt;div class="xyz-in" xyz="fade up big"&gt;Big fade up&lt;/div&gt;
+&lt;div class="xyz-in" xyz="fade left small"&gt;Small slide from right&lt;/div&gt;
+&lt;div class="xyz-in" xyz="fade rotate-right"&gt;Fade + rotate&lt;/div&gt;
+&lt;div class="xyz-in" xyz="fade up-100%"&gt;Slide full height&lt;/div&gt;
+
+&lt;!-- Direction control --&gt;
+&lt;div xyz="in-left out-right"&gt;Slides in from left, exits right&lt;/div&gt;
+
+&lt;!-- Custom CSS variable overrides --&gt;
+&lt;div class="xyz-in" xyz="fade" style="--xyz-translate-x: -42%"&gt;Custom offset&lt;/div&gt;
+&lt;div class="xyz-in" xyz="fade up" style="--xyz-duration: 0.3s; --xyz-delay: 0.5s"&gt;Custom timing&lt;/div&gt;
+
+&lt;!-- Nested/staggered children --&gt;
+&lt;ul class="xyz-in" xyz="fade up stagger"&gt;
+  &lt;li&gt;Stagger item 1&lt;/li&gt;
+  &lt;li&gt;Stagger item 2&lt;/li&gt;
+  &lt;li&gt;Stagger item 3&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+    </div>
+
+    <h3>React Usage</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-tsx">import { XyzTransition, XyzTransitionGroup } from "@animxyz/react";
+import "@animxyz/core";
+
+// Single element transition
+function FadeInCard({ visible }: { visible: boolean }) {
+  return (
+    &lt;XyzTransition appear xyz="fade up"&gt;
+      {visible &amp;&amp; (
+        &lt;div className="card"&gt;I animate in and out&lt;/div&gt;
+      )}
+    &lt;/XyzTransition&gt;
+  );
+}
+
+// List with stagger
+function AnimatedList({ items }: { items: string[] }) {
+  return (
+    &lt;XyzTransitionGroup appear xyz="fade up stagger"&gt;
+      {items.map((item) =&gt; (
+        &lt;div key={item} className="item"&gt;{item}&lt;/div&gt;
+      ))}
+    &lt;/XyzTransitionGroup&gt;
+  );
+}</code></pre>
+    </div>
+
+    <h3>Key xyz Utilities</h3>
+    <div class="anim-grid">
+      <div class="anim-pill">fade</div>
+      <div class="anim-pill">up / down</div>
+      <div class="anim-pill">left / right</div>
+      <div class="anim-pill">small / big</div>
+      <div class="anim-pill">rotate-right / -left</div>
+      <div class="anim-pill">flip-up / flip-down</div>
+      <div class="anim-pill">skew-left / skew-right</div>
+      <div class="anim-pill">stagger</div>
+      <div class="anim-pill">stagger-rev</div>
+      <div class="anim-pill">ease-in / ease-out</div>
+      <div class="anim-pill">origin-top</div>
+      <div class="anim-pill">origin-bottom</div>
+    </div>
+    </div>
+
+    <!-- AUTO-ANIMATE -->
+    <div data-section="auto-animate autoanimate formkit">
+    <h2 id="auto-animate">AutoAnimate</h2>
+    <p>Zero-config, drop-in animation utility. Add one line of code to animate DOM additions, removals, and moves automatically. MIT licensed by FormKit. Works with React, Vue, Solid, Svelte, Angular, and vanilla JS.</p>
+    <span class="badge free">FREE</span> <span class="tag">MIT</span> <span class="tag">React</span> <span class="tag">Vue</span> <span class="tag">Solid</span> <span class="tag">Svelte</span> <span class="tag">Vanilla JS</span>
+    <p style="margin-top:12px"><a href="https://auto-animate.formkit.com" target="_blank" style="color:#f59e0b">auto-animate.formkit.com →</a></p>
+
+    <h3>Install</h3>
+    <div class="install">npm install @formkit/auto-animate</div>
+
+    <h3>React Hook</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-tsx">import { useAutoAnimate } from '@formkit/auto-animate/react';
+
+// Animated todo list
+export function TodoList() {
+  const [parent] = useAutoAnimate();
+  const [items, setItems] = useState(['Buy groceries', 'Walk the dog']);
+
+  const addItem = () => setItems(prev => [...prev, `Item ${prev.length + 1}`]);
+  const removeItem = (i: number) => setItems(prev => prev.filter((_, idx) => idx !== i));
+
+  return (
+    &lt;div&gt;
+      &lt;button onClick={addItem}&gt;Add item&lt;/button&gt;
+      &lt;ul ref={parent}&gt;
+        {items.map((item, i) =&gt; (
+          &lt;li key={item} onClick={() =&gt; removeItem(i)}&gt;{item}&lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  );
+}
+
+// Animated accordion/show-hide
+export function Accordion({ title, content }: { title: string; content: string }) {
+  const [parent] = useAutoAnimate();
+  const [open, setOpen] = useState(false);
+  return (
+    &lt;div ref={parent}&gt;
+      &lt;button onClick={() =&gt; setOpen(!open)}&gt;{title}&lt;/button&gt;
+      {open &amp;&amp; &lt;p&gt;{content}&lt;/p&gt;}
+    &lt;/div&gt;
+  );
+}</code></pre>
+    </div>
+
+    <h3>Vue Directive</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-html">&lt;!-- Vue 3 --&gt;
+&lt;script setup&gt;
+import { useAutoAnimate } from '@formkit/auto-animate/vue';
+const [parent] = useAutoAnimate();
+// or as directive:
+import { vAutoAnimate } from '@formkit/auto-animate/vue';
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;ul v-auto-animate&gt;
+    &lt;li v-for="item in items" :key="item"&gt;{{ item }}&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/template&gt;</code></pre>
+    </div>
+
+    <h3>Vanilla JS</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">import autoAnimate from '@formkit/auto-animate';
+
+// Pass the parent element — children animate automatically
+const list = document.getElementById('my-list');
+autoAnimate(list);
+
+// With custom options
+autoAnimate(list, {
+  duration: 250,          // ms
+  easing: 'ease-in-out', // CSS easing
+  disrespectUserMotionPreference: false
+});</code></pre>
+    </div>
+    </div>
+
+    <!-- MOTION ONE -->
+    <div data-section="motion one motion.dev web animations api">
+    <h2 id="motion-one">Motion (Motion One)</h2>
+    <p>Production-grade animation library for the web. Hybrid engine — JavaScript-powered with hardware acceleration via the Web Animations API. Significantly smaller than GSAP. MIT licensed. Available for React, Vue, and vanilla JS. 370+ copy-paste examples.</p>
+    <span class="badge free">FREE</span> <span class="tag">MIT</span> <span class="tag">React</span> <span class="tag">Vue</span> <span class="tag">Vanilla JS</span> <span class="tag">Web Animations API</span>
+    <p style="margin-top:12px"><a href="https://motion.dev" target="_blank" style="color:#f59e0b">motion.dev →</a> &nbsp; <a href="https://motion.dev/examples" target="_blank" style="color:#f59e0b">Examples →</a></p>
+
+    <h3>Install</h3>
+    <div class="install">npm install motion</div>
+
+    <h3>Vanilla JS — animate()</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">import { animate, scroll, spring } from "motion";
+
+// Basic animation
+animate("#box", { x: 100, opacity: 1 }, { duration: 0.5 });
+
+// Spring physics
+animate("#card", { scale: 1 }, {
+  type: spring,
+  stiffness: 400,
+  damping: 20
+});
+
+// Keyframes
+animate("#circle", {
+  x: [0, 100, 0],
+  rotate: [0, 180, 360]
+}, { duration: 2, repeat: Infinity });
+
+// Scroll-linked animation
+scroll(animate("#progress", { scaleX: [0, 1] }));
+
+// Stagger
+import { stagger } from "motion";
+animate(".item", { opacity: 1, y: [20, 0] }, {
+  delay: stagger(0.1),
+  duration: 0.4
+});</code></pre>
+    </div>
+
+    <h3>React — motion components</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-tsx">import { motion, AnimatePresence, useMotionValue, useTransform } from "motion/react";
+
+// Basic animated element
+function AnimatedCard() {
+  return (
+    &lt;motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      className="card"
+      whileHover={{ scale: 1.03 }}
+      whileTap={{ scale: 0.97 }}
+    &gt;
+      Animated card
+    &lt;/motion.div&gt;
+  );
+}
+
+// Exit animations
+function Modal({ show }: { show: boolean }) {
+  return (
+    &lt;AnimatePresence&gt;
+      {show &amp;&amp; (
+        &lt;motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.95 }}
+          className="modal"
+        &gt;
+          Modal content
+        &lt;/motion.div&gt;
+      )}
+    &lt;/AnimatePresence&gt;
+  );
+}
+
+// Scroll-linked parallax
+import { useScroll, useTransform } from "motion/react";
+
+function ParallaxHero() {
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 500], [0, -150]);
+  return &lt;motion.div style={{ y }} className="hero-bg" /&gt;;
+}</code></pre>
+    </div>
+    </div>
+
+    <!-- TIPPY.JS -->
+    <div data-section="tippy tooltip popover">
+    <h2 id="tippy">Tippy.js</h2>
+    <p>Highly customizable tooltip and popover library powered by Popper.js (now Floating UI). Smart positioning, accessible, animated, and themeable. MIT licensed. Works with vanilla JS and has React bindings.</p>
+    <span class="badge free">FREE</span> <span class="tag">MIT</span> <span class="tag">Vanilla JS</span> <span class="tag">React</span> <span class="tag">Popper.js</span>
+    <p style="margin-top:12px"><a href="https://atomiks.github.io/tippyjs/" target="_blank" style="color:#f59e0b">tippyjs docs →</a></p>
+
+    <h3>Install</h3>
+    <div class="install">npm install tippy.js</div>
+
+    <h3>Vanilla JS Usage</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">import tippy from 'tippy.js';
+import 'tippy.js/dist/tippy.css';
+import 'tippy.js/themes/light.css';
+
+// Basic tooltip
+tippy('#myButton', { content: 'Hello!' });
+
+// Full options
+tippy('.has-tooltip', {
+  content: 'Tooltip content',
+  placement: 'top',          // top, bottom, left, right + -start/-end variants
+  animation: 'scale',        // fade, scale, shift-away, perspective
+  theme: 'light',            // light, light-border, material, translucent
+  trigger: 'mouseenter',     // mouseenter, focus, click, manual
+  delay: [300, 0],           // [show delay, hide delay]
+  arrow: true,
+  interactive: true,         // allows hovering the tooltip itself
+  appendTo: document.body,
+});
+
+// HTML content tooltip
+tippy('#btn', {
+  content: '&lt;strong&gt;Rich&lt;/strong&gt; content',
+  allowHTML: true,
+  theme: 'light-border',
+});
+
+// Programmatic control
+const instance = tippy('#el', { content: 'Tip' });
+instance[0].show();
+instance[0].hide();
+instance[0].destroy();</code></pre>
+    </div>
+
+    <h3>React (@tippyjs/react)</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-tsx">import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
+// npm install @tippyjs/react
+
+export function TooltipButton() {
+  return (
+    &lt;Tippy content="Save changes" placement="top" animation="scale"&gt;
+      &lt;button&gt;Save&lt;/button&gt;
+    &lt;/Tippy&gt;
+  );
+}
+
+// Popover with React content
+export function Popover() {
+  return (
+    &lt;Tippy
+      content={
+        &lt;div className="p-3"&gt;
+          &lt;h4 className="font-bold"&gt;Settings&lt;/h4&gt;
+          &lt;p&gt;Manage your preferences&lt;/p&gt;
+        &lt;/div&gt;
+      }
+      interactive={true}
+      trigger="click"
+      theme="light-border"
+    &gt;
+      &lt;button&gt;Open Popover&lt;/button&gt;
+    &lt;/Tippy&gt;
+  );
+}</code></pre>
+    </div>
+    </div>
+
+  </div>
+</div>
+<script>
+hljs.highlightAll();
+document.querySelectorAll('.code-block').forEach(b => {
+  const btn = b.querySelector('.copy-btn');
+  if (btn) btn.onclick = () => {
+    navigator.clipboard.writeText(b.querySelector('code').innerText);
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1500);
+  };
+});
+function search(q) {
+  document.querySelectorAll('[data-section]').forEach(el => {
+    el.style.display = !q || el.textContent.toLowerCase().includes(q.toLowerCase()) ? '' : 'none';
+  });
+}
+</script>
+</body></html>

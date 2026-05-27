@@ -1,0 +1,1078 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Advanced Animation Patterns</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#e5e5e5;font-family:'Inter',sans-serif;line-height:1.6}.sidebar{position:fixed;left:0;top:0;width:220px;height:100vh;background:#111;border-right:1px solid #1f1f1f;padding:20px;overflow-y:auto}.sidebar h2{font-size:13px;color:#f59e0b;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}.sidebar a{display:block;color:#888;text-decoration:none;padding:6px 8px;border-radius:6px;font-size:13px;margin-bottom:2px}.sidebar a:hover{color:#fff;background:#1a1a1a}.sidebar a.active{color:#f59e0b;background:#f59e0b10}.main{margin-left:220px;padding:48px;max-width:900px}h1{font-size:32px;font-weight:700;color:#fff;margin-bottom:8px}h2{font-size:20px;font-weight:600;color:#fff;margin:40px 0 12px;padding-top:40px;border-top:1px solid #1f1f1f}p{color:#aaa;margin-bottom:12px}.tag{display:inline-block;background:#f59e0b15;border:1px solid #f59e0b40;color:#f59e0b;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.code-block{position:relative;margin:16px 0}.copy-btn{position:absolute;top:8px;right:8px;background:#1f1f1f;border:1px solid #333;color:#888;padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer;z-index:10}pre{border-radius:8px;overflow:auto;font-size:13px;max-height:500px}.note{background:#1a1a1a;border-left:3px solid #f59e0b;padding:10px 14px;border-radius:0 6px 6px 0;margin:12px 0;font-size:13px;color:#bbb}.subtitle{color:#666;font-size:14px;margin-bottom:32px}</style></head>
+<body>
+<div class="sidebar">
+  <h2>Animations</h2>
+  <a href="../index.html">&#127968; Home</a>
+  <a href="gsap.html">GSAP</a>
+  <a href="framer-motion.html">Framer Motion</a>
+  <a href="lenis.html">Lenis</a>
+  <a href="advanced-patterns.html" class="active">Advanced Patterns</a>
+  <a href="../components/magicui-components.html">MagicUI</a>
+  <a href="../components/aceternity-components.html">Aceternity</a>
+</div>
+<div class="main"><div id="content">
+
+<h1>Advanced Animation Patterns</h1>
+<p class="subtitle">Production-ready implementations — GSAP, Framer Motion, vanilla hooks</p>
+
+<!-- ============================================================ -->
+<h2 id="splittext">1. GSAP SplitText Character Reveal</h2>
+<p>Splits an h1 into individual characters using GSAP SplitText, then staggers them in on scroll via ScrollTrigger.</p>
+<div style="margin-bottom:10px">
+  <span class="tag">GSAP Club</span>
+  <span class="tag">SplitText plugin</span>
+  <span class="tag">ScrollTrigger plugin</span>
+  <span class="tag">React</span>
+</div>
+<div class="note">Requires GSAP Club membership for SplitText. Install: <code>gsap</code> + register both plugins.</div>
+<div class="code-block">
+  <button class="copy-btn">Copy</button>
+  <pre><code class="language-tsx">// SplitTextReveal.tsx
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/SplitText";
+
+gsap.registerPlugin(ScrollTrigger, SplitText);
+
+interface SplitTextRevealProps {
+  text: string;
+  className?: string;
+}
+
+export function SplitTextReveal({ text, className = "" }: SplitTextRevealProps) {
+  const headingRef = useRef&lt;HTMLHeadingElement&gt;(null);
+
+  useEffect(() => {
+    const el = headingRef.current;
+    if (!el) return;
+
+    // Split into characters — SplitText wraps each char in a span
+    const split = new SplitText(el, { type: "chars,words" });
+    const chars = split.chars;
+
+    // Set overflow hidden on the parent so chars don't flash before animating
+    gsap.set(el, { overflow: "hidden" });
+
+    const tl = gsap.fromTo(
+      chars,
+      {
+        y: "110%",
+        opacity: 0,
+        rotateZ: 8,
+      },
+      {
+        y: "0%",
+        opacity: 1,
+        rotateZ: 0,
+        duration: 0.7,
+        ease: "power3.out",
+        stagger: 0.025,
+        scrollTrigger: {
+          trigger: el,
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+
+    return () => {
+      tl.kill();
+      split.revert(); // restore original HTML
+      ScrollTrigger.getAll().forEach((st) => st.kill());
+    };
+  }, [text]);
+
+  return (
+    &lt;h1
+      ref={headingRef}
+      className={`text-5xl font-bold tracking-tight ${className}`}
+    &gt;
+      {text}
+    &lt;/h1&gt;
+  );
+}
+
+// Usage:
+// &lt;SplitTextReveal text="Hello World" className="text-white" /&gt;
+</code></pre>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="magnetic">2. Magnetic Button</h2>
+<p>Mouse proximity pulls the button toward the cursor (attract). On leave, it springs back. Uses lerp for smooth follow.</p>
+<div style="margin-bottom:10px">
+  <span class="tag">Vanilla JS</span>
+  <span class="tag">React hook</span>
+  <span class="tag">No deps</span>
+</div>
+<div class="code-block">
+  <button class="copy-btn">Copy</button>
+  <pre><code class="language-tsx">// MagneticButton.tsx
+import { useRef, useCallback, MouseEvent } from "react";
+
+interface MagneticButtonProps {
+  children: React.ReactNode;
+  strength?: number; // 0–1, how strongly it pulls (default 0.4)
+  className?: string;
+}
+
+export function MagneticButton({
+  children,
+  strength = 0.4,
+  className = "",
+}: MagneticButtonProps) {
+  const btnRef = useRef&lt;HTMLButtonElement&gt;(null);
+  const rafRef = useRef&lt;number&gt;(0);
+  const pos = useRef({ x: 0, y: 0 });
+  const target = useRef({ x: 0, y: 0 });
+
+  const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+  const animate = useCallback(() => {
+    pos.current.x = lerp(pos.current.x, target.current.x, 0.1);
+    pos.current.y = lerp(pos.current.y, target.current.y, 0.1);
+
+    if (btnRef.current) {
+      btnRef.current.style.transform = `translate(${pos.current.x}px, ${pos.current.y}px)`;
+    }
+
+    // Stop when close enough
+    const dx = Math.abs(pos.current.x - target.current.x);
+    const dy = Math.abs(pos.current.y - target.current.y);
+    if (dx &gt; 0.1 || dy &gt; 0.1) {
+      rafRef.current = requestAnimationFrame(animate);
+    }
+  }, []);
+
+  const handleMouseMove = (e: MouseEvent&lt;HTMLButtonElement&gt;) => {
+    const rect = btnRef.current!.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const deltaX = (e.clientX - centerX) * strength;
+    const deltaY = (e.clientY - centerY) * strength;
+
+    target.current = { x: deltaX, y: deltaY };
+
+    cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(animate);
+  };
+
+  const handleMouseLeave = () => {
+    target.current = { x: 0, y: 0 };
+    cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(animate);
+  };
+
+  return (
+    &lt;button
+      ref={btnRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className={`relative inline-flex items-center justify-center px-8 py-4 rounded-full
+        bg-white text-black font-semibold text-sm transition-shadow duration-300
+        hover:shadow-[0_0_40px_rgba(255,255,255,0.2)] ${className}`}
+      style={{ willChange: "transform" }}
+    &gt;
+      {children}
+    &lt;/button&gt;
+  );
+}
+
+// Usage:
+// &lt;MagneticButton strength={0.5}&gt;Click me&lt;/MagneticButton&gt;
+</code></pre>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="cursor">3. Custom Cursor</h2>
+<p>Smooth lerp cursor dot + ring. Scales on hover over interactive elements. Changes color when over dark/light sections via data attribute.</p>
+<div style="margin-bottom:10px">
+  <span class="tag">React context</span>
+  <span class="tag">rAF lerp</span>
+  <span class="tag">data-cursor attribute</span>
+</div>
+<div class="code-block">
+  <button class="copy-btn">Copy</button>
+  <pre><code class="language-tsx">// CustomCursor.tsx
+import { useEffect, useRef, useState } from "react";
+
+export function CustomCursor() {
+  const dotRef = useRef&lt;HTMLDivElement&gt;(null);
+  const ringRef = useRef&lt;HTMLDivElement&gt;(null);
+
+  const mouse = useRef({ x: -100, y: -100 });
+  const dotPos = useRef({ x: -100, y: -100 });
+  const ringPos = useRef({ x: -100, y: -100 });
+  const rafRef = useRef&lt;number&gt;(0);
+
+  const [isHovering, setIsHovering] = useState(false);
+  const [cursorColor, setCursorColor] = useState("white");
+
+  const lerp = (a: number, b: number, t: number) =&gt; a + (b - a) * t;
+
+  useEffect(() => {
+    const onMouseMove = (e: globalThis.MouseEvent) => {
+      mouse.current = { x: e.clientX, y: e.clientY };
+
+      // Detect section color
+      const el = document.elementFromPoint(e.clientX, e.clientY);
+      const section = el?.closest("[data-cursor-color]");
+      const color = section?.getAttribute("data-cursor-color") ?? "white";
+      setCursorColor(color);
+    };
+
+    const onMouseOver = (e: globalThis.MouseEvent) => {
+      const el = e.target as HTMLElement;
+      if (el.matches("a, button, [data-cursor-hover]")) {
+        setIsHovering(true);
+      }
+    };
+
+    const onMouseOut = (e: globalThis.MouseEvent) => {
+      const el = e.target as HTMLElement;
+      if (el.matches("a, button, [data-cursor-hover]")) {
+        setIsHovering(false);
+      }
+    };
+
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseover", onMouseOver);
+    window.addEventListener("mouseout", onMouseOut);
+
+    const tick = () => {
+      // Dot follows faster
+      dotPos.current.x = lerp(dotPos.current.x, mouse.current.x, 0.5);
+      dotPos.current.y = lerp(dotPos.current.y, mouse.current.y, 0.5);
+      // Ring follows slower
+      ringPos.current.x = lerp(ringPos.current.x, mouse.current.x, 0.12);
+      ringPos.current.y = lerp(ringPos.current.y, mouse.current.y, 0.12);
+
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate(${dotPos.current.x - 4}px, ${dotPos.current.y - 4}px)`;
+      }
+      if (ringRef.current) {
+        ringRef.current.style.transform = `translate(${ringPos.current.x - 20}px, ${ringPos.current.y - 20}px)`;
+      }
+
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
+
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseover", onMouseOver);
+      window.removeEventListener("mouseout", onMouseOut);
+      cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
+  const dotColor = cursorColor === "dark" ? "#000" : "#fff";
+  const ringBorder = cursorColor === "dark" ? "rgba(0,0,0,0.6)" : "rgba(255,255,255,0.6)";
+
+  return (
+    &lt;&gt;
+      {/* Dot */}
+      &lt;div
+        ref={dotRef}
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: 8,
+          height: 8,
+          borderRadius: "50%",
+          background: dotColor,
+          pointerEvents: "none",
+          zIndex: 9999,
+          transition: "background 0.3s, transform 0.05s",
+          willChange: "transform",
+        }}
+      /&gt;
+      {/* Ring */}
+      &lt;div
+        ref={ringRef}
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: 40,
+          height: 40,
+          borderRadius: "50%",
+          border: `1.5px solid ${ringBorder}`,
+          pointerEvents: "none",
+          zIndex: 9998,
+          transition: "border-color 0.3s, width 0.25s ease, height 0.25s ease",
+          willChange: "transform",
+          ...(isHovering
+            ? { width: 60, height: 60, mixBlendMode: "difference" as const }
+            : {}),
+        }}
+      /&gt;
+    &lt;/&gt;
+  );
+}
+
+// In _app.tsx / layout.tsx:
+// &lt;CustomCursor /&gt;
+// Hide native cursor: body { cursor: none; }
+// Dark section: &lt;section data-cursor-color="dark"&gt;
+</code></pre>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="hscroll">4. Horizontal Scroll Section</h2>
+<p>GSAP ScrollTrigger pins the section and scrubs a horizontal translateX, creating a sideways scroll experience.</p>
+<div style="margin-bottom:10px">
+  <span class="tag">GSAP</span>
+  <span class="tag">ScrollTrigger</span>
+  <span class="tag">React</span>
+</div>
+<div class="code-block">
+  <button class="copy-btn">Copy</button>
+  <pre><code class="language-tsx">// HorizontalScroll.tsx
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+interface HorizontalScrollProps {
+  children: React.ReactNode;
+}
+
+export function HorizontalScroll({ children }: HorizontalScrollProps) {
+  const sectionRef = useRef&lt;HTMLElement&gt;(null);
+  const trackRef = useRef&lt;HTMLDivElement&gt;(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const track = trackRef.current;
+    if (!section || !track) return;
+
+    // Total scroll distance = track width minus viewport width
+    const getScrollAmount = () => -(track.scrollWidth - window.innerWidth);
+
+    const ctx = gsap.context(() => {
+      gsap.to(track, {
+        x: getScrollAmount,
+        ease: "none",
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: () =&gt; `+=${track.scrollWidth - window.innerWidth}`,
+          pin: true,
+          scrub: 1,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+    }, section);
+
+    return () =&gt; ctx.revert();
+  }, []);
+
+  return (
+    &lt;section
+      ref={sectionRef}
+      className="relative overflow-hidden h-screen"
+    &gt;
+      {/* Track: flex row of panels, each panel = 100vw */}
+      &lt;div
+        ref={trackRef}
+        className="flex h-full will-change-transform"
+        style={{ width: "max-content" }}
+      &gt;
+        {children}
+      &lt;/div&gt;
+    &lt;/section&gt;
+  );
+}
+
+// Panel helper
+export function HScrollPanel({
+  children,
+  bg = "bg-neutral-900",
+}: {
+  children: React.ReactNode;
+  bg?: string;
+}) {
+  return (
+    &lt;div
+      className={`w-screen h-full flex items-center justify-center flex-shrink-0 ${bg}`}
+    &gt;
+      {children}
+    &lt;/div&gt;
+  );
+}
+
+// Usage:
+// &lt;HorizontalScroll&gt;
+//   &lt;HScrollPanel bg="bg-neutral-900"&gt;Panel 1&lt;/HScrollPanel&gt;
+//   &lt;HScrollPanel bg="bg-zinc-800"&gt;Panel 2&lt;/HScrollPanel&gt;
+//   &lt;HScrollPanel bg="bg-stone-900"&gt;Panel 3&lt;/HScrollPanel&gt;
+// &lt;/HorizontalScroll&gt;
+</code></pre>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="pagetransitions">5. Page Transitions (Framer Motion)</h2>
+<p>AnimatePresence wraps pages, each page slides in/out. Works with Next.js App Router or React Router.</p>
+<div style="margin-bottom:10px">
+  <span class="tag">framer-motion</span>
+  <span class="tag">Next.js / React Router</span>
+  <span class="tag">AnimatePresence</span>
+</div>
+<div class="code-block">
+  <button class="copy-btn">Copy</button>
+  <pre><code class="language-tsx">// PageTransition.tsx  (Next.js App Router)
+"use client";
+import { AnimatePresence, motion } from "framer-motion";
+import { usePathname } from "next/navigation";
+
+const variants = {
+  initial: { opacity: 0, y: 20, filter: "blur(4px)" },
+  enter: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
+  exit: {
+    opacity: 0,
+    y: -20,
+    filter: "blur(4px)",
+    transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
+};
+
+export function PageTransition({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+
+  return (
+    &lt;AnimatePresence mode="wait"&gt;
+      &lt;motion.div
+        key={pathname}
+        variants={variants}
+        initial="initial"
+        animate="enter"
+        exit="exit"
+        className="min-h-screen"
+      &gt;
+        {children}
+      &lt;/motion.div&gt;
+    &lt;/AnimatePresence&gt;
+  );
+}
+
+// ----------------------------------------------------------
+// Slide variant (left ↔ right based on nav direction)
+// ----------------------------------------------------------
+// slideVariants.ts
+export const slideVariants = (direction: "left" | "right") => ({
+  initial: { x: direction === "right" ? "100%" : "-100%", opacity: 0 },
+  enter: {
+    x: 0,
+    opacity: 1,
+    transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
+  },
+  exit: {
+    x: direction === "right" ? "-100%" : "100%",
+    opacity: 0,
+    transition: { duration: 0.4, ease: [0.76, 0, 0.24, 1] },
+  },
+});
+
+// ----------------------------------------------------------
+// Curtain wipe variant
+// ----------------------------------------------------------
+export function CurtainTransition({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+
+  return (
+    &lt;AnimatePresence mode="wait"&gt;
+      &lt;motion.div key={pathname} className="relative min-h-screen"&gt;
+        {/* Curtain overlay */}
+        &lt;motion.div
+          className="fixed inset-0 z-50 bg-black pointer-events-none origin-top"
+          initial={{ scaleY: 1 }}
+          animate={{ scaleY: 0, transition: { duration: 0.6, ease: [0.76, 0, 0.24, 1] } }}
+          exit={{ scaleY: 1, transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] } }}
+        /&gt;
+        {children}
+      &lt;/motion.div&gt;
+    &lt;/AnimatePresence&gt;
+  );
+}
+
+// In app/layout.tsx:
+// &lt;PageTransition&gt;{children}&lt;/PageTransition&gt;
+</code></pre>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="grain">6. Noise / Grain Overlay</h2>
+<p>SVG feTurbulence filter animated via CSS to create a film grain / noise texture overlay — no JS needed.</p>
+<div style="margin-bottom:10px">
+  <span class="tag">CSS only</span>
+  <span class="tag">SVG filter</span>
+  <span class="tag">No deps</span>
+</div>
+<div class="code-block">
+  <button class="copy-btn">Copy</button>
+  <pre><code class="language-tsx">// GrainOverlay.tsx
+export function GrainOverlay({ opacity = 0.035 }: { opacity?: number }) {
+  return (
+    &lt;&gt;
+      {/* Hidden SVG filter definition */}
+      &lt;svg style={{ position: "absolute", width: 0, height: 0 }}&gt;
+        &lt;filter id="grain-filter"&gt;
+          &lt;feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.65"
+            numOctaves="3"
+            stitchTiles="stitch"
+          /&gt;
+          &lt;feColorMatrix type="saturate" values="0" /&gt;
+        &lt;/filter&gt;
+      &lt;/svg&gt;
+
+      {/* The overlay div */}
+      &lt;div
+        aria-hidden="true"
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 9000,
+          pointerEvents: "none",
+          opacity,
+          filter: "url(#grain-filter)",
+          willChange: "transform",
+          animation: "grain 0.3s steps(1) infinite",
+        }}
+      /&gt;
+
+      &lt;style&gt;{`
+        @keyframes grain {
+          0%  { transform: translate(0, 0) }
+          10% { transform: translate(-2%, -3%) }
+          20% { transform: translate(3%, 2%) }
+          30% { transform: translate(-1%, 3%) }
+          40% { transform: translate(2%, -1%) }
+          50% { transform: translate(-3%, 1%) }
+          60% { transform: translate(1%, -2%) }
+          70% { transform: translate(3%, 3%) }
+          80% { transform: translate(-2%, 1%) }
+          90% { transform: translate(1%, -3%) }
+          100% { transform: translate(0, 0) }
+        }
+      `}&lt;/style&gt;
+    &lt;/&gt;
+  );
+}
+
+// Usage — add near root, e.g. in layout.tsx:
+// &lt;GrainOverlay opacity={0.04} /&gt;
+
+// CSS-only alternative (globals.css):
+/*
+  .grain::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    animation: grain 0.3s steps(1) infinite;
+  }
+*/
+</code></pre>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="clippath">7. Clip-Path Reveal</h2>
+<p>Elements reveal from bottom to top using clip-path inset animation triggered on scroll via ScrollTrigger or Intersection Observer.</p>
+<div style="margin-bottom:10px">
+  <span class="tag">GSAP</span>
+  <span class="tag">ScrollTrigger</span>
+  <span class="tag">clip-path</span>
+</div>
+<div class="code-block">
+  <button class="copy-btn">Copy</button>
+  <pre><code class="language-tsx">// ClipReveal.tsx
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+type Direction = "bottom" | "top" | "left" | "right";
+
+interface ClipRevealProps {
+  children: React.ReactNode;
+  direction?: Direction;
+  duration?: number;
+  delay?: number;
+  className?: string;
+}
+
+const clipStart: Record&lt;Direction, string&gt; = {
+  bottom: "inset(100% 0% 0% 0%)",
+  top:    "inset(0% 0% 100% 0%)",
+  left:   "inset(0% 100% 0% 0%)",
+  right:  "inset(0% 0% 0% 100%)",
+};
+
+export function ClipReveal({
+  children,
+  direction = "bottom",
+  duration = 0.9,
+  delay = 0,
+  className = "",
+}: ClipRevealProps) {
+  const ref = useRef&lt;HTMLDivElement&gt;(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    gsap.fromTo(
+      el,
+      { clipPath: clipStart[direction] },
+      {
+        clipPath: "inset(0% 0% 0% 0%)",
+        duration,
+        delay,
+        ease: "power4.inOut",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 88%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+
+    return () =&gt; {
+      ScrollTrigger.getAll().forEach((st) =&gt; st.kill());
+    };
+  }, [direction, duration, delay]);
+
+  return (
+    &lt;div
+      ref={ref}
+      className={className}
+      style={{ clipPath: clipStart[direction], willChange: "clip-path" }}
+    &gt;
+      {children}
+    &lt;/div&gt;
+  );
+}
+
+// CSS-only version (no JS):
+// .clip-reveal {
+//   clip-path: inset(100% 0 0 0);
+//   transition: clip-path 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+// }
+// .clip-reveal.visible {
+//   clip-path: inset(0% 0 0 0);
+// }
+
+// Usage:
+// &lt;ClipReveal direction="bottom"&gt;
+//   &lt;img src="/hero.jpg" className="w-full h-96 object-cover" /&gt;
+// &lt;/ClipReveal&gt;
+</code></pre>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="parallax">8. Parallax Image</h2>
+<p>Image moves at a different speed than the scroll using GSAP scrub, creating a depth effect. Image is slightly oversized to cover gaps.</p>
+<div style="margin-bottom:10px">
+  <span class="tag">GSAP</span>
+  <span class="tag">ScrollTrigger scrub</span>
+  <span class="tag">React</span>
+</div>
+<div class="code-block">
+  <button class="copy-btn">Copy</button>
+  <pre><code class="language-tsx">// ParallaxImage.tsx
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+interface ParallaxImageProps {
+  src: string;
+  alt: string;
+  speed?: number; // parallax strength, e.g. 0.3 = 30% offset
+  className?: string;
+}
+
+export function ParallaxImage({
+  src,
+  alt,
+  speed = 0.3,
+  className = "",
+}: ParallaxImageProps) {
+  const wrapRef = useRef&lt;HTMLDivElement&gt;(null);
+  const imgRef = useRef&lt;HTMLImageElement&gt;(null);
+
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    const img = imgRef.current;
+    if (!wrap || !img) return;
+
+    // Offset = speed * 100% — image must be taller than container to cover gap
+    const yPercent = speed * 100;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        img,
+        { yPercent: -yPercent },
+        {
+          yPercent,
+          ease: "none",
+          scrollTrigger: {
+            trigger: wrap,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        }
+      );
+    }, wrap);
+
+    return () =&gt; ctx.revert();
+  }, [speed]);
+
+  const scale = 1 + speed * 2; // oversized so parallax doesn't reveal edges
+
+  return (
+    &lt;div
+      ref={wrapRef}
+      className={`relative overflow-hidden ${className}`}
+    &gt;
+      &lt;img
+        ref={imgRef}
+        src={src}
+        alt={alt}
+        className="w-full h-full object-cover"
+        style={{
+          transform: `scale(${scale})`,
+          willChange: "transform",
+        }}
+      /&gt;
+    &lt;/div&gt;
+  );
+}
+
+// Usage:
+// &lt;ParallaxImage
+//   src="/hero.jpg"
+//   alt="Hero"
+//   speed={0.3}
+//   className="h-[60vh]"
+// /&gt;
+</code></pre>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="stagger">9. Stagger Grid Reveal</h2>
+<p>Grid items animate in with a staggered delay cascade. Uses Intersection Observer + CSS variables for zero-dependency approach, plus a GSAP version.</p>
+<div style="margin-bottom:10px">
+  <span class="tag">Intersection Observer</span>
+  <span class="tag">CSS stagger</span>
+  <span class="tag">React</span>
+</div>
+<div class="code-block">
+  <button class="copy-btn">Copy</button>
+  <pre><code class="language-tsx">// StaggerGrid.tsx
+import { useEffect, useRef, ReactNode } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+interface StaggerGridProps {
+  items: ReactNode[];
+  columns?: number;
+  stagger?: number;
+  className?: string;
+  itemClassName?: string;
+}
+
+export function StaggerGrid({
+  items,
+  columns = 3,
+  stagger = 0.08,
+  className = "",
+  itemClassName = "",
+}: StaggerGridProps) {
+  const gridRef = useRef&lt;HTMLDivElement&gt;(null);
+
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) return;
+
+    const cards = grid.querySelectorAll&lt;HTMLDivElement&gt;(".stagger-item");
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        cards,
+        {
+          opacity: 0,
+          y: 40,
+          scale: 0.96,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.65,
+          ease: "power3.out",
+          stagger: {
+            amount: stagger * items.length,
+            grid: [Math.ceil(items.length / columns), columns],
+            from: "start", // or "center", "edges", "random"
+          },
+          scrollTrigger: {
+            trigger: grid,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+    }, grid);
+
+    return () =&gt; ctx.revert();
+  }, [items.length, columns, stagger]);
+
+  const colClass: Record&lt;number, string&gt; = {
+    2: "grid-cols-2",
+    3: "grid-cols-3",
+    4: "grid-cols-4",
+  };
+
+  return (
+    &lt;div
+      ref={gridRef}
+      className={`grid gap-6 ${colClass[columns] ?? "grid-cols-3"} ${className}`}
+    &gt;
+      {items.map((item, i) =&gt; (
+        &lt;div
+          key={i}
+          className={`stagger-item ${itemClassName}`}
+          style={{ willChange: "transform, opacity" }}
+        &gt;
+          {item}
+        &lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}
+
+// ----------------------------------------------------------
+// CSS-only version (no JS, uses custom property)
+// ----------------------------------------------------------
+// In your component:
+// {items.map((item, i) => (
+//   &lt;div
+//     key={i}
+//     className="card-item"
+//     style={{ "--i": i } as React.CSSProperties}
+//   &gt;
+//     {item}
+//   &lt;/div&gt;
+// ))}
+//
+// In CSS (with .visible toggled by IntersectionObserver):
+// .card-item {
+//   opacity: 0;
+//   transform: translateY(30px);
+//   transition: opacity 0.5s ease, transform 0.5s ease;
+//   transition-delay: calc(var(--i) * 60ms);
+// }
+// .card-item.visible { opacity: 1; transform: translateY(0); }
+</code></pre>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="scramble">10. Text Scramble Effect</h2>
+<p>Random characters cycle through before settling on the final text. Classic hacker-style decode animation. Pure React hook, no dependencies.</p>
+<div style="margin-bottom:10px">
+  <span class="tag">React hook</span>
+  <span class="tag">No deps</span>
+  <span class="tag">Vanilla JS</span>
+</div>
+<div class="code-block">
+  <button class="copy-btn">Copy</button>
+  <pre><code class="language-tsx">// useTextScramble.ts
+import { useState, useEffect, useCallback, useRef } from "react";
+
+const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+
+function randomChar() {
+  return CHARS[Math.floor(Math.random() * CHARS.length)];
+}
+
+export function useTextScramble(finalText: string, speed = 40) {
+  const [displayed, setDisplayed] = useState(finalText);
+  const frameRef = useRef&lt;ReturnType&lt;typeof setTimeout&gt;&gt;();
+  const iterRef = useRef(0);
+
+  const scramble = useCallback(() => {
+    iterRef.current = 0;
+
+    const totalFrames = finalText.length * 3; // how many frames before each char settles
+
+    const tick = () => {
+      setDisplayed(
+        finalText
+          .split("")
+          .map((char, i) =&gt; {
+            if (char === " ") return " ";
+            // Once enough frames have passed for this char index, lock it in
+            if (i &lt; iterRef.current / 3) return char;
+            return randomChar();
+          })
+          .join("")
+      );
+
+      iterRef.current++;
+
+      if (iterRef.current &lt; totalFrames + finalText.length) {
+        frameRef.current = setTimeout(tick, speed);
+      } else {
+        setDisplayed(finalText);
+      }
+    };
+
+    tick();
+  }, [finalText, speed]);
+
+  useEffect(() =&gt; {
+    scramble();
+    return () =&gt; clearTimeout(frameRef.current);
+  }, [scramble]);
+
+  return { displayed, scramble };
+}
+
+// ----------------------------------------------------------
+// ScrambleText component
+// ----------------------------------------------------------
+import { useTextScramble } from "./useTextScramble";
+
+interface ScrambleTextProps {
+  text: string;
+  triggerOnHover?: boolean;
+  className?: string;
+  speed?: number;
+}
+
+export function ScrambleText({
+  text,
+  triggerOnHover = false,
+  className = "",
+  speed = 35,
+}: ScrambleTextProps) {
+  const { displayed, scramble } = useTextScramble(text, speed);
+
+  return (
+    &lt;span
+      className={`font-mono ${className}`}
+      onMouseEnter={triggerOnHover ? scramble : undefined}
+    &gt;
+      {displayed}
+    &lt;/span&gt;
+  );
+}
+
+// ----------------------------------------------------------
+// On-scroll trigger version
+// ----------------------------------------------------------
+export function ScrambleOnScroll({ text, className = "" }: { text: string; className?: string }) {
+  const ref = useRef&lt;HTMLSpanElement&gt;(null);
+  const { displayed, scramble } = useTextScramble(text, 35);
+  const fired = useRef(false);
+
+  useEffect(() =&gt; {
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) =&gt; {
+        if (entry.isIntersecting && !fired.current) {
+          fired.current = true;
+          scramble();
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(el);
+    return () =&gt; observer.disconnect();
+  }, [scramble]);
+
+  return (
+    &lt;span ref={ref} className={`font-mono ${className}`}&gt;
+      {displayed}
+    &lt;/span&gt;
+  );
+}
+
+// Usage:
+// Hover trigger: &lt;ScrambleText text="Hello World" triggerOnHover /&gt;
+// Auto on mount: &lt;ScrambleText text="Hello World" /&gt;
+// On scroll:     &lt;ScrambleOnScroll text="Hello World" /&gt;
+</code></pre>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="deps">Dependency Reference</h2>
+<div class="code-block">
+  <button class="copy-btn">Copy</button>
+  <pre><code class="language-bash"># GSAP (free plugins: ScrollTrigger, Flip, Observer, etc.)
+npm install gsap
+
+# GSAP Club plugins (SplitText, MorphSVG, etc.) — add to package.json after auth
+# See: https://gsap.com/docs/v3/Installation/?tab=npm
+
+# Framer Motion
+npm install framer-motion
+
+# Next.js (if using page transitions with usePathname)
+npm install next
+
+# No extra deps needed for:
+# - Magnetic button, Custom cursor, Text scramble, Grain overlay (vanilla hooks)
+</code></pre>
+</div>
+
+<div class="code-block">
+  <button class="copy-btn">Copy</button>
+  <pre><code class="language-ts">// gsap-setup.ts — register all plugins once at app root
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/SplitText"; // Club plugin
+import { Flip } from "gsap/Flip";
+
+gsap.registerPlugin(ScrollTrigger, SplitText, Flip);
+
+// Optional: configure defaults
+gsap.defaults({ ease: "power3.out", duration: 0.8 });
+
+// Refresh ScrollTrigger after fonts/images load
+window.addEventListener("load", () =&gt; ScrollTrigger.refresh());
+</code></pre>
+</div>
+
+</div></div>
+<script>hljs.highlightAll();document.querySelectorAll('.code-block').forEach(b=>{const btn=b.querySelector('.copy-btn');if(btn)btn.onclick=()=>{navigator.clipboard.writeText(b.querySelector('code').innerText);btn.textContent='Copied!';setTimeout(()=>btn.textContent='Copy',1500);}});</script>
+</body></html>

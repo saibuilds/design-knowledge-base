@@ -1,0 +1,912 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>daisyUI + Flowbite + Headless UI — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#e5e5e5;font-family:'Inter',sans-serif;font-size:15px;line-height:1.6}.sidebar{position:fixed;left:0;top:0;width:220px;height:100vh;background:#111;border-right:1px solid #1f1f1f;padding:20px;overflow-y:auto}.sidebar h2{font-size:13px;color:#f59e0b;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}.sidebar a{display:block;color:#888;text-decoration:none;padding:6px 8px;border-radius:6px;font-size:13px;margin-bottom:2px}.sidebar a:hover{color:#fff;background:#1a1a1a}.main{margin-left:220px;padding:48px;max-width:960px}h1{font-size:32px;font-weight:700;color:#fff;margin-bottom:8px}h2{font-size:20px;font-weight:600;color:#fff;margin:40px 0 12px;padding-top:40px;border-top:1px solid #1f1f1f}h3{font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.08em;margin:20px 0 8px}p{color:#aaa;margin-bottom:12px}.tag{display:inline-block;background:#f59e0b15;border:1px solid #f59e0b40;color:#f59e0b;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.badge.free{background:#0d2e1680;border:1px solid #22c55e40;color:#22c55e;display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.install{background:#0d0d0d;border:1px solid #1f1f1f;border-radius:6px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#f59e0b;margin:8px 0}.code-block{position:relative;margin:12px 0}.copy-btn{position:absolute;top:8px;right:8px;background:#1f1f1f;border:1px solid #333;color:#888;padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer}pre{border-radius:8px;overflow:auto;font-size:12px;max-height:450px}.component-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin:16px 0}.component-card{background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:14px}.component-card h4{font-size:13px;color:#e5e5e5;margin-bottom:4px}.component-card p{font-size:11px;color:#555;margin:0}input[type=search]{width:100%;background:#111;border:1px solid #2a2a2a;color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;font-family:inherit;margin-bottom:32px;outline:none}</style></head>
+<body>
+<div class="sidebar">
+  <h2>Components</h2>
+  <a href="../index.html">&#127968; Home</a>
+  <a href="free-components-master.html">&#9733; All Free</a>
+  <a href="shadcn.html">shadcn/ui</a>
+  <a href="shadcn-blocks.html">shadcn Blocks</a>
+  <a href="magicui-components.html">MagicUI</a>
+  <a href="aceternity-components.html">Aceternity</a>
+  <a href="tailwind-components.html">Tailwind</a>
+  <a href="more-free-components.html">More Free</a>
+  <a href="21st-dev-full.html">21st.dev</a>
+  <a href="hover-dev-full.html">hover.dev</a>
+</div>
+<div class="main">
+  <input type="search" placeholder="Search components..." oninput="search(this.value)">
+  <div id="content">
+
+    <h1>daisyUI + Flowbite + Headless UI</h1>
+    <p>Three powerful free Tailwind CSS component libraries. daisyUI = pure CSS classes, no JS. Flowbite = HTML components with optional JS. Headless UI = unstyled accessible React/Vue primitives from Tailwind Labs.</p>
+
+    <!-- =================== DAISY UI SECTION =================== -->
+    <h2>daisyUI — Pure CSS Tailwind Components</h2>
+    <p>65+ components using semantic class names on top of Tailwind. No JavaScript required. Supports 35+ built-in themes.</p>
+    <div class="install">npm install -D daisyui@latest</div>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-js">// tailwind.config.js
+module.exports = {
+  plugins: [
+    require('daisyui'),
+  ],
+  daisyui: {
+    themes: ["light", "dark", "cupcake", "bumblebee", "emerald", "corporate",
+             "synthwave", "retro", "cyberpunk", "valentine", "halloween",
+             "garden", "forest", "aqua", "lofi", "pastel", "fantasy",
+             "wireframe", "black", "luxury", "dracula", "cmyk", "autumn",
+             "business", "acid", "lemonade", "night", "coffee", "winter"],
+  },
+}</code></pre>
+    </div>
+
+    <div class="component-grid">
+      <div class="component-card"><h4>Button</h4><p>btn, btn-primary, btn-ghost, btn-outline</p></div>
+      <div class="component-card"><h4>Card</h4><p>card, card-body, card-title</p></div>
+      <div class="component-card"><h4>Modal</h4><p>modal, modal-box, dialog element</p></div>
+      <div class="component-card"><h4>Alert</h4><p>alert, alert-info/success/warning/error</p></div>
+      <div class="component-card"><h4>Badge</h4><p>badge, badge-primary, badge-outline</p></div>
+      <div class="component-card"><h4>Navbar</h4><p>navbar, navbar-start/center/end</p></div>
+      <div class="component-card"><h4>Table</h4><p>table, table-zebra, table-pin-rows</p></div>
+      <div class="component-card"><h4>Tabs</h4><p>tabs, tab, tabs-bordered, tabs-boxed</p></div>
+      <div class="component-card"><h4>Input</h4><p>input, input-bordered, input-primary</p></div>
+      <div class="component-card"><h4>Select</h4><p>select, select-bordered</p></div>
+      <div class="component-card"><h4>Toggle</h4><p>toggle, toggle-primary</p></div>
+      <div class="component-card"><h4>Skeleton</h4><p>skeleton — loading placeholders</p></div>
+    </div>
+
+    <div data-component="daisyui button variants primary ghost outline soft link circle">
+      <h3>daisyUI — Button</h3>
+      <p>All button variants: colors, sizes, styles, shapes. Pure CSS — no JavaScript.</p>
+      <span class="badge free">FREE</span> <span class="tag">daisyUI</span> <span class="tag">No JS</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-html">&lt;!-- Color variants --&gt;
+&lt;button class="btn btn-primary"&gt;Primary&lt;/button&gt;
+&lt;button class="btn btn-secondary"&gt;Secondary&lt;/button&gt;
+&lt;button class="btn btn-accent"&gt;Accent&lt;/button&gt;
+&lt;button class="btn btn-neutral"&gt;Neutral&lt;/button&gt;
+&lt;button class="btn btn-info"&gt;Info&lt;/button&gt;
+&lt;button class="btn btn-success"&gt;Success&lt;/button&gt;
+&lt;button class="btn btn-warning"&gt;Warning&lt;/button&gt;
+&lt;button class="btn btn-error"&gt;Error&lt;/button&gt;
+
+&lt;!-- Style variants --&gt;
+&lt;button class="btn btn-outline btn-primary"&gt;Outline&lt;/button&gt;
+&lt;button class="btn btn-ghost"&gt;Ghost&lt;/button&gt;
+&lt;button class="btn btn-soft btn-primary"&gt;Soft&lt;/button&gt;
+&lt;button class="btn btn-dash btn-primary"&gt;Dash&lt;/button&gt;
+&lt;button class="btn btn-link"&gt;Link&lt;/button&gt;
+
+&lt;!-- Size variants --&gt;
+&lt;button class="btn btn-xs"&gt;Extra Small&lt;/button&gt;
+&lt;button class="btn btn-sm"&gt;Small&lt;/button&gt;
+&lt;button class="btn btn-md"&gt;Medium (default)&lt;/button&gt;
+&lt;button class="btn btn-lg"&gt;Large&lt;/button&gt;
+&lt;button class="btn btn-xl"&gt;Extra Large&lt;/button&gt;
+
+&lt;!-- Shape variants --&gt;
+&lt;button class="btn btn-circle btn-primary"&gt;
+  &lt;svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"&gt;
+    &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/&gt;
+  &lt;/svg&gt;
+&lt;/button&gt;
+&lt;button class="btn btn-square btn-outline"&gt;&#9776;&lt;/button&gt;
+&lt;button class="btn btn-wide btn-primary"&gt;Wide Button&lt;/button&gt;
+&lt;button class="btn btn-block btn-primary"&gt;Full Width&lt;/button&gt;
+
+&lt;!-- State --&gt;
+&lt;button class="btn btn-primary btn-active"&gt;Active&lt;/button&gt;
+&lt;button class="btn btn-disabled" disabled&gt;Disabled&lt;/button&gt;
+
+&lt;!-- With loading spinner --&gt;
+&lt;button class="btn btn-primary"&gt;
+  &lt;span class="loading loading-spinner loading-sm"&gt;&lt;/span&gt;
+  Loading...
+&lt;/button&gt;
+
+&lt;!-- With icon --&gt;
+&lt;button class="btn btn-primary gap-2"&gt;
+  &lt;svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;
+    &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/&gt;
+  &lt;/svg&gt;
+  Upload
+&lt;/button&gt;</code></pre>
+      </div>
+    </div>
+
+    <div data-component="daisyui card image title body actions">
+      <h3>daisyUI — Card</h3>
+      <p>Card with image, title, body, and actions. Supports side layout, image overlay, and responsive adaption.</p>
+      <span class="badge free">FREE</span> <span class="tag">daisyUI</span> <span class="tag">No JS</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-html">&lt;!-- Basic card --&gt;
+&lt;div class="card bg-base-100 w-96 shadow-sm"&gt;
+  &lt;figure&gt;
+    &lt;img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Shoes" /&gt;
+  &lt;/figure&gt;
+  &lt;div class="card-body"&gt;
+    &lt;h2 class="card-title"&gt;
+      Card Title
+      &lt;div class="badge badge-secondary"&gt;NEW&lt;/div&gt;
+    &lt;/h2&gt;
+    &lt;p&gt;If a dog chews shoes whose shoes does he choose?&lt;/p&gt;
+    &lt;div class="card-actions justify-end"&gt;
+      &lt;div class="badge badge-outline"&gt;Fashion&lt;/div&gt;
+      &lt;div class="badge badge-outline"&gt;Products&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Card with bottom image --&gt;
+&lt;div class="card bg-base-100 w-96 shadow-sm"&gt;
+  &lt;div class="card-body"&gt;
+    &lt;h2 class="card-title"&gt;Card with bottom image&lt;/h2&gt;
+    &lt;p&gt;We are using cookies for no reason.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;figure&gt;&lt;img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Shoes" /&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;!-- Image overlay card --&gt;
+&lt;div class="card image-full w-96 shadow-sm"&gt;
+  &lt;figure&gt;&lt;img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Shoes" /&gt;&lt;/figure&gt;
+  &lt;div class="card-body"&gt;
+    &lt;h2 class="card-title text-white"&gt;Shoes!&lt;/h2&gt;
+    &lt;p class="text-white/80"&gt;If a dog chews shoes whose shoes does he choose?&lt;/p&gt;
+    &lt;div class="card-actions justify-end"&gt;
+      &lt;button class="btn btn-primary"&gt;Buy Now&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Side card (responsive) --&gt;
+&lt;div class="card card-side bg-base-100 shadow-sm"&gt;
+  &lt;figure&gt;&lt;img src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp" alt="Movie" /&gt;&lt;/figure&gt;
+  &lt;div class="card-body"&gt;
+    &lt;h2 class="card-title"&gt;New movie is released!&lt;/h2&gt;
+    &lt;p&gt;Click the button to watch on Jetflix app.&lt;/p&gt;
+    &lt;div class="card-actions justify-end"&gt;
+      &lt;button class="btn btn-primary"&gt;Watch&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Bordered card --&gt;
+&lt;div class="card card-border bg-base-100 w-96"&gt;
+  &lt;div class="card-body"&gt;
+    &lt;h2 class="card-title"&gt;Bordered Card&lt;/h2&gt;
+    &lt;p&gt;Content with a subtle border.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </div>
+
+    <div data-component="daisyui modal dialog html open close">
+      <h3>daisyUI — Modal (Dialog)</h3>
+      <p>Three methods: HTML dialog element (recommended), checkbox toggle, or anchor links.</p>
+      <span class="badge free">FREE</span> <span class="tag">daisyUI</span> <span class="tag">No JS</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-html">&lt;!-- Method 1: HTML dialog (recommended, ESC key works automatically) --&gt;
+&lt;button onclick="my_modal.showModal()" class="btn btn-primary"&gt;Open Modal&lt;/button&gt;
+&lt;dialog id="my_modal" class="modal"&gt;
+  &lt;div class="modal-box"&gt;
+    &lt;form method="dialog"&gt;
+      &lt;button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"&gt;&#10005;&lt;/button&gt;
+    &lt;/form&gt;
+    &lt;h3 class="text-lg font-bold"&gt;Hello!&lt;/h3&gt;
+    &lt;p class="py-4"&gt;Press ESC key or click &#10005; to close.&lt;/p&gt;
+    &lt;div class="modal-action"&gt;
+      &lt;form method="dialog"&gt;
+        &lt;button class="btn"&gt;Close&lt;/button&gt;
+        &lt;button class="btn btn-primary"&gt;Confirm&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/dialog&gt;
+
+&lt;!-- Click outside to close --&gt;
+&lt;button onclick="outside_modal.showModal()" class="btn"&gt;Click outside to close&lt;/button&gt;
+&lt;dialog id="outside_modal" class="modal"&gt;
+  &lt;div class="modal-box"&gt;
+    &lt;h3 class="font-bold text-lg"&gt;Hello!&lt;/h3&gt;
+    &lt;p class="py-4"&gt;Click outside the box to close.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;form method="dialog" class="modal-backdrop"&gt;
+    &lt;button&gt;close&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/dialog&gt;
+
+&lt;!-- Responsive: bottom on mobile, center on desktop --&gt;
+&lt;button onclick="responsive_modal.showModal()" class="btn"&gt;Responsive Modal&lt;/button&gt;
+&lt;dialog id="responsive_modal" class="modal modal-bottom sm:modal-middle"&gt;
+  &lt;div class="modal-box"&gt;
+    &lt;h3 class="font-bold text-lg"&gt;Hello!&lt;/h3&gt;
+    &lt;p class="py-4"&gt;This modal sits at the bottom on mobile.&lt;/p&gt;
+    &lt;div class="modal-action"&gt;
+      &lt;form method="dialog"&gt;
+        &lt;button class="btn"&gt;Close&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/dialog&gt;
+
+&lt;!-- Custom width (extra wide) --&gt;
+&lt;button onclick="wide_modal.showModal()" class="btn"&gt;Wide Modal&lt;/button&gt;
+&lt;dialog id="wide_modal" class="modal"&gt;
+  &lt;div class="modal-box w-11/12 max-w-5xl"&gt;
+    &lt;h3 class="font-bold text-lg"&gt;Wide modal!&lt;/h3&gt;
+    &lt;p class="py-4"&gt;This is a wider modal box.&lt;/p&gt;
+    &lt;div class="modal-action"&gt;
+      &lt;form method="dialog"&gt;
+        &lt;button class="btn"&gt;Close&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/dialog&gt;</code></pre>
+      </div>
+    </div>
+
+    <div data-component="daisyui alert info success warning error soft outline">
+      <h3>daisyUI — Alert</h3>
+      <p>Status alerts in all colors and styles. Layout can be horizontal or vertical.</p>
+      <span class="badge free">FREE</span> <span class="tag">daisyUI</span> <span class="tag">No JS</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-html">&lt;!-- Info --&gt;
+&lt;div role="alert" class="alert alert-info"&gt;
+  &lt;svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="h-6 w-6 shrink-0 stroke-current"&gt;
+    &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span&gt;New software update available.&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- Success --&gt;
+&lt;div role="alert" class="alert alert-success"&gt;
+  &lt;svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24"&gt;
+    &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/&gt;
+  &lt;/svg&gt;
+  &lt;span&gt;Your purchase has been confirmed!&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- Warning --&gt;
+&lt;div role="alert" class="alert alert-warning"&gt;
+  &lt;svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24"&gt;
+    &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/&gt;
+  &lt;/svg&gt;
+  &lt;span&gt;Warning: Invalid email address!&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- Error --&gt;
+&lt;div role="alert" class="alert alert-error"&gt;
+  &lt;svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24"&gt;
+    &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/&gt;
+  &lt;/svg&gt;
+  &lt;span&gt;Error! Task failed successfully.&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- Soft style --&gt;
+&lt;div role="alert" class="alert alert-soft alert-info"&gt;
+  &lt;span&gt;Info alert with soft background.&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- With title and action button --&gt;
+&lt;div role="alert" class="alert alert-vertical sm:alert-horizontal"&gt;
+  &lt;svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info h-6 w-6 shrink-0"&gt;
+    &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;div&gt;
+    &lt;h3 class="font-bold"&gt;New message!&lt;/h3&gt;
+    &lt;div class="text-xs"&gt;You have 1 unread message&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;button class="btn btn-sm"&gt;See&lt;/button&gt;
+  &lt;button class="btn btn-sm btn-ghost"&gt;Deny&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </div>
+
+    <div data-component="daisyui badge primary soft outline ghost">
+      <h3>daisyUI — Badge</h3>
+      <span class="badge free">FREE</span> <span class="tag">daisyUI</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-html">&lt;!-- Colors --&gt;
+&lt;span class="badge"&gt;Default&lt;/span&gt;
+&lt;span class="badge badge-primary"&gt;Primary&lt;/span&gt;
+&lt;span class="badge badge-secondary"&gt;Secondary&lt;/span&gt;
+&lt;span class="badge badge-accent"&gt;Accent&lt;/span&gt;
+&lt;span class="badge badge-info"&gt;Info&lt;/span&gt;
+&lt;span class="badge badge-success"&gt;Success&lt;/span&gt;
+&lt;span class="badge badge-warning"&gt;Warning&lt;/span&gt;
+&lt;span class="badge badge-error"&gt;Error&lt;/span&gt;
+
+&lt;!-- Styles --&gt;
+&lt;span class="badge badge-outline badge-primary"&gt;Outline&lt;/span&gt;
+&lt;span class="badge badge-soft badge-primary"&gt;Soft&lt;/span&gt;
+&lt;span class="badge badge-ghost"&gt;Ghost&lt;/span&gt;
+&lt;span class="badge badge-dash badge-primary"&gt;Dash&lt;/span&gt;
+
+&lt;!-- Sizes --&gt;
+&lt;span class="badge badge-xs badge-primary"&gt;XS&lt;/span&gt;
+&lt;span class="badge badge-sm badge-primary"&gt;SM&lt;/span&gt;
+&lt;span class="badge badge-md badge-primary"&gt;MD&lt;/span&gt;
+&lt;span class="badge badge-lg badge-primary"&gt;LG&lt;/span&gt;
+&lt;span class="badge badge-xl badge-primary"&gt;XL&lt;/span&gt;
+
+&lt;!-- In a button --&gt;
+&lt;button class="btn"&gt;
+  Inbox &lt;div class="badge badge-secondary"&gt;+99&lt;/div&gt;
+&lt;/button&gt;</code></pre>
+      </div>
+    </div>
+
+    <div data-component="daisyui navbar responsive hamburger menu dropdown">
+      <h3>daisyUI — Navbar</h3>
+      <p>Responsive navbar with logo, menu items, dropdown, and mobile hamburger menu.</p>
+      <span class="badge free">FREE</span> <span class="tag">daisyUI</span> <span class="tag">No JS</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-html">&lt;!-- Responsive navbar with hamburger on mobile --&gt;
+&lt;div class="navbar bg-base-100 shadow-sm"&gt;
+  &lt;div class="navbar-start"&gt;
+    &lt;div class="dropdown"&gt;
+      &lt;div tabindex="0" role="button" class="btn btn-ghost lg:hidden"&gt;
+        &lt;svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"&gt;
+          &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16"/&gt;
+        &lt;/svg&gt;
+      &lt;/div&gt;
+      &lt;ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"&gt;
+        &lt;li&gt;&lt;a&gt;Item 1&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;
+          &lt;a&gt;Parent&lt;/a&gt;
+          &lt;ul class="p-2"&gt;
+            &lt;li&gt;&lt;a&gt;Submenu 1&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a&gt;Submenu 2&lt;/a&gt;&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/li&gt;
+        &lt;li&gt;&lt;a&gt;Item 3&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;a class="btn btn-ghost text-xl"&gt;daisyUI&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div class="navbar-center hidden lg:flex"&gt;
+    &lt;ul class="menu menu-horizontal px-1"&gt;
+      &lt;li&gt;&lt;a&gt;Item 1&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;
+        &lt;details&gt;
+          &lt;summary&gt;Parent&lt;/summary&gt;
+          &lt;ul class="p-2"&gt;
+            &lt;li&gt;&lt;a&gt;Submenu 1&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a&gt;Submenu 2&lt;/a&gt;&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/details&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a&gt;Item 3&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+  &lt;div class="navbar-end"&gt;
+    &lt;a class="btn btn-primary"&gt;Get Started&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Navbar with search and avatar --&gt;
+&lt;div class="navbar bg-base-100 shadow-sm"&gt;
+  &lt;div class="flex-1"&gt;
+    &lt;a class="btn btn-ghost text-xl"&gt;daisyUI&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div class="flex-none gap-2"&gt;
+    &lt;div class="form-control"&gt;
+      &lt;input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" /&gt;
+    &lt;/div&gt;
+    &lt;div class="dropdown dropdown-end"&gt;
+      &lt;div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar"&gt;
+        &lt;div class="w-10 rounded-full"&gt;
+          &lt;img alt="Avatar" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" /&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"&gt;
+        &lt;li&gt;&lt;a class="justify-between"&gt;Profile &lt;span class="badge"&gt;New&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a&gt;Settings&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a&gt;Logout&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </div>
+
+    <div data-component="daisyui table zebra striped bordered hover">
+      <h3>daisyUI — Table</h3>
+      <span class="badge free">FREE</span> <span class="tag">daisyUI</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-html">&lt;!-- Basic table with border --&gt;
+&lt;div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100"&gt;
+  &lt;table class="table"&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th&gt;&lt;/th&gt;
+        &lt;th&gt;Name&lt;/th&gt;
+        &lt;th&gt;Job&lt;/th&gt;
+        &lt;th&gt;Favorite Color&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;th&gt;1&lt;/th&gt;
+        &lt;td&gt;Cy Ganderton&lt;/td&gt;
+        &lt;td&gt;Quality Control Specialist&lt;/td&gt;
+        &lt;td&gt;Blue&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;th&gt;2&lt;/th&gt;
+        &lt;td&gt;Hart Hagerty&lt;/td&gt;
+        &lt;td&gt;Desktop Support Technician&lt;/td&gt;
+        &lt;td&gt;Purple&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;th&gt;3&lt;/th&gt;
+        &lt;td&gt;Brice Swyre&lt;/td&gt;
+        &lt;td&gt;Tax Accountant&lt;/td&gt;
+        &lt;td&gt;Red&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+
+&lt;!-- Zebra striped --&gt;
+&lt;table class="table table-zebra"&gt;
+  &lt;!-- same thead/tbody --&gt;
+&lt;/table&gt;
+
+&lt;!-- Hover rows --&gt;
+&lt;table class="table"&gt;
+  &lt;tbody&gt;
+    &lt;tr class="hover:bg-base-200 cursor-pointer"&gt;
+      &lt;td&gt;Row 1&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;!-- Rich table with avatars, badges, buttons --&gt;
+&lt;div class="overflow-x-auto"&gt;
+  &lt;table class="table table-sm"&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th&gt;&lt;input type="checkbox" class="checkbox checkbox-sm" /&gt;&lt;/th&gt;
+        &lt;th&gt;Name&lt;/th&gt;
+        &lt;th&gt;Status&lt;/th&gt;
+        &lt;th&gt;Actions&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;th&gt;&lt;input type="checkbox" class="checkbox checkbox-sm" /&gt;&lt;/th&gt;
+        &lt;td&gt;
+          &lt;div class="flex items-center gap-3"&gt;
+            &lt;div class="avatar"&gt;
+              &lt;div class="mask mask-squircle h-10 w-10"&gt;
+                &lt;img src="https://img.daisyui.com/images/profile/demo/2a@94.webp" alt="Avatar" /&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div&gt;
+              &lt;div class="font-bold"&gt;Hart Hagerty&lt;/div&gt;
+              &lt;div class="text-sm opacity-50"&gt;United States&lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/td&gt;
+        &lt;td&gt;&lt;span class="badge badge-success badge-sm"&gt;Active&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;button class="btn btn-ghost btn-xs"&gt;details&lt;/button&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </div>
+
+    <!-- =================== FLOWBITE SECTION =================== -->
+    <h2>Flowbite — Tailwind Components with JS</h2>
+    <p>Free Tailwind CSS component library with 56+ UI blocks. Requires Flowbite JS for interactive components (dropdowns, modals).</p>
+    <div class="install">npm install flowbite</div>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-js">// tailwind.config.js
+module.exports = {
+  content: [
+    "./node_modules/flowbite/**/*.js"
+  ],
+  plugins: [
+    require('flowbite/plugin')
+  ],
+}
+// In HTML/JS entry: import 'flowbite';</code></pre>
+    </div>
+
+    <div data-component="flowbite button primary gradient pill outline icon loading disabled">
+      <h3>Flowbite — Button Variants</h3>
+      <p>All button types: default, gradient, pill, outline, icon, social, loading, disabled.</p>
+      <span class="badge free">FREE</span> <span class="tag">Flowbite</span> <span class="tag">Tailwind</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-html">&lt;!-- Default (uses Flowbite design tokens) --&gt;
+&lt;button type="button" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none"&gt;
+  Default
+&lt;/button&gt;
+
+&lt;!-- Outline --&gt;
+&lt;button type="button" class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"&gt;
+  Outline
+&lt;/button&gt;
+
+&lt;!-- Pill shape --&gt;
+&lt;button type="button" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 focus:outline-none"&gt;
+  Pill
+&lt;/button&gt;
+
+&lt;!-- Gradient monochrome --&gt;
+&lt;button type="button" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"&gt;
+  Blue Gradient
+&lt;/button&gt;
+
+&lt;!-- Gradient duotone --&gt;
+&lt;button type="button" class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"&gt;
+  Purple to Blue
+&lt;/button&gt;
+
+&lt;!-- Gradient outline --&gt;
+&lt;button class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300"&gt;
+  &lt;span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-transparent"&gt;
+    Gradient Outline
+  &lt;/span&gt;
+&lt;/button&gt;
+
+&lt;!-- With shadow --&gt;
+&lt;button type="button" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center"&gt;
+  Colored Shadow
+&lt;/button&gt;
+
+&lt;!-- Sizes --&gt;
+&lt;button class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-1.5"&gt;XS&lt;/button&gt;
+&lt;button class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2"&gt;SM&lt;/button&gt;
+&lt;button class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-3"&gt;LG&lt;/button&gt;
+&lt;button class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3.5"&gt;XL&lt;/button&gt;
+
+&lt;!-- Icon only --&gt;
+&lt;button type="button" class="inline-flex items-center justify-center text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg w-10 h-10 focus:outline-none"&gt;
+  &lt;svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;
+    &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/&gt;
+  &lt;/svg&gt;
+  &lt;span class="sr-only"&gt;Add item&lt;/span&gt;
+&lt;/button&gt;
+
+&lt;!-- Loading state --&gt;
+&lt;button disabled type="button" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center"&gt;
+  &lt;svg aria-hidden="true" role="status" class="inline w-4 h-4 me-3 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg"&gt;
+    &lt;path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 45.3011 27.9921 45.3011 50.5908C45.3011 73.1895 27.4013 91.5094 50 91.5094Z" fill="#E5E7EB"/&gt;
+    &lt;path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/&gt;
+  &lt;/svg&gt;
+  Loading...
+&lt;/button&gt;</code></pre>
+      </div>
+    </div>
+
+    <div data-component="flowbite navbar responsive fixed">
+      <h3>Flowbite — Navbar</h3>
+      <p>Responsive fixed navbar with mobile hamburger toggle via Flowbite JS.</p>
+      <span class="badge free">FREE</span> <span class="tag">Flowbite</span> <span class="tag">Tailwind</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-html">&lt;nav class="bg-white border-gray-200 dark:bg-gray-900"&gt;
+  &lt;div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"&gt;
+    &lt;a href="#" class="flex items-center space-x-3"&gt;
+      &lt;img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Logo" /&gt;
+      &lt;span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"&gt;Flowbite&lt;/span&gt;
+    &lt;/a&gt;
+    &lt;button data-collapse-toggle="navbar-default" type="button"
+      class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700"
+      aria-controls="navbar-default" aria-expanded="false"&gt;
+      &lt;span class="sr-only"&gt;Open main menu&lt;/span&gt;
+      &lt;svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14"&gt;
+        &lt;path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/&gt;
+      &lt;/svg&gt;
+    &lt;/button&gt;
+    &lt;div class="hidden w-full md:block md:w-auto" id="navbar-default"&gt;
+      &lt;ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"&gt;
+        &lt;li&gt;&lt;a href="#" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0" aria-current="page"&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white"&gt;About&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white"&gt;Services&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white"&gt;Pricing&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</code></pre>
+      </div>
+    </div>
+
+    <div data-component="flowbite alert info success warning error dismissible">
+      <h3>Flowbite — Alert</h3>
+      <p>Default, with icon, bordered, and dismissible alert variants in all colors.</p>
+      <span class="badge free">FREE</span> <span class="tag">Flowbite</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-html">&lt;!-- Info alert with icon --&gt;
+&lt;div class="flex items-center p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert"&gt;
+  &lt;svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"&gt;
+    &lt;path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/&gt;
+  &lt;/svg&gt;
+  &lt;span class="sr-only"&gt;Info&lt;/span&gt;
+  &lt;div&gt;&lt;span class="font-medium"&gt;Info alert!&lt;/span&gt; Change a few things up and try submitting again.&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Success --&gt;
+&lt;div class="flex items-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50" role="alert"&gt;
+  &lt;svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"&gt;
+    &lt;path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/&gt;
+  &lt;/svg&gt;
+  &lt;div&gt;&lt;span class="font-medium"&gt;Success alert!&lt;/span&gt; You successfully read this alert message.&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Warning --&gt;
+&lt;div class="flex items-center p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50" role="alert"&gt;
+  &lt;svg class="flex-shrink-0 inline w-4 h-4 me-3" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"&gt;
+    &lt;path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/&gt;
+  &lt;/svg&gt;
+  &lt;div&gt;&lt;span class="font-medium"&gt;Warning alert!&lt;/span&gt; Change a few things up and try submitting again.&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Dismissible --&gt;
+&lt;div id="alert-1" class="flex items-center p-4 mb-4 text-blue-800 rounded-lg bg-blue-50" role="alert"&gt;
+  &lt;svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"&gt;
+    &lt;path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/&gt;
+  &lt;/svg&gt;
+  &lt;div class="ms-3 text-sm font-medium"&gt;
+    A simple info alert with an &lt;a href="#" class="font-semibold underline hover:no-underline"&gt;example link&lt;/a&gt;.
+  &lt;/div&gt;
+  &lt;button type="button" data-dismiss-target="#alert-1" aria-label="Close"
+    class="ms-auto -mx-1.5 -my-1.5 bg-blue-50 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex items-center justify-center h-8 w-8"&gt;
+    &lt;span class="sr-only"&gt;Close&lt;/span&gt;
+    &lt;svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14"&gt;
+      &lt;path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/&gt;
+    &lt;/svg&gt;
+  &lt;/button&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </div>
+
+    <!-- =================== HEADLESS UI SECTION =================== -->
+    <h2>Headless UI — Tailwind Labs (React + Vue)</h2>
+    <p>Unstyled, fully accessible UI components from the Tailwind CSS team. Works perfectly with Tailwind CSS utility classes.</p>
+    <div class="install">npm install @headlessui/react  &nbsp;# React
+npm install @headlessui/vue   &nbsp;# Vue</div>
+
+    <div data-component="headlessui dialog modal accessible react">
+      <h3>Headless UI — Dialog (Modal)</h3>
+      <span class="badge free">FREE</span> <span class="tag">Headless UI</span> <span class="tag">React</span> <span class="tag">Accessible</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
+import { useState } from 'react'
+
+export default function DialogExample() {
+  const [isOpen, setIsOpen] = useState(false)
+
+  return (
+    &lt;&gt;
+      &lt;button
+        onClick={() =&gt; setIsOpen(true)}
+        className="rounded-md bg-black/20 px-4 py-2 text-sm font-medium text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
+      &gt;
+        Open dialog
+      &lt;/button&gt;
+
+      &lt;Dialog open={isOpen} onClose={() =&gt; setIsOpen(false)} className="relative z-50"&gt;
+        {/* Backdrop */}
+        &lt;div className="fixed inset-0 bg-black/30" aria-hidden="true" /&gt;
+
+        {/* Full-screen container */}
+        &lt;div className="fixed inset-0 flex w-screen items-center justify-center p-4"&gt;
+          &lt;DialogPanel className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl"&gt;
+            &lt;DialogTitle className="text-base/7 font-medium text-gray-900"&gt;
+              Deactivate account
+            &lt;/DialogTitle&gt;
+            &lt;Description className="mt-2 text-sm/6 text-gray-600"&gt;
+              This will permanently deactivate your account
+            &lt;/Description&gt;
+            &lt;p className="mt-4 text-sm text-gray-500"&gt;
+              Are you sure? All your data will be permanently removed. This action cannot be undone.
+            &lt;/p&gt;
+            &lt;div className="mt-6 flex gap-3 justify-end"&gt;
+              &lt;button
+                onClick={() =&gt; setIsOpen(false)}
+                className="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+              &gt;
+                Cancel
+              &lt;/button&gt;
+              &lt;button
+                onClick={() =&gt; setIsOpen(false)}
+                className="rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
+              &gt;
+                Deactivate
+              &lt;/button&gt;
+            &lt;/div&gt;
+          &lt;/DialogPanel&gt;
+        &lt;/div&gt;
+      &lt;/Dialog&gt;
+    &lt;/&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="headlessui combobox searchable autocomplete">
+      <h3>Headless UI — Combobox (Autocomplete)</h3>
+      <p>Searchable dropdown with keyboard navigation and filtering.</p>
+      <span class="badge free">FREE</span> <span class="tag">Headless UI</span> <span class="tag">React</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions } from '@headlessui/react'
+import { useState } from 'react'
+
+const people = [
+  { id: 1, name: 'Durward Reynolds' },
+  { id: 2, name: 'Kenton Towne' },
+  { id: 3, name: 'Therese Wunsch' },
+  { id: 4, name: 'Benedict Kessler' },
+  { id: 5, name: 'Katelyn Rohan' },
+]
+
+export default function ComboboxExample() {
+  const [selectedPerson, setSelectedPerson] = useState(people[0])
+  const [query, setQuery] = useState('')
+
+  const filtered = query === ''
+    ? people
+    : people.filter(p =&gt; p.name.toLowerCase().includes(query.toLowerCase()))
+
+  return (
+    &lt;Combobox value={selectedPerson} onChange={setSelectedPerson} onClose={() =&gt; setQuery('')}&gt;
+      &lt;div className="relative"&gt;
+        &lt;ComboboxInput
+          className="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm"
+          displayValue={(person) =&gt; person?.name}
+          onChange={(e) =&gt; setQuery(e.target.value)}
+          placeholder="Search people..."
+        /&gt;
+        &lt;ComboboxOptions
+          anchor="bottom"
+          className="absolute z-10 mt-1 w-full overflow-auto rounded-md bg-white py-1 text-sm shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none empty:invisible"
+        &gt;
+          {filtered.map((person) =&gt; (
+            &lt;ComboboxOption
+              key={person.id}
+              value={person}
+              className="relative cursor-default select-none py-2 pl-3 pr-9 data-[focus]:bg-blue-600 data-[focus]:text-white text-gray-900"
+            &gt;
+              {person.name}
+            &lt;/ComboboxOption&gt;
+          ))}
+        &lt;/ComboboxOptions&gt;
+      &lt;/div&gt;
+    &lt;/Combobox&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="headlessui tabs tab panels keyboard navigation">
+      <h3>Headless UI — Tabs</h3>
+      <span class="badge free">FREE</span> <span class="tag">Headless UI</span> <span class="tag">React</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
+
+const categories = {
+  Recent: [
+    { id: 1, title: 'Does drinking coffee make you smarter?', date: '5h ago' },
+    { id: 2, title: "So you've bought coffee... now what?", date: '3h ago' },
+  ],
+  Popular: [
+    { id: 1, title: 'Is tech making coffee better or worse?', date: 'Jan 7' },
+    { id: 2, title: 'The most innovative things happening in coffee', date: 'Mar 19' },
+  ],
+  Trending: [
+    { id: 1, title: 'Ask Me Anything: 10 answers to your questions about coffee', date: '2d ago' },
+  ],
+}
+
+export default function TabsExample() {
+  return (
+    &lt;div className="w-full max-w-md px-2 py-16 sm:px-0"&gt;
+      &lt;TabGroup&gt;
+        &lt;TabList className="flex space-x-1 rounded-xl bg-blue-900/20 p-1"&gt;
+          {Object.keys(categories).map((category) =&gt; (
+            &lt;Tab
+              key={category}
+              className="w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 data-[selected]:bg-white data-[selected]:shadow data-[hover]:bg-white/[0.12] data-[hover]:text-white"
+            &gt;
+              {category}
+            &lt;/Tab&gt;
+          ))}
+        &lt;/TabList&gt;
+        &lt;TabPanels className="mt-2"&gt;
+          {Object.values(categories).map((posts, idx) =&gt; (
+            &lt;TabPanel key={idx} className="rounded-xl bg-white p-3 ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"&gt;
+              &lt;ul&gt;
+                {posts.map((post) =&gt; (
+                  &lt;li key={post.id} className="relative rounded-md p-3 hover:bg-gray-100"&gt;
+                    &lt;h3 className="text-sm font-medium leading-5"&gt;{post.title}&lt;/h3&gt;
+                    &lt;ul className="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500"&gt;
+                      &lt;li&gt;{post.date}&lt;/li&gt;
+                    &lt;/ul&gt;
+                  &lt;/li&gt;
+                ))}
+              &lt;/ul&gt;
+            &lt;/TabPanel&gt;
+          ))}
+        &lt;/TabPanels&gt;
+      &lt;/TabGroup&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+    <div data-component="headlessui switch toggle boolean accessible">
+      <h3>Headless UI — Switch (Toggle)</h3>
+      <span class="badge free">FREE</span> <span class="tag">Headless UI</span> <span class="tag">React</span>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { Switch } from '@headlessui/react'
+import { useState } from 'react'
+
+export default function SwitchExample() {
+  const [enabled, setEnabled] = useState(false)
+
+  return (
+    &lt;div className="flex items-center gap-3"&gt;
+      &lt;Switch
+        checked={enabled}
+        onChange={setEnabled}
+        className="group relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-gray-200 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 data-[checked]:bg-blue-600"
+      &gt;
+        &lt;span className="sr-only"&gt;Enable notifications&lt;/span&gt;
+        &lt;span
+          aria-hidden="true"
+          className="pointer-events-none inline-block h-5 w-5 translate-x-0 rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out group-data-[checked]:translate-x-5"
+        /&gt;
+      &lt;/Switch&gt;
+      &lt;span className="text-sm font-medium text-gray-900"&gt;
+        {enabled ? 'Enabled' : 'Disabled'}
+      &lt;/span&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+      </div>
+    </div>
+
+  </div><!-- #content -->
+</div><!-- .main -->
+<script>
+hljs.highlightAll();
+document.querySelectorAll('.code-block').forEach(b => {
+  const btn = b.querySelector('.copy-btn');
+  if (btn) btn.onclick = () => {
+    navigator.clipboard.writeText(b.querySelector('code').innerText);
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1500);
+  };
+});
+function search(q) {
+  document.querySelectorAll('[data-component]').forEach(el => {
+    el.style.display = !q || el.textContent.toLowerCase().includes(q.toLowerCase()) ? '' : 'none';
+  });
+}
+</script>
+</body></html>

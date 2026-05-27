@@ -1,0 +1,1190 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Framer Motion Advanced — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#e5e5e5;font-family:'Inter',sans-serif;font-size:15px;line-height:1.6}.sidebar{position:fixed;left:0;top:0;width:220px;height:100vh;background:#111;border-right:1px solid #1f1f1f;padding:20px;overflow-y:auto}.sidebar h2{font-size:13px;color:#f59e0b;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}.sidebar a{display:block;color:#888;text-decoration:none;padding:6px 8px;border-radius:6px;font-size:13px;margin-bottom:2px}.sidebar a:hover{color:#fff;background:#1a1a1a}.main{margin-left:220px;padding:48px;max-width:960px}h1{font-size:32px;font-weight:700;color:#fff;margin-bottom:8px}h2{font-size:20px;font-weight:600;color:#fff;margin:40px 0 12px;padding-top:40px;border-top:1px solid #1f1f1f}h3{font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.08em;margin:20px 0 8px}p{color:#aaa;margin-bottom:12px}.tag{display:inline-block;background:#f59e0b15;border:1px solid #f59e0b40;color:#f59e0b;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.badge.free{background:#0d2e1680;border:1px solid #22c55e40;color:#22c55e}.install{background:#0d0d0d;border:1px solid #1f1f1f;border-radius:6px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#f59e0b;margin:8px 0}.code-block{position:relative;margin:12px 0}.copy-btn{position:absolute;top:8px;right:8px;background:#1f1f1f;border:1px solid #333;color:#888;padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer}.copy-btn:hover{color:#fff}pre{border-radius:8px;overflow:auto;font-size:12px;max-height:500px}input[type=search]{width:100%;background:#111;border:1px solid #2a2a2a;color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;font-family:inherit;margin-bottom:32px;outline:none}input[type=search]:focus{border-color:#f59e0b50}.info-box{background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:16px 20px;margin:12px 0}.info-box.tip{border-color:#f59e0b30;background:#f59e0b08}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}.card{background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:16px}.card h4{color:#fff;font-size:14px;margin-bottom:6px}table{width:100%;border-collapse:collapse;margin:12px 0}td,th{padding:8px 12px;border:1px solid #1f1f1f;font-size:13px;text-align:left}th{color:#888;background:#111}td{color:#ccc}code{background:#1a1a1a;border:1px solid #2a2a2a;padding:1px 5px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#f59e0b}</style></head>
+<body>
+<div class="sidebar">
+  <h2>Design KB</h2>
+  <a href="../index.html">&#127968; Home</a>
+  <a href="../3d/spline-scenes.html">Spline Scenes</a>
+  <a href="../3d/spline-rive-resources.html">Spline + Rive</a>
+  <a href="../3d/r3f.html">R3F</a>
+  <a href="../animations/gsap.html">GSAP</a>
+  <a href="../animations/gsap-plugins.html">GSAP Plugins</a>
+  <a href="../animations/framer-motion.html">Framer Motion</a>
+  <a href="../animations/framer-motion-advanced.html" style="color:#f59e0b">Framer Advanced</a>
+  <a href="../animations/lottie-rive.html">Lottie + Rive</a>
+  <a href="../components/magicui-components.html">MagicUI</a>
+</div>
+<div class="main">
+  <input type="search" placeholder="Search..." oninput="search(this.value)">
+  <div id="content">
+
+    <h1>Framer Motion — Advanced Patterns</h1>
+    <p>Motion for React (formerly Framer Motion) — comprehensive API reference for useScroll, useTransform, useSpring, AnimatePresence, layout animations, drag, and production patterns.</p>
+    <div class="install">npm i motion</div>
+    <div class="install">import { motion, useScroll, useTransform } from 'motion/react'</div>
+
+    <div class="info-box tip">
+      <strong style="color:#f59e0b">Package rename:</strong> <code>framer-motion</code> was renamed to <code>motion</code>. Use <code>import { ... } from 'motion/react'</code> for React. The old package still works but <code>motion</code> is canonical.
+    </div>
+
+    <!-- ========== QUICK REFERENCE ========== -->
+    <div data-section="quick reference api hooks components">
+      <h2>Full API Quick Reference</h2>
+      <div class="grid">
+        <div class="card">
+          <h4>Hooks</h4>
+          <ul style="color:#aaa;font-size:13px;line-height:2;padding-left:0;list-style:none">
+            <li><code>useScroll()</code> — scroll position</li>
+            <li><code>useTransform()</code> — map/compute motion values</li>
+            <li><code>useSpring()</code> — spring physics</li>
+            <li><code>useMotionValue()</code> — mutable animation value</li>
+            <li><code>useVelocity()</code> — motion value velocity</li>
+            <li><code>useMotionTemplate()</code> — CSS string interpolation</li>
+            <li><code>useMotionValueEvent()</code> — listen to value changes</li>
+            <li><code>useAnimate()</code> — imperative animations</li>
+            <li><code>useAnimationFrame()</code> — rAF callback</li>
+            <li><code>useDragControls()</code> — programmatic drag</li>
+            <li><code>useInView()</code> — viewport detection</li>
+            <li><code>useReducedMotion()</code> — a11y preference</li>
+            <li><code>useTime()</code> — elapsed time value</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Components</h4>
+          <ul style="color:#aaa;font-size:13px;line-height:2;padding-left:0;list-style:none">
+            <li><code>&lt;motion.div&gt;</code> — animatable div</li>
+            <li><code>&lt;AnimatePresence&gt;</code> — exit animations</li>
+            <li><code>&lt;LayoutGroup&gt;</code> — sync layout anims</li>
+            <li><code>&lt;LazyMotion&gt;</code> — reduce bundle size</li>
+            <li><code>&lt;MotionConfig&gt;</code> — global config</li>
+            <li><code>&lt;Reorder.Group&gt;</code> — drag-to-reorder</li>
+            <li><code>&lt;AnimateView&gt;</code> — viewport-triggered</li>
+          </ul>
+          <h4 style="margin-top:12px">Key Props</h4>
+          <ul style="color:#aaa;font-size:13px;line-height:2;padding-left:0;list-style:none">
+            <li><code>initial</code> / <code>animate</code> / <code>exit</code></li>
+            <li><code>transition</code> — timing/physics config</li>
+            <li><code>whileHover</code> / <code>whileTap</code> / <code>whileFocus</code></li>
+            <li><code>whileInView</code> / <code>viewport</code></li>
+            <li><code>layout</code> / <code>layoutId</code></li>
+            <li><code>drag</code> / <code>dragConstraints</code></li>
+            <li><code>variants</code> / <code>animate</code> (variant name)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== USE SCROLL ========== -->
+    <div data-section="useScroll scroll progress parallax">
+      <h2>useScroll — Scroll-Linked Animations</h2>
+      <p>Returns four motion values linked to scroll position. Hardware-accelerated via ScrollTimeline API when driving transform/opacity/filter/clipPath.</p>
+
+      <h3>Return Values</h3>
+      <table>
+        <tr><th>Value</th><th>Type</th><th>Description</th></tr>
+        <tr><td><code>scrollX</code></td><td>MotionValue&lt;number&gt;</td><td>Absolute horizontal scroll in px</td></tr>
+        <tr><td><code>scrollY</code></td><td>MotionValue&lt;number&gt;</td><td>Absolute vertical scroll in px</td></tr>
+        <tr><td><code>scrollXProgress</code></td><td>MotionValue&lt;0–1&gt;</td><td>Normalized horizontal progress</td></tr>
+        <tr><td><code>scrollYProgress</code></td><td>MotionValue&lt;0–1&gt;</td><td>Normalized vertical progress</td></tr>
+      </table>
+
+      <h3>Options</h3>
+      <table>
+        <tr><th>Option</th><th>Default</th><th>Description</th></tr>
+        <tr><td><code>container</code></td><td>viewport</td><td>ref to scrollable container</td></tr>
+        <tr><td><code>target</code></td><td>scrollable area</td><td>ref to element being tracked</td></tr>
+        <tr><td><code>axis</code></td><td>"y"</td><td>"x" | "y"</td></tr>
+        <tr><td><code>offset</code></td><td>["start start","end end"]</td><td>Define start/end intersection points</td></tr>
+        <tr><td><code>trackContentSize</code></td><td>false</td><td>Auto-update when content changes size</td></tr>
+      </table>
+
+      <h3>Progress Bar</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">'use client';
+import { motion, useScroll } from 'motion/react';
+
+export function ReadingProgress() {
+  const { scrollYProgress } = useScroll();
+
+  return (
+    &lt;motion.div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: 3,
+        background: '#f59e0b',
+        transformOrigin: '0%',
+        scaleX: scrollYProgress,
+        zIndex: 100,
+      }}
+    /&gt;
+  );
+}</code></pre>
+      </div>
+
+      <h3>Element Scroll Progress (track specific element)</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
+
+export function ParallaxSection() {
+  const sectionRef = useRef&lt;HTMLDivElement&gt;(null);
+
+  // Track progress of this specific element through viewport
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+    // "start end"   = element top hits viewport bottom (enters)
+    // "end start"   = element bottom hits viewport top (exits)
+  });
+
+  // As element scrolls through, image moves up (parallax)
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '-20%']);
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
+
+  return (
+    &lt;div ref={sectionRef} style={{ height: '80vh', overflow: 'hidden', position: 'relative' }}&gt;
+      &lt;motion.img
+        src="/hero.jpg"
+        alt=""
+        style={{ width: '100%', height: '120%', objectFit: 'cover', y, opacity }}
+      /&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+      </div>
+
+      <h3>Scrollable Container (not window)</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useRef } from 'react';
+import { motion, useScroll } from 'motion/react';
+
+export function CardCarousel() {
+  const containerRef = useRef&lt;HTMLDivElement&gt;(null);
+
+  const { scrollXProgress } = useScroll({
+    container: containerRef,
+    axis: 'x',
+  });
+
+  return (
+    &lt;div style={{ position: 'relative' }}&gt;
+      {/* Scroll progress indicator */}
+      &lt;motion.div
+        style={{
+          height: 2,
+          background: '#f59e0b',
+          transformOrigin: '0%',
+          scaleX: scrollXProgress,
+        }}
+      /&gt;
+      {/* Horizontally scrollable container */}
+      &lt;div
+        ref={containerRef}
+        style={{ display: 'flex', gap: 16, overflowX: 'scroll', scrollSnapType: 'x mandatory' }}
+      &gt;
+        {Array.from({ length: 8 }).map((_, i) =&gt; (
+          &lt;div key={i} style={{ flexShrink: 0, width: 300, height: 200, scrollSnapAlign: 'start',
+            background: '#111', borderRadius: 12 }} /&gt;
+        ))}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- ========== USE TRANSFORM ========== -->
+    <div data-section="useTransform transform map range motion value">
+      <h2>useTransform — Map &amp; Compute Motion Values</h2>
+      <p>Creates a derived motion value. Two usage patterns: range mapping (input range → output range) and transform function (compute from one or more values).</p>
+
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useScroll, useTransform, motion } from 'motion/react';
+
+// Pattern 1: Range mapping
+// scrollYProgress: 0 → 1
+// y:               0px → -100px
+const { scrollYProgress } = useScroll();
+const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
+const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1, 0]);
+const scale = useTransform(scrollYProgress, [0, 0.3], [1, 0.85]);
+
+// Pattern 2: Transform function
+// Reads from multiple motion values
+const background = useTransform(
+  () => `hsl(${scrollYProgress.get() * 360}, 100%, 50%)`
+);
+
+// Colors
+const color = useTransform(
+  scrollYProgress,
+  [0, 1],
+  ['#ffffff', '#f59e0b']
+);
+
+// CSS units
+const blur = useTransform(scrollYProgress, [0, 1], ['blur(0px)', 'blur(8px)']);
+
+// Options
+const clamped = useTransform(
+  scrollYProgress,
+  [0, 0.5],
+  [0, 1],
+  { clamp: false }  // allow output beyond 0-1
+);
+
+// Multiple outputs from one input
+const transforms = useTransform(scrollYProgress, [0, 1], {
+  x: [0, 200],
+  opacity: [1, 0],
+  scale: [1, 0.5],
+});</code></pre>
+      </div>
+
+      <h3>Parallax Stack (multiple layers)</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
+
+export function ParallaxStack() {
+  const ref = useRef&lt;HTMLDivElement&gt;(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start start', 'end start'],
+  });
+
+  // Each layer moves at different speed
+  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);     // slow
+  const midY = useTransform(scrollYProgress, [0, 1], ['0%', '15%']);    // medium
+  const fgY = useTransform(scrollYProgress, [0, 1], ['0%', '-10%']);    // forward
+  const titleY = useTransform(scrollYProgress, [0, 1], ['0%', '60%']);  // fast
+
+  return (
+    &lt;div ref={ref} style={{ height: '100vh', position: 'relative', overflow: 'hidden' }}&gt;
+      {/* Background layer */}
+      &lt;motion.div style={{ position: 'absolute', inset: 0, y: bgY,
+        background: 'radial-gradient(circle at 50% 50%, #1a0a2e, #0a0a0a)' }} /&gt;
+
+      {/* Mid layer */}
+      &lt;motion.img src="/mountains-mid.png" alt="" style={{
+        position: 'absolute', bottom: 0, width: '100%', y: midY,
+      }} /&gt;
+
+      {/* Hero text */}
+      &lt;motion.h1 style={{
+        position: 'absolute', top: '40%', left: '50%', transform: 'translateX(-50%)',
+        y: titleY, color: '#fff', fontSize: '5rem', fontWeight: 700,
+      }}&gt;
+        Parallax Hero
+      &lt;/motion.h1&gt;
+
+      {/* Foreground layer */}
+      &lt;motion.img src="/mountains-fg.png" alt="" style={{
+        position: 'absolute', bottom: 0, width: '100%', y: fgY,
+      }} /&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+      </div>
+
+      <h3>Color Theme on Scroll</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useScroll, useTransform, motion, useMotionTemplate } from 'motion/react';
+
+export function ThemeScroll() {
+  const { scrollYProgress } = useScroll();
+
+  const r = useTransform(scrollYProgress, [0, 0.5, 1], [10, 30, 15]);
+  const g = useTransform(scrollYProgress, [0, 0.5, 1], [10, 15, 46]);
+  const b = useTransform(scrollYProgress, [0, 0.5, 1], [10, 60, 22]);
+
+  // useMotionTemplate stitches motion values into a CSS string
+  const background = useMotionTemplate`rgb(${r}, ${g}, ${b})`;
+
+  return &lt;motion.div style={{ background, minHeight: '200vh', padding: 48 }} /&gt;;
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- ========== USE SPRING ========== -->
+    <div data-section="useSpring spring physics bounce">
+      <h2>useSpring — Spring Physics</h2>
+      <p>Creates a motion value that animates with spring physics when its target changes. Can track a static value, a number, or another motion value (e.g. scroll progress for a smoothed lag).</p>
+
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useSpring, useScroll, motion } from 'motion/react';
+
+// Spring configuration presets
+const SPRING_CONFIGS = {
+  gentle:   { stiffness: 100, damping: 20, mass: 1 },
+  wobbly:   { stiffness: 180, damping: 12, mass: 1 },
+  stiff:    { stiffness: 400, damping: 30, mass: 1 },
+  slow:     { stiffness: 60,  damping: 15, mass: 1 },
+  snappy:   { stiffness: 600, damping: 40, mass: 0.8 },
+};
+
+// Basic spring value
+const scale = useSpring(1, SPRING_CONFIGS.wobbly);
+// scale.set(1.2) → springs to 1.2 with physics
+
+// Smoothed scroll progress
+function SmoothedScrollBar() {
+  const { scrollYProgress } = useScroll();
+  // Spring follows scrollYProgress but with lag
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+    skipInitialAnimation: true,  // jump to initial value without animating
+  });
+
+  return &lt;motion.div style={{ scaleX: smoothProgress, transformOrigin: '0%',
+    height: 3, background: '#f59e0b', position: 'fixed', top: 0 }} /&gt;;
+}
+
+// Cursor follower with spring lag
+function MagneticCursor() {
+  const x = useSpring(0, { stiffness: 300, damping: 25 });
+  const y = useSpring(0, { stiffness: 300, damping: 25 });
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    x.set(e.clientX - 12);
+    y.set(e.clientY - 12);
+  };
+
+  return (
+    &lt;div onMouseMove={handleMouseMove} style={{ position: 'fixed', inset: 0, zIndex: 9999, pointerEvents: 'none' }}&gt;
+      &lt;motion.div
+        style={{
+          position: 'fixed',
+          x, y,
+          width: 24,
+          height: 24,
+          borderRadius: '50%',
+          background: 'rgba(245, 158, 11, 0.8)',
+          pointerEvents: 'none',
+        }}
+      /&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+      </div>
+
+      <h3>Interactive Spring Button</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useSpring, motion } from 'motion/react';
+
+export function SpringButton({ children }: { children: React.ReactNode }) {
+  const scale = useSpring(1, { stiffness: 400, damping: 17 });
+  const y = useSpring(0, { stiffness: 400, damping: 17 });
+
+  return (
+    &lt;motion.button
+      style={{ scale, y }}
+      onHoverStart={() => { scale.set(1.05); y.set(-2); }}
+      onHoverEnd={() => { scale.set(1); y.set(0); }}
+      onTapStart={() => { scale.set(0.97); y.set(1); }}
+      onTap={() => { scale.set(1); y.set(0); }}
+      onTapCancel={() => { scale.set(1); y.set(0); }}
+    &gt;
+      {children}
+    &lt;/motion.button&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- ========== ANIMATE PRESENCE ========== -->
+    <div data-section="AnimatePresence exit animation unmount modal">
+      <h2>AnimatePresence — Exit Animations</h2>
+      <p>Enables <code>exit</code> prop on motion components. When a child is removed from the React tree, it plays its exit animation before unmounting.</p>
+
+      <h3>Props</h3>
+      <table>
+        <tr><th>Prop</th><th>Values</th><th>Description</th></tr>
+        <tr><td><code>mode</code></td><td>"sync" | "wait" | "popLayout"</td><td>sync = overlap; wait = sequential; popLayout = layout reflowed</td></tr>
+        <tr><td><code>initial</code></td><td>boolean</td><td>false = skip enter anim on first render</td></tr>
+        <tr><td><code>custom</code></td><td>any</td><td>Data passed to exiting children via usePresenceData()</td></tr>
+        <tr><td><code>onExitComplete</code></td><td>() => void</td><td>Fires when all exits finish</td></tr>
+        <tr><td><code>propagate</code></td><td>boolean</td><td>Trigger child exits when parent exits</td></tr>
+      </table>
+
+      <h3>Modal with Exit Animation</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useState } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
+
+const backdropVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 },
+};
+
+const modalVariants = {
+  hidden: { opacity: 0, scale: 0.9, y: 20 },
+  visible: { opacity: 1, scale: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } },
+  exit: { opacity: 0, scale: 0.95, y: 10, transition: { duration: 0.15 } },
+};
+
+export function Modal() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    &lt;&gt;
+      &lt;button onClick={() =&gt; setOpen(true)}&gt;Open Modal&lt;/button&gt;
+
+      &lt;AnimatePresence mode="wait"&gt;
+        {open &amp;&amp; (
+          &lt;motion.div
+            key="backdrop"
+            variants={backdropVariants}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            onClick={() =&gt; setOpen(false)}
+            style={{
+              position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              zIndex: 100,
+            }}
+          &gt;
+            &lt;motion.div
+              key="modal"
+              variants={modalVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              onClick={e =&gt; e.stopPropagation()}
+              style={{
+                background: '#111', borderRadius: 16, padding: 32,
+                width: 480, border: '1px solid #1f1f1f',
+              }}
+            &gt;
+              &lt;h2 style={{ color: '#fff' }}&gt;Modal Title&lt;/h2&gt;
+              &lt;button onClick={() =&gt; setOpen(false)}&gt;Close&lt;/button&gt;
+            &lt;/motion.div&gt;
+          &lt;/motion.div&gt;
+        )}
+      &lt;/AnimatePresence&gt;
+    &lt;/&gt;
+  );
+}</code></pre>
+      </div>
+
+      <h3>Page Transitions (Next.js App Router)</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// app/layout.tsx — wrap children in AnimatePresence
+'use client';
+import { AnimatePresence, motion } from 'motion/react';
+import { usePathname } from 'next/navigation';
+
+const pageVariants = {
+  initial: { opacity: 0, y: 8 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] } },
+  exit: { opacity: 0, y: -8, transition: { duration: 0.2 } },
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+
+  return (
+    &lt;html lang="en"&gt;
+      &lt;body&gt;
+        &lt;AnimatePresence mode="wait" initial={false}&gt;
+          &lt;motion.main
+            key={pathname}
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+          &gt;
+            {children}
+          &lt;/motion.main&gt;
+        &lt;/AnimatePresence&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  );
+}</code></pre>
+      </div>
+
+      <h3>List with Enter/Exit Stagger</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useState } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
+
+const listVariants = {
+  container: {
+    animate: { transition: { staggerChildren: 0.07 } },
+    exit: { transition: { staggerChildren: 0.05, staggerDirection: -1 } },
+  },
+  item: {
+    initial: { opacity: 0, x: -20 },
+    animate: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: 20, transition: { duration: 0.2 } },
+  },
+};
+
+export function AnimatedList() {
+  const [items, setItems] = useState(['Alpha', 'Beta', 'Gamma', 'Delta']);
+
+  const remove = (item: string) => setItems(prev =&gt; prev.filter(i =&gt; i !== item));
+  const add = () => setItems(prev =&gt; [...prev, `Item ${Date.now()}`]);
+
+  return (
+    &lt;div&gt;
+      &lt;button onClick={add}&gt;Add Item&lt;/button&gt;
+      &lt;motion.ul
+        variants={listVariants.container}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        style={{ listStyle: 'none', padding: 0 }}
+      &gt;
+        &lt;AnimatePresence&gt;
+          {items.map(item =&gt; (
+            &lt;motion.li
+              key={item}
+              variants={listVariants.item}
+              layout
+              style={{ padding: '8px 12px', marginBottom: 4, background: '#111', borderRadius: 8, cursor: 'pointer' }}
+              onClick={() =&gt; remove(item)}
+            &gt;
+              {item}
+            &lt;/motion.li&gt;
+          ))}
+        &lt;/AnimatePresence&gt;
+      &lt;/motion.ul&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- ========== LAYOUT ANIMATIONS ========== -->
+    <div data-section="layout animation layoutId shared element transition">
+      <h2>Layout Animations &amp; Shared Element Transitions</h2>
+      <p>Add <code>layout</code> to any motion component to automatically animate its position/size changes. Use <code>layoutId</code> to connect two different elements for shared element transitions.</p>
+
+      <h3>All Layout Props</h3>
+      <table>
+        <tr><th>Prop</th><th>Description</th></tr>
+        <tr><td><code>layout</code></td><td>true | "position" | "size" — auto-animate changes</td></tr>
+        <tr><td><code>layoutId</code></td><td>string — link elements across components for shared transition</td></tr>
+        <tr><td><code>layoutScroll</code></td><td>Apply to scrollable containers inside layout animations</td></tr>
+        <tr><td><code>layoutRoot</code></td><td>Apply to position:fixed elements to account for scroll</td></tr>
+        <tr><td><code>layoutAnchor</code></td><td>{x: 0–1, y: 0–1} — anchor point during layout animation</td></tr>
+        <tr><td><code>layoutDependency</code></td><td>Trigger layout recalc on value change</td></tr>
+      </table>
+
+      <h3>Expanding Card (layoutId shared transition)</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useState } from 'react';
+import { AnimatePresence, motion, LayoutGroup } from 'motion/react';
+
+const cards = [
+  { id: 'card-1', title: 'Card One', color: '#f59e0b' },
+  { id: 'card-2', title: 'Card Two', color: '#60a5fa' },
+  { id: 'card-3', title: 'Card Three', color: '#34d399' },
+];
+
+export function ExpandingCards() {
+  const [selected, setSelected] = useState&lt;string | null&gt;(null);
+
+  return (
+    &lt;LayoutGroup&gt;
+      &lt;div style={{ display: 'flex', gap: 16 }}&gt;
+        {cards.map(card =&gt; (
+          &lt;motion.div
+            key={card.id}
+            layoutId={card.id}   // same id as expanded version
+            onClick={() =&gt; setSelected(card.id)}
+            style={{
+              width: 120, height: 80, borderRadius: 12, cursor: 'pointer',
+              background: card.color,
+            }}
+          &gt;
+            &lt;motion.h3 layoutId={`${card.id}-title`} style={{ padding: 12, fontSize: 14 }}&gt;
+              {card.title}
+            &lt;/motion.h3&gt;
+          &lt;/motion.div&gt;
+        ))}
+      &lt;/div&gt;
+
+      &lt;AnimatePresence&gt;
+        {selected &amp;&amp; (() =&gt; {
+          const card = cards.find(c =&gt; c.id === selected)!;
+          return (
+            &lt;motion.div
+              layoutId={selected}
+              onClick={() =&gt; setSelected(null)}
+              style={{
+                position: 'fixed', inset: '10%', zIndex: 100,
+                background: card.color, borderRadius: 24,
+                cursor: 'pointer', padding: 32,
+              }}
+            &gt;
+              &lt;motion.h2 layoutId={`${selected}-title`} style={{ fontSize: 28 }}&gt;
+                {card.title}
+              &lt;/motion.h2&gt;
+              &lt;motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, transition: { delay: 0.2 } }}
+                exit={{ opacity: 0 }}
+              &gt;
+                Expanded content here...
+              &lt;/motion.p&gt;
+            &lt;/motion.div&gt;
+          );
+        })()}
+      &lt;/AnimatePresence&gt;
+    &lt;/LayoutGroup&gt;
+  );
+}</code></pre>
+      </div>
+
+      <h3>Tabs with Animated Underline</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useState } from 'react';
+import { motion } from 'motion/react';
+
+const tabs = ['Overview', 'Features', 'Pricing', 'Docs'];
+
+export function AnimatedTabs() {
+  const [active, setActive] = useState('Overview');
+
+  return (
+    &lt;div style={{ display: 'flex', gap: 4, borderBottom: '1px solid #1f1f1f', paddingBottom: 0 }}&gt;
+      {tabs.map(tab =&gt; (
+        &lt;button
+          key={tab}
+          onClick={() =&gt; setActive(tab)}
+          style={{
+            position: 'relative', padding: '8px 16px', background: 'none', border: 'none',
+            color: active === tab ? '#fff' : '#666', cursor: 'pointer', fontSize: 14,
+          }}
+        &gt;
+          {tab}
+          {active === tab &amp;&amp; (
+            &lt;motion.div
+              layoutId="tab-underline"  // shared across all tabs
+              style={{
+                position: 'absolute', bottom: -1, left: 0, right: 0,
+                height: 2, background: '#f59e0b', borderRadius: 1,
+              }}
+              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+            /&gt;
+          )}
+        &lt;/button&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}</code></pre>
+      </div>
+
+      <h3>Reorder List (drag to sort)</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useState } from 'react';
+import { Reorder, motion } from 'motion/react';
+
+export function SortableList() {
+  const [items, setItems] = useState(['Item 1', 'Item 2', 'Item 3', 'Item 4']);
+
+  return (
+    &lt;Reorder.Group
+      axis="y"
+      values={items}
+      onReorder={setItems}
+      style={{ listStyle: 'none', padding: 0 }}
+    &gt;
+      {items.map(item =&gt; (
+        &lt;Reorder.Item
+          key={item}
+          value={item}
+          style={{
+            background: '#111', border: '1px solid #1f1f1f',
+            borderRadius: 8, padding: '12px 16px', marginBottom: 8,
+            cursor: 'grab', color: '#fff', userSelect: 'none',
+          }}
+          whileDrag={{ scale: 1.02, background: '#1a1a1a', boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}
+        &gt;
+          {item}
+        &lt;/Reorder.Item&gt;
+      ))}
+    &lt;/Reorder.Group&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- ========== DRAG ========== -->
+    <div data-section="drag draggable constraints elastic momentum">
+      <h2>Drag — Draggable Elements</h2>
+
+      <h3>All Drag Props</h3>
+      <table>
+        <tr><th>Prop</th><th>Description</th></tr>
+        <tr><td><code>drag</code></td><td>true | "x" | "y" — enable dragging</td></tr>
+        <tr><td><code>dragConstraints</code></td><td>{ top, left, right, bottom } or ref to container</td></tr>
+        <tr><td><code>dragElastic</code></td><td>0–1 — resistance beyond constraints (0=none, 1=full)</td></tr>
+        <tr><td><code>dragMomentum</code></td><td>boolean — inertia on release (default: true)</td></tr>
+        <tr><td><code>dragTransition</code></td><td>{ bounceStiffness, bounceDamping } — post-release physics</td></tr>
+        <tr><td><code>dragDirectionLock</code></td><td>boolean — lock to first dragged axis</td></tr>
+        <tr><td><code>dragSnapToOrigin</code></td><td>boolean — snap back to 0,0 on release</td></tr>
+        <tr><td><code>dragControls</code></td><td>useDragControls() result — programmatic drag start</td></tr>
+        <tr><td><code>onDragStart</code></td><td>(event, info) => void</td></tr>
+        <tr><td><code>onDrag</code></td><td>(event, info) => void — info.point, info.offset, info.velocity</td></tr>
+        <tr><td><code>onDragEnd</code></td><td>(event, info) => void</td></tr>
+      </table>
+
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useRef } from 'react';
+import { motion } from 'motion/react';
+
+export function DraggableCards() {
+  const containerRef = useRef&lt;HTMLDivElement&gt;(null);
+
+  return (
+    &lt;div
+      ref={containerRef}
+      style={{ width: 400, height: 400, background: '#111', borderRadius: 12,
+        position: 'relative', overflow: 'hidden' }}
+    &gt;
+      {/* Constrained to container */}
+      &lt;motion.div
+        drag
+        dragConstraints={containerRef}
+        dragElastic={0.1}
+        dragMomentum={false}
+        whileDrag={{ scale: 1.05, zIndex: 10, boxShadow: '0 16px 40px rgba(0,0,0,0.5)' }}
+        style={{
+          width: 80, height: 80, background: '#f59e0b', borderRadius: 8,
+          position: 'absolute', top: 40, left: 40, cursor: 'grab',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000',
+        }}
+      &gt;
+        Drag me
+      &lt;/motion.div&gt;
+
+      {/* Axis-locked */}
+      &lt;motion.div
+        drag="x"
+        dragConstraints={{ left: 0, right: 280 }}
+        dragElastic={0}
+        style={{
+          width: 60, height: 30, background: '#60a5fa', borderRadius: 4,
+          position: 'absolute', top: 160, left: 0, cursor: 'ew-resize',
+        }}
+      /&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+      </div>
+
+      <h3>useDragControls — Custom Drag Handle</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useDragControls, motion } from 'motion/react';
+
+export function DraggableWithHandle() {
+  const controls = useDragControls();
+
+  return (
+    &lt;motion.div
+      drag
+      dragControls={controls}
+      dragListener={false}  // disable default drag listener on the element
+      style={{
+        width: 320, background: '#111', borderRadius: 12,
+        border: '1px solid #1f1f1f', overflow: 'hidden',
+      }}
+    &gt;
+      {/* Only this handle can initiate drag */}
+      &lt;div
+        onPointerDown={e =&gt; controls.start(e)}
+        style={{
+          background: '#1a1a1a', padding: '10px 16px', cursor: 'grab',
+          borderBottom: '1px solid #1f1f1f', display: 'flex', alignItems: 'center', gap: 8,
+        }}
+      &gt;
+        &lt;span style={{ color: '#555' }}&gt;⣿&lt;/span&gt;
+        &lt;span style={{ color: '#888', fontSize: 13 }}&gt;Drag from here&lt;/span&gt;
+      &lt;/div&gt;
+
+      &lt;div style={{ padding: 20, color: '#aaa' }}&gt;
+        Content area — not draggable (can select text, click buttons).
+      &lt;/div&gt;
+    &lt;/motion.div&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- ========== VARIANTS ========== -->
+    <div data-section="variants orchestration stagger children">
+      <h2>Variants — Orchestration &amp; Stagger</h2>
+      <p>Variants allow you to define animation states by name and propagate them through component trees. Parent controls children via stagger.</p>
+
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { motion } from 'motion/react';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      // Orchestration options
+      staggerChildren: 0.1,       // delay between each child
+      delayChildren: 0.2,         // initial delay before first child
+      staggerDirection: 1,        // 1 = forward, -1 = reverse
+      when: 'beforeChildren',     // 'beforeChildren' | 'afterChildren'
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: 'spring', stiffness: 300, damping: 20 },
+  },
+};
+
+export function StaggerGrid() {
+  const items = Array.from({ length: 9 }, (_, i) =&gt; i);
+
+  return (
+    &lt;motion.div
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-50px' }}
+      style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12 }}
+    &gt;
+      {items.map(i =&gt; (
+        &lt;motion.div
+          key={i}
+          variants={itemVariants}
+          style={{
+            background: '#111', borderRadius: 8,
+            height: 100, border: '1px solid #1f1f1f',
+          }}
+        /&gt;
+      ))}
+    &lt;/motion.div&gt;
+  );
+}</code></pre>
+      </div>
+
+      <h3>Gesture States with Variants</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { motion } from 'motion/react';
+
+const cardVariants = {
+  rest: { scale: 1, y: 0, boxShadow: '0 2px 8px rgba(0,0,0,0.2)' },
+  hover: { scale: 1.03, y: -4, boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
+    transition: { type: 'spring', stiffness: 300, damping: 20 } },
+  tap: { scale: 0.98, y: 0 },
+};
+
+const iconVariants = {
+  rest: { rotate: 0, x: 0 },
+  hover: { rotate: 15, x: 3, transition: { type: 'spring', stiffness: 400 } },
+};
+
+export function Card3DButton({ icon, title }: { icon: string; title: string }) {
+  return (
+    &lt;motion.button
+      variants={cardVariants}
+      initial="rest"
+      whileHover="hover"
+      whileTap="tap"
+      style={{
+        background: '#111', border: '1px solid #1f1f1f',
+        borderRadius: 12, padding: '20px 24px', cursor: 'pointer',
+        display: 'flex', alignItems: 'center', gap: 12, color: '#fff',
+      }}
+    &gt;
+      {/* Child inherits parent's "hover" variant automatically */}
+      &lt;motion.span variants={iconVariants} style={{ fontSize: 24 }}&gt;
+        {icon}
+      &lt;/motion.span&gt;
+      &lt;span style={{ fontWeight: 600 }}&gt;{title}&lt;/span&gt;
+    &lt;/motion.button&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- ========== THEATRE.JS ========== -->
+    <div data-section="theatre.js theatrejs timeline sequencer three.js r3f">
+      <h2>Theatre.js — Professional Animation Sequencer</h2>
+      <p>Theatre.js is a JavaScript animation library with a visual motion design editor. Animate any JS variable — Three.js, R3F, CSS, DOM — using a timeline GUI. Free and open source.</p>
+
+      <div class="grid">
+        <div class="card">
+          <h4>Packages</h4>
+          <div class="install">npm i @theatre/core @theatre/studio</div>
+          <div class="install">npm i @theatre/r3f   # React Three Fiber</div>
+          <div class="install">npm i @theatre/react  # React bindings</div>
+        </div>
+        <div class="card">
+          <h4>Core Concepts</h4>
+          <ul style="color:#aaa;font-size:13px;line-height:2;padding-left:16px">
+            <li><strong>Project</strong> — container for all animations</li>
+            <li><strong>Sheet</strong> — timeline/scene group</li>
+            <li><strong>Sheet Object</strong> — animatable entity</li>
+            <li><strong>Sequence</strong> — keyframe timeline</li>
+            <li><strong>Prop types</strong> — number, boolean, string, rgba</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Basic Theatre.js Setup</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-ts">import { getProject, types } from '@theatre/core';
+import studio from '@theatre/studio';
+
+// Initialize studio (dev only — remove in production)
+if (process.env.NODE_ENV === 'development') {
+  studio.initialize();
+}
+
+// Create a project
+const project = getProject('My Animation Project');
+
+// Create a sheet (like a scene/timeline)
+const sheet = project.sheet('Hero Scene');
+
+// Create an animatable object with typed props
+const obj = sheet.object('Camera', {
+  position: types.compound({
+    x: types.number(0, { range: [-20, 20] }),
+    y: types.number(0, { range: [-10, 10] }),
+    z: types.number(5, { range: [0, 30] }),
+  }),
+  rotation: types.number(0, { range: [-180, 180] }),
+  fov: types.number(60, { range: [20, 120] }),
+});
+
+// Subscribe to changes (runs on every frame during playback)
+obj.onValuesChange((values) => {
+  camera.position.set(values.position.x, values.position.y, values.position.z);
+  camera.rotation.y = values.rotation * (Math.PI / 180);
+  camera.fov = values.fov;
+  camera.updateProjectionMatrix();
+});
+
+// Play the sequence
+const sequence = sheet.sequence;
+sequence.play({ iterationCount: Infinity, range: [0, 10] });
+
+// Programmatic control
+sequence.pause();
+sequence.position = 3.5; // seek to 3.5 seconds</code></pre>
+      </div>
+
+      <h3>Theatre.js + React Three Fiber (@theatre/r3f)</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">// Install: npm i @theatre/core @theatre/studio @theatre/r3f three @react-three/fiber
+import { Canvas } from '@react-three/fiber';
+import { getProject } from '@theatre/core';
+import { SheetProvider, editable as e, useCurrentSheet } from '@theatre/r3f';
+import studio from '@theatre/studio';
+
+if (process.env.NODE_ENV === 'development') studio.initialize();
+
+const project = getProject('R3F Scene');
+const sheet = project.sheet('Main');
+
+// Editable mesh — Theatre.js can control this from the GUI
+function AnimatedBox() {
+  return (
+    &lt;e.mesh
+      theatreKey="Box"      // unique key in Theatre editor
+      position={[0, 0, 0]}
+    &gt;
+      &lt;boxGeometry args={[1, 1, 1]} /&gt;
+      &lt;meshStandardMaterial color="#f59e0b" /&gt;
+    &lt;/e.mesh&gt;
+  );
+}
+
+function ScenePlayer() {
+  const sheet = useCurrentSheet();
+
+  useEffect(() =&gt; {
+    sheet.sequence.play({ iterationCount: Infinity });
+  }, [sheet]);
+
+  return null;
+}
+
+export default function TheatreR3FScene() {
+  return (
+    &lt;Canvas&gt;
+      &lt;SheetProvider sheet={sheet}&gt;
+        &lt;ambientLight /&gt;
+        &lt;AnimatedBox /&gt;
+        &lt;ScenePlayer /&gt;
+      &lt;/SheetProvider&gt;
+    &lt;/Canvas&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- ========== USE ANIMATE ========== -->
+    <div data-section="useAnimate animate imperative programmatic">
+      <h2>useAnimate — Imperative Animations</h2>
+      <p>Programmatic control of animations without relying on component re-renders. Returns a scope ref and an animate function.</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { useAnimate, stagger } from 'motion/react';
+
+export function AnimateOnClick() {
+  const [scope, animate] = useAnimate();
+
+  const runAnimation = async () => {
+    // scope scopes selectors to this ref's subtree
+    await animate('li', { opacity: [0, 1], y: [20, 0] }, {
+      duration: 0.3,
+      delay: stagger(0.05),
+    });
+
+    await animate('li', { color: '#f59e0b' }, { duration: 0.2 });
+    await animate('.badge', { scale: [0, 1] }, { type: 'spring', stiffness: 400 });
+  };
+
+  return (
+    &lt;div ref={scope}&gt;
+      &lt;button onClick={runAnimation}&gt;Animate&lt;/button&gt;
+      &lt;ul&gt;
+        {['Alpha', 'Beta', 'Gamma'].map(item =&gt; (
+          &lt;li key={item} style={{ opacity: 0 }}&gt;
+            {item} &lt;span className="badge"&gt;new&lt;/span&gt;
+          &lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- ========== PERFORMANCE PATTERNS ========== -->
+    <div data-section="performance lazymotion motionconfig accessibility">
+      <h2>Performance &amp; Accessibility Patterns</h2>
+
+      <h3>LazyMotion — Reduce Bundle Size</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { LazyMotion, domAnimation, m } from 'motion/react';
+
+// domAnimation = ~18kb (vs full ~34kb)
+// domMax = full feature set including drag
+
+export function OptimizedApp({ children }: { children: React.ReactNode }) {
+  return (
+    &lt;LazyMotion features={domAnimation} strict&gt;
+      {children}
+    &lt;/LazyMotion&gt;
+  );
+}
+
+// Use &lt;m.div&gt; instead of &lt;motion.div&gt; inside LazyMotion
+function Card() {
+  return &lt;m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}&gt;Card&lt;/m.div&gt;;
+}</code></pre>
+      </div>
+
+      <h3>MotionConfig — Global Defaults</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { MotionConfig } from 'motion/react';
+import { useReducedMotion } from 'motion/react';
+
+export function AppMotionConfig({ children }: { children: React.ReactNode }) {
+  const prefersReduced = useReducedMotion();
+
+  return (
+    &lt;MotionConfig
+      transition={{
+        duration: prefersReduced ? 0 : 0.35,
+        ease: [0.22, 1, 0.36, 1],  // custom cubic-bezier
+      }}
+      reducedMotion={prefersReduced ? 'always' : 'never'}
+    &gt;
+      {children}
+    &lt;/MotionConfig&gt;
+  );
+}</code></pre>
+      </div>
+
+      <h3>whileInView — Scroll-Triggered (No ScrollTrigger needed)</h3>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code class="language-tsx">import { motion } from 'motion/react';
+
+export function RevealSection() {
+  return (
+    &lt;motion.section
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{
+        once: true,          // only animate once
+        margin: '-100px',    // trigger 100px before entering viewport
+        amount: 0.3,         // trigger when 30% is visible
+      }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+    &gt;
+      Content that animates in on scroll
+    &lt;/motion.section&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+hljs.highlightAll();
+document.querySelectorAll('.code-block').forEach(b=>{
+  const btn=b.querySelector('.copy-btn');
+  if(btn)btn.onclick=()=>{
+    navigator.clipboard.writeText(b.querySelector('code').innerText);
+    btn.textContent='Copied!';setTimeout(()=>btn.textContent='Copy',1500);
+  };
+});
+function search(q){
+  const ql=q.toLowerCase();
+  document.querySelectorAll('[data-section]').forEach(el=>{
+    el.style.display=!q||el.textContent.toLowerCase().includes(ql)?'':'none';
+  });
+}
+</script>
+</body></html>

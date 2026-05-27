@@ -1,0 +1,793 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Codrops Experiments — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#e5e5e5;font-family:'Inter',sans-serif;font-size:15px;line-height:1.6}.sidebar{position:fixed;left:0;top:0;width:220px;height:100vh;background:#111;border-right:1px solid #1f1f1f;padding:20px;overflow-y:auto}.sidebar h2{font-size:13px;color:#f59e0b;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}.sidebar a{display:block;color:#888;text-decoration:none;padding:6px 8px;border-radius:6px;font-size:13px;margin-bottom:2px}.sidebar a:hover{color:#fff;background:#1a1a1a}.sidebar a.active{color:#f59e0b;background:#1a1a1a}.main{margin-left:220px;padding:48px;max-width:960px}h1{font-size:32px;font-weight:700;color:#fff;margin-bottom:8px}h2{font-size:20px;font-weight:600;color:#fff;margin:40px 0 12px;padding-top:40px;border-top:1px solid #1f1f1f}h3{font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.08em;margin:20px 0 8px}p{color:#aaa;margin-bottom:12px}.tag{display:inline-block;background:#f59e0b15;border:1px solid #f59e0b40;color:#f59e0b;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.badge.free{background:#0d2e1680;border:1px solid #22c55e40;color:#22c55e}.badge.mit{background:#1e1b4b80;border:1px solid #818cf840;color:#818cf8}.install{background:#0d0d0d;border:1px solid #1f1f1f;border-radius:6px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#f59e0b;margin:8px 0}.code-block{position:relative;margin:12px 0}.copy-btn{position:absolute;top:8px;right:8px;background:#1f1f1f;border:1px solid #333;color:#888;padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer;z-index:10}.copy-btn:hover{color:#fff}pre{border-radius:8px;overflow:auto;font-size:12px;max-height:450px}input[type=search]{width:100%;background:#111;border:1px solid #2a2a2a;color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;font-family:inherit;margin-bottom:32px;outline:none}input[type=search]:focus{border-color:#f59e0b50}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}.card{background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:16px;transition:border-color .2s}.card:hover{border-color:#f59e0b40}.card h4{font-size:14px;font-weight:600;color:#fff;margin-bottom:6px}.card p{font-size:13px;color:#777;margin:0 0 8px}.card a{color:#f59e0b;font-size:12px;text-decoration:none}.card .by{font-size:11px;color:#555;margin-top:6px}.note{background:#0d1a0d;border:1px solid #22c55e30;border-radius:6px;padding:12px 16px;color:#86efac;font-size:13px;margin:16px 0}.warn{background:#1a1000;border:1px solid #f59e0b30;border-radius:6px;padding:12px 16px;color:#d4a800;font-size:13px;margin:12px 0}.ref-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}.ref-table th{text-align:left;padding:8px 12px;background:#111;border:1px solid #1f1f1f;color:#888;font-weight:500}.ref-table td{padding:8px 12px;border:1px solid #1a1a1a;color:#ccc;vertical-align:top}.ref-table td:first-child{font-family:'JetBrains Mono',monospace;color:#f59e0b;font-size:11px}</style></head>
+<body>
+<div class="sidebar">
+  <h2>Design KB</h2>
+  <a href="../index.html">Home</a>
+  <a href="../3d/r3f.html">R3F</a>
+  <a href="../3d/r3f-advanced.html">R3F Advanced</a>
+  <a href="../3d/threejs-patterns.html">Three.js</a>
+  <a href="../3d/spline-scenes.html">Spline</a>
+  <a href="../reference-sites/webflow-cloneables.html">Webflow Free</a>
+  <a href="../reference-sites/codrops-experiments.html" class="active">Codrops</a>
+  <a href="../animations/gsap.html">GSAP</a>
+  <a href="../components/magicui-components.html">MagicUI</a>
+</div>
+<div class="main">
+  <input type="search" placeholder="Search techniques, effects, demos..." oninput="search(this.value)">
+  <div id="content">
+
+    <h1>Codrops Experiments</h1>
+    <p>Creative CSS/JS/WebGL experiments from <a href="https://tympanus.net/codrops/" target="_blank" style="color:#f59e0b">tympanus.net/codrops</a>. All demos are open source. <span class="badge free">Open Source</span> <span class="badge mit">MIT / Educational</span></p>
+    <div class="note">
+      All Codrops experiments include full source code on GitHub. License is typically MIT or for educational use. Always check the individual demo's GitHub repo for exact license. Source: <a href="https://github.com/codrops" target="_blank" style="color:#86efac">github.com/codrops</a>
+    </div>
+
+    <!-- LATEST 2026 EXPERIMENTS -->
+    <div data-section>
+    <h2>Latest Experiments (2026)</h2>
+    <div class="grid">
+      <div class="card">
+        <h4>Scroll-Driven 3D Cube Gallery</h4>
+        <p>GSAP ScrollTrigger + CSS 3D transforms. Cubes rotate on scroll revealing gallery panels.</p>
+        <div><span class="tag">webgl</span><span class="tag">scroll</span><span class="tag">gsap</span><span class="tag">3d-css</span></div>
+        <div class="by">by Francesco Castronuovo · May 2026</div>
+        <a href="https://tympanus.net/codrops/2026/05/26/building-a-scroll-driven-3d-cube-gallery-in-webflow-with-gsap/" target="_blank">Read + Code →</a>
+      </div>
+      <div class="card">
+        <h4>Scroll-Driven SVG Map Animations</h4>
+        <p>GSAP DrawSVG + ScrollTrigger driving path drawing on map SVGs. Waypoint reveals.</p>
+        <div><span class="tag">svg</span><span class="tag">scroll</span><span class="tag">gsap</span><span class="tag">paths</span></div>
+        <div class="by">by Tom Miller · May 2026</div>
+        <a href="https://tympanus.net/codrops/2026/05/21/creating-scroll-driven-svg-map-animations-with-gsap/" target="_blank">Read + Code →</a>
+      </div>
+      <div class="card">
+        <h4>Gravity-Based Mouse Trail</h4>
+        <p>Physics-sim mouse trail. Particles attracted/repelled by cursor with spring forces.</p>
+        <div><span class="tag">canvas</span><span class="tag">physics</span><span class="tag">mouse</span><span class="tag">gsap</span></div>
+        <div class="by">Made With GSAP · May 2026</div>
+        <a href="https://tympanus.net/codrops/2026/05/20/made-with-gsap-building-a-fun-gravity-based-mouse-trail/" target="_blank">Read + Code →</a>
+      </div>
+      <div class="card">
+        <h4>Shader.se WebGPU Pipeline</h4>
+        <p>Scene transitions with scroll-driven WebGPU shader pipeline. 80s aesthetic.</p>
+        <div><span class="tag">webgpu</span><span class="tag">shaders</span><span class="tag">scroll</span><span class="tag">transitions</span></div>
+        <div class="by">by Filip Kantedal · May 2026</div>
+        <a href="https://tympanus.net/codrops/2026/05/19/80s-business-tech-seamless-scene-transitions-inside-shader-ses-scroll-driven-webgpu-pipeline/" target="_blank">Read + Code →</a>
+      </div>
+      <div class="card">
+        <h4>Adrien Vanderpotte Interface Feeling</h4>
+        <p>Whooshes, snaps, and shaders. Physics-driven UI interactions with custom GLSL.</p>
+        <div><span class="tag">glsl</span><span class="tag">physics</span><span class="tag">interaction</span><span class="tag">audio</span></div>
+        <div class="by">Adrien Vanderpotte · May 2026</div>
+        <a href="https://tympanus.net/codrops/2026/05/27/whooshes-snaps-and-shaders-adrien-vanderpotte-and-the-feeling-of-the-interface/" target="_blank">Read →</a>
+      </div>
+    </div>
+    </div>
+
+    <!-- CLASSIC CODROPS DEMOS -->
+    <div data-section>
+    <h2>Classic Demos — Text Effects</h2>
+    <div class="grid">
+      <div class="card">
+        <h4>Text Scramble Effect</h4>
+        <p>Characters randomize then resolve to final text. Classic "hacker" reveal.</p>
+        <div><span class="tag">text</span><span class="tag">animation</span><span class="tag">js</span></div>
+        <a href="https://tympanus.net/Development/TextScrambleEffect/" target="_blank">Demo →</a>
+      </div>
+      <div class="card">
+        <h4>Motion Path Text</h4>
+        <p>Text flowing along SVG motion paths. textPath + animateMotion.</p>
+        <div><span class="tag">svg</span><span class="tag">text</span><span class="tag">path</span></div>
+        <a href="https://tympanus.net/codrops/" target="_blank">Demo →</a>
+      </div>
+      <div class="card">
+        <h4>Splitting.js Text Reveal</h4>
+        <p>Per-character/word stagger animations. Used with GSAP or CSS custom properties.</p>
+        <div><span class="tag">text</span><span class="tag">stagger</span><span class="tag">splitting</span></div>
+        <a href="https://splitting.js.org" target="_blank">Library →</a>
+      </div>
+      <div class="card">
+        <h4>Variable Font Hover</h4>
+        <p>CSS variable font axes animated on hover. Weight, width, slant transitions.</p>
+        <div><span class="tag">fonts</span><span class="tag">css</span><span class="tag">hover</span></div>
+        <a href="https://tympanus.net/codrops/" target="_blank">Demo →</a>
+      </div>
+    </div>
+
+    <h3>Text Scramble — Standalone Pattern</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">// Text scramble — Codrops-style implementation
+class TextScramble {
+  constructor(el) {
+    this.el = el
+    this.chars = '!&lt;&gt;-_\\/[]{}—=+*^?#__abcdefghijklmnopqrstuvwxyz'
+    this.update = this.update.bind(this)
+  }
+
+  setText(newText) {
+    const oldText = this.el.innerText
+    const length = Math.max(oldText.length, newText.length)
+    const promise = new Promise(resolve => (this.resolve = resolve))
+    this.queue = []
+
+    for (let i = 0; i &lt; length; i++) {
+      const from = oldText[i] || ''
+      const to   = newText[i] || ''
+      const start = Math.floor(Math.random() * 20)
+      const end   = start + Math.floor(Math.random() * 20)
+      this.queue.push({ from, to, start, end })
+    }
+
+    cancelAnimationFrame(this.frameRequest)
+    this.frame = 0
+    this.update()
+    return promise
+  }
+
+  update() {
+    let output = ''
+    let complete = 0
+
+    for (let i = 0, n = this.queue.length; i &lt; n; i++) {
+      let { from, to, start, end, char } = this.queue[i]
+
+      if (this.frame >= end) {
+        complete++
+        output += to
+      } else if (this.frame >= start) {
+        if (!char || Math.random() &lt; 0.28) {
+          char = this.chars[Math.floor(Math.random() * this.chars.length)]
+          this.queue[i].char = char
+        }
+        output += `&lt;span style="color:#f59e0b"&gt;${char}&lt;/span&gt;`
+      } else {
+        output += from
+      }
+    }
+
+    this.el.innerHTML = output
+    if (complete === this.queue.length) {
+      this.resolve()
+    } else {
+      this.frameRequest = requestAnimationFrame(this.update)
+      this.frame++
+    }
+  }
+}
+
+// Usage:
+const el = document.querySelector('.scramble-text')
+const fx = new TextScramble(el)
+const phrases = ['Creative Developer', 'Design Engineer', 'Frontend Artisan']
+let counter = 0
+const cycle = () => {
+  fx.setText(phrases[counter]).then(() => {
+    setTimeout(cycle, 2000)
+  })
+  counter = (counter + 1) % phrases.length
+}
+cycle()
+</code></pre>
+    </div>
+    </div>
+
+    <!-- CLIP PATH ANIMATIONS -->
+    <div data-section>
+    <h2>Clip-Path Animations</h2>
+    <p>Codrops signature technique. Animate clip-path shapes for reveals, transitions, and hover effects.</p>
+
+    <h3>Wipe Reveal on Scroll</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-css">/* Clip-path wipe reveal — left to right */
+.wipe-reveal {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1s cubic-bezier(0.77, 0, 0.175, 1);
+}
+.wipe-reveal.visible {
+  clip-path: inset(0 0% 0 0);
+}
+
+/* Diagonal wipe */
+.diagonal-reveal {
+  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+  transition: clip-path 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.diagonal-reveal.visible {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+/* Circle reveal from center */
+.circle-reveal {
+  clip-path: circle(0% at 50% 50%);
+  transition: clip-path 0.8s ease;
+}
+.circle-reveal.visible {
+  clip-path: circle(75% at 50% 50%);
+}
+
+/* Image hover — zoom inside clip */
+.img-hover-clip {
+  clip-path: inset(8px round 12px);
+  transition: clip-path 0.4s ease;
+}
+.img-hover-clip:hover {
+  clip-path: inset(0px round 12px);
+}
+</code></pre>
+    </div>
+
+    <h3>Page Transition with Clip-Path</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">// Codrops page transition pattern — overlay wipe
+import gsap from 'gsap'
+
+const overlay = document.querySelector('.page-overlay')
+
+// Enter: wipe in (overlay covers page)
+async function pageOut(href) {
+  await gsap.to(overlay, {
+    clipPath: 'inset(0 0% 0 0)',  // fully visible
+    duration: 0.6,
+    ease: 'power2.inOut',
+  })
+  window.location.href = href
+}
+
+// Exit: wipe out (overlay reveals new page)
+window.addEventListener('DOMContentLoaded', () => {
+  gsap.fromTo(overlay,
+    { clipPath: 'inset(0 0% 0 0)' },
+    { clipPath: 'inset(0 100% 0 0)', duration: 0.6, ease: 'power2.inOut', delay: 0.1 }
+  )
+})
+
+document.querySelectorAll('a[data-transition]').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault()
+    pageOut(link.href)
+  })
+})
+</code></pre>
+    </div>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-css">/* Overlay element */
+.page-overlay {
+  position: fixed;
+  inset: 0;
+  background: #0a0a0a;
+  z-index: 9999;
+  pointer-events: none;
+  clip-path: inset(0 100% 0 0);
+}
+</code></pre>
+    </div>
+    </div>
+
+    <!-- CANVAS / WEBGL EFFECTS -->
+    <div data-section>
+    <h2>Canvas + WebGL Effects</h2>
+
+    <h3>Cursor Ripple on Canvas</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">// Codrops-style canvas ripple cursor effect
+const canvas = document.querySelector('#cursor-canvas')
+const ctx = canvas.getContext('2d')
+canvas.width = window.innerWidth
+canvas.height = window.innerHeight
+
+const ripples = []
+
+window.addEventListener('mousemove', (e) => {
+  ripples.push({ x: e.clientX, y: e.clientY, r: 0, a: 1 })
+})
+
+function render() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  for (let i = ripples.length - 1; i >= 0; i--) {
+    const rp = ripples[i]
+    rp.r += 3
+    rp.a -= 0.025
+
+    ctx.beginPath()
+    ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2)
+    ctx.strokeStyle = `rgba(79, 70, 229, ${rp.a})`
+    ctx.lineWidth = 1.5
+    ctx.stroke()
+
+    if (rp.a &lt;= 0) ripples.splice(i, 1)
+  }
+  requestAnimationFrame(render)
+}
+render()
+
+window.addEventListener('resize', () => {
+  canvas.width  = window.innerWidth
+  canvas.height = window.innerHeight
+})
+</code></pre>
+    </div>
+
+    <h3>Image Displacement Shader (Three.js + GLSL)</h3>
+    <p>Classic Codrops image transition: mouse-driven displacement map distorts image on hover. Used extensively in portfolio sites.</p>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">import * as THREE from 'three'
+
+// Full-screen image plane with displacement on hover
+const scene    = new THREE.Scene()
+const camera   = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10)
+camera.position.z = 1
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
+renderer.setSize(innerWidth, innerHeight)
+document.body.appendChild(renderer.domElement)
+
+const loader = new THREE.TextureLoader()
+const image  = loader.load('/hero.jpg')
+const disp   = loader.load('/displacement.jpg') // noise/displacement map
+disp.wrapS = disp.wrapT = THREE.RepeatWrapping
+
+const material = new THREE.ShaderMaterial({
+  uniforms: {
+    uTexture:     { value: image },
+    uDisplacement: { value: disp },
+    uMouse:       { value: new THREE.Vector2(0.5, 0.5) },
+    uHover:       { value: 0.0 },
+    uScale:       { value: 0.1 },
+  },
+  vertexShader: `
+    varying vec2 vUv;
+    void main() { vUv = uv; gl_Position = vec4(position, 1.0); }
+  `,
+  fragmentShader: `
+    uniform sampler2D uTexture;
+    uniform sampler2D uDisplacement;
+    uniform vec2  uMouse;
+    uniform float uHover;
+    uniform float uScale;
+    varying vec2  vUv;
+
+    void main() {
+      vec4 dispMap = texture2D(uDisplacement, vUv);
+      float dist = distance(vUv, uMouse);
+      float ripple = smoothstep(0.3, 0.0, dist) * uHover;
+
+      vec2 distorted = vUv + dispMap.rg * uScale * ripple;
+      gl_FragColor = texture2D(uTexture, distorted);
+    }
+  `,
+})
+
+const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material)
+scene.add(mesh)
+
+// Mouse tracking
+window.addEventListener('mousemove', (e) => {
+  material.uniforms.uMouse.value.set(
+    e.clientX / innerWidth,
+    1 - e.clientY / innerHeight
+  )
+})
+
+// Hover in/out
+const el = document.querySelector('.hero-image')
+el.addEventListener('mouseenter', () => gsap.to(material.uniforms.uHover, { value: 1, duration: 0.6 }))
+el.addEventListener('mouseleave', () => gsap.to(material.uniforms.uHover, { value: 0, duration: 0.8 }))
+
+;(function animate() { requestAnimationFrame(animate); renderer.render(scene, camera) })()
+</code></pre>
+    </div>
+
+    <h3>Noise-Based Blob Shader</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">import * as THREE from 'three'
+
+// Animated noise blob — Codrops/Bruno Simon style
+const geo = new THREE.SphereGeometry(2, 128, 128)
+const mat = new THREE.ShaderMaterial({
+  uniforms: {
+    uTime:      { value: 0 },
+    uFrequency: { value: 1.5 },
+    uAmplitude: { value: 0.4 },
+    uColorA:    { value: new THREE.Color('#4f46e5') },
+    uColorB:    { value: new THREE.Color('#e11d48') },
+  },
+  vertexShader: `
+    uniform float uTime;
+    uniform float uFrequency;
+    uniform float uAmplitude;
+    varying float vNoise;
+
+    // Simple 3D noise function
+    vec3 mod289(vec3 x) { return x - floor(x*(1./289.))*289.; }
+    vec4 mod289(vec4 x) { return x - floor(x*(1./289.))*289.; }
+    vec4 permute(vec4 x) { return mod289((x*34.+1.)*x); }
+    vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159-.85373472095314*r; }
+    float snoise(vec3 v) {
+      const vec2 C = vec2(1./6.,1./3.);
+      vec4 i = floor(v+dot(v,C.yyy));
+      vec3 x0 = v-i+dot(i,C.xxx);
+      vec3 g = step(x0.yzx,x0.xyz);
+      vec3 l = 1.-g;
+      vec3 i1 = min(g.xyz,l.zxy);
+      vec3 i2 = max(g.xyz,l.zxy);
+      vec3 x1=x0-i1+C.xxx, x2=x0-i2+C.yyy, x3=x0-.5;
+      i = mod289(i);
+      vec4 p = permute(permute(permute(i.z+vec4(0.,i1.z,i2.z,1.))
+        +i.y+vec4(0.,i1.y,i2.y,1.))+i.x+vec4(0.,i1.x,i2.x,1.));
+      vec3 ns = .142857142857*C.yyy-.333333333333;
+      vec4 j = p-49.*floor(p*ns.z*ns.z);
+      vec4 x_ = floor(j*ns.z), y_ = floor(j-7.*x_);
+      vec4 x=x_*ns.x+ns.yyyy, y=y_*ns.x+ns.yyyy;
+      vec4 h = 1.-abs(x)-abs(y);
+      vec4 b0=vec4(x.xy,y.xy), b1=vec4(x.zw,y.zw);
+      vec4 s0=floor(b0)*2.+1., s1=floor(b1)*2.+1.;
+      vec4 sh = -step(h,vec4(0.));
+      vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy, a1=b1.xzyw+s1.xzyw*sh.zzww;
+      vec3 p0=vec3(a0.xy,h.x), p1=vec3(a0.zw,h.y),
+           p2=vec3(a1.xy,h.z), p3=vec3(a1.zw,h.w);
+      vec4 norm = taylorInvSqrt(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));
+      p0*=norm.x; p1*=norm.y; p2*=norm.z; p3*=norm.w;
+      vec4 m=max(.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.);
+      m=m*m; return 42.*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));
+    }
+
+    void main() {
+      vec3 pos = position;
+      float n = snoise(pos * uFrequency + uTime * 0.3);
+      pos += normal * n * uAmplitude;
+      vNoise = n;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+    }
+  `,
+  fragmentShader: `
+    uniform vec3  uColorA;
+    uniform vec3  uColorB;
+    varying float vNoise;
+    void main() {
+      float t = (vNoise + 1.0) * 0.5;
+      gl_FragColor = vec4(mix(uColorA, uColorB, t), 1.0);
+    }
+  `,
+})
+
+const blob = new THREE.Mesh(geo, mat)
+scene.add(blob)
+
+// In animate: mat.uniforms.uTime.value = clock.getElapsedTime()
+</code></pre>
+    </div>
+    </div>
+
+    <!-- SCROLL EFFECTS -->
+    <div data-section>
+    <h2>Scroll Effects</h2>
+
+    <h3>Lenis Smooth Scroll + GSAP Integration</h3>
+    <p>Codrops almost always uses Lenis for buttery smooth scrolling. Industry standard pattern as of 2024+.</p>
+    <div class="install">npm install @studio-freight/lenis</div>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">import Lenis from '@studio-freight/lenis'
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
+
+// Init Lenis
+const lenis = new Lenis({
+  duration: 1.2,
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  smoothWheel: true,
+  wheelMultiplier: 1,
+  touchMultiplier: 2,
+})
+
+// Hook Lenis into GSAP's ticker
+gsap.ticker.add((time) => {
+  lenis.raf(time * 1000)
+})
+gsap.ticker.lagSmoothing(0)
+
+// Connect ScrollTrigger
+lenis.on('scroll', ScrollTrigger.update)
+</code></pre>
+    </div>
+
+    <h3>Scroll Velocity Skew Effect</h3>
+    <p>Elements skew based on scroll velocity. Codrops staple — creates fluid, organic scroll feel.</p>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">// Scroll velocity skew — Codrops signature technique
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
+
+const skewElements = document.querySelectorAll('[data-skew]')
+const proxy = { skew: 0 }
+const clamp = gsap.utils.clamp(-20, 20)
+
+ScrollTrigger.create({
+  onUpdate: (self) => {
+    const skew = clamp(self.getVelocity() / -300)
+    if (Math.abs(skew) > Math.abs(proxy.skew)) {
+      proxy.skew = skew
+      gsap.to(proxy, {
+        skew: 0,
+        duration: 0.8,
+        ease: 'power3',
+        overwrite: true,
+        onUpdate: () => {
+          skewElements.forEach(el => {
+            el.style.transform = `skewY(${proxy.skew}deg)`
+          })
+        }
+      })
+    }
+  }
+})
+</code></pre>
+    </div>
+
+    <h3>Parallax Sections</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">// Codrops parallax — GSAP ScrollTrigger
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
+
+// Parallax images (move slower than scroll)
+document.querySelectorAll('[data-parallax-img]').forEach(img => {
+  const speed = parseFloat(img.dataset.parallaxImg) || 0.3
+  gsap.fromTo(img,
+    { yPercent: -20 * speed },
+    {
+      yPercent: 20 * speed,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: img.closest('section'),
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true,
+      }
+    }
+  )
+})
+
+// Parallax text layers
+gsap.utils.toArray('.parallax-text').forEach((el, i) => {
+  const depth = i % 2 === 0 ? -50 : 50
+  gsap.fromTo(el,
+    { y: depth },
+    {
+      y: -depth,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: el.closest('section'),
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1,
+      }
+    }
+  )
+})
+</code></pre>
+    </div>
+    </div>
+
+    <!-- CSS-ONLY EFFECTS -->
+    <div data-section>
+    <h2>CSS-Only Effects</h2>
+
+    <h3>Gradient Text Animation</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-css">/* Animated gradient text — Codrops pattern */
+.gradient-text {
+  background: linear-gradient(135deg, #4f46e5, #e11d48, #f59e0b, #4f46e5);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 4s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Noise texture overlay on gradient */
+.gradient-noise {
+  position: relative;
+}
+.gradient-noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.15;
+  mix-blend-mode: overlay;
+}
+</code></pre>
+    </div>
+
+    <h3>Magnetic Button</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">// Magnetic button — Codrops signature hover effect
+document.querySelectorAll('[data-magnetic]').forEach(btn => {
+  const strength = parseFloat(btn.dataset.magnetic) || 0.3
+
+  btn.addEventListener('mousemove', (e) => {
+    const rect = btn.getBoundingClientRect()
+    const cx = rect.left + rect.width  / 2
+    const cy = rect.top  + rect.height / 2
+    const dx = (e.clientX - cx) * strength
+    const dy = (e.clientY - cy) * strength
+
+    gsap.to(btn, {
+      x: dx, y: dy,
+      duration: 0.3,
+      ease: 'power2.out',
+    })
+
+    // Optional: move inner text slightly less
+    const inner = btn.querySelector('[data-magnetic-inner]')
+    if (inner) gsap.to(inner, { x: dx * 0.4, y: dy * 0.4, duration: 0.3 })
+  })
+
+  btn.addEventListener('mouseleave', () => {
+    gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)' })
+    const inner = btn.querySelector('[data-magnetic-inner]')
+    if (inner) gsap.to(inner, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)' })
+  })
+})
+</code></pre>
+    </div>
+
+    <h3>CSS Noise Grain Overlay</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-css">/* Animated film grain — Codrops/Awwwards staple */
+body::before {
+  content: '';
+  position: fixed;
+  inset: -200%;
+  width: 400%;
+  height: 400%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.045;
+  animation: grain 0.5s steps(1) infinite;
+  pointer-events: none;
+  z-index: 9999;
+}
+@keyframes grain {
+  0%  { transform: translate(0, 0); }
+  10% { transform: translate(-2%, -3%); }
+  20% { transform: translate(3%, 2%); }
+  30% { transform: translate(-3%, 3%); }
+  40% { transform: translate(2%, -2%); }
+  50% { transform: translate(-1%, 2%); }
+  60% { transform: translate(3%, 1%); }
+  70% { transform: translate(-2%, 3%); }
+  80% { transform: translate(2%, -3%); }
+  90% { transform: translate(-3%, 2%); }
+  100%{ transform: translate(1%, -1%); }
+}
+</code></pre>
+    </div>
+
+    <h3>CSS Scroll Progress Bar</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-css">/* Native CSS scroll-driven animation — no JS needed */
+@supports (animation-timeline: scroll()) {
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #4f46e5, #e11d48);
+    transform-origin: 0 0;
+    animation: progress linear;
+    animation-timeline: scroll();
+    z-index: 9999;
+  }
+  @keyframes progress {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+}
+</code></pre>
+    </div>
+    </div>
+
+    <!-- INSPIRATION LINKS -->
+    <div data-section>
+    <h2>Sources + Discovery</h2>
+    <div class="grid">
+      <div class="card">
+        <h4>Codrops Demos</h4>
+        <p>All interactive demos with full source. Updated weekly.</p>
+        <a href="https://tympanus.net/codrops/category/playground/" target="_blank">Browse →</a>
+      </div>
+      <div class="card">
+        <h4>Codrops GitHub</h4>
+        <p>All source code repos. MIT/educational license.</p>
+        <a href="https://github.com/codrops" target="_blank">Browse →</a>
+      </div>
+      <div class="card">
+        <h4>CSS-Tricks Almanac</h4>
+        <p>Every CSS property with interactive demos.</p>
+        <a href="https://css-tricks.com/almanac/" target="_blank">Browse →</a>
+      </div>
+      <div class="card">
+        <h4>Motion One</h4>
+        <p>Lightweight animation library. WAAPI-based, 3kb.</p>
+        <a href="https://motion.dev" target="_blank">Browse →</a>
+      </div>
+      <div class="card">
+        <h4>Awwwards Sites</h4>
+        <p>Best-in-class sites for interaction inspiration.</p>
+        <a href="https://www.awwwards.com" target="_blank">Browse →</a>
+      </div>
+      <div class="card">
+        <h4>CodePen Trending</h4>
+        <p>Community CSS/JS/Canvas experiments, searchable.</p>
+        <a href="https://codepen.io/trending" target="_blank">Browse →</a>
+      </div>
+      <div class="card">
+        <h4>Shader Toy</h4>
+        <p>GLSL shader experiments. Live edit + fork any shader.</p>
+        <a href="https://www.shadertoy.com" target="_blank">Browse →</a>
+      </div>
+      <div class="card">
+        <h4>Matt DesLauriers Generative</h4>
+        <p>canvas-sketch framework for generative art in JS.</p>
+        <a href="https://github.com/mattdesl/canvas-sketch" target="_blank">Browse →</a>
+      </div>
+    </div>
+
+    <h3>Key Libraries Used by Codrops</h3>
+    <table class="ref-table">
+      <tr><th>Library</th><th>Purpose</th><th>Size</th></tr>
+      <tr><td>GSAP</td><td>Animation engine. ScrollTrigger, Draggable, SplitText</td><td>~70kb</td></tr>
+      <tr><td>Lenis</td><td>Smooth scroll. Works with GSAP ScrollTrigger</td><td>~8kb</td></tr>
+      <tr><td>Three.js</td><td>WebGL 3D scenes, shaders, particles</td><td>~600kb</td></tr>
+      <tr><td>Splitting.js</td><td>Split text into chars/words/lines for animation</td><td>~5kb</td></tr>
+      <tr><td>gl-matrix</td><td>Fast matrix math for raw WebGL</td><td>~40kb</td></tr>
+      <tr><td>OGL</td><td>Minimal WebGL framework. Lighter than Three.js</td><td>~50kb</td></tr>
+      <tr><td>PIXI.js</td><td>2D WebGL renderer. Sprites, filters, particles</td><td>~300kb</td></tr>
+      <tr><td>matter-js</td><td>2D physics engine for interactive experiments</td><td>~85kb</td></tr>
+    </table>
+    </div>
+
+  </div>
+</div>
+<script>
+hljs.highlightAll()
+document.querySelectorAll('.code-block').forEach(b => {
+  const btn = b.querySelector('.copy-btn')
+  if (btn) btn.onclick = () => {
+    navigator.clipboard.writeText(b.querySelector('code').innerText)
+    btn.textContent = 'Copied!'
+    setTimeout(() => btn.textContent = 'Copy', 1500)
+  }
+})
+function search(q) {
+  document.querySelectorAll('[data-section]').forEach(el => {
+    el.style.display = !q || el.textContent.toLowerCase().includes(q.toLowerCase()) ? '' : 'none'
+  })
+}
+</script>
+</body></html>

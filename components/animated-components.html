@@ -1,0 +1,516 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Animated Components — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#e5e5e5;font-family:'Inter',sans-serif;font-size:15px;line-height:1.6}.sidebar{position:fixed;left:0;top:0;width:220px;height:100vh;background:#111;border-right:1px solid #1f1f1f;padding:20px;overflow-y:auto}.sidebar h2{font-size:13px;color:#f59e0b;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}.sidebar a{display:block;color:#888;text-decoration:none;padding:6px 8px;border-radius:6px;font-size:13px;margin-bottom:2px}.sidebar a:hover{color:#fff;background:#1a1a1a}.main{margin-left:220px;padding:48px;max-width:960px}h1{font-size:32px;font-weight:700;color:#fff;margin-bottom:8px}h2{font-size:20px;font-weight:600;color:#fff;margin:40px 0 12px;padding-top:40px;border-top:1px solid #1f1f1f}h3{font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.08em;margin:20px 0 8px}p{color:#aaa;margin-bottom:12px}.tag{display:inline-block;background:#f59e0b15;border:1px solid #f59e0b40;color:#f59e0b;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.badge.free{background:#0d2e1680;border:1px solid #22c55e40;color:#22c55e;display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.badge.attr{background:#1a1400;border:1px solid #f59e0b40;color:#f59e0b;display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.install{background:#0d0d0d;border:1px solid #1f1f1f;border-radius:6px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#f59e0b;margin:8px 0}.code-block{position:relative;margin:12px 0}.copy-btn{position:absolute;top:8px;right:8px;background:#1f1f1f;border:1px solid #333;color:#888;padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer}.copy-btn:hover{color:#fff}pre{border-radius:8px;overflow:auto;font-size:12px;max-height:450px}.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin:16px 0}.resource-card{background:#111;border:1px solid #1f1f1f;border-radius:10px;padding:16px}.resource-card h4{font-size:14px;color:#fff;margin-bottom:6px}.resource-card p{font-size:12px;color:#666;margin:0 0 8px}.resource-card a{font-size:12px;color:#f59e0b;text-decoration:none}input[type=search]{width:100%;background:#111;border:1px solid #2a2a2a;color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;font-family:inherit;margin-bottom:32px;outline:none}input[type=search]:focus{border-color:#f59e0b50}.note{background:#111;border:1px solid #1f1f1f;border-left:3px solid #f59e0b;padding:12px 16px;border-radius:0 6px 6px 0;margin:12px 0;font-size:13px;color:#888}</style></head>
+<body>
+<div class="sidebar">
+  <h2>Design KB</h2>
+  <a href="../index.html">Home</a>
+  <a href="../components/animated-components.html" style="color:#f59e0b">Animated Components</a>
+  <a href="../animations/css-animation-libraries.html">CSS Animations</a>
+  <a href="../3d/webgl-libraries.html">WebGL / 3D</a>
+  <a href="../reference-sites/design-galleries.html">Design Galleries</a>
+  <a href="../assets/free-templates.html">Free Templates</a>
+  <a href="../assets/icons-fonts.html">Icons + Fonts</a>
+</div>
+<div class="main">
+  <input type="search" placeholder="Search components, libraries..." oninput="search(this.value)">
+  <div id="content">
+
+    <h1>Animated Component Libraries</h1>
+    <p>Free, copy-paste animated React/Tailwind components. All libraries below are MIT-licensed — you own the code you copy into your project with no restrictions.</p>
+    <div class="note">All resources on this page are <strong>free to use with full code ownership</strong> (MIT / ISC / Apache). No attribution required unless noted.</div>
+
+    <!-- ANIMATA -->
+    <div data-section="animata">
+    <h2 id="animata">Animata</h2>
+    <p>Free, open-source collection of hand-crafted animations, effects, and interactions built on top of Framer Motion and Tailwind CSS. Copy-paste into your shadcn/Tailwind project — no npm install needed.</p>
+    <span class="badge free">FREE</span> <span class="tag">MIT</span> <span class="tag">React</span> <span class="tag">Framer Motion</span> <span class="tag">Tailwind</span> <span class="tag">shadcn/ui</span>
+    <p style="margin-top:12px"><a href="https://animata.design" target="_blank" style="color:#f59e0b">animata.design →</a></p>
+
+    <h3>Dependencies</h3>
+    <div class="install">npm install framer-motion clsx tailwind-merge</div>
+
+    <h3>Component Categories</h3>
+    <div class="resource-grid">
+      <div class="resource-card"><h4>Text Animations</h4><p>Typing effects, word swap, gradient text, blur reveal, staggered chars</p></div>
+      <div class="resource-card"><h4>Card Components</h4><p>Hover cards, tilt cards, glow cards, spotlight cards</p></div>
+      <div class="resource-card"><h4>Button Effects</h4><p>Magnetic, shimmer, gradient, border-glow buttons</p></div>
+      <div class="resource-card"><h4>Loaders</h4><p>Spinner variants, skeleton screens, progress indicators</p></div>
+      <div class="resource-card"><h4>Backgrounds</h4><p>Particle fields, grid patterns, aurora, beam effects</p></div>
+      <div class="resource-card"><h4>List / Feed</h4><p>Animated lists, stagger children, presence animations</p></div>
+    </div>
+
+    <h3>Usage — Copy-Paste Pattern</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-tsx">// Animata components are copy-paste — visit animata.design, pick a component,
+// copy the source into your project at components/animata/[name].tsx
+
+// Example: Typing Animation component
+"use client";
+import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
+
+interface TypingAnimationProps {
+  text: string;
+  className?: string;
+  duration?: number;
+}
+
+export function TypingAnimation({ text, className, duration = 100 }: TypingAnimationProps) {
+  const [displayed, setDisplayed] = useState("");
+
+  useEffect(() => {
+    let i = 0;
+    const timer = setInterval(() => {
+      if (i < text.length) {
+        setDisplayed(text.slice(0, i + 1));
+        i++;
+      } else {
+        clearInterval(timer);
+      }
+    }, duration);
+    return () => clearInterval(timer);
+  }, [text, duration]);
+
+  return (
+    &lt;span className={cn("font-mono", className)}&gt;
+      {displayed}
+      &lt;span className="animate-pulse"&gt;|&lt;/span&gt;
+    &lt;/span&gt;
+  );
+}
+
+// Usage
+&lt;TypingAnimation text="Hello, World!" className="text-4xl font-bold" /&gt;</code></pre>
+    </div>
+
+    <h3>Stagger Children Animation</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-tsx">import { motion } from "framer-motion";
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+};
+
+export function StaggerList({ items }: { items: string[] }) {
+  return (
+    &lt;motion.ul variants={container} initial="hidden" animate="show"&gt;
+      {items.map((text, i) =&gt; (
+        &lt;motion.li key={i} variants={item} className="p-3 border-b border-border"&gt;
+          {text}
+        &lt;/motion.li&gt;
+      ))}
+    &lt;/motion.ul&gt;
+  );
+}</code></pre>
+    </div>
+    </div>
+
+    <!-- MOTION PRIMITIVES -->
+    <div data-section="motion-primitives">
+    <h2 id="motion-primitives">Motion Primitives</h2>
+    <p>A library of high-quality, accessible Framer Motion components built for React. Designed to drop into shadcn/ui projects. Components include transitions, text effects, cursors, carousels, and more. MIT licensed — full code ownership.</p>
+    <span class="badge free">FREE</span> <span class="tag">MIT</span> <span class="tag">React</span> <span class="tag">Framer Motion</span> <span class="tag">shadcn/ui</span>
+    <p style="margin-top:12px"><a href="https://motion-primitives.com" target="_blank" style="color:#f59e0b">motion-primitives.com →</a></p>
+
+    <h3>Install</h3>
+    <div class="install">npm install framer-motion</div>
+    <div class="note">Components are copy-paste. Visit the site, click a component, copy source to your project.</div>
+
+    <h3>Key Components</h3>
+    <div class="resource-grid">
+      <div class="resource-card"><h4>Animated Group</h4><p>Staggered entry animations for lists and grids</p></div>
+      <div class="resource-card"><h4>Text Effect</h4><p>Per-character/word reveal animations with presets</p></div>
+      <div class="resource-card"><h4>Cursor</h4><p>Custom cursor with spring physics and blend modes</p></div>
+      <div class="resource-card"><h4>Magnetic</h4><p>Magnetic hover effect using mouse position tracking</p></div>
+      <div class="resource-card"><h4>In View</h4><p>Animate elements as they enter the viewport</p></div>
+      <div class="resource-card"><h4>Carousel</h4><p>Drag-to-scroll carousel with Framer Motion</p></div>
+      <div class="resource-card"><h4>Transition Panel</h4><p>Animated panel/tab switching</p></div>
+      <div class="resource-card"><h4>Scroll Progress</h4><p>Scroll-linked progress bar animations</p></div>
+    </div>
+
+    <h3>Text Effect Component</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-tsx">"use client";
+import { motion, Variants } from "framer-motion";
+
+type TextEffectProps = {
+  children: string;
+  per?: "word" | "char";
+  preset?: "fade" | "slide" | "scale";
+  delay?: number;
+  className?: string;
+};
+
+const presets: Record<string, Variants> = {
+  fade: {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+  },
+  slide: {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  },
+  scale: {
+    hidden: { opacity: 0, scale: 0.5 },
+    visible: { opacity: 1, scale: 1 },
+  },
+};
+
+export function TextEffect({
+  children,
+  per = "word",
+  preset = "slide",
+  delay = 0,
+  className,
+}: TextEffectProps) {
+  const segments = per === "char" ? children.split("") : children.split(" ");
+  const variants = presets[preset];
+
+  return (
+    &lt;motion.p
+      className={className}
+      initial="hidden"
+      animate="visible"
+      transition={{ staggerChildren: 0.05, delayChildren: delay }}
+    &gt;
+      {segments.map((seg, i) =&gt; (
+        &lt;motion.span key={i} variants={variants} style={{ display: "inline-block" }}&gt;
+          {seg}{per === "word" ? " " : ""}
+        &lt;/motion.span&gt;
+      ))}
+    &lt;/motion.p&gt;
+  );
+}
+
+// Usage
+&lt;TextEffect preset="slide" per="word" className="text-3xl font-bold"&gt;
+  Animate each word on mount
+&lt;/TextEffect&gt;</code></pre>
+    </div>
+    </div>
+
+    <!-- UIVERSE -->
+    <div data-section="uiverse">
+    <h2 id="uiverse">UIverse</h2>
+    <p>Community-built library of free CSS and Tailwind UI elements. No framework required — pure CSS components you copy directly. Contributions from 5000+ developers. All elements are free to use in personal and commercial projects.</p>
+    <span class="badge free">FREE</span> <span class="tag">MIT</span> <span class="tag">Pure CSS</span> <span class="tag">Tailwind CSS</span> <span class="tag">No Framework</span>
+    <p style="margin-top:12px"><a href="https://uiverse.io/elements" target="_blank" style="color:#f59e0b">uiverse.io/elements →</a></p>
+
+    <h3>Element Categories</h3>
+    <div class="resource-grid">
+      <div class="resource-card"><h4>Buttons</h4><p>Hover effects, gradients, glassmorphism, 3D press effects</p></div>
+      <div class="resource-card"><h4>Cards</h4><p>Flip cards, hover reveals, glassmorphism, animated borders</p></div>
+      <div class="resource-card"><h4>Loaders</h4><p>CSS-only spinners, dots, bars, rings — no JS needed</p></div>
+      <div class="resource-card"><h4>Checkboxes</h4><p>Custom checkboxes with CSS animations</p></div>
+      <div class="resource-card"><h4>Toggles</h4><p>Switch toggles, animated state changes</p></div>
+      <div class="resource-card"><h4>Inputs</h4><p>Floating labels, animated underlines, glassmorphism fields</p></div>
+      <div class="resource-card"><h4>Tooltips</h4><p>Pure CSS tooltips with directional arrows</p></div>
+      <div class="resource-card"><h4>Radio Buttons</h4><p>Custom styled radio groups</p></div>
+    </div>
+
+    <h3>Example — Glassmorphism Button (CSS)</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-css">/* Glassmorphism button — copy from uiverse.io */
+.glass-button {
+  padding: 12px 28px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-button::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.glass-button:hover::before { left: 100%; }
+.glass-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  transform: translateY(-2px);
+}</code></pre>
+    </div>
+
+    <h3>Example — CSS Spinner Loader</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-css">.loader {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #f59e0b;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Dot bounce loader */
+.dot-loader {
+  display: flex;
+  gap: 6px;
+}
+.dot-loader span {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #f59e0b;
+  animation: bounce 1.2s infinite;
+}
+.dot-loader span:nth-child(2) { animation-delay: 0.2s; }
+.dot-loader span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}</code></pre>
+    </div>
+    </div>
+
+    <!-- SYNTAXUI -->
+    <div data-section="syntaxui">
+    <h2 id="syntaxui">SyntaxUI</h2>
+    <p>Free-to-use UI elements designed for rapid development. React + Tailwind CSS components, blocks, and animated effects. Maintained by Ansub on GitHub. A Pro tier exists for additional templates.</p>
+    <span class="badge free">FREE (core)</span> <span class="tag">React</span> <span class="tag">Tailwind CSS</span> <span class="tag">Framer Motion</span>
+    <p style="margin-top:12px"><a href="https://syntaxui.com" target="_blank" style="color:#f59e0b">syntaxui.com →</a></p>
+
+    <h3>Categories</h3>
+    <div class="resource-grid">
+      <div class="resource-card"><h4>Components</h4><p>Button, Loaders, Text, Input, Tabs, Toggle, Accordion, Stepper</p></div>
+      <div class="resource-card"><h4>Blocks</h4><p>Features, Pricing, Testimonials, Footer, Logo Cloud, Banner</p></div>
+      <div class="resource-card"><h4>Animations</h4><p>Skewed Infinite Scroll, Hover Animations</p></div>
+      <div class="resource-card"><h4>Effects</h4><p>Image Fade, Gradients, Background, Emoji Confetti</p></div>
+    </div>
+
+    <h3>Infinite Scroll Ticker</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-tsx">// Skewed infinite scroll — typical SyntaxUI pattern
+"use client";
+import { cn } from "@/lib/utils";
+
+export function InfiniteScroll({
+  items,
+  speed = 30,
+  className,
+}: {
+  items: string[];
+  speed?: number;
+  className?: string;
+}) {
+  return (
+    &lt;div
+      className={cn("flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]", className)}
+    &gt;
+      {[0, 1].map((i) =&gt; (
+        &lt;div
+          key={i}
+          className="flex shrink-0 gap-4 py-4 animate-marquee"
+          style={{ "--duration": `${speed}s` } as React.CSSProperties}
+        &gt;
+          {items.map((item, j) =&gt; (
+            &lt;span key={j} className="px-4 py-1 bg-muted rounded-full text-sm font-medium"&gt;
+              {item}
+            &lt;/span&gt;
+          ))}
+        &lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}
+
+// tailwind.config.js — add animation
+// animation: { marquee: "marquee var(--duration) linear infinite" }
+// keyframes: { marquee: { from: { transform: "translateX(0)" }, to: { transform: "translateX(-50%)" } } }</code></pre>
+    </div>
+    </div>
+
+    <!-- CULT UI -->
+    <div data-section="cult-ui">
+    <h2 id="cult-ui">Cult UI</h2>
+    <p>78+ animated components and effects. Free, open-source, built to drop into any shadcn/ui project. MIT licensed. Includes marketing blocks, AI patterns, full-stack templates, and premium-look components integrating React, shadcn/ui, and Tailwind CSS.</p>
+    <span class="badge free">FREE</span> <span class="tag">MIT</span> <span class="tag">React</span> <span class="tag">shadcn/ui</span> <span class="tag">Tailwind</span> <span class="tag">Framer Motion</span>
+    <p style="margin-top:12px"><a href="https://www.cult-ui.com" target="_blank" style="color:#f59e0b">cult-ui.com →</a></p>
+
+    <h3>Install</h3>
+    <div class="install">npx shadcn@latest add https://www.cult-ui.com/r/[component-name].json</div>
+
+    <h3>Component Categories</h3>
+    <div class="resource-grid">
+      <div class="resource-card"><h4>Animated Cards</h4><p>Shift Card (hover reveal), Tilt Card, Glow Card</p></div>
+      <div class="resource-card"><h4>Navigation</h4><p>Animated toolbars, floating nav, command menus</p></div>
+      <div class="resource-card"><h4>Marketing Blocks</h4><p>Feature sections, hero sections, pricing tables</p></div>
+      <div class="resource-card"><h4>AI Patterns</h4><p>100+ AI SDK agent patterns, chat interfaces</p></div>
+      <div class="resource-card"><h4>Data Visualization</h4><p>Animated charts, metric cards, stat counters</p></div>
+      <div class="resource-card"><h4>Forms + Auth</h4><p>Authentication blocks, form components</p></div>
+    </div>
+
+    <h3>Shift Card (Hover Reveal)</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-tsx">"use client";
+import { motion } from "framer-motion";
+import { useState } from "react";
+
+interface ShiftCardProps {
+  title: string;
+  description: string;
+  detail: string;
+  icon?: React.ReactNode;
+}
+
+export function ShiftCard({ title, description, detail, icon }: ShiftCardProps) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    &lt;motion.div
+      className="relative w-64 h-40 bg-card border border-border rounded-xl p-5 cursor-pointer overflow-hidden"
+      onHoverStart={() =&gt; setHovered(true)}
+      onHoverEnd={() =&gt; setHovered(false)}
+    &gt;
+      {/* Default state */}
+      &lt;motion.div
+        animate={{ opacity: hovered ? 0 : 1, y: hovered ? -10 : 0 }}
+        transition={{ duration: 0.2 }}
+      &gt;
+        {icon &amp;&amp; &lt;div className="mb-2 text-muted-foreground"&gt;{icon}&lt;/div&gt;}
+        &lt;h3 className="font-semibold text-foreground"&gt;{title}&lt;/h3&gt;
+        &lt;p className="text-sm text-muted-foreground mt-1"&gt;{description}&lt;/p&gt;
+      &lt;/motion.div&gt;
+
+      {/* Hover detail */}
+      &lt;motion.div
+        className="absolute inset-0 p-5 flex items-center justify-center bg-card"
+        animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : 10 }}
+        transition={{ duration: 0.2 }}
+      &gt;
+        &lt;p className="text-sm text-foreground text-center"&gt;{detail}&lt;/p&gt;
+      &lt;/motion.div&gt;
+    &lt;/motion.div&gt;
+  );
+}</code></pre>
+    </div>
+    </div>
+
+    <!-- ORIGIN UI -->
+    <div data-section="originui">
+    <h2 id="originui">Origin UI</h2>
+    <p>Large collection of copy-paste UI components built with shadcn/ui and Tailwind CSS. Covers forms, inputs, buttons, modals, tables, and more. Free to use — MIT license, full code ownership. Components require shadcn/ui setup.</p>
+    <span class="badge free">FREE</span> <span class="tag">MIT</span> <span class="tag">React</span> <span class="tag">shadcn/ui</span> <span class="tag">Tailwind CSS</span> <span class="tag">Radix UI</span>
+    <p style="margin-top:12px"><a href="https://originui.com" target="_blank" style="color:#f59e0b">originui.com →</a></p>
+
+    <h3>Prerequisites</h3>
+    <div class="install">npx shadcn@latest init  # Set up shadcn/ui first</div>
+
+    <h3>Component Categories</h3>
+    <div class="resource-grid">
+      <div class="resource-card"><h4>Inputs</h4><p>Text, password, search, textarea, with icons and validation states</p></div>
+      <div class="resource-card"><h4>Buttons</h4><p>Icon buttons, loading states, social auth buttons, split buttons</p></div>
+      <div class="resource-card"><h4>Checkboxes &amp; Radios</h4><p>Custom styled with Radix primitives</p></div>
+      <div class="resource-card"><h4>Selects &amp; Comboboxes</h4><p>Single/multi select with search</p></div>
+      <div class="resource-card"><h4>Modals &amp; Drawers</h4><p>Dialog variants, sheet/drawer patterns</p></div>
+      <div class="resource-card"><h4>Tables</h4><p>Sortable tables with pagination</p></div>
+      <div class="resource-card"><h4>Notifications</h4><p>Toast variants, alert banners</p></div>
+      <div class="resource-card"><h4>Navigation</h4><p>Breadcrumbs, tabs, pagination</p></div>
+    </div>
+
+    <h3>Input with Icon (Origin UI pattern)</h3>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-tsx">import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Search } from "lucide-react";
+
+export function SearchInput() {
+  return (
+    &lt;div className="space-y-2"&gt;
+      &lt;Label htmlFor="search"&gt;Search&lt;/Label&gt;
+      &lt;div className="relative"&gt;
+        &lt;Search
+          className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+          size={16}
+        /&gt;
+        &lt;Input
+          id="search"
+          className="pl-9"
+          placeholder="Search anything..."
+          type="search"
+        /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+
+// Password Input with visibility toggle
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+export function PasswordInput() {
+  const [show, setShow] = useState(false);
+  return (
+    &lt;div className="relative"&gt;
+      &lt;Input type={show ? "text" : "password"} placeholder="Password" className="pr-10" /&gt;
+      &lt;Button
+        variant="ghost"
+        size="icon"
+        className="absolute right-0 top-0 h-full w-10"
+        onClick={() =&gt; setShow(!show)}
+      &gt;
+        {show ? &lt;EyeOff size={16} /&gt; : &lt;Eye size={16} /&gt;}
+      &lt;/Button&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+    </div>
+    </div>
+
+  </div>
+</div>
+<script>
+hljs.highlightAll();
+document.querySelectorAll('.code-block').forEach(b => {
+  const btn = b.querySelector('.copy-btn');
+  if (btn) btn.onclick = () => {
+    navigator.clipboard.writeText(b.querySelector('code').innerText);
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1500);
+  };
+});
+function search(q) {
+  document.querySelectorAll('[data-section]').forEach(el => {
+    el.style.display = !q || el.textContent.toLowerCase().includes(q.toLowerCase()) ? '' : 'none';
+  });
+}
+</script>
+</body></html>

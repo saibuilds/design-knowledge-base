@@ -1,0 +1,1063 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Three.js Patterns — Design KB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#e5e5e5;font-family:'Inter',sans-serif;font-size:15px;line-height:1.6}.sidebar{position:fixed;left:0;top:0;width:220px;height:100vh;background:#111;border-right:1px solid #1f1f1f;padding:20px;overflow-y:auto}.sidebar h2{font-size:13px;color:#f59e0b;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}.sidebar a{display:block;color:#888;text-decoration:none;padding:6px 8px;border-radius:6px;font-size:13px;margin-bottom:2px}.sidebar a:hover{color:#fff;background:#1a1a1a}.sidebar a.active{color:#f59e0b;background:#1a1a1a}.main{margin-left:220px;padding:48px;max-width:960px}h1{font-size:32px;font-weight:700;color:#fff;margin-bottom:8px}h2{font-size:20px;font-weight:600;color:#fff;margin:40px 0 12px;padding-top:40px;border-top:1px solid #1f1f1f}h3{font-size:13px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.08em;margin:20px 0 8px}p{color:#aaa;margin-bottom:12px}.tag{display:inline-block;background:#f59e0b15;border:1px solid #f59e0b40;color:#f59e0b;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;margin:2px}.badge.free{background:#0d2e1680;border:1px solid #22c55e40;color:#22c55e}.badge.core{background:#1e1b4b80;border:1px solid #818cf840;color:#818cf8}.badge.advanced{background:#2d1b0080;border:1px solid #f59e0b40;color:#f59e0b}.install{background:#0d0d0d;border:1px solid #1f1f1f;border-radius:6px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#f59e0b;margin:8px 0}.code-block{position:relative;margin:12px 0}.copy-btn{position:absolute;top:8px;right:8px;background:#1f1f1f;border:1px solid #333;color:#888;padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer;z-index:10}.copy-btn:hover{color:#fff}pre{border-radius:8px;overflow:auto;font-size:12px;max-height:500px}input[type=search]{width:100%;background:#111;border:1px solid #2a2a2a;color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;font-family:inherit;margin-bottom:32px;outline:none}input[type=search]:focus{border-color:#f59e0b50}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}.card{background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:16px}.card h4{font-size:14px;font-weight:600;color:#fff;margin-bottom:6px}.card p{font-size:13px;color:#888;margin:0}.card a{color:#f59e0b;font-size:12px;text-decoration:none}.ref-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}.ref-table th{text-align:left;padding:8px 12px;background:#111;border:1px solid #1f1f1f;color:#888;font-weight:500}.ref-table td{padding:8px 12px;border:1px solid #1a1a1a;color:#ccc;vertical-align:top}.ref-table td:first-child{font-family:'JetBrains Mono',monospace;color:#f59e0b;font-size:11px;white-space:nowrap}.divider{border:none;border-top:1px solid #1f1f1f;margin:8px 0}.note{background:#1a1500;border:1px solid #f59e0b30;border-radius:6px;padding:12px 16px;color:#d4a800;font-size:13px;margin:12px 0}</style></head>
+<body>
+<div class="sidebar">
+  <h2>Design KB</h2>
+  <a href="../index.html">Home</a>
+  <a href="../3d/r3f.html">R3F</a>
+  <a href="../3d/r3f-advanced.html">R3F Advanced</a>
+  <a href="../3d/threejs-patterns.html" class="active">Three.js</a>
+  <a href="../3d/spline-scenes.html">Spline</a>
+  <a href="../reference-sites/webflow-cloneables.html">Webflow Free</a>
+  <a href="../reference-sites/codrops-experiments.html">Codrops</a>
+  <a href="../animations/gsap.html">GSAP</a>
+  <a href="../components/magicui-components.html">MagicUI</a>
+</div>
+<div class="main">
+  <input type="search" placeholder="Search patterns, classes, techniques..." oninput="search(this.value)">
+  <div id="content">
+
+    <h1>Three.js Patterns</h1>
+    <p>Vanilla Three.js patterns for web hero sections, 3D backgrounds, particles, shaders, and post-processing. All code is MIT-licensed via Three.js. <span class="badge free">MIT License</span> <span class="badge core">r170+</span></p>
+    <div class="install">npm install three</div>
+    <div class="note">All patterns use ES modules. Import from 'three' for core and 'three/addons/' for controls, loaders, and post-processing passes.</div>
+
+    <!-- BOILERPLATE -->
+    <div data-section>
+    <h2>Boilerplate — Scene Setup</h2>
+    <p>The minimal foundation every Three.js project builds on: scene, camera, renderer, resize handler, animation loop.</p>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">import * as THREE from 'three'
+
+// --- Scene, Camera, Renderer ---
+const scene = new THREE.Scene()
+const camera = new THREE.PerspectiveCamera(
+  75,                                    // fov
+  window.innerWidth / window.innerHeight, // aspect
+  0.1,                                   // near
+  1000                                   // far
+)
+camera.position.set(0, 0, 5)
+
+const renderer = new THREE.WebGLRenderer({
+  antialias: true,
+  alpha: true,          // transparent background
+  powerPreference: 'high-performance'
+})
+renderer.setSize(window.innerWidth, window.innerHeight)
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+renderer.shadowMap.enabled = true
+renderer.shadowMap.type = THREE.PCFSoftShadowMap
+renderer.toneMapping = THREE.ACESFilmicToneMapping
+renderer.toneMappingExposure = 1
+document.body.appendChild(renderer.domElement)
+
+// --- Resize ---
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight
+  camera.updateProjectionMatrix()
+  renderer.setSize(window.innerWidth, window.innerHeight)
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+})
+
+// --- Clock for delta time ---
+const clock = new THREE.Clock()
+
+// --- Animation Loop ---
+function animate() {
+  requestAnimationFrame(animate)
+  const elapsed = clock.getElapsedTime()
+  const delta = clock.getDelta()
+
+  // update objects here...
+
+  renderer.render(scene, camera)
+}
+animate()
+</code></pre>
+    </div>
+    </div>
+
+    <!-- ORBIT CONTROLS -->
+    <div data-section>
+    <h2>OrbitControls</h2>
+    <p>Add mouse/touch orbit, pan, zoom. Essential for dev and interactive scenes.</p>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+
+const controls = new OrbitControls(camera, renderer.domElement)
+controls.enableDamping = true       // smooth inertia
+controls.dampingFactor = 0.05
+controls.minDistance = 2
+controls.maxDistance = 20
+controls.maxPolarAngle = Math.PI / 2  // lock to horizon
+controls.autoRotate = true
+controls.autoRotateSpeed = 0.5
+
+// In animation loop:
+controls.update(delta)
+</code></pre>
+    </div>
+    </div>
+
+    <!-- PARTICLE SYSTEM -->
+    <div data-section>
+    <h2>Particle System — BufferGeometry Points</h2>
+    <p>High-performance particle system using BufferGeometry. Scales to 100k+ particles. Used in: <a href="https://threejs.org/examples/#webgl_points_billboards" target="_blank">webgl_points_billboards</a>, <a href="https://threejs.org/examples/#webgl_points_dynamic" target="_blank">webgl_points_dynamic</a>.</p>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">import * as THREE from 'three'
+
+const COUNT = 50000
+
+// Create random positions
+const positions = new Float32Array(COUNT * 3)
+const colors = new Float32Array(COUNT * 3)
+const sizes = new Float32Array(COUNT)
+
+for (let i = 0; i &lt; COUNT; i++) {
+  // Random sphere distribution
+  const theta = Math.random() * Math.PI * 2
+  const phi = Math.acos(2 * Math.random() - 1)
+  const r = 5 + Math.random() * 10
+
+  positions[i * 3]     = r * Math.sin(phi) * Math.cos(theta)
+  positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta)
+  positions[i * 3 + 2] = r * Math.cos(phi)
+
+  // Gradient color: blue to purple
+  colors[i * 3]     = 0.2 + Math.random() * 0.4  // R
+  colors[i * 3 + 1] = 0.1 + Math.random() * 0.3  // G
+  colors[i * 3 + 2] = 0.8 + Math.random() * 0.2  // B
+
+  sizes[i] = Math.random() * 3
+}
+
+const geometry = new THREE.BufferGeometry()
+geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+geometry.setAttribute('color',    new THREE.BufferAttribute(colors, 3))
+geometry.setAttribute('size',     new THREE.BufferAttribute(sizes, 1))
+
+const material = new THREE.PointsMaterial({
+  size: 0.05,
+  vertexColors: true,
+  sizeAttenuation: true,
+  transparent: true,
+  opacity: 0.8,
+  blending: THREE.AdditiveBlending,
+  depthWrite: false,
+})
+
+// Or use a circular texture for soft particles:
+// material.map = new THREE.TextureLoader().load('circle.png')
+// material.alphaTest = 0.01
+
+const particles = new THREE.Points(geometry, material)
+scene.add(particles)
+
+// Animate — rotate the whole system
+function animate() {
+  requestAnimationFrame(animate)
+  const t = clock.getElapsedTime()
+  particles.rotation.y = t * 0.05
+  particles.rotation.x = Math.sin(t * 0.03) * 0.2
+  renderer.render(scene, camera)
+}
+</code></pre>
+    </div>
+    </div>
+
+    <!-- ANIMATED PARTICLES WITH CUSTOM SHADER -->
+    <div data-section>
+    <h2>Animated Particles — Custom ShaderMaterial</h2>
+    <p>Per-particle animation using vertex shaders. Each particle gets a random offset for organic motion. Pattern from: <a href="https://threejs.org/examples/#webgl_buffergeometry_custom_attributes_particles" target="_blank">webgl_buffergeometry_custom_attributes_particles</a>.</p>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">import * as THREE from 'three'
+
+const COUNT = 20000
+const positions = new Float32Array(COUNT * 3)
+const randoms = new Float32Array(COUNT)  // per-particle random for shader
+
+for (let i = 0; i &lt; COUNT; i++) {
+  positions[i * 3]     = (Math.random() - 0.5) * 20
+  positions[i * 3 + 1] = (Math.random() - 0.5) * 20
+  positions[i * 3 + 2] = (Math.random() - 0.5) * 20
+  randoms[i] = Math.random()
+}
+
+const geometry = new THREE.BufferGeometry()
+geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+geometry.setAttribute('aRandom',  new THREE.BufferAttribute(randoms, 1))
+
+const material = new THREE.ShaderMaterial({
+  transparent: true,
+  depthWrite: false,
+  blending: THREE.AdditiveBlending,
+  uniforms: {
+    uTime: { value: 0 },
+    uSize: { value: 30 * renderer.getPixelRatio() },
+    uColor: { value: new THREE.Color('#4f46e5') },
+  },
+  vertexShader: `
+    uniform float uTime;
+    uniform float uSize;
+    attribute float aRandom;
+
+    void main() {
+      vec3 pos = position;
+      // Wave animation
+      pos.y += sin(uTime * 0.8 + aRandom * 6.28) * 0.5;
+      pos.x += cos(uTime * 0.6 + aRandom * 6.28) * 0.3;
+
+      vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+      gl_Position = projectionMatrix * mvPosition;
+
+      // Size attenuation
+      gl_PointSize = uSize * aRandom * (1.0 / -mvPosition.z);
+    }
+  `,
+  fragmentShader: `
+    uniform vec3 uColor;
+
+    void main() {
+      // Circular particle with soft edge
+      float dist = length(gl_PointCoord - 0.5);
+      if (dist > 0.5) discard;
+      float alpha = 1.0 - smoothstep(0.3, 0.5, dist);
+      gl_FragColor = vec4(uColor, alpha);
+    }
+  `,
+})
+
+const points = new THREE.Points(geometry, material)
+scene.add(points)
+
+// In animation loop:
+material.uniforms.uTime.value = clock.getElapsedTime()
+</code></pre>
+    </div>
+    </div>
+
+    <!-- GALAXY GENERATOR -->
+    <div data-section>
+    <h2>Galaxy / Spiral Particle System</h2>
+    <p>Iconic galaxy generator — spiral arms with color gradient from warm core to cool edges. Classic Bruno Simon pattern.</p>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">import * as THREE from 'three'
+
+function generateGalaxy(params = {}) {
+  const {
+    count = 100000,
+    size = 0.01,
+    radius = 5,
+    branches = 3,
+    spin = 1,
+    randomness = 0.2,
+    randomnessPower = 3,
+    insideColor = '#ff6030',
+    outsideColor = '#1b3984',
+  } = params
+
+  const positions = new Float32Array(count * 3)
+  const colors    = new Float32Array(count * 3)
+
+  const colorIn  = new THREE.Color(insideColor)
+  const colorOut = new THREE.Color(outsideColor)
+
+  for (let i = 0; i &lt; count; i++) {
+    const i3 = i * 3
+    const r = Math.random() * radius
+    const branchAngle = ((i % branches) / branches) * Math.PI * 2
+    const spinAngle = r * spin
+
+    const rx = Math.pow(Math.random(), randomnessPower) * (Math.random() &lt; 0.5 ? 1 : -1) * randomness * r
+    const ry = Math.pow(Math.random(), randomnessPower) * (Math.random() &lt; 0.5 ? 1 : -1) * randomness * r
+    const rz = Math.pow(Math.random(), randomnessPower) * (Math.random() &lt; 0.5 ? 1 : -1) * randomness * r
+
+    positions[i3]     = Math.cos(branchAngle + spinAngle) * r + rx
+    positions[i3 + 1] = ry
+    positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * r + rz
+
+    const mixedColor = colorIn.clone().lerp(colorOut, r / radius)
+    colors[i3]     = mixedColor.r
+    colors[i3 + 1] = mixedColor.g
+    colors[i3 + 2] = mixedColor.b
+  }
+
+  const geometry = new THREE.BufferGeometry()
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+  geometry.setAttribute('color',    new THREE.BufferAttribute(colors, 3))
+
+  const material = new THREE.PointsMaterial({
+    size,
+    sizeAttenuation: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    vertexColors: true,
+  })
+
+  return new THREE.Points(geometry, material)
+}
+
+const galaxy = generateGalaxy()
+scene.add(galaxy)
+
+// Animate slow rotation
+function animate() {
+  requestAnimationFrame(animate)
+  galaxy.rotation.y = clock.getElapsedTime() * 0.05
+  renderer.render(scene, camera)
+}
+</code></pre>
+    </div>
+    </div>
+
+    <!-- SHADER MATERIAL PLANE -->
+    <div data-section>
+    <h2>Animated Shader Plane — Wave / Noise</h2>
+    <p>Full-screen shader plane for hero backgrounds. Uses simplex-style noise in GLSL. Pattern from <a href="https://threejs.org/examples/#webgl_shader" target="_blank">webgl_shader</a>.</p>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">import * as THREE from 'three'
+
+const geometry = new THREE.PlaneGeometry(2, 2, 128, 128)
+
+const material = new THREE.ShaderMaterial({
+  uniforms: {
+    uTime:       { value: 0 },
+    uColorA:     { value: new THREE.Color('#0f0c29') },
+    uColorB:     { value: new THREE.Color('#302b63') },
+    uColorC:     { value: new THREE.Color('#24243e') },
+    uFrequency:  { value: new THREE.Vector2(4, 3) },
+    uAmplitude:  { value: 0.15 },
+  },
+  vertexShader: `
+    uniform float uTime;
+    uniform vec2  uFrequency;
+    uniform float uAmplitude;
+    varying vec2  vUv;
+    varying float vElevation;
+
+    void main() {
+      vec4 modelPosition = modelMatrix * vec4(position, 1.0);
+      float elevation = sin(modelPosition.x * uFrequency.x + uTime) *
+                        sin(modelPosition.y * uFrequency.y + uTime) *
+                        uAmplitude;
+      modelPosition.z += elevation;
+      vElevation = elevation;
+      vUv = uv;
+      gl_Position = projectionMatrix * viewMatrix * modelPosition;
+    }
+  `,
+  fragmentShader: `
+    uniform vec3  uColorA;
+    uniform vec3  uColorB;
+    uniform vec3  uColorC;
+    varying float vElevation;
+    varying vec2  vUv;
+
+    void main() {
+      float t = (vElevation + 0.15) / 0.3;
+      vec3 col = mix(uColorA, uColorB, vUv.x);
+      col = mix(col, uColorC, t);
+      gl_FragColor = vec4(col, 1.0);
+    }
+  `,
+  side: THREE.DoubleSide,
+})
+
+const mesh = new THREE.Mesh(geometry, material)
+scene.add(mesh)
+
+// Use orthographic camera for full-screen effect:
+const orthoCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10)
+orthoCamera.position.z = 1
+
+function animate() {
+  requestAnimationFrame(animate)
+  material.uniforms.uTime.value = clock.getElapsedTime()
+  renderer.render(scene, orthoCamera)
+}
+</code></pre>
+    </div>
+    </div>
+
+    <!-- MORPH GEOMETRY -->
+    <div data-section>
+    <h2>Morphing Geometry — Sphere to Box</h2>
+    <p>Smooth morph between two geometries using ShaderMaterial. Great for hero section transitions.</p>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">import * as THREE from 'three'
+
+// Create both geometries with same vertex count
+const sphereGeo = new THREE.SphereGeometry(1, 64, 64)
+const boxGeo    = new THREE.BoxGeometry(1.5, 1.5, 1.5, 32, 32, 32)
+
+// Note: both need same vertex count — use BufferGeometry tricks or match segments
+const geometry = sphereGeo.clone()
+
+// Add morph targets
+geometry.morphAttributes.position = []
+geometry.morphAttributes.position[0] = new THREE.BufferAttribute(
+  boxGeo.attributes.position.array.slice(0, sphereGeo.attributes.position.count * 3),
+  3
+)
+
+const material = new THREE.MeshStandardMaterial({
+  color: '#4f46e5',
+  roughness: 0.4,
+  metalness: 0.6,
+  morphTargets: true,
+})
+
+const mesh = new THREE.Mesh(geometry, material)
+scene.add(mesh)
+
+// Animate morph influence
+function animate() {
+  requestAnimationFrame(animate)
+  const t = (Math.sin(clock.getElapsedTime()) + 1) / 2  // 0-1 ping-pong
+  mesh.morphTargetInfluences[0] = t
+  renderer.render(scene, camera)
+}
+</code></pre>
+    </div>
+    </div>
+
+    <!-- POSTPROCESSING BLOOM -->
+    <div data-section>
+    <h2>Post-Processing — Bloom + Film Grain</h2>
+    <p>EffectComposer pipeline with UnrealBloomPass for glow and FilmPass for cinematic grain. Used in: <a href="https://threejs.org/examples/#webgl_postprocessing_unreal_bloom" target="_blank">webgl_postprocessing_unreal_bloom</a>.</p>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">import { EffectComposer }   from 'three/addons/postprocessing/EffectComposer.js'
+import { RenderPass }       from 'three/addons/postprocessing/RenderPass.js'
+import { UnrealBloomPass }  from 'three/addons/postprocessing/UnrealBloomPass.js'
+import { FilmPass }         from 'three/addons/postprocessing/FilmPass.js'
+import { OutputPass }       from 'three/addons/postprocessing/OutputPass.js'
+import { ShaderPass }       from 'three/addons/postprocessing/ShaderPass.js'
+import { FXAAShader }       from 'three/addons/shaders/FXAAShader.js'
+
+renderer.toneMapping = THREE.ACESFilmicToneMapping
+
+const composer = new EffectComposer(renderer)
+
+// 1. Render scene
+composer.addPass(new RenderPass(scene, camera))
+
+// 2. Bloom glow
+const bloomPass = new UnrealBloomPass(
+  new THREE.Vector2(window.innerWidth, window.innerHeight),
+  1.5,   // strength
+  0.4,   // radius
+  0.85   // threshold
+)
+composer.addPass(bloomPass)
+
+// 3. Film grain
+const filmPass = new FilmPass(0.35)  // noise intensity
+composer.addPass(filmPass)
+
+// 4. FXAA anti-aliasing
+const fxaaPass = new ShaderPass(FXAAShader)
+fxaaPass.uniforms['resolution'].value.set(
+  1 / (window.innerWidth  * renderer.getPixelRatio()),
+  1 / (window.innerHeight * renderer.getPixelRatio())
+)
+composer.addPass(fxaaPass)
+
+// 5. Output (tone mapping)
+composer.addPass(new OutputPass())
+
+// Replace renderer.render() with:
+composer.render()
+
+// Resize handler:
+window.addEventListener('resize', () => {
+  composer.setSize(window.innerWidth, window.innerHeight)
+  fxaaPass.uniforms['resolution'].value.set(
+    1 / (window.innerWidth  * renderer.getPixelRatio()),
+    1 / (window.innerHeight * renderer.getPixelRatio())
+  )
+})
+</code></pre>
+    </div>
+    </div>
+
+    <!-- SELECTIVE BLOOM -->
+    <div data-section>
+    <h2>Post-Processing — Selective Bloom (Dark Background)</h2>
+    <p>Bloom only glowing objects, not the whole scene. Pattern from <a href="https://threejs.org/examples/#webgl_postprocessing_unreal_bloom_selective" target="_blank">webgl_postprocessing_unreal_bloom_selective</a>.</p>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">import { EffectComposer }   from 'three/addons/postprocessing/EffectComposer.js'
+import { RenderPass }       from 'three/addons/postprocessing/RenderPass.js'
+import { UnrealBloomPass }  from 'three/addons/postprocessing/UnrealBloomPass.js'
+import { OutputPass }       from 'three/addons/postprocessing/OutputPass.js'
+import { ShaderPass }       from 'three/addons/postprocessing/ShaderPass.js'
+
+const BLOOM_LAYER = 1
+const bloomLayer = new THREE.Layers()
+bloomLayer.set(BLOOM_LAYER)
+
+// Two composers: bloom-only + final composite
+const bloomComposer = new EffectComposer(renderer)
+bloomComposer.renderToScreen = false
+bloomComposer.addPass(new RenderPass(scene, camera))
+bloomComposer.addPass(new UnrealBloomPass(
+  new THREE.Vector2(window.innerWidth, window.innerHeight),
+  1.5, 0.4, 0.0  // low threshold = bloom everything visible
+))
+
+// Final composer mixes bloom + base scene
+const mixShader = {
+  uniforms: { baseTexture: { value: null }, bloomTexture: { value: bloomComposer.renderTarget2.texture } },
+  vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.0); }`,
+  fragmentShader: `uniform sampler2D baseTexture; uniform sampler2D bloomTexture; varying vec2 vUv;
+    void main() { gl_FragColor = texture2D(baseTexture,vUv) + vec4(1.0)*texture2D(bloomTexture,vUv); }`,
+  defines: {}
+}
+const finalComposer = new EffectComposer(renderer)
+finalComposer.addPass(new RenderPass(scene, camera))
+const finalPass = new ShaderPass(mixShader, 'baseTexture')
+finalPass.needsSwap = true
+finalComposer.addPass(finalPass)
+finalComposer.addPass(new OutputPass())
+
+// Mark objects for bloom:
+glowMesh.layers.enable(BLOOM_LAYER)
+
+// In animate:
+// 1. Hide non-bloom objects, render bloom
+scene.traverse(obj => { if (obj.isMesh && !bloomLayer.test(obj.layers)) { obj.visible = false } })
+bloomComposer.render()
+scene.traverse(obj => { if (obj.isMesh) obj.visible = true })
+// 2. Render final composite
+finalComposer.render()
+</code></pre>
+    </div>
+    </div>
+
+    <!-- GLTF LOADER -->
+    <div data-section>
+    <h2>GLTF Model Loader + Draco Compression</h2>
+    <p>Load .glb models with Draco decompression for smaller file sizes. Pattern from <a href="https://threejs.org/examples/#webgl_loader_gltf" target="_blank">webgl_loader_gltf</a>.</p>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">import { GLTFLoader }   from 'three/addons/loaders/GLTFLoader.js'
+import { DRACOLoader }  from 'three/addons/loaders/DRACOLoader.js'
+
+// Draco decoder (host from CDN or /public)
+const dracoLoader = new DRACOLoader()
+dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/')
+
+const loader = new GLTFLoader()
+loader.setDRACOLoader(dracoLoader)
+
+// Loading manager with progress
+const manager = new THREE.LoadingManager(
+  () => console.log('All loaded'),
+  (url, loaded, total) => console.log(`Loading: ${Math.round(loaded/total*100)}%`),
+  (url) => console.error('Error:', url)
+)
+const gltfLoader = new GLTFLoader(manager)
+gltfLoader.setDRACOLoader(dracoLoader)
+
+gltfLoader.load('/model.glb', (gltf) => {
+  const model = gltf.scene
+
+  // Configure shadows
+  model.traverse((node) => {
+    if (node.isMesh) {
+      node.castShadow = true
+      node.receiveShadow = true
+      // Upgrade to PBR if needed:
+      // node.material = new THREE.MeshStandardMaterial({ map: node.material.map })
+    }
+  })
+
+  // Scale and center
+  const box = new THREE.Box3().setFromObject(model)
+  const center = box.getCenter(new THREE.Vector3())
+  const size = box.getSize(new THREE.Vector3())
+  model.position.sub(center)  // center at origin
+  const maxDim = Math.max(size.x, size.y, size.z)
+  model.scale.multiplyScalar(2 / maxDim)  // normalize to size 2
+
+  scene.add(model)
+
+  // Play animations
+  if (gltf.animations.length) {
+    const mixer = new THREE.AnimationMixer(model)
+    const action = mixer.clipAction(gltf.animations[0])
+    action.play()
+    // In loop: mixer.update(delta)
+  }
+})
+</code></pre>
+    </div>
+    </div>
+
+    <!-- ENVIRONMENT MAP -->
+    <div data-section>
+    <h2>Environment Map — HDRI Lighting</h2>
+    <p>HDRI environment for realistic PBR reflections. Uses RGBELoader + PMREMGenerator. Pattern from <a href="https://threejs.org/examples/#webgl_loader_rgbe" target="_blank">webgl_loader_rgbe</a>.</p>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">import { RGBELoader } from 'three/addons/loaders/RGBELoader.js'
+
+renderer.toneMapping = THREE.ACESFilmicToneMapping
+renderer.toneMappingExposure = 1
+
+const pmremGenerator = new THREE.PMREMGenerator(renderer)
+pmremGenerator.compileEquirectangularShader()
+
+new RGBELoader().load('/studio.hdr', (texture) => {
+  const envMap = pmremGenerator.fromEquirectangular(texture).texture
+  scene.environment = envMap    // affects all PBR materials
+  // scene.background = envMap  // also set as background
+
+  texture.dispose()
+  pmremGenerator.dispose()
+})
+
+// Any MeshStandardMaterial now picks up environment automatically:
+const mat = new THREE.MeshStandardMaterial({
+  color: '#ffffff',
+  metalness: 1,
+  roughness: 0,
+  // envMap auto-applied from scene.environment
+})
+
+// Free HDRIs: https://polyhaven.com/hdris
+</code></pre>
+    </div>
+    </div>
+
+    <!-- LIGHTS + SHADOWS -->
+    <div data-section>
+    <h2>Lights + Shadows Setup</h2>
+    <p>Production-quality lighting rig with shadows. Combine ambient, directional, and point lights.</p>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">import * as THREE from 'three'
+
+// Ambient — fills shadows softly
+const ambientLight = new THREE.AmbientLight('#ffffff', 0.5)
+scene.add(ambientLight)
+
+// Directional — key light with shadow
+const dirLight = new THREE.DirectionalLight('#ffffff', 1.5)
+dirLight.position.set(5, 8, 5)
+dirLight.castShadow = true
+dirLight.shadow.camera.near = 0.1
+dirLight.shadow.camera.far = 50
+dirLight.shadow.camera.left = -10
+dirLight.shadow.camera.right = 10
+dirLight.shadow.camera.top = 10
+dirLight.shadow.camera.bottom = -10
+dirLight.shadow.mapSize.set(2048, 2048)  // higher = sharper shadows
+dirLight.shadow.radius = 4              // PCFSoft blur
+scene.add(dirLight)
+
+// Hemisphere — sky/ground gradient
+const hemiLight = new THREE.HemisphereLight('#b9d5ff', '#444422', 0.6)
+scene.add(hemiLight)
+
+// Point light — accent/rim
+const pointLight = new THREE.PointLight('#4f46e5', 2, 20)
+pointLight.position.set(-4, 3, -4)
+pointLight.castShadow = true
+scene.add(pointLight)
+
+// Animate point light orbit
+function animate() {
+  const t = clock.getElapsedTime()
+  pointLight.position.x = Math.sin(t) * 4
+  pointLight.position.z = Math.cos(t) * 4
+}
+
+// Ground — receives shadow
+const floorGeo = new THREE.PlaneGeometry(20, 20)
+const floorMat = new THREE.MeshStandardMaterial({ color: '#1a1a1a' })
+const floor = new THREE.Mesh(floorGeo, floorMat)
+floor.rotation.x = -Math.PI / 2
+floor.receiveShadow = true
+scene.add(floor)
+</code></pre>
+    </div>
+    </div>
+
+    <!-- GEOMETRY INSTANCING -->
+    <div data-section>
+    <h2>Instanced Mesh — 10,000 Objects at 60fps</h2>
+    <p>InstancedMesh renders thousands of objects in a single draw call. Pattern from <a href="https://threejs.org/examples/#webgl_instancing_dynamic" target="_blank">webgl_instancing_dynamic</a>.</p>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">import * as THREE from 'three'
+
+const COUNT = 10000
+const geometry = new THREE.IcosahedronGeometry(0.1, 0)
+const material = new THREE.MeshStandardMaterial({
+  color: '#4f46e5',
+  metalness: 0.5,
+  roughness: 0.3,
+})
+
+const mesh = new THREE.InstancedMesh(geometry, material, COUNT)
+mesh.castShadow = true
+
+const dummy = new THREE.Object3D()
+const scales = new Float32Array(COUNT)
+
+for (let i = 0; i &lt; COUNT; i++) {
+  dummy.position.set(
+    (Math.random() - 0.5) * 40,
+    (Math.random() - 0.5) * 40,
+    (Math.random() - 0.5) * 40
+  )
+  dummy.rotation.set(Math.random() * Math.PI * 2, Math.random() * Math.PI * 2, 0)
+  const s = 0.3 + Math.random() * 1.5
+  dummy.scale.setScalar(s)
+  scales[i] = s
+  dummy.updateMatrix()
+  mesh.setMatrixAt(i, dummy.matrix)
+}
+
+// Per-instance color:
+const color = new THREE.Color()
+for (let i = 0; i &lt; COUNT; i++) {
+  color.setHSL(i / COUNT, 0.7, 0.5)
+  mesh.setColorAt(i, color)
+}
+mesh.instanceColor.needsUpdate = true
+
+scene.add(mesh)
+
+// Animate — update matrices each frame
+function animate() {
+  requestAnimationFrame(animate)
+  const t = clock.getElapsedTime()
+  for (let i = 0; i &lt; COUNT; i++) {
+    mesh.getMatrixAt(i, dummy.matrix)
+    dummy.matrix.decompose(dummy.position, dummy.quaternion, dummy.scale)
+    dummy.rotation.x += 0.01
+    dummy.rotation.y += 0.005
+    dummy.updateMatrix()
+    mesh.setMatrixAt(i, dummy.matrix)
+  }
+  mesh.instanceMatrix.needsUpdate = true
+  renderer.render(scene, camera)
+}
+</code></pre>
+    </div>
+    </div>
+
+    <!-- SCROLL-DRIVEN CAMERA -->
+    <div data-section>
+    <h2>Scroll-Driven Camera Animation</h2>
+    <p>Animate camera position and scene objects based on scroll position. Combine with GSAP ScrollTrigger for precise control.</p>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">import * as THREE from 'three'
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
+
+// Create tall page for scroll
+document.body.style.height = '400vh'
+
+// Camera waypoints
+const waypoints = [
+  { pos: new THREE.Vector3(0, 0, 5),  target: new THREE.Vector3(0, 0, 0) },
+  { pos: new THREE.Vector3(3, 2, 3),  target: new THREE.Vector3(0, 0, 0) },
+  { pos: new THREE.Vector3(-3, 0, 4), target: new THREE.Vector3(0, 1, 0) },
+  { pos: new THREE.Vector3(0, 5, 2),  target: new THREE.Vector3(0, 0, 0) },
+]
+
+const tl = gsap.timeline({
+  scrollTrigger: {
+    trigger: 'body',
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: 1.5,   // smooth lag
+  }
+})
+
+waypoints.forEach((wp, i) => {
+  if (i === 0) return
+  tl.to(camera.position, {
+    x: wp.pos.x, y: wp.pos.y, z: wp.pos.z,
+    ease: 'power2.inOut',
+    onUpdate: () => camera.lookAt(wp.target),
+  })
+})
+
+// Or simpler: map scrollY to rotation
+let scrollY = 0
+window.addEventListener('scroll', () => { scrollY = window.scrollY })
+
+function animate() {
+  requestAnimationFrame(animate)
+  // Smooth lerp toward scroll position
+  mesh.rotation.y += (scrollY * 0.001 - mesh.rotation.y) * 0.05
+  renderer.render(scene, camera)
+}
+</code></pre>
+    </div>
+    </div>
+
+    <!-- RAYCASTER INTERACTION -->
+    <div data-section>
+    <h2>Raycaster — Mouse Hover + Click</h2>
+    <p>Pick 3D objects with mouse. Used for interactive scenes, hover effects, click events.</p>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">import * as THREE from 'three'
+
+const raycaster = new THREE.Raycaster()
+const mouse = new THREE.Vector2()
+let hoveredObject = null
+
+window.addEventListener('mousemove', (e) => {
+  // Normalize to -1..1
+  mouse.x =  (e.clientX / window.innerWidth)  * 2 - 1
+  mouse.y = -(e.clientY / window.innerHeight) * 2 + 1
+})
+
+window.addEventListener('click', () => {
+  raycaster.setFromCamera(mouse, camera)
+  const hits = raycaster.intersectObjects(scene.children, true)
+  if (hits.length) {
+    const obj = hits[0].object
+    // Animate clicked object
+    gsap.to(obj.scale, { x: 1.5, y: 1.5, z: 1.5, duration: 0.2, yoyo: true, repeat: 1 })
+  }
+})
+
+function animate() {
+  requestAnimationFrame(animate)
+
+  // Hover detection each frame
+  raycaster.setFromCamera(mouse, camera)
+  const interactables = [mesh1, mesh2, mesh3]  // your objects
+  const intersects = raycaster.intersectObjects(interactables)
+
+  // Reset previous hover
+  if (hoveredObject && !intersects.find(i => i.object === hoveredObject)) {
+    hoveredObject.material.emissive.setHex(0x000000)
+    hoveredObject = null
+    document.body.style.cursor = 'default'
+  }
+
+  // Apply hover
+  if (intersects.length) {
+    hoveredObject = intersects[0].object
+    hoveredObject.material.emissive.setHex(0x4f46e5)
+    document.body.style.cursor = 'pointer'
+  }
+
+  renderer.render(scene, camera)
+}
+</code></pre>
+    </div>
+    </div>
+
+    <!-- FLOATING GEOMETRY HERO -->
+    <div data-section>
+    <h2>Hero Section — Floating Geometry</h2>
+    <p>Complete hero background pattern: floating geometric shapes with additive bloom. Drop into any landing page.</p>
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code class="language-javascript">import * as THREE from 'three'
+import { EffectComposer }  from 'three/addons/postprocessing/EffectComposer.js'
+import { RenderPass }      from 'three/addons/postprocessing/RenderPass.js'
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
+import { OutputPass }      from 'three/addons/postprocessing/OutputPass.js'
+
+// Scene
+const scene    = new THREE.Scene()
+scene.fog      = new THREE.FogExp2('#0a0a0a', 0.08)
+const camera   = new THREE.PerspectiveCamera(75, innerWidth/innerHeight, 0.1, 100)
+camera.position.z = 8
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false })
+renderer.setSize(innerWidth, innerHeight)
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2))
+document.getElementById('hero-canvas').appendChild(renderer.domElement)
+
+// Bloom
+const composer = new EffectComposer(renderer)
+composer.addPass(new RenderPass(scene, camera))
+composer.addPass(new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.8, 0.3, 0))
+composer.addPass(new OutputPass())
+
+// Shapes
+const geos = [
+  new THREE.IcosahedronGeometry(0.5, 0),
+  new THREE.OctahedronGeometry(0.5, 0),
+  new THREE.TetrahedronGeometry(0.5, 0),
+  new THREE.TorusGeometry(0.4, 0.15, 8, 6),
+  new THREE.BoxGeometry(0.8, 0.8, 0.8),
+]
+
+const meshes = []
+for (let i = 0; i &lt; 40; i++) {
+  const geo = geos[Math.floor(Math.random() * geos.length)]
+  const mat = new THREE.MeshStandardMaterial({
+    color: new THREE.Color().setHSL(0.65 + Math.random() * 0.2, 0.8, 0.6),
+    emissive: new THREE.Color().setHSL(0.65 + Math.random() * 0.2, 1, 0.3),
+    emissiveIntensity: 0.5,
+    roughness: 0.3,
+    metalness: 0.8,
+    wireframe: Math.random() > 0.7,
+  })
+  const mesh = new THREE.Mesh(geo, mat)
+  mesh.position.set(
+    (Math.random() - 0.5) * 20,
+    (Math.random() - 0.5) * 12,
+    (Math.random() - 0.5) * 15
+  )
+  mesh.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0)
+  mesh.userData.rotSpeed = { x: (Math.random()-0.5)*0.01, y: (Math.random()-0.5)*0.01 }
+  mesh.userData.floatOffset = Math.random() * Math.PI * 2
+  meshes.push(mesh)
+  scene.add(mesh)
+}
+
+// Lights
+scene.add(new THREE.AmbientLight('#ffffff', 0.3))
+const pt1 = new THREE.PointLight('#4f46e5', 3, 30)
+pt1.position.set(3, 3, 3)
+scene.add(pt1)
+const pt2 = new THREE.PointLight('#e11d48', 2, 25)
+pt2.position.set(-4, -2, 2)
+scene.add(pt2)
+
+// Mouse parallax
+let mx = 0, my = 0
+window.addEventListener('mousemove', e => {
+  mx = (e.clientX / innerWidth  - 0.5) * 2
+  my = (e.clientY / innerHeight - 0.5) * 2
+})
+
+const clock = new THREE.Clock()
+;(function animate() {
+  requestAnimationFrame(animate)
+  const t = clock.getElapsedTime()
+
+  // Float + rotate each shape
+  meshes.forEach(m => {
+    m.rotation.x += m.userData.rotSpeed.x
+    m.rotation.y += m.userData.rotSpeed.y
+    m.position.y += Math.sin(t + m.userData.floatOffset) * 0.002
+  })
+
+  // Camera parallax
+  camera.position.x += (mx * 1.5 - camera.position.x) * 0.02
+  camera.position.y += (-my * 1.0 - camera.position.y) * 0.02
+  camera.lookAt(0, 0, 0)
+
+  composer.render()
+})()
+
+window.addEventListener('resize', () => {
+  camera.aspect = innerWidth/innerHeight
+  camera.updateProjectionMatrix()
+  renderer.setSize(innerWidth, innerHeight)
+  composer.setSize(innerWidth, innerHeight)
+})
+</code></pre>
+    </div>
+    </div>
+
+    <!-- CLASS REFERENCE -->
+    <div data-section>
+    <h2>Key Classes Quick Reference</h2>
+    <h3>Core</h3>
+    <table class="ref-table">
+      <tr><th>Class</th><th>Description</th><th>Link</th></tr>
+      <tr><td>THREE.Scene</td><td>Root container for all objects, lights, fog</td><td><a href="https://threejs.org/docs/#api/en/scenes/Scene" target="_blank">docs</a></td></tr>
+      <tr><td>THREE.PerspectiveCamera</td><td>Standard 3D perspective camera (fov, aspect, near, far)</td><td><a href="https://threejs.org/docs/#api/en/cameras/PerspectiveCamera" target="_blank">docs</a></td></tr>
+      <tr><td>THREE.WebGLRenderer</td><td>Renders scene to canvas via WebGL</td><td><a href="https://threejs.org/docs/#api/en/renderers/WebGLRenderer" target="_blank">docs</a></td></tr>
+      <tr><td>THREE.Clock</td><td>Tracks elapsed time and delta for animations</td><td><a href="https://threejs.org/docs/#api/en/core/Clock" target="_blank">docs</a></td></tr>
+      <tr><td>THREE.Raycaster</td><td>Cast rays for mouse picking and collision</td><td><a href="https://threejs.org/docs/#api/en/core/Raycaster" target="_blank">docs</a></td></tr>
+    </table>
+    <h3>Materials</h3>
+    <table class="ref-table">
+      <tr><th>Class</th><th>Use Case</th></tr>
+      <tr><td>MeshStandardMaterial</td><td>PBR material — best for most objects. metalness + roughness</td></tr>
+      <tr><td>MeshPhysicalMaterial</td><td>Advanced PBR: clearcoat, iridescence, transmission (glass)</td></tr>
+      <tr><td>ShaderMaterial</td><td>Custom GLSL vertex + fragment shaders</td></tr>
+      <tr><td>PointsMaterial</td><td>Particle systems, star fields</td></tr>
+      <tr><td>MeshBasicMaterial</td><td>No lighting — flat color or texture, unlit</td></tr>
+      <tr><td>MeshToonMaterial</td><td>Cartoon/cel shading look</td></tr>
+    </table>
+    <h3>Lights</h3>
+    <table class="ref-table">
+      <tr><th>Class</th><th>Use Case</th></tr>
+      <tr><td>AmbientLight</td><td>Fills shadows uniformly. Soft base</td></tr>
+      <tr><td>DirectionalLight</td><td>Sun-like parallel rays. Best for shadows</td></tr>
+      <tr><td>PointLight</td><td>Bulb-like 360° light. Good for accent</td></tr>
+      <tr><td>HemisphereLight</td><td>Sky/ground gradient. Cheap outdoor ambient</td></tr>
+      <tr><td>RectAreaLight</td><td>Soft-box studio light. Requires RectAreaLightHelper</td></tr>
+    </table>
+    <h3>Post-Processing Passes</h3>
+    <table class="ref-table">
+      <tr><th>Pass</th><th>Effect</th></tr>
+      <tr><td>UnrealBloomPass</td><td>Glow on bright areas. strength, radius, threshold</td></tr>
+      <tr><td>FilmPass</td><td>Film grain + scanlines</td></tr>
+      <tr><td>GlitchPass</td><td>RGB shift + block glitch</td></tr>
+      <tr><td>SSAOPass</td><td>Ambient occlusion in crevices</td></tr>
+      <tr><td>DotScreenPass</td><td>Halftone dot pattern</td></tr>
+      <tr><td>RenderPixelatedPass</td><td>Pixel art look</td></tr>
+    </table>
+    </div>
+
+    <!-- EXAMPLES INDEX -->
+    <div data-section>
+    <h2>Official Examples Index</h2>
+    <p>Browse all live examples at <a href="https://threejs.org/examples/" target="_blank">threejs.org/examples</a>. Most useful for hero sections:</p>
+    <div class="grid">
+      <div class="card"><h4>webgl_particles_dynamic</h4><p>GPU-driven particle system with dynamic positions</p><a href="https://threejs.org/examples/#webgl_points_dynamic" target="_blank">View example →</a></div>
+      <div class="card"><h4>webgl_postprocessing_unreal_bloom</h4><p>Bloom glow effect with threshold control</p><a href="https://threejs.org/examples/#webgl_postprocessing_unreal_bloom" target="_blank">View example →</a></div>
+      <div class="card"><h4>webgl_shader_lava</h4><p>Lava lamp animated shader with noise</p><a href="https://threejs.org/examples/#webgl_shader_lava" target="_blank">View example →</a></div>
+      <div class="card"><h4>webgl_geometry_convex</h4><p>Convex hull geometry generation</p><a href="https://threejs.org/examples/#webgl_geometry_convex" target="_blank">View example →</a></div>
+      <div class="card"><h4>webgl_animation_skinning_morph</h4><p>Skinned mesh with morph targets</p><a href="https://threejs.org/examples/#webgl_animation_skinning_morph" target="_blank">View example →</a></div>
+      <div class="card"><h4>webgl_instancing_dynamic</h4><p>100k instanced objects, 60fps</p><a href="https://threejs.org/examples/#webgl_instancing_dynamic" target="_blank">View example →</a></div>
+      <div class="card"><h4>webgl_postprocessing_glitch</h4><p>RGB glitch + digital distortion</p><a href="https://threejs.org/examples/#webgl_postprocessing_glitch" target="_blank">View example →</a></div>
+      <div class="card"><h4>webgl_loader_gltf_compressed</h4><p>Draco-compressed GLTF loader</p><a href="https://threejs.org/examples/#webgl_loader_gltf_compressed" target="_blank">View example →</a></div>
+      <div class="card"><h4>webgl_lines_fat</h4><p>Anti-aliased fat lines with width</p><a href="https://threejs.org/examples/#webgl_lines_fat" target="_blank">View example →</a></div>
+      <div class="card"><h4>webgl_postprocessing_ssao</h4><p>Screen-space ambient occlusion</p><a href="https://threejs.org/examples/#webgl_postprocessing_ssao" target="_blank">View example →</a></div>
+      <div class="card"><h4>webgl_materials_physical_clearcoat</h4><p>Glossy clearcoat lacquer finish</p><a href="https://threejs.org/examples/#webgl_materials_physical_clearcoat" target="_blank">View example →</a></div>
+      <div class="card"><h4>webgl_gpgpu_birds</h4><p>GPU-computed flocking simulation</p><a href="https://threejs.org/examples/#webgl_gpgpu_birds" target="_blank">View example →</a></div>
+    </div>
+    </div>
+
+  </div>
+</div>
+<script>
+hljs.highlightAll()
+document.querySelectorAll('.code-block').forEach(b => {
+  const btn = b.querySelector('.copy-btn')
+  if (btn) btn.onclick = () => {
+    navigator.clipboard.writeText(b.querySelector('code').innerText)
+    btn.textContent = 'Copied!'
+    setTimeout(() => btn.textContent = 'Copy', 1500)
+  }
+})
+function search(q) {
+  document.querySelectorAll('[data-section]').forEach(el => {
+    el.style.display = !q || el.textContent.toLowerCase().includes(q.toLowerCase()) ? '' : 'none'
+  })
+}
+</script>
+</body></html>

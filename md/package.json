@@ -1,0 +1,13 @@
+{
+  "name": "web-design-knowledge",
+  "version": "1.0.0",
+  "description": "Local design knowledge base — free components, animations, 3D, and reference patterns",
+  "scripts": {
+    "refresh": "node scraper/refresh.js",
+    "refresh:components": "node scraper/refresh.js --only=components",
+    "refresh:animations": "node scraper/refresh.js --only=animations",
+    "refresh:3d": "node scraper/refresh.js --only=3d"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
