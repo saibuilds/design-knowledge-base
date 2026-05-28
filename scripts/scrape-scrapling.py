@@ -12,16 +12,12 @@ import re
 from pathlib import Path
 from datetime import datetime
 
+from scrapling import AsyncFetcher
+
 OUT_DIR = Path(__file__).parent.parent / "md" / "components"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 TARGETS = [
-    {
-        "name": "skiper",
-        "list_url": "https://ui.skiper.dev",
-        "output": OUT_DIR / "skiper-scrapling.md",
-        "link_pattern": r"/components/",
-    },
     {
         "name": "origin-ui",
         "list_url": "https://originui.com/components",
@@ -63,12 +59,6 @@ def extract_deps(code: str) -> list[str]:
 
 
 async def scrape_site(target: dict):
-    try:
-        from scrapling import Fetcher, AsyncFetcher
-    except ImportError:
-        print("scrapling not installed. Run: .venv/Scripts/pip install scrapling")
-        return
-
     print(f"\n=== Scraping {target['name']} with Scrapling ===")
     scraped = []
 
@@ -100,9 +90,9 @@ async def scrape_site(target: dict):
                         "code": code,
                         "deps": deps,
                     })
-                    print(f"    ✓ {len(code)} chars")
+                    print(f"    OK {len(code)} chars")
                 else:
-                    print(f"    ✗ No code")
+                    print(f"    NO code")
             except Exception as e:
                 print(f"    ✗ {str(e)[:80]}")
 
@@ -119,7 +109,7 @@ async def scrape_site(target: dict):
         md += f"\n```tsx\n{c['code']}\n```\n\n---\n\n"
 
     target["output"].write_text(md, encoding="utf-8")
-    print(f"✓ Done: {len(scraped)} → {target['output']}")
+    print(f"Done: {len(scraped)} -> {target['output']}")
     return len(scraped)
 
 
